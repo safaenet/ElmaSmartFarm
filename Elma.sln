@@ -10,7 +10,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElmaSmartFarm.DataLibraryCore", "ElmaSmartFarm.DataLibraryCore\ElmaSmartFarm.DataLibraryCore.csproj", "{1F45C14C-FAA5-4F40-BEDB-346731B89F61}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ElmaSmartFarm.DataLibraryCore", "ElmaSmartFarm.DataLibraryCore\ElmaSmartFarm.DataLibraryCore.csproj", "{1F45C14C-FAA5-4F40-BEDB-346731B89F61}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ElmaSmartFarm.SharedLibrary", "ElmaSmartFarm.SharedLibrary\ElmaSmartFarm.SharedLibrary.csproj", "{D2577249-37C7-4D13-B624-4A4546B95542}"
 EndProject
@@ -18,7 +18,7 @@ Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "ElmaSmartFarm.Database", "E
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AppSettings", "AppSettings", "{A3FFF094-774E-4356-BE5C-EFEFEC2AAC0A}"
 	ProjectSection(SolutionItems) = preProject
-		..\appsettings.json = ..\appsettings.json
+		AppSettings\appsettings.json = AppSettings\appsettings.json
 	EndProjectSection
 EndProject
 Global
