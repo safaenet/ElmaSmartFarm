@@ -5,15 +5,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ElmaSmartFarm.Service
+namespace ElmaSmartFarm.SharedLibrary
 {
     public static class SettingsDataAccess
     {
         public static IConfiguration AppConfiguration()
         {
+            var relativePath = @"../AppSettings";
+            var absolutePath = Path.GetFullPath(relativePath);
             IConfiguration conf;
             var builder = new ConfigurationBuilder()
-                .SetBasePath(Environment.CurrentDirectory)
+                .SetBasePath(absolutePath)
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
             conf = builder.Build();
             return conf;

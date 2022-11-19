@@ -1,5 +1,7 @@
 using MQTTnet;
 using MQTTnet.Client;
+using Serilog;
+using Serilog.Events;
 using System.Text;
 
 namespace ElmaSmartFarm.Service
@@ -9,48 +11,37 @@ namespace ElmaSmartFarm.Service
     {
         public static async Task Main(string[] args)
         {
-            string mqtt_broker = SettingsDataAccess.AppConfiguration().GetSection("mqtt:mqtt_broker").Value ?? "192.168.1.106";
-            int mqtt_port = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("mqtt:mqtt_port").Value ?? "1883");
-            string mqtt_username = SettingsDataAccess.AppConfiguration().GetSection("mqtt:mqtt_username").Value ?? "admin";
-            string mqtt_password = SettingsDataAccess.AppConfiguration().GetSection("mqtt:mqtt_password").Value ?? "admin";
-            MqttFactory mqttFactory = new();
-            IMqttClient mqttClient = mqttFactory.CreateMqttClient();
-            var options = new MqttClientOptionsBuilder()
-                .WithClientId(Guid.NewGuid().ToString())
-                .WithTcpServer(mqtt_broker, mqtt_port)
-                .WithCleanSession()
+            Log.Logger = new LoggerConfiguration()
+                .MinimumLevel.Debug()
+                .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
+                .Enrich.FromLogContext()
+                .WriteTo.File(@"log\LogFile.txt")
+                .CreateLogger();
+
+            try
+            {
+                Log.Information("Starting up the Service...");
+                IHost host = Host.CreateDefaultBuilder(args)
+                .UseWindowsService()
+                .ConfigureServices(services =>
+                {
+                    services.AddHostedService<Worker>();
+                })
+                .UseSerilog()
                 .Build();
-            await mqttClient.ConnectAsync(options);
 
-            var mqttTopicFilterBuilder = new MqttTopicFilterBuilder().WithTopic("safa/#").Build();
-            await mqttClient.SubscribeAsync(mqttTopicFilterBuilder);
-            mqttClient.ApplicationMessageReceivedAsync += MqttClient_ApplicationMessageReceivedAsync;
-            Console.WriteLine("Connected to MQTT");
-            while (true) ;
-
-            //var m = new MqttApplicationMessageBuilder().WithTopic("safa").WithPayload("dana").Build();
-            //if(mqttClient.IsConnected) await mqttClient.PublishAsync(m);
-        }
-
-        private static Task MqttClient_ApplicationMessageReceivedAsync(MqttApplicationMessageReceivedEventArgs arg)
-        {
-            Console.Write(arg.ApplicationMessage.Topic + ": ");
-            Console.WriteLine(Encoding.UTF8.GetString(arg.ApplicationMessage.Payload));
-            return Task.CompletedTask;
-        }
-
-        private async Task loop()
-        {
-            while (true) ;
+                await host.RunAsync();
+                return;
+            }
+            catch (Exception ex)
+            {
+                Log.Fatal(ex, "There was a problem starting up the Service.");
+                return;
+            }
+            finally
+            {
+                Log.CloseAndFlush();
+            }            
         }
     }
-
-    IHost host = Host.CreateDefaultBuilder(args)
-        .ConfigureServices(services =>
-        {
-            services.AddHostedService<Worker>();
-        })
-        .Build();
-
-    await host.RunAsync();
 }
