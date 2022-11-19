@@ -16,7 +16,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ElmaSmartFarm.SharedLibrary
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "ElmaSmartFarm.Database", "ElmaSmartFarm.Database\ElmaSmartFarm.Database.sqlproj", "{973AC9C7-6A43-4F6F-8A25-893D6EFFE03A}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AppSettings", "AppSettings", "{A3FFF094-774E-4356-BE5C-EFEFEC2AAC0A}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Config", "Config", "{A3FFF094-774E-4356-BE5C-EFEFEC2AAC0A}"
 	ProjectSection(SolutionItems) = preProject
 		AppSettings\appsettings.json = AppSettings\appsettings.json
 	EndProjectSection

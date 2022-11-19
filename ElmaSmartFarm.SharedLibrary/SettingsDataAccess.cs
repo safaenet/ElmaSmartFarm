@@ -11,7 +11,7 @@ namespace ElmaSmartFarm.SharedLibrary
     {
         public static IConfiguration AppConfiguration()
         {
-            var relativePath = @"../AppSettings";
+            var relativePath = @"../Config";
             var absolutePath = Path.GetFullPath(relativePath);
             IConfiguration conf;
             var builder = new ConfigurationBuilder()
