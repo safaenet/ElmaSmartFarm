@@ -32,7 +32,7 @@ namespace ElmaSmartFarm.Service
             mqtt_username = SettingsDataAccess.AppConfiguration().GetSection("mqtt:mqtt_username").Value ?? "admin";
             mqtt_password = SettingsDataAccess.AppConfiguration().GetSection("mqtt:mqtt_password").Value ?? "admin";
             retry_seconds = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("mqtt:retry_seconds").Value ?? "2");
-            sensor_topic = SettingsDataAccess.AppConfiguration().GetSection("mqtt:sensor_topic").Value ?? "Elma/Sensors/#";
+            sensor_topic = SettingsDataAccess.AppConfiguration().GetSection("mqtt:sensor_topic").Value ?? "Elma/ToServer/Sensors";
 
             mqttFactory = new();
             mqttClient = mqttFactory.CreateMqttClient();
@@ -58,7 +58,7 @@ namespace ElmaSmartFarm.Service
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            var mqttTopicFilterBuilder = new MqttTopicFilterBuilder().WithTopic(sensor_topic).Build();
+            var mqttTopicFilterBuilder = new MqttTopicFilterBuilder().WithTopic(sensor_topic + "/#").Build();
             await mqttClient.SubscribeAsync(mqttTopicFilterBuilder);
             //var m = new MqttApplicationMessageBuilder().WithTopic("safa").WithPayload("dana").Build();
             //if(mqttClient.IsConnected) await mqttClient.PublishAsync(m);
@@ -73,7 +73,7 @@ namespace ElmaSmartFarm.Service
                 ClientId = arg.ClientId,
                 Topic = arg.ApplicationMessage.Topic,
                 Payload = Encoding.UTF8.GetString(arg.ApplicationMessage.Payload),
-                DateCreated = DateTime.Now
+                ReadDate = DateTime.Now
             };
             
             return Task.CompletedTask;

@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Operations Version="1.0" xmlns="http://schemas.microsoft.com/sqlserver/dac/Serialization/2012/02">
+  <Operation Name="Rename Refactor" Key="0400fa9d-39e4-499e-bf58-019b314c5360" ChangeDateTime="11/20/2022 06:14:20">
+    <Property Name="ElementName" Value="[dbo].[Sensor_Type].[Sensor_Type]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Sensor_Type]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="SensorType" />
+  </Operation>
+</Operations>

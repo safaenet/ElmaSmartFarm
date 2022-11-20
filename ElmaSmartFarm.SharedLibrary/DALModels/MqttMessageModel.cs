@@ -11,6 +11,6 @@ namespace ElmaSmartFarm.SharedLibrary.DALModels
         public string ClientId { get; set; }
         public string Topic { get; set; }
         public string Payload { get; set; }
-        public DateTime DateCreated { get; set; }
+        public DateTime ReadDate { get; set; }
     }
 }

@@ -57,9 +57,15 @@
   <ItemGroup>
     <Folder Include="Properties" />
     <Folder Include="Tables" />
+    <Folder Include="StoredProcedures" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Temperatures.sql" />
     <Build Include="Tables\Humidities.sql" />
+    <Build Include="Tables\Sensors.sql" />
+    <Build Include="StoredProcedures\SaveTempData.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="ElmaSmartFarm.Database.refactorlog" />
   </ItemGroup>
 </Project>
