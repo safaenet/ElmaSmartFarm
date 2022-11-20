@@ -71,34 +71,6 @@ namespace ElmaSmartFarm.Service
             return Task.CompletedTask;
         }
 
-        public override async Task<Task> StopAsync(CancellationToken cancellationToken)
-        {
-            await mqttClient.DisconnectAsync();
-            mqttClient.Dispose();
-            return base.StopAsync(cancellationToken);
-        }
-
-        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
-        {
-            while (!stoppingToken.IsCancellationRequested)
-            {
-                if (!mqttClient.IsConnected) await TryReconnectAsync();
-            }
-        }
-
-        //Elma/ToServer/Sensors/Temp/{Id}
-        //Elma/ToServer/Sensors/Humid/{Id}
-        private async Task MqttClient_ApplicationMessageReceivedAsync(MqttApplicationMessageReceivedEventArgs arg)
-        {
-            MqttMessageModel message = new()
-            {
-                Topic = arg.ApplicationMessage.Topic,
-                Payload = Encoding.UTF8.GetString(arg.ApplicationMessage.Payload),
-                ReadDate = DateTime.Now
-            };
-            _ = await MqttProcessor.ProcessMqttMessageAsync(message);
-        }
-
         private async Task TryReconnectAsync()
         {
             if (mqttClient.IsConnected) return;
@@ -120,6 +92,39 @@ namespace ElmaSmartFarm.Service
                     Task.Delay(retry_seconds * 1000).Wait();
                 }
             }
+        }
+
+        private async Task MqttLoopAsync()
+        {
+            if (!mqttClient.IsConnected) await TryReconnectAsync();
+        }
+
+        public override async Task<Task> StopAsync(CancellationToken cancellationToken)
+        {
+            await mqttClient.DisconnectAsync();
+            mqttClient.Dispose();
+            return base.StopAsync(cancellationToken);
+        }
+
+        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+        {
+            while (!stoppingToken.IsCancellationRequested)
+            {
+                await MqttLoopAsync();
+            }
+        }
+
+        //Elma/ToServer/Sensors/Temp/{Id}
+        //Elma/ToServer/Sensors/Humid/{Id}
+        private async Task MqttClient_ApplicationMessageReceivedAsync(MqttApplicationMessageReceivedEventArgs arg)
+        {
+            MqttMessageModel message = new()
+            {
+                Topic = arg.ApplicationMessage.Topic,
+                Payload = Encoding.UTF8.GetString(arg.ApplicationMessage.Payload),
+                ReadDate = DateTime.Now
+            };
+            _ = await MqttProcessor.ProcessMqttMessageAsync(message);
         }
     }
 }
