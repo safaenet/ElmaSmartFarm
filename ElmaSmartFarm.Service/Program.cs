@@ -1,3 +1,6 @@
+using ElmaSmartFarm.DataLibraryCore.Interfaces;
+using ElmaSmartFarm.DataLibraryCore.Mqtt;
+using ElmaSmartFarm.DataLibraryCore.SqlServer;
 using MQTTnet;
 using MQTTnet.Client;
 using Serilog;
@@ -25,7 +28,10 @@ namespace ElmaSmartFarm.Service
                 .UseWindowsService()
                 .ConfigureServices(services =>
                 {
-                    services.AddHostedService<Worker>();
+                    services.AddHostedService<Worker>()
+                    .AddSingleton<IDataAccess, SqlDataAccess>()
+                    .AddSingleton<IDbProcessor, MsSqlDbProcessor>()
+                    .AddSingleton<IMqttProcessor, MqttProcessor>();
                 })
                 .UseSerilog()
                 .Build();

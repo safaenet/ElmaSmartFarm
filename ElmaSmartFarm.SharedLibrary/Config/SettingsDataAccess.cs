@@ -5,11 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ElmaSmartFarm.SharedLibrary
+namespace ElmaSmartFarm.SharedLibrary.Config
 {
     public static class SettingsDataAccess
     {
-        const string relativePath = @"../ElmaSmartFarm.SharedLibrary";
+        const string relativePath = @"../ElmaSmartFarm.SharedLibrary/Config";
         public static IConfiguration AppConfiguration()
         {
             var absolutePath = Path.GetFullPath(relativePath);

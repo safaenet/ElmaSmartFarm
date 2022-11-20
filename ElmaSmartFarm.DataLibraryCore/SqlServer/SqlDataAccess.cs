@@ -4,7 +4,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
-using ElmaSmartFarm.SharedLibrary;
+using ElmaSmartFarm.SharedLibrary.Config;
 using System.Collections.Generic;
 using ElmaSmartFarm.DataLibraryCore.Interfaces;
 
