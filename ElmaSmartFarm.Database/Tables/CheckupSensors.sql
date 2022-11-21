@@ -1,4 +1,4 @@
-﻿CREATE TABLE [dbo].[ButtonSensors]
+﻿CREATE TABLE [dbo].[CheckupSensors]
 (
 	[Id] INT NOT NULL PRIMARY KEY, 
     [EnvironmentType] INT NOT NULL DEFAULT 1,

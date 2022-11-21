@@ -1,0 +1,7 @@
+﻿CREATE TABLE [dbo].[Poultries]
+(
+	[Id] INT NOT NULL PRIMARY KEY, 
+    [Name] NVARCHAR(50) NULL,
+    [IsEnabled] BIT NOT NULL DEFAULT 1, 
+    [Descriptions] NVARCHAR(50) NULL
+)
