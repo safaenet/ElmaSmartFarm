@@ -7,4 +7,18 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="SensorType" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="dae465fd-4fc2-44ca-939c-79c38df32208" ChangeDateTime="11/21/2022 13:26:19">
+    <Property Name="ElementName" Value="[dbo].[TemperatureSensors].[Description]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[TemperatureSensors]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Descriptions" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="c136d25c-5138-48c5-b539-1958311645a0" ChangeDateTime="11/21/2022 13:26:27">
+    <Property Name="ElementName" Value="[dbo].[HumiditySensors].[Description]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[HumiditySensors]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Descriptions" />
+  </Operation>
 </Operations>

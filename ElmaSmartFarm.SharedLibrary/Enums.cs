@@ -15,4 +15,11 @@ namespace ElmaSmartFarm.SharedLibrary
         PushButton = 5,
         ElectricPower = 6
     }
+
+    public enum EnvironmentType
+    {
+        Farm = 1,
+        Outside = 2,
+        Warehouse = 3
+    }
 }
