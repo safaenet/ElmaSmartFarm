@@ -1,7 +1,6 @@
 ﻿using ElmaSmartFarm.DataLibraryCore.Interfaces;
 using ElmaSmartFarm.SharedLibrary.Config;
 using ElmaSmartFarm.SharedLibrary.DALModels;
-using SharedLibrary.DALModels;
 using System.Threading.Tasks;
 
 namespace ElmaSmartFarm.DataLibraryCore.Mqtt

@@ -1,6 +1,6 @@
 ﻿using Dapper;
 using ElmaSmartFarm.DataLibraryCore.Interfaces;
-using SharedLibrary.DALModels;
+using ElmaSmartFarm.SharedLibrary.DALModels;
 using System.Threading.Tasks;
 
 namespace ElmaSmartFarm.DataLibraryCore.SqlServer

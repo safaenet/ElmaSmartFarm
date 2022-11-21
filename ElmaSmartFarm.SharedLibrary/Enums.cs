@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ElmaSmartFarm.SharedLibrary
+﻿namespace ElmaSmartFarm.SharedLibrary
 {
     public enum SensorType
     {
@@ -21,5 +15,17 @@ namespace ElmaSmartFarm.SharedLibrary
         Farm = 1,
         Outside = 2,
         Warehouse = 3
+    }
+
+    public enum FarmAlarmType
+    {
+        Feed,
+        HighTemperature,
+        LowTemperature,
+        HighHumidity,
+        LowHumidity,
+        LongBright,
+        LongDark,
+        LongLeave
     }
 }
