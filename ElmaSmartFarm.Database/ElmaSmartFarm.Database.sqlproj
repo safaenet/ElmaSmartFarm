@@ -58,20 +58,22 @@
     <Folder Include="Properties" />
     <Folder Include="Tables" />
     <Folder Include="StoredProcedures" />
+    <Folder Include="Tables\Sensors" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="Tables\TemperatureValues.sql" />
-    <Build Include="Tables\TemperatureSensors.sql" />
-    <Build Include="Tables\HumiditySensors.sql" />
-    <Build Include="Tables\HumidityValues.sql" />
-    <Build Include="Tables\AmbientLightSensors.sql" />
     <Build Include="Tables\Farms.sql" />
-    <Build Include="Tables\AmbientLightValues.sql" />
-    <Build Include="Tables\CheckupSensors.sql" />
-    <Build Include="Tables\CheckupValues.sql" />
-    <Build Include="Tables\FeedSensors.sql" />
-    <Build Include="Tables\FeedValues.sql" />
     <Build Include="Tables\Poultries.sql" />
+    <Build Include="Tables\Sensors\AmbientLightSensors.sql" />
+    <Build Include="Tables\Sensors\AmbientLightValues.sql" />
+    <Build Include="Tables\Sensors\CheckupSensors.sql" />
+    <Build Include="Tables\Sensors\CheckupValues.sql" />
+    <Build Include="Tables\Sensors\FeedSensors.sql" />
+    <Build Include="Tables\Sensors\HumiditySensors.sql" />
+    <Build Include="Tables\Sensors\FeedValues.sql" />
+    <Build Include="Tables\Sensors\HumidityValues.sql" />
+    <Build Include="Tables\Sensors\TemperatureSensors.sql" />
+    <Build Include="Tables\Sensors\TemperatureValues.sql" />
+    <Build Include="Tables\Periods.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="ElmaSmartFarm.Database.refactorlog" />
