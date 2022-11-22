@@ -74,6 +74,9 @@
     <Build Include="Tables\Sensors\TemperatureSensors.sql" />
     <Build Include="Tables\Sensors\TemperatureValues.sql" />
     <Build Include="Tables\Periods.sql" />
+    <Build Include="Tables\FarmsInPeriods.sql" />
+    <Build Include="Tables\ChickenStatistics.sql" />
+    <Build Include="Tables\FoodStatistics.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="ElmaSmartFarm.Database.refactorlog" />

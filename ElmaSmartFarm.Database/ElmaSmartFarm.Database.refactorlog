@@ -21,4 +21,25 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="Descriptions" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="fdc05643-0f72-40be-81d3-fd1c02b2caec" ChangeDateTime="11/22/2022 13:37:29">
+    <Property Name="ElementName" Value="[dbo].[FarmsInPeriods].[Populate]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[FarmsInPeriods]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="ChickenCount" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="454eec20-c9ca-40aa-84e6-a8a5c1266402" ChangeDateTime="11/22/2022 14:11:19">
+    <Property Name="ElementName" Value="[dbo].[ChickenStatistics].[DateHappend]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[ChickenStatistics]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="DateHappened" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="a92c074f-4611-4480-901f-87553f234f81" ChangeDateTime="11/22/2022 14:11:34">
+    <Property Name="ElementName" Value="[dbo].[ChickenStatistics].[DateHappened]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[ChickenStatistics]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="DateRegistered" />
+  </Operation>
 </Operations>
