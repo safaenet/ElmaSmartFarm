@@ -42,4 +42,32 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="DateRegistered" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="28c9f157-d422-4302-bff5-cd2f590b7b4a" ChangeDateTime="11/23/2022 18:01:59">
+    <Property Name="ElementName" Value="[dbo].[CommuteValues].[StepOutDate]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[CommuteValues]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="StepInOutDate" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="13b89cb7-6be5-4979-8d40-a025927b432b" ChangeDateTime="11/23/2022 18:02:10">
+    <Property Name="ElementName" Value="[dbo].[CommuteValues].[StepInDate]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[CommuteValues]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="IsStepIn" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="0e8ffe90-0c6a-4204-9dca-4245573b9915" ChangeDateTime="11/23/2022 18:05:13">
+    <Property Name="ElementName" Value="[dbo].[CommuteValues].[StepInOutDate]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[CommuteValues]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="StepDate" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="d0b2a372-ed8c-4cf8-9014-578f26f3ee33" ChangeDateTime="11/23/2022 18:26:56">
+    <Property Name="ElementName" Value="[dbo].[ChickenStatistics].[DeadCount]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[ChickenStatistics]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="LossCount" />
+  </Operation>
 </Operations>

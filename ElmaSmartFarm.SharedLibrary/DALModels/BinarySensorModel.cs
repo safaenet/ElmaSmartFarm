@@ -9,9 +9,11 @@ namespace ElmaSmartFarm.SharedLibrary.DALModels
     public class BinarySensorModel
     {
         public int Id { get; set; }
-        public bool CurrentStatus { get; set; } //If true: pressed
-        public DateTime? LastReadDate { get; set; }
+        public List<BinarySensorReadModel> BinaryReads { get; set; }
+        public bool? CurrentStatus => BinaryReads?.MaxBy(t => t.ReadDate)?.Status;
+        public DateTime? LastReadDate => BinaryReads?.MaxBy(t => t.ReadDate)?.ReadDate;
         public bool IsEnabled { get; set; }
+        public int BatteryLevel { get; set; }
         public string Descriptions { get; set; }
     }
 }

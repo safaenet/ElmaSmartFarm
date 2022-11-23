@@ -13,7 +13,7 @@
     "max_differ_value": 3, //Wont accept the incoming data if new value according to previous value increased/decreased more than this value. (Percent)
     "write_to_db_interval": 30 //(Seconds)
   },
-  "ambient": {
+  "ambient_light": {
     "read_interval": 30, //(Seconds)
     "min_value": 0, //Wont accept the incoming data if lower than this value. (Percent)
     "max_value": 100, //Wont accept the incoming data if higher than this value. (Percent)

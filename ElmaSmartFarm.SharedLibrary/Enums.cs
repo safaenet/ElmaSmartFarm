@@ -28,4 +28,10 @@
         LongDark,
         LongLeave
     }
+
+    public enum CommuteSensorStepType
+    {
+        StepIn = 1,
+        StepOut = 2
+    }
 }

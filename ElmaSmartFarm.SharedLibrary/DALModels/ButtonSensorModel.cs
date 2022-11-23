@@ -9,8 +9,10 @@ namespace ElmaSmartFarm.SharedLibrary.DALModels
     public class ButtonSensorModel
     {
         public int Id { get; set; }
-        public DateTime? LastReadDate { get; set; }
+        public List<DateTime> ButtonReads { get; set; }
+        public DateTime? LastReadDate => ButtonReads?.Max();
         public bool IsEnabled { get; set; }
+        public int BatteryLevel { get; set; }
         public string Descriptions { get; set; }
     }
 }
