@@ -1,6 +1,7 @@
 ﻿CREATE TABLE [dbo].[Farms]
 (
 	[Id] INT NOT NULL PRIMARY KEY, 
+    [Name] NVARCHAR(200) NULL,
     [PoultryId] INT NOT NULL,
     [FarmNumber] INT NULL ,
     [MaxCapacity] INT NULL ,

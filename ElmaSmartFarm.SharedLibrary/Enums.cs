@@ -34,4 +34,17 @@
         StepIn = 1,
         StepOut = 2
     }
+
+    public enum ButtonSensorType
+    {
+        FeedSensor = 1,
+        CheckupSensor = 2
+    }
+
+    public enum BinarySensorType
+    {
+        MainElectricPower = 1,
+        BackupElectricPower = 2,
+        FarmElectricPower = 3
+    }
 }

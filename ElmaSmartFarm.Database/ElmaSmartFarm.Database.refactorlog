@@ -70,4 +70,11 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="LossCount" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="97549d07-9aea-4b3b-93b1-a673f9d649fc" ChangeDateTime="11/23/2022 22:20:02">
+    <Property Name="ElementName" Value="[dbo].[FeedSensors].[EnvironmentId]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[FeedSensors]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="FarmId" />
+  </Operation>
 </Operations>
