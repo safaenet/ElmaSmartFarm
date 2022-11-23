@@ -13,6 +13,8 @@ namespace ElmaSmartFarm.SharedLibrary.DALModels
         public List<FarmModel> Farms { get; set; }
         public TemperatureSensorModel OutdoorTemperature { get; set; }
         public HumiditySensorModel OutdoorHumidity { get; set; }
+        public BinarySensorModel MainPowerStatus { get; set; }
+        public BinarySensorModel BackupPowerStatus { get; set; }
         public bool HasAlarm => Farms != null && Farms.Any(f => f.HasAlarm);
         public bool IsEnabled { get; set; }
     }
