@@ -63,22 +63,26 @@
   <ItemGroup>
     <Build Include="Tables\Farms.sql" />
     <Build Include="Tables\Poultries.sql" />
-    <Build Include="Tables\Sensors\AmbientLightSensors.sql" />
-    <Build Include="Tables\Sensors\AmbientLightValues.sql" />
-    <Build Include="Tables\Sensors\CheckupSensors.sql" />
-    <Build Include="Tables\Sensors\CheckupValues.sql" />
-    <Build Include="Tables\Sensors\FeedSensors.sql" />
-    <Build Include="Tables\Sensors\HumiditySensors.sql" />
-    <Build Include="Tables\Sensors\FeedValues.sql" />
-    <Build Include="Tables\Sensors\HumidityValues.sql" />
-    <Build Include="Tables\Sensors\TemperatureSensors.sql" />
-    <Build Include="Tables\Sensors\TemperatureValues.sql" />
+    <Build Include="Tables\Sensors\FarmAmbientLightSensors.sql" />
+    <Build Include="Tables\Sensors\FarmAmbientLightValues.sql" />
+    <Build Include="Tables\Sensors\FarmCheckupSensors.sql" />
+    <Build Include="Tables\Sensors\FarmCheckupValues.sql" />
+    <Build Include="Tables\Sensors\FarmFeedSensors.sql" />
+    <Build Include="Tables\Sensors\FarmHumiditySensors.sql" />
+    <Build Include="Tables\Sensors\FarmFeedValues.sql" />
+    <Build Include="Tables\Sensors\FarmHumidityValues.sql" />
+    <Build Include="Tables\Sensors\FarmTemperatureSensors.sql" />
+    <Build Include="Tables\Sensors\FarmTemperatureValues.sql" />
     <Build Include="Tables\Periods.sql" />
     <Build Include="Tables\FarmsInPeriods.sql" />
     <Build Include="Tables\ChickenLosses.sql" />
     <Build Include="Tables\FoodStatistics.sql" />
-    <Build Include="Tables\Sensors\CommuteSensors.sql" />
-    <Build Include="Tables\Sensors\CommuteValues.sql" />
+    <Build Include="Tables\Sensors\FarmCommuteSensors.sql" />
+    <Build Include="Tables\Sensors\FarmCommuteValues.sql" />
+    <Build Include="Tables\Sensors\OutdoorTemperatureSensors.sql" />
+    <Build Include="Tables\Sensors\OutdoorHumiditySensors.sql" />
+    <Build Include="Tables\Sensors\OutdoorTemperatureValues.sql" />
+    <Build Include="Tables\Sensors\OutdoorHumidityValues.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="ElmaSmartFarm.Database.refactorlog" />

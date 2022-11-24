@@ -1,7 +1,7 @@
-﻿CREATE TABLE [dbo].[TemperatureValues]
+﻿CREATE TABLE [dbo].[FarmHumidityValues]
 (
 	[Id] INT NOT NULL PRIMARY KEY, 
     [SensorId] INT NOT NULL,
     [ReadDate] DATETIME NOT NULL, 
-    [SensorValue] DECIMAL(5, 2) NOT NULL
+    [SensorValue] TINYINT NOT NULL
 )
