@@ -1,6 +1,7 @@
 ﻿CREATE TABLE [dbo].[OutdoorTemperatureSensors]
 (
 	[Id] INT NOT NULL PRIMARY KEY, 
+    [DeviceId] INT NOT NULL,
     [PoultryId] INT NOT NULL,
     [Name] NVARCHAR(200) NULL,
     [IsEnabled] BIT NOT NULL DEFAULT 1, 

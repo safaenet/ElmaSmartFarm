@@ -8,6 +8,7 @@
         public const string LossCount = "LossCount";
         public const string DateHappened = "DateHappened";
         public const string DateRegistered = "DateRegistered";
+        public const string UserId = "UserId";
         public const string Descriptions = "Descriptions";
 
         public const string pId = $"@{Id}";
@@ -16,6 +17,7 @@
         public const string pLossCount = $"@{LossCount}";
         public const string pDateHappened = $"@{DateHappened}";
         public const string pDateRegistered = $"@{DateRegistered}";
+        public const string pUserId = $"@{UserId}";
         public const string pDescriptions = $"@{Descriptions}";
     }
 }

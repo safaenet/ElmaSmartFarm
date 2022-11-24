@@ -5,5 +5,6 @@
     [FarmId] INT NOT NULL, 
     [StartDate] DATETIME NOT NULL, 
     [EndDate] DATETIME NULL, 
+    [UserId] INT NULL,
     [Descriptions] NVARCHAR(200) NULL
 )

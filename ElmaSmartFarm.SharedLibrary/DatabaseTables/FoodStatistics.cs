@@ -8,6 +8,7 @@
         public const string FoodWeight = "FoodWeight";
         public const string FeedDate = "FeedDate";
         public const string DateRegistered = "DateRegistered";
+        public const string UserId = "UserId";
         public const string Descriptions = "Descriptions";
 
         public const string pId = $"@{Id}";
@@ -16,6 +17,7 @@
         public const string pFoodWeight = $"@{FoodWeight}";
         public const string pFeedDate = $"@{FeedDate}";
         public const string pDateRegistered = $"@{DateRegistered}";
+        public const string pUserId = $"@{UserId}";
         public const string pDescriptions = $"@{Descriptions}";
     }
 }

@@ -3,6 +3,7 @@
     public static class BinarySensors
     {
         public const string Id = "Id";
+        public const string DeviceId = "DeviceId";
         public const string Type = "Type";
         public const string LocationId = "LocationId";
         public const string Name = "Name";
@@ -10,6 +11,7 @@
         public const string Descriptions = "Descriptions";
 
         public const string pId = $"@{Id}";
+        public const string pDeviceId = $"@{DeviceId}";
         public const string pType = $"@{Type}";
         public const string pLocationId = $"@{LocationId}";
         public const string pName = $"@{Name}";
