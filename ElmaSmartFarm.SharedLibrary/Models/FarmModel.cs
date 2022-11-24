@@ -1,4 +1,6 @@
-﻿namespace ElmaSmartFarm.SharedLibrary.DALModels
+﻿using ElmaSmartFarm.SharedLibrary.Models.Sensors;
+
+namespace ElmaSmartFarm.SharedLibrary.Models
 {
     public class FarmModel
     {
@@ -10,10 +12,11 @@
         public FarmCommuteModel Commute { get; set; }
         public PushButtonSensorModel CheckupSensor { get; set; }
         public PushButtonSensorModel FeedSensor { get; set; }
-        public ChickenStatisticsModel ChickenStatistics { get; set; }
         public BinarySensorModel ElectricPower { get; set; }
+        public PeriodModel Period { get; set; }
         public List<FarmAlarmType> Alarms { get; set; }
         public bool HasAlarm => Alarms != null && Alarms.Count > 0;
+        public bool IsInPeriod => Period != null && Period.EndDate != null;
         public bool IsEnabled { get; set; }
         public string Descriptions { get; set; }
     }

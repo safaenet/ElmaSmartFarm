@@ -1,4 +1,6 @@
-﻿namespace ElmaSmartFarm.SharedLibrary.DALModels
+﻿using ElmaSmartFarm.SharedLibrary.Models.Sensors;
+
+namespace ElmaSmartFarm.SharedLibrary.Models
 {
     public class FarmHumidityModel
     {
