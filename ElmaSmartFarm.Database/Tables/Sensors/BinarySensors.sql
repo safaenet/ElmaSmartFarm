@@ -1,4 +1,4 @@
-﻿CREATE TABLE [dbo].[BinarySensor]
+﻿CREATE TABLE [dbo].[BinarySensors]
 (
 	[Id] INT NOT NULL PRIMARY KEY, 
     [Type] TINYINT NOT NULL,

@@ -1,19 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ElmaSmartFarm.SharedLibrary.DALModels
+﻿namespace ElmaSmartFarm.SharedLibrary.Models.Sensors
 {
-    public class PushButtonSensorModel
+    public class PushButtonSensorModel : SensorBaseModel
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
         public List<DateTime> ButtonReads { get; set; }
         public DateTime? LastReadDate => ButtonReads?.Max();
-        public bool IsEnabled { get; set; }
-        public int BatteryLevel { get; set; }
-        public string Descriptions { get; set; }
     }
 }

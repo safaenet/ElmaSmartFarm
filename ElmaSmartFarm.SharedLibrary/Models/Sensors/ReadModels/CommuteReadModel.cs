@@ -1,4 +1,4 @@
-﻿namespace ElmaSmartFarm.SharedLibrary.DALModels
+﻿namespace ElmaSmartFarm.SharedLibrary.Models.Sensors.ReadModels
 {
     public class CommuteReadModel
     {
