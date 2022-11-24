@@ -43,8 +43,14 @@
 
     public enum BinarySensorType
     {
-        MainElectricPower = 1,
-        BackupElectricPower = 2,
+        PoultryMainElectricPower = 1,
+        PoultryBackupElectricPower = 2,
         FarmElectricPower = 3
+    }
+
+    public enum BinarySensorStatus
+    {
+        Off = 0,
+        On = 1
     }
 }

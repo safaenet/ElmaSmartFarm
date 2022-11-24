@@ -1,4 +1,4 @@
-﻿CREATE TABLE [dbo].[FarmTemperatureValues]
+﻿CREATE TABLE [dbo].[TemperatureValues]
 (
 	[Id] INT NOT NULL PRIMARY KEY, 
     [SensorId] INT NOT NULL,

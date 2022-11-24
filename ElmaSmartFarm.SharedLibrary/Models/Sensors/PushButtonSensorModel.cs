@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace ElmaSmartFarm.SharedLibrary.DALModels
 {
-    public class ButtonSensorModel
+    public class PushButtonSensorModel
     {
         public int Id { get; set; }
+        public string Name { get; set; }
         public List<DateTime> ButtonReads { get; set; }
         public DateTime? LastReadDate => ButtonReads?.Max();
         public bool IsEnabled { get; set; }

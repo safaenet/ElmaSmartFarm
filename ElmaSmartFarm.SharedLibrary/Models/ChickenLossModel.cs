@@ -6,5 +6,6 @@
         public int LossCount { get; set; }
         public DateTime DateHappened { get; set; }
         public DateTime DateRegistered { get; set; }
+        public string Descriptions { get; set; }
     }
 }

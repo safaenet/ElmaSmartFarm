@@ -3,6 +3,7 @@
     public class HumiditySensorModel
     {
         public int Id { get; set; }
+        public string Name { get; set; }
         public int Section { get; set; }
         public List<HumidityReadModel> HumidityReads { get; set; }
         public int? MinimumRecentHumidity => HumidityReads?.Min(t => t.Humidity);

@@ -3,6 +3,7 @@
     public class TemperatureSensorModel
     {
         public int Id { get; set; }
+        public string Name { get; set; }
         public int Section { get; set; }
         public List<TemperatureReadModel> TemperatureReads { get; set; }
         public double? MinimumRecentTemperature => TemperatureReads?.Min(t => t.Celsius);

@@ -1,4 +1,4 @@
-﻿CREATE TABLE [dbo].[FarmCheckupValues]
+﻿CREATE TABLE [dbo].[PushButtonSensorValues]
 (
 	[Id] INT NOT NULL PRIMARY KEY,
 	[SensorId] INT NOT NULL,

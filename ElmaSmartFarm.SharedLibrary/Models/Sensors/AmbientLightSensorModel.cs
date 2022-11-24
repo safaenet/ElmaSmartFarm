@@ -3,6 +3,7 @@
     public class AmbientLightSensorModel
     {
         public int Id { get; set; }
+        public string Name { get; set; }
         public int Section { get; set; }
         public List<AmbientLightReadModel> AmbientLightReads { get; set; }
         public int? MinimumRecentAmbientLight => AmbientLightReads?.Min(t => t.AmbientLight);

@@ -1,4 +1,4 @@
-﻿CREATE TABLE [dbo].[FarmHumidityValues]
+﻿CREATE TABLE [dbo].[HumidityValues]
 (
 	[Id] INT NOT NULL PRIMARY KEY, 
     [SensorId] INT NOT NULL,

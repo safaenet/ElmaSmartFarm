@@ -1,4 +1,4 @@
-﻿CREATE TABLE [dbo].[FarmCommuteValues]
+﻿CREATE TABLE [dbo].[CommuteValues]
 (
 	[Id] INT NOT NULL PRIMARY KEY, 
     [SensorId] INT NOT NULL,

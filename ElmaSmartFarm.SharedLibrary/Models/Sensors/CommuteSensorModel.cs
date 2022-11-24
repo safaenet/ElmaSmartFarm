@@ -3,6 +3,7 @@
     public class CommuteSensorModel
     {
         public int Id { get; set; }
+        public string Name { get; set; }
         public int Section { get; set; }
         public List<CommuteReadModel> CommuteReads { get; set; }
         public DateTime? LastStepInDate => CommuteReads?.Where(c => c.StepType == CommuteSensorStepType.StepIn).MaxBy(r => r.ReadDate)?.ReadDate;
