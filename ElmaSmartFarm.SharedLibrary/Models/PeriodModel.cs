@@ -8,6 +8,7 @@
         public DateTime? EndDate { get; set; }
         public int ElapsedDays => (DateTime.Now - StartDate).Days;
         public ChickenStatisticsModel ChickenStatistics { get; set; }
+        public FoodStatisticsModel FoodStatistics { get; set; }
         public string Descriptions { get; set; }
     }
 }

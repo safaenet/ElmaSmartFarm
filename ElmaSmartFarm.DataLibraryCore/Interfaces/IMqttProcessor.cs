@@ -1,4 +1,4 @@
-﻿using ElmaSmartFarm.SharedLibrary.DALModels;
+﻿using ElmaSmartFarm.SharedLibrary.Models;
 using System.Threading.Tasks;
 
 namespace ElmaSmartFarm.DataLibraryCore.Interfaces
