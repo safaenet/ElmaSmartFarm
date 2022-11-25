@@ -8,5 +8,6 @@
         public int? CurrentValue => Values?.MaxBy(t => t.ReadDate)?.Value;
         public DateTime? LastReadDate => Values?.MaxBy(t => t.ReadDate)?.ReadDate;
         public int Offset { get; set; }
+        public bool IsWatched { get; set; }
     }
 }
