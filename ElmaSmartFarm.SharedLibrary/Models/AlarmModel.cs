@@ -1,13 +1,12 @@
-﻿namespace ElmaSmartFarm.SharedLibrary.Models.Sensors
+﻿namespace ElmaSmartFarm.SharedLibrary.Models
 {
-    public class SensorBaseModel
+    public class AlarmModel
     {
         public int Id { get; set; }
         public int DeviceId { get; set; }
         public string Name { get; set; }
-        public string IPAddress { get; set; }
+        public AlarmDeviceType Type { get; set; }
         public bool IsEnabled { get; set; }
-        public int BatteryLevel { get; set; }
         public string Descriptions { get; set; }
     }
 }

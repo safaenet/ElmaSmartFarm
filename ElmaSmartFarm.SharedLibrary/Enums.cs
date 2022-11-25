@@ -29,6 +29,13 @@
         LongLeave
     }
 
+    public enum AlarmDeviceType
+    {
+        Light = 1,
+        SMS = 2,
+        Email = 3
+    }
+
     public enum CommuteSensorStepType
     {
         StepIn = 1,
