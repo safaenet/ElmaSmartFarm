@@ -3,56 +3,72 @@
     public enum SensorType
     {
         Temperature = 1,
-        Humidity = 2,
-        Light = 3,
-        Feed = 4,
-        PushButton = 5,
-        ElectricPower = 6
+        Humidity,
+        Light,
+        Feed,
+        PushButton,
+        ElectricPower
     }
 
     public enum EnvironmentType
     {
         Farm = 1,
-        Outside = 2,
-        Warehouse = 3
+        Outside,
+        Warehouse
     }
 
-    public enum FarmAlarmType
+    public enum FarmInPeriodErrorType
     {
-        Feed,
+        LongTimeNoFeed = 1,
         HighTemperature,
         LowTemperature,
         HighHumidity,
         LowHumidity,
-        LongBright,
-        LongDark,
-        LongLeave
+        LongTimeBright,
+        LongTimeDark,
+        HighBrightness,
+        LowBrightness,
+        LongTimeLeave,
+        NoElectricPower
+    }
+
+    public enum PoultryInPeriodErrorType
+    {
+        NoMainElectricPower = 1,
+        NoBackupPower
+    }
+
+    public enum SensorErrorType
+    {
+        LowBattery = 1,
+        NotOnline,
+        InvalidValue
     }
 
     public enum AlarmDeviceType
     {
         Light = 1,
-        SMS = 2,
-        Email = 3
+        SMS,
+        Email
     }
 
     public enum CommuteSensorStepType
     {
         StepIn = 1,
-        StepOut = 2
+        StepOut
     }
 
     public enum ButtonSensorType
     {
         FeedSensor = 1,
-        CheckupSensor = 2
+        CheckupSensor
     }
 
     public enum BinarySensorType
     {
         PoultryMainElectricPower = 1,
-        PoultryBackupElectricPower = 2,
-        FarmElectricPower = 3
+        PoultryBackupElectricPower,
+        FarmElectricPower
     }
 
     public enum BinarySensorStatus

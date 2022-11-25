@@ -8,6 +8,7 @@
         public string IPAddress { get; set; }
         public bool IsEnabled { get; set; }
         public int BatteryLevel { get; set; }
+        public List<SensorErrorType> Errors { get; set; }
         public string Descriptions { get; set; }
     }
 }

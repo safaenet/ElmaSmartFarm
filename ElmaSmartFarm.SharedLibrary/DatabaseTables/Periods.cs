@@ -5,6 +5,7 @@
         public const string Id = "Id";
         public const string Name = "Name";
         public const string FarmId = "FarmId";
+        public const string ChickenCount = "ChickenCount";
         public const string StartDate = "StartDate";
         public const string EndDate = "EndDate";
         public const string UserId = "UserId";
@@ -13,6 +14,7 @@
         public const string pId = $"@{Id}";
         public const string pName = $"@{Name}";
         public const string pFarmId = $"@{FarmId}";
+        public const string pChickenCount = $"@{ChickenCount}";
         public const string pStartDate = $"@{StartDate}";
         public const string pEndDate = $"@{EndDate}";
         public const string pUserId = $"@{UserId}";

@@ -14,7 +14,6 @@ namespace ElmaSmartFarm.SharedLibrary.Models
         public int TotalPrimaryChickenCount => Farms != null ? Farms.Sum(c => c.Period != null && c.Period.ChickenStatistics != null ? c.Period.ChickenStatistics.ChickenPrimaryCount : 0) : 0;
         public int TotalAliveChickenCount => Farms != null ? Farms.Sum(c => c.Period != null && c.Period.ChickenStatistics != null ? c.Period.ChickenStatistics.TotalAliveCount : 0) : 0;
         public int TotalLostChickenCount => Farms != null ? Farms.Sum(c => c.Period != null && c.Period.ChickenStatistics != null ? c.Period.ChickenStatistics.TotalLossCount : 0) : 0;
-        public bool HasAlarm => Farms != null && Farms.Any(f => f.HasAlarm);
         public bool IsInPeriod => Farms != null && Farms.Any(f => f.Period != null && f.Period.EndDate != null);
         public bool IsEnabled { get; set; }
     }
