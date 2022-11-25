@@ -1,8 +1,8 @@
 ﻿namespace ElmaSmartFarm.SharedLibrary.Models.Sensors
 {
-    public class PushButtonSensorModel : SensorBaseModel
+    public class PushButtonSensorModel : SensorModel
     {
-        public List<DateTime> ButtonReads { get; set; }
-        public DateTime? LastReadDate => ButtonReads?.Max();
+        public List<DateTime> Values { get; set; }
+        public DateTime? LastReadDate => Values?.Max();
     }
 }

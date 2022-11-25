@@ -64,24 +64,18 @@
   <ItemGroup>
     <Build Include="Tables\Farms.sql" />
     <Build Include="Tables\Poultries.sql" />
-    <Build Include="Tables\Sensors\FarmAmbientLightSensors.sql" />
-    <Build Include="Tables\Sensors\FarmCheckupSensors.sql" />
-    <Build Include="Tables\Sensors\FarmFeedSensors.sql" />
-    <Build Include="Tables\Sensors\FarmHumiditySensors.sql" />
-    <Build Include="Tables\Sensors\FarmTemperatureSensors.sql" />
+    <Build Include="Tables\Sensors\AmbientLightSensorDetails.sql" />
+    <Build Include="Tables\Sensors\HumiditySensorDetails.sql" />
+    <Build Include="Tables\Sensors\TemperatureSensorDetails.sql" />
     <Build Include="Tables\Periods.sql" />
     <Build Include="Tables\ChickenLosses.sql" />
     <Build Include="Tables\FoodStatistics.sql" />
-    <Build Include="Tables\Sensors\FarmCommuteSensors.sql" />
-    <Build Include="Tables\Sensors\OutdoorTemperatureSensors.sql" />
-    <Build Include="Tables\Sensors\OutdoorHumiditySensors.sql" />
     <Build Include="Tables\Sensors\Values\BinarySensorValues.sql" />
     <Build Include="Tables\Sensors\Values\AmbientLightValues.sql" />
     <Build Include="Tables\Sensors\Values\CommuteValues.sql" />
     <Build Include="Tables\Sensors\Values\HumidityValues.sql" />
     <Build Include="Tables\Sensors\Values\TemperatureValues.sql" />
     <Build Include="Tables\Sensors\Values\PushButtonSensorValues.sql" />
-    <Build Include="Tables\Sensors\BinarySensors.sql" />
     <Build Include="Tables\Sensors\Sensors.sql" />
   </ItemGroup>
   <ItemGroup>

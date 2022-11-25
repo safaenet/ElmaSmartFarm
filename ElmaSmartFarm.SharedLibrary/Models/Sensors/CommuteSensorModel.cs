@@ -1,14 +1,10 @@
-﻿using ElmaSmartFarm.SharedLibrary.Models.Sensors.ReadModels;
-
-namespace ElmaSmartFarm.SharedLibrary.Models.Sensors
+﻿namespace ElmaSmartFarm.SharedLibrary.Models.Sensors
 {
-    public class CommuteSensorModel : SensorBaseModel
+    public class CommuteSensorModel : SensorModel
     {
-        public int Section { get; set; }
-        public List<CommuteReadModel> CommuteReads { get; set; }
-        public DateTime? LastStepInDate => CommuteReads?.Where(c => c.StepType == CommuteSensorStepType.StepIn).MaxBy(r => r.ReadDate)?.ReadDate;
-        public DateTime? LastStepOutDate => CommuteReads?.Where(c => c.StepType == CommuteSensorStepType.StepOut).MaxBy(r => r.ReadDate)?.ReadDate;
-        public CommuteReadModel LastRead => CommuteReads?.MaxBy(r => r.ReadDate);
-        public DateTime? LastReadDate => CommuteReads?.MaxBy(t => t.ReadDate)?.ReadDate;
+        public List<SensorReadModel<CommuteSensorValueType>> Values { get; set; }
+        public DateTime? LastStepInDate => Values?.Where(c => c.Value == CommuteSensorValueType.StepIn).MaxBy(r => r.ReadDate)?.ReadDate;
+        public DateTime? LastStepOutDate => Values?.Where(c => c.Value == CommuteSensorValueType.StepOut).MaxBy(r => r.ReadDate)?.ReadDate;
+        public SensorReadModel<CommuteSensorValueType> LastRead => Values?.MaxBy(r => r.ReadDate);
     }
 }

@@ -1,14 +1,12 @@
-﻿using ElmaSmartFarm.SharedLibrary.Models.Sensors.ReadModels;
-
-namespace ElmaSmartFarm.SharedLibrary.Models.Sensors
+﻿namespace ElmaSmartFarm.SharedLibrary.Models.Sensors
 {
-    public class AmbientLightSensorModel : SensorBaseModel
+    public class AmbientLightSensorModel : SensorModel
     {
-        public int Section { get; set; }
-        public List<AmbientLightReadModel> AmbientLightReads { get; set; }
-        public int? MinimumRecentAmbientLight => AmbientLightReads?.Min(t => t.AmbientLight);
-        public int? MaximumRecentAmbientLight => AmbientLightReads?.Max(t => t.AmbientLight);
-        public int? CurrentAmbientLight => AmbientLightReads?.MaxBy(t => t.ReadDate)?.AmbientLight;
-        public DateTime? LastReadDate => AmbientLightReads?.MaxBy(t => t.ReadDate)?.ReadDate;
+        public List<SensorReadModel<int>> Values { get; set; }
+        public int? MinimumRecentValue => Values?.Min(t => t.Value);
+        public int? MaximumRecentValue => Values?.Max(t => t.Value);
+        public int? CurrentValue => Values?.MaxBy(t => t.ReadDate)?.Value;
+        public DateTime? LastReadDate => Values?.MaxBy(t => t.ReadDate)?.ReadDate;
+        public int Offset { get; set; }
     }
 }

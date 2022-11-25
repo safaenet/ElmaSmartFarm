@@ -98,4 +98,11 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="FarmId" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="7a019095-c1ad-4ed8-aa66-7c3f252d4c77" ChangeDateTime="11/25/2022 16:37:38">
+    <Property Name="ElementName" Value="[dbo].[CommuteValues].[IsStepIn]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[CommuteValues]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="StepType" />
+  </Operation>
 </Operations>

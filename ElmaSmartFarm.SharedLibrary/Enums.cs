@@ -2,12 +2,15 @@
 {
     public enum SensorType
     {
-        Temperature = 1,
-        Humidity,
-        Light,
-        Feed,
-        PushButton,
-        ElectricPower
+        FarmTemperature = 1,
+        FarmHumidity,
+        FarmAmbientLight,
+        FarmFeed,
+        FarmCommute,
+        FarmCheckup,
+        FarmElectricPower,
+        PoultryMainElectricPower,
+        PoultryBackupElectricPower
     }
 
     public enum EnvironmentType
@@ -52,26 +55,13 @@
         Email
     }
 
-    public enum CommuteSensorStepType
+    public enum CommuteSensorValueType
     {
         StepIn = 1,
         StepOut
     }
 
-    public enum ButtonSensorType
-    {
-        FeedSensor = 1,
-        CheckupSensor
-    }
-
-    public enum BinarySensorType
-    {
-        PoultryMainElectricPower = 1,
-        PoultryBackupElectricPower,
-        FarmElectricPower
-    }
-
-    public enum BinarySensorStatus
+    public enum BinarySensorValueType
     {
         Off = 0,
         On = 1

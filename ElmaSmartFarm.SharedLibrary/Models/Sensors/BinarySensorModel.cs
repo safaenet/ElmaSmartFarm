@@ -1,12 +1,9 @@
-﻿using ElmaSmartFarm.SharedLibrary.Models.Sensors.ReadModels;
-
-namespace ElmaSmartFarm.SharedLibrary.Models.Sensors
+﻿namespace ElmaSmartFarm.SharedLibrary.Models.Sensors
 {
-    public class BinarySensorModel : SensorBaseModel
+    public class BinarySensorModel : SensorModel
     {
-        public BinarySensorType Type { get; set; }
-        public List<BinarySensorReadModel> BinaryReads { get; set; }
-        public bool? CurrentStatus => BinaryReads?.MaxBy(t => t.ReadDate)?.Status;
-        public DateTime? LastReadDate => BinaryReads?.MaxBy(t => t.ReadDate)?.ReadDate;
+        public List<SensorReadModel<BinarySensorValueType>> Values { get; set; }
+        public BinarySensorValueType? CurrentValue => Values?.MaxBy(t => t.ReadDate)?.Value;
+        public DateTime? LastReadDate => Values?.MaxBy(t => t.ReadDate)?.ReadDate;
     }
 }

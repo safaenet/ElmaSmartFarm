@@ -1,15 +1,12 @@
-﻿using ElmaSmartFarm.SharedLibrary.Models.Sensors.ReadModels;
-
-namespace ElmaSmartFarm.SharedLibrary.Models.Sensors
+﻿namespace ElmaSmartFarm.SharedLibrary.Models.Sensors
 {
-    public class HumiditySensorModel : SensorBaseModel
+    public class HumiditySensorModel : SensorModel
     {
-        public int Section { get; set; }
-        public List<HumidityReadModel> HumidityReads { get; set; }
-        public int? MinimumRecentHumidity => HumidityReads?.Min(t => t.Humidity);
-        public int? MaximumRecentHumidity => HumidityReads?.Max(t => t.Humidity);
-        public int? CurrentHumidity => HumidityReads?.MaxBy(t => t.ReadDate)?.Humidity;
-        public DateTime? LastReadDate => HumidityReads?.MaxBy(t => t.ReadDate)?.ReadDate;
+        public List<SensorReadModel<int>> Values { get; set; }
+        public int? MinimumRecentValue => Values?.Min(t => t.Value);
+        public int? MaximumRecentValue => Values?.Max(t => t.Value);
+        public int? CurrentValue => Values?.MaxBy(t => t.ReadDate)?.Value;
+        public DateTime? LastReadDate => Values?.MaxBy(t => t.ReadDate)?.ReadDate;
         public int Offset { get; set; }
     }
 }
