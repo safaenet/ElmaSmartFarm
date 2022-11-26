@@ -105,4 +105,11 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="StepType" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="cb7937f5-12d1-46e6-92cf-d67ea56a82f6" ChangeDateTime="11/26/2022 20:40:04">
+    <Property Name="ElementName" Value="[dbo].[SensorsInPeriods].[WatchStartDay]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[SensorsInPeriods]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="WatchStartDate" />
+  </Operation>
 </Operations>

@@ -4,5 +4,5 @@
     [PeriodId] INT NOT NULL, 
     [LocationId] INT NOT NULL,
     [Section] TINYINT NOT NULL,
-    [WatchStartDay] TINYINT NOT NULL
+    [WatchStartDate] DATETIME NOT NULL
 )
