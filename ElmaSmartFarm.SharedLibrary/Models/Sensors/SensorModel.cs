@@ -10,7 +10,8 @@
         public string IPAddress { get; set; }
         public bool IsEnabled { get; set; }
         public int BatteryLevel { get; set; }
-        public List<SensorErrorType> Errors { get; set; }
+        public List<SesnorErrorModel> Errors { get; set; }
+        public bool HasError => IsEnabled && Errors != null && Errors.Count > 0 && Errors.Any(e => e.DateErased == null);
         public string Descriptions { get; set; }
     }
 }

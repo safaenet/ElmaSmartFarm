@@ -16,6 +16,7 @@ namespace ElmaSmartFarm.SharedLibrary.Models
         public PeriodModel Period { get; set; }
         public bool IsInPeriod => Period != null && Period.EndDate != null;
         public bool IsEnabled { get; set; }
+        public bool HasSensorError => IsEnabled && ((Temperature != null && Temperature.HasError) || (Humidity != null && Humidity.HasError) || (AmbientLight != null && AmbientLight.HasError) || (Commute != null && Commute.HasError) || (CheckupSensor != null && CheckupSensor.HasError) || (FeedSensor != null && FeedSensor.HasError) || (ElectricPower != null && ElectricPower.HasError));
         public string Descriptions { get; set; }
     }
 }

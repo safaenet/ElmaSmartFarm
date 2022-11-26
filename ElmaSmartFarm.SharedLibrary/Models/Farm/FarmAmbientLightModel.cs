@@ -4,12 +4,13 @@ namespace ElmaSmartFarm.SharedLibrary.Models
 {
     public class FarmAmbientLightModel
     {
-        public List<AmbientLightSensorModel> AmbientLightSensors { get; set; }
-        public bool HasAmbientLightSensors => AmbientLightSensors != null && AmbientLightSensors.Any(t => t.IsEnabled);
-        public int? MinimumAmbientLight => AmbientLightSensors?.Where(s => s.IsEnabled)?.Min(t => t.CurrentValue);
-        public int? MaximumAmbientLight => AmbientLightSensors?.Where(s => s.IsEnabled)?.Max(t => t.CurrentValue);
-        public double? AverageTemperature => AmbientLightSensors?.Where(s => s.IsEnabled)?.Average(t => t.CurrentValue);
-        public SensorSection? MinimumAmbientLightSection => AmbientLightSensors?.Where(s => s.IsEnabled)?.MinBy(t => t.CurrentValue).Section;
-        public SensorSection? MaximumAmbientLightSection => AmbientLightSensors?.Where(s => s.IsEnabled)?.MaxBy(t => t.CurrentValue).Section;
+        public List<AmbientLightSensorModel> Sensors { get; set; }
+        public bool HasSensors => Sensors != null && Sensors.Any(t => t.IsEnabled);
+        public int? MinimumValue => Sensors?.Where(s => s.IsEnabled)?.Min(t => t.CurrentValue);
+        public int? MaximumValue => Sensors?.Where(s => s.IsEnabled)?.Max(t => t.CurrentValue);
+        public double? AverageValue => Sensors?.Where(s => s.IsEnabled)?.Average(t => t.CurrentValue);
+        public SensorSection? MinimumValueSection => Sensors?.Where(s => s.IsEnabled)?.MinBy(t => t.CurrentValue).Section;
+        public SensorSection? MaximumValueSection => Sensors?.Where(s => s.IsEnabled)?.MaxBy(t => t.CurrentValue).Section;
+        public bool HasError => HasSensors && Sensors.Any(s => s.HasError);
     }
 }
