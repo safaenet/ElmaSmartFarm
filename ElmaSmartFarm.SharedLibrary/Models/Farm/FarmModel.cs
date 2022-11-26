@@ -1,22 +1,20 @@
-﻿using ElmaSmartFarm.SharedLibrary.Models.Sensors;
-
-namespace ElmaSmartFarm.SharedLibrary.Models
+﻿namespace ElmaSmartFarm.SharedLibrary.Models
 {
     public class FarmModel
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public FarmTemperatureModel Temperature { get; set; }
-        public FarmHumidityModel Humidity { get; set; }
-        public FarmAmbientLightModel AmbientLight { get; set; }
-        public FarmCommuteModel Commute { get; set; }
-        public PushButtonSensorModel CheckupSensor { get; set; }
-        public PushButtonSensorModel FeedSensor { get; set; }
-        public BinarySensorModel ElectricPower { get; set; }
+        public TemperatureSensorSetModel Temperatures { get; set; }
+        public HumiditySensorSetModel Humidities { get; set; }
+        public AmbientLightSensorSetModel AmbientLights { get; set; }
+        public CommuteSensorSetModel Commutes { get; set; }
+        public PushButtonSensorSetModel Checkups { get; set; }
+        public PushButtonSensorSetModel Feeds { get; set; }
+        public BinarySensorSetModel ElectricPowers { get; set; }
         public PeriodModel Period { get; set; }
         public bool IsInPeriod => Period != null && Period.EndDate != null;
         public bool IsEnabled { get; set; }
-        public bool HasSensorError => IsEnabled && ((Temperature != null && Temperature.HasError) || (Humidity != null && Humidity.HasError) || (AmbientLight != null && AmbientLight.HasError) || (Commute != null && Commute.HasError) || (CheckupSensor != null && CheckupSensor.HasError) || (FeedSensor != null && FeedSensor.HasError) || (ElectricPower != null && ElectricPower.HasError));
+        public bool HasSensorError => IsEnabled && ((Temperatures != null && Temperatures.HasError) || (Humidities != null && Humidities.HasError) || (AmbientLights != null && AmbientLights.HasError) || (Commutes != null && Commutes.HasError) || (Checkups != null && Checkups.HasError) || (Feeds != null && Feeds.HasError) || (ElectricPowers != null && ElectricPowers.HasError));
         public string Descriptions { get; set; }
     }
 }

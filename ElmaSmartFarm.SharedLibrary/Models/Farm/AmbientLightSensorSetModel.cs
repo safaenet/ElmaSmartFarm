@@ -2,9 +2,9 @@
 
 namespace ElmaSmartFarm.SharedLibrary.Models
 {
-    public class FarmHumidityModel
+    public class AmbientLightSensorSetModel
     {
-        public List<HumiditySensorModel> Sensors { get; set; }
+        public List<AmbientLightSensorModel> Sensors { get; set; }
         public bool HasSensors => Sensors != null && Sensors.Any(t => t.IsEnabled);
         public int? MinimumValue => Sensors?.Where(s => s.IsEnabled)?.Min(t => t.CurrentValue);
         public int? MaximumValue => Sensors?.Where(s => s.IsEnabled)?.Max(t => t.CurrentValue);

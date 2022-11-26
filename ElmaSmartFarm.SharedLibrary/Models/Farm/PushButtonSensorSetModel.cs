@@ -2,9 +2,9 @@
 
 namespace ElmaSmartFarm.SharedLibrary.Models
 {
-    public class FarmCommuteModel
+    public class PushButtonSensorSetModel
     {
-        public List<CommuteSensorModel> Sensors { get; set; }
+        public List<PushButtonSensorModel> Sensors { get; set; }
         public bool HasSensors => Sensors != null && Sensors.Any(t => t.IsEnabled);
         public bool HasError => HasSensors && Sensors.Any(s => s.HasError);
     }
