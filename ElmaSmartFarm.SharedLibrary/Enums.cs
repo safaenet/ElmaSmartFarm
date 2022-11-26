@@ -15,10 +15,10 @@
         OutdoorHumidity
     }
 
-    public enum EnvironmentType
+    public enum LocationType
     {
-        Indoor = 1,
-        Outdoor
+        Poultry = 1,
+        Farm
     }
 
     public enum FarmInPeriodErrorType

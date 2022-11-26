@@ -3,7 +3,7 @@
     public class SensorModel
     {
         public int Id { get; set; }
-        public int LocationId { get; set; }
+        public int LocationId { get; set; } //FarmId or PoultryId
         public SensorSection Section { get; set; }
         public SensorType Type { get; set; }
         public string Name { get; set; }
