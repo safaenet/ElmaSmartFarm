@@ -9,7 +9,7 @@ namespace ElmaSmartFarm.SharedLibrary.Models
         public double? MinimumTemperature => TemperatureSensors?.Where(s => s.IsEnabled)?.Min(t => t.CurrentValue);
         public double? MaximumTemperature => TemperatureSensors?.Where(s => s.IsEnabled)?.Max(t => t.CurrentValue);
         public double? AverageTemperature => TemperatureSensors?.Where(s => s.IsEnabled)?.Average(t => t.CurrentValue);
-        public int? MinimumTemperatureSection => TemperatureSensors?.Where(s => s.IsEnabled)?.MinBy(t => t.CurrentValue).Section;
-        public int? MaximumTemperatureSection => TemperatureSensors?.Where(s => s.IsEnabled)?.MaxBy(t => t.CurrentValue).Section;
+        public SensorSection? MinimumTemperatureSection => TemperatureSensors?.Where(s => s.IsEnabled)?.MinBy(t => t.CurrentValue).Section;
+        public SensorSection? MaximumTemperatureSection => TemperatureSensors?.Where(s => s.IsEnabled)?.MaxBy(t => t.CurrentValue).Section;
     }
 }

@@ -10,14 +10,15 @@
         FarmCheckup,
         FarmElectricPower,
         PoultryMainElectricPower,
-        PoultryBackupElectricPower
+        PoultryBackupElectricPower,
+        OutdoorTemperature,
+        OutdoorHumidity
     }
 
     public enum EnvironmentType
     {
-        Farm = 1,
-        Outside,
-        Warehouse
+        Indoor = 1,
+        Outdoor
     }
 
     public enum FarmInPeriodErrorType
@@ -65,5 +66,19 @@
     {
         Off = 0,
         On = 1
+    }
+
+    public enum SensorSection
+    {
+        FarmLeftTop = 11,
+        FarmLeftMiddle = 12,
+        FarmLeftBottom = 13,
+        FarmMiddleTop = 21,
+        FarmMiddleMiddle = 22,
+        FarmMiddleBottom = 23,
+        FarmRightTop = 31,
+        FarmRightMiddle = 32,
+        FarmRightBottom = 33,        
+        Outdoor = 34
     }
 }
