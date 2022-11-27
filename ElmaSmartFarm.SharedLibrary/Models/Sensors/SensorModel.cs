@@ -9,9 +9,9 @@
         public string Name { get; set; }
         public string IPAddress { get; set; }
         public bool IsEnabled { get; set; }
-        public int KeepAliveInterval { get; set; } //In Seconds. If 0 : Disabled.
         public bool IsInPeriod { get; set; }
         public int BatteryLevel { get; set; }
+        public DateTime? KeepAliveMessageDate { get; set; }
         public List<SesnorErrorModel> Errors { get; set; }
         public bool HasError => IsEnabled && Errors != null && Errors.Count > 0 && Errors.Any(e => e.DateErased == null);
         public string Descriptions { get; set; }
