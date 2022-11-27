@@ -60,6 +60,7 @@
     <Folder Include="Tables\Sensors" />
     <Folder Include="Tables\Sensors\Values" />
     <Folder Include="Tables\Periods" />
+    <Folder Include="Tables\Logs" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Farms.sql" />
@@ -80,6 +81,7 @@
     <Build Include="Tables\Periods\Periods.sql" />
     <Build Include="Tables\Periods\SensorsInPeriods.sql" />
     <Build Include="Tables\Alarms.sql" />
+    <Build Include="Tables\Logs\SensorErrorLogs.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="ElmaSmartFarm.Database.refactorlog" />
