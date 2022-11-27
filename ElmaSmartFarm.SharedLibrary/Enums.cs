@@ -45,7 +45,7 @@
     public enum SensorErrorType
     {
         LowBattery = 1,
-        NotOnline,
+        NotAlive,
         InvalidValue
     }
 

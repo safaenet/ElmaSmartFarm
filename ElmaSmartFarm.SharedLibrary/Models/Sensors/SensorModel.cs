@@ -9,6 +9,8 @@
         public string Name { get; set; }
         public string IPAddress { get; set; }
         public bool IsEnabled { get; set; }
+        public int KeepAliveInterval { get; set; } //In Seconds. If 0 : Disabled.
+        public int CurrentValueExpire { get; set; } //In Seconds.
         public bool IsInPeriod { get; set; }
         public int BatteryLevel { get; set; }
         public List<SesnorErrorModel> Errors { get; set; }

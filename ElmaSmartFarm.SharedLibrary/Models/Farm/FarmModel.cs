@@ -12,9 +12,11 @@
         public PushButtonSensorSetModel Feeds { get; set; }
         public BinarySensorSetModel ElectricPowers { get; set; }
         public PeriodModel Period { get; set; }
-        public bool IsInPeriod => Period != null && Period.EndDate != null;
         public bool IsEnabled { get; set; }
+        public bool IsInPeriod => IsEnabled && Period != null && Period.EndDate != null;
         public bool HasSensorError => IsEnabled && ((Temperatures != null && Temperatures.HasError) || (Humidities != null && Humidities.HasError) || (AmbientLights != null && AmbientLights.HasError) || (Commutes != null && Commutes.HasError) || (Checkups != null && Checkups.HasError) || (Feeds != null && Feeds.HasError) || (ElectricPowers != null && ElectricPowers.HasError));
+        public bool HasSensorAlarm => IsEnabled && ((Temperatures != null && Temperatures.HasAlarm) || (Humidities != null && Humidities.HasAlarm) || (AmbientLights != null && AmbientLights.HasAlarm) || (Commutes != null && Commutes.HasAlarm) || (Checkups != null && Checkups.HasAlarm) || (Feeds != null && Feeds.HasAlarm));
+        public bool HasSensorIssue => HasSensorError || HasSensorAlarm;
         public string Descriptions { get; set; }
     }
 }

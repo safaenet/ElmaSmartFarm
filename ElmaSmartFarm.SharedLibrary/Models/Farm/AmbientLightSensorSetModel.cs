@@ -12,5 +12,7 @@ namespace ElmaSmartFarm.SharedLibrary.Models
         public SensorSection? MinimumValueSection => Sensors?.Where(s => s.IsEnabled)?.MinBy(t => t.CurrentValue).Section;
         public SensorSection? MaximumValueSection => Sensors?.Where(s => s.IsEnabled)?.MaxBy(t => t.CurrentValue).Section;
         public bool HasError => HasSensors && Sensors.Any(s => s.HasError);
+        public bool HasAlarm => HasSensors && Sensors.Any(s => s.HasAlarm);
+        public bool HasIssue => HasSensors && Sensors.Any(s => s.HasIssue);
     }
 }
