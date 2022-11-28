@@ -14,6 +14,7 @@
         public PeriodModel Period { get; set; }
         public bool IsEnabled { get; set; }
         public bool IsInPeriod => IsEnabled && Period != null && Period.EndDate != null;
+        public List<FarmInPeriodErrorModel> InPeriodErrors { get; set; }
         public bool HasSensorError => IsEnabled && ((Temperatures != null && Temperatures.HasError) || (Humidities != null && Humidities.HasError) || (AmbientLights != null && AmbientLights.HasError) || (Commutes != null && Commutes.HasError) || (Checkups != null && Checkups.HasError) || (Feeds != null && Feeds.HasError) || (ElectricPowers != null && ElectricPowers.HasError));
         public string Descriptions { get; set; }
     }

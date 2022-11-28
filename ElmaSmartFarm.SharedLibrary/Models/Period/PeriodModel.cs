@@ -10,7 +10,6 @@
         public int? Duration => EndDate == null ? null : (EndDate - StartDate).Value.Days;
         public ChickenStatisticsModel ChickenStatistics { get; set; }
         public FoodStatisticsModel FoodStatistics { get; set; }
-        public PeriodErrorModel Errors { get; set; }
         public string Descriptions { get; set; }
     }
 }
