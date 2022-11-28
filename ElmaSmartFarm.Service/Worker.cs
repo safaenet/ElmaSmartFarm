@@ -27,6 +27,7 @@ namespace ElmaSmartFarm.Service
         private string mqtt_password;
         private int retry_seconds;
         private string sensor_topic;
+        private List<PoultryModel> Poultries;
 
         public override async Task<Task> StartAsync(CancellationToken cancellationToken)
         {

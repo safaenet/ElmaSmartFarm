@@ -3,7 +3,10 @@
     public class FarmModel
     {
         public int Id { get; set; }
+        public int PoultryId { get; set; }
         public string Name { get; set; }
+        public int FarmNumber { get; set; }
+        public int MaxCapacity { get; set; }
         public TemperatureSensorSetModel Temperatures { get; set; }
         public HumiditySensorSetModel Humidities { get; set; }
         public AmbientLightSensorSetModel AmbientLights { get; set; }

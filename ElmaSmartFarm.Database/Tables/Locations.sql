@@ -1,4 +1,4 @@
-﻿CREATE TABLE [dbo].[Poultries]
+﻿CREATE TABLE [dbo].[Locations]
 (
 	[Id] INT NOT NULL PRIMARY KEY, 
     [Name] NVARCHAR(200) NULL,

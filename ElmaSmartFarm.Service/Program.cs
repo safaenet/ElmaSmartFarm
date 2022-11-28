@@ -9,7 +9,6 @@ using System.Text;
 
 namespace ElmaSmartFarm.Service
 {
-
     public class Program
     {
         public static async Task Main(string[] args)
