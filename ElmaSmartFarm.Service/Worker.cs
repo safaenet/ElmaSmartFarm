@@ -1,6 +1,6 @@
 using ElmaSmartFarm.DataLibraryCore.Interfaces;
 using ElmaSmartFarm.SharedLibrary.Config;
-using ElmaSmartFarm.SharedLibrary.DALModels;
+using ElmaSmartFarm.SharedLibrary.Models;
 using MQTTnet;
 using MQTTnet.Client;
 using System.Text;

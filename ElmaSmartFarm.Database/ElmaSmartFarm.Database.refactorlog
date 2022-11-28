@@ -112,4 +112,11 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="WatchStartDate" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="53ac2f1d-010b-4653-b3bf-9ec17537e712" ChangeDateTime="11/28/2022 10:49:50">
+    <Property Name="ElementName" Value="[dbo].[CK_Contacts_Column]" />
+    <Property Name="ElementType" Value="SqlCheckConstraint" />
+    <Property Name="ParentElementName" Value="[dbo].[Contacts]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="[CK_Contacts_PhoneOrEmail]" />
+  </Operation>
 </Operations>

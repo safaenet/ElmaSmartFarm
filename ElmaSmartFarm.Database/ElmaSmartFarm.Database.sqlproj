@@ -82,6 +82,7 @@
     <Build Include="Tables\Periods\SensorsInPeriods.sql" />
     <Build Include="Tables\Alarms.sql" />
     <Build Include="Tables\Logs\SensorErrorLogs.sql" />
+    <Build Include="Tables\Contacts.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="ElmaSmartFarm.Database.refactorlog" />
