@@ -4,7 +4,7 @@ namespace ElmaSmartFarm.SharedLibrary.Models
 {
     public class AmbientLightSensorSetModel
     {
-        public List<AmbientLightSensorModel> Sensors { get; set; }
+        public IEnumerable<AmbientLightSensorModel> Sensors { get; set; }
         public bool HasSensors => Sensors != null && Sensors.Any(t => t.IsEnabled);
         public int? MinimumValue => Sensors?.Where(s => s.IsEnabled)?.Min(t => t.LastValue)?.Value;
         public int? MaximumValue => Sensors?.Where(s => s.IsEnabled)?.Max(t => t.LastValue)?.Value;

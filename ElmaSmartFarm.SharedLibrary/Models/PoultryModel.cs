@@ -6,7 +6,7 @@ namespace ElmaSmartFarm.SharedLibrary.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public List<FarmModel> Farms { get; set; }
+        public IEnumerable<FarmModel> Farms { get; set; }
         public TemperatureSensorModel OutdoorTemperature { get; set; }
         public HumiditySensorModel OutdoorHumidity { get; set; }
         public BinarySensorModel MainElectricPower { get; set; }
@@ -15,7 +15,7 @@ namespace ElmaSmartFarm.SharedLibrary.Models
         public int TotalAliveChickenCount => Farms != null ? Farms.Sum(c => c.Period != null && c.Period.ChickenStatistics != null ? c.Period.ChickenStatistics.TotalAliveCount : 0) : 0;
         public int TotalLostChickenCount => Farms != null ? Farms.Sum(c => c.Period != null && c.Period.ChickenStatistics != null ? c.Period.ChickenStatistics.TotalLossCount : 0) : 0;
         public bool IsInPeriod => Farms != null && Farms.Any(f => f.Period != null && f.Period.EndDate != null);
-        public List<PoultryInPeriodErrorModel> InPeriodErrors { get; set; }
+        public IEnumerable<PoultryInPeriodErrorModel> InPeriodErrors { get; set; }
         public bool IsEnabled { get; set; }
     }
 }

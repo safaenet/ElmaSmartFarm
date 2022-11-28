@@ -12,8 +12,8 @@
         public bool IsInPeriod { get; set; }
         public int BatteryLevel { get; set; }
         public DateTime? KeepAliveMessageDate { get; set; }
-        public List<SesnorErrorModel> Errors { get; set; }
-        public bool HasError => IsEnabled && Errors != null && Errors.Count > 0 && Errors.Any(e => e.DateErased == null);
+        public IEnumerable<SesnorErrorModel> Errors { get; set; }
+        public bool HasError => IsEnabled && Errors != null && Errors.Any(e => e.DateErased == null);
         public string Descriptions { get; set; }
     }
 }

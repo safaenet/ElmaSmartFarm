@@ -77,12 +77,14 @@
     <Build Include="Tables\Sensors\Sensors.sql" />
     <Build Include="Tables\Sensors\SensorDetails.sql" />
     <Build Include="Tables\Periods\ChickenLosses.sql" />
-    <Build Include="Tables\Periods\FoodStatistics.sql" />
+    <Build Include="Tables\Periods\Feeds.sql" />
     <Build Include="Tables\Periods\Periods.sql" />
     <Build Include="Tables\Periods\SensorsInPeriods.sql" />
     <Build Include="Tables\Alarms.sql" />
     <Build Include="Tables\Logs\SensorErrorLogs.sql" />
     <Build Include="Tables\Contacts.sql" />
+    <Build Include="Tables\Logs\FarmInPeriodErrorLogs.sql" />
+    <Build Include="Tables\Logs\PoultryInPeriodErrorLogs.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="ElmaSmartFarm.Database.refactorlog" />

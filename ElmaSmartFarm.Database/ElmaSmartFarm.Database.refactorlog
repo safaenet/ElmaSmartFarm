@@ -119,4 +119,11 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="[CK_Contacts_PhoneOrEmail]" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="eebe9789-c293-44f2-ac1b-9c3d6d066b47" ChangeDateTime="11/28/2022 20:42:02">
+    <Property Name="ElementName" Value="[dbo].[Periods].[ChickenCount]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Periods]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="ChickenPrimaryCount" />
+  </Operation>
 </Operations>

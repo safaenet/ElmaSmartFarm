@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using ElmaSmartFarm.SharedLibrary.Config;
 using System.Collections.Generic;
 using ElmaSmartFarm.DataLibraryCore.Interfaces;
+using static Dapper.SqlMapper;
 
 namespace ElmaSmartFarm.DataLibraryCore.SqlServer
 {
@@ -39,6 +40,12 @@ namespace ElmaSmartFarm.DataLibraryCore.SqlServer
         {
             using IDbConnection conn = new SqlConnection(GetConnectionString());
             return await conn.QueryAsync<T>(sql, param);
+        }
+
+        public async Task<GridReader> LoadMultipleDataAsync<T>(string sql, T param)
+        {
+            using IDbConnection conn = new SqlConnection(GetConnectionString());
+            return await conn.QueryMultipleAsync(sql, param);
         }
 
         public async Task<int> SaveDataAsync<T>(string sql, T data)

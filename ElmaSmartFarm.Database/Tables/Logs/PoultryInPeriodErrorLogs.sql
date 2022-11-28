@@ -1,0 +1,10 @@
+﻿CREATE TABLE [dbo].[PoultryInPeriodErrorLogs]
+(
+	[Id] INT NOT NULL PRIMARY KEY, 
+    [PoultryId] INT NOT NULL, 
+    [PeriodId] INT NOT NULL, 
+    [ErrorType] TINYINT NOT NULL,
+    [DateHappened] DATETIME NOT NULL, 
+    [DateErased] DATETIME NULL, 
+    [Descriptions] NVARCHAR(200) NULL
+)

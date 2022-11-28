@@ -2,7 +2,7 @@
 {
     public class PushButtonSensorModel : SensorModel
     {
-        public List<DateTime> PushedDates { get; set; }
+        public IEnumerable<DateTime> PushedDates { get; set; }
         public DateTime? LastPushedDate => PushedDates?.Max();
     }
 }

@@ -3,7 +3,7 @@
 	[Id] INT NOT NULL PRIMARY KEY, 
     [Name] NVARCHAR(200) NULL,
     [FarmId] INT NOT NULL, 
-    [ChickenCount] INT NOT NULL, 
+    [ChickenPrimaryCount] INT NOT NULL, 
     [StartDate] DATETIME NOT NULL, 
     [EndDate] DATETIME NULL, 
     [UserId] INT NULL,
