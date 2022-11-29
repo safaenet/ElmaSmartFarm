@@ -21,6 +21,7 @@ namespace ElmaSmartFarm.Service
         private IMqttClient mqttClient;
         private MqttClientOptions options;
         private List<PoultryModel> poultries;
+        private List<FarmModel> farms;
 
         public override async Task<Task> StartAsync(CancellationToken cancellationToken)
         {
@@ -39,6 +40,7 @@ namespace ElmaSmartFarm.Service
             await TryReconnectAsync();
 
             poultries = await DbProcessor.LoadPoultries();
+            farms = ((from p in poultries select p.Farms) as List<FarmModel>) ?? new();
             return base.StartAsync(cancellationToken);
         }
 
