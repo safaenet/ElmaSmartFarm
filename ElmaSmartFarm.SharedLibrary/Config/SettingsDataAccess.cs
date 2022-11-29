@@ -16,17 +16,7 @@ namespace ElmaSmartFarm.SharedLibrary.Config
             IConfiguration conf;
             var builder = new ConfigurationBuilder()
                 .SetBasePath(absolutePath)
-                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
-            conf = builder.Build();
-            return conf;
-        }
-
-        public static IConfiguration SystemConfiguration()
-        {
-            var absolutePath = Path.GetFullPath(relativePath);
-            IConfiguration conf;
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(absolutePath)
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .AddJsonFile("syssettings.json", optional: false, reloadOnChange: true);
             conf = builder.Build();
             return conf;

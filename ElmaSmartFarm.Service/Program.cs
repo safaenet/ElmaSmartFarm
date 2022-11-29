@@ -18,6 +18,7 @@ namespace ElmaSmartFarm.Service
                 .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
                 .Enrich.FromLogContext()
                 .WriteTo.File(@"log\LogFile.txt")
+                .WriteTo.Console()
                 .CreateLogger();
 
             try

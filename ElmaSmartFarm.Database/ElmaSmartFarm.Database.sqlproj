@@ -89,4 +89,7 @@
   <ItemGroup>
     <RefactorLog Include="ElmaSmartFarm.Database.refactorlog" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="ElmaSmartFarm.Database.publish.xml" />
+  </ItemGroup>
 </Project>

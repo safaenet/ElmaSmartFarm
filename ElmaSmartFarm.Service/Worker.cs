@@ -3,20 +3,19 @@ using ElmaSmartFarm.SharedLibrary.Config;
 using ElmaSmartFarm.SharedLibrary.Models;
 using MQTTnet;
 using MQTTnet.Client;
+using Serilog;
 using System.Text;
 
 namespace ElmaSmartFarm.Service
 {
     public class Worker : BackgroundService
     {
-        public Worker(ILogger<Worker> logger, IMqttProcessor mqttProcessor, IDbProcessor dbProcessor)
+        public Worker(IMqttProcessor mqttProcessor, IDbProcessor dbProcessor)
         {
-            _logger = logger;
             MqttProcessor = mqttProcessor;
             DbProcessor = dbProcessor;
         }
 
-        private readonly ILogger<Worker> _logger;
         private readonly IMqttProcessor MqttProcessor;
         private readonly IDbProcessor DbProcessor;
         private MqttFactory mqttFactory;
@@ -29,17 +28,11 @@ namespace ElmaSmartFarm.Service
         private string mqtt_password;
         private int retry_seconds;
         private string sensor_topic;
-        private IEnumerable<PoultryModel> Poultries;
+        private IEnumerable<PoultryModel> poultries;
 
         public override async Task<Task> StartAsync(CancellationToken cancellationToken)
         {
-            mqtt_broker = Config.MQTT.Broker;
-            mqtt_port = Config.MQTT.Port;
-            authentication_enabled = Config.MQTT.AuthenticationEnabled;
-            mqtt_username = Config.MQTT.Username;
-            mqtt_password = Config.MQTT.Password;
-            retry_seconds = Config.MQTT.RetryInterval;
-            sensor_topic = Config.MQTT.SensorTopic;
+            ReloadEssentialConfigs();
 
             mqttFactory = new();
             mqttClient = mqttFactory.CreateMqttClient();
@@ -54,25 +47,25 @@ namespace ElmaSmartFarm.Service
             mqttClient.DisconnectedAsync += MqttClient_DisconnectedAsync;
             await TryReconnectAsync();
 
-            Poultries = await DbProcessor.LoadPoultries();
+            poultries = await DbProcessor.LoadPoultries();
             return base.StartAsync(cancellationToken);
         }
 
         private Task MqttClient_DisconnectedAsync(MqttClientDisconnectedEventArgs arg)
         {
-            _logger.LogWarning("Disconnected from MQTT Broker: {mqtt_broker}, Port: {mqtt_port}, Client Id: {ClientId}.", mqtt_broker, mqtt_port, options.ClientId);
+            Log.Warning("Disconnected from MQTT Broker: {mqtt_broker}, Port: {mqtt_port}, Client Id: {ClientId}.", mqtt_broker, mqtt_port, options.ClientId);
             return Task.CompletedTask;
         }
 
         private Task MqttClient_ConnectedAsync(MqttClientConnectedEventArgs arg)
         {
-            _logger.LogInformation("Successfully connected to MQTT Broker: {mqtt_broker}, Port: {mqtt_port}, Client Id: {ClientId}.", mqtt_broker, mqtt_port, options.ClientId);
+            Log.Information("Successfully connected to MQTT Broker: {mqtt_broker}, Port: {mqtt_port}, Client Id: {ClientId}.", mqtt_broker, mqtt_port, options.ClientId);
             return Task.CompletedTask;
         }
 
         private Task MqttClient_ConnectingAsync(MqttClientConnectingEventArgs arg)
         {
-            _logger.LogInformation("Connecting to MQTT Broker: {mqtt_broker}, Port: {mqtt_port}, Client Id: {ClientId}.", mqtt_broker, mqtt_port, options.ClientId);
+            Log.Information("Connecting to MQTT Broker: {mqtt_broker}, Port: {mqtt_port}, Client Id: {ClientId}.", mqtt_broker, mqtt_port, options.ClientId);
             return Task.CompletedTask;
         }
 
@@ -87,13 +80,13 @@ namespace ElmaSmartFarm.Service
                     
                     var mqttTopicFilterBuilder = new MqttTopicFilterBuilder().WithTopic(sensor_topic + "/#").Build();
                     await mqttClient.SubscribeAsync(mqttTopicFilterBuilder);
-                    _logger.LogInformation("Subscribed to MQTT topic {topic}.", sensor_topic + "/#");
+                    Log.Information("Subscribed to MQTT topic {topic}.", sensor_topic + "/#");
                     //var m = new MqttApplicationMessageBuilder().WithTopic("safa").WithPayload("dana").Build();
                     //if(mqttClient.IsConnected) await mqttClient.PublishAsync(m);
                 }
                 catch
                 {
-                    _logger.LogError("Error connecting to MQTT Broker. retrying in {retry_seconds} seconds...", retry_seconds);
+                    Log.Error("Error connecting to MQTT Broker. retrying in {retry_seconds} seconds...", retry_seconds);
                     Task.Delay(retry_seconds * 1000).Wait();
                 }
             }
@@ -130,6 +123,17 @@ namespace ElmaSmartFarm.Service
                 ReadDate = DateTime.Now
             };
             _ = await MqttProcessor.ProcessMqttMessageAsync(message);
+        }
+
+        private void ReloadEssentialConfigs()
+        {
+            mqtt_broker = Config.MQTT.Broker;
+            mqtt_port = Config.MQTT.Port;
+            authentication_enabled = Config.MQTT.AuthenticationEnabled;
+            mqtt_username = Config.MQTT.Username;
+            mqtt_password = Config.MQTT.Password;
+            retry_seconds = Config.MQTT.RetryInterval;
+            sensor_topic = Config.MQTT.SensorTopic;
         }
     }
 }

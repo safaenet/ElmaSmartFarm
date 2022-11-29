@@ -3,6 +3,7 @@ using ElmaSmartFarm.DataLibraryCore.Interfaces;
 using ElmaSmartFarm.SharedLibrary;
 using ElmaSmartFarm.SharedLibrary.Models;
 using ElmaSmartFarm.SharedLibrary.Models.Sensors;
+using Serilog;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -115,7 +116,7 @@ namespace ElmaSmartFarm.DataLibraryCore.SqlServer
                     if (periods != null && periods.Any()) p.InPeriodErrors = poultryInPeriodErrors?.Where(e => e.PoultryId == p.Id);
                 }
             }
-            Serilog.Log.Information("Poultries loaded");
+            Log.Information("Poultries loaded");
             return poultries;
         }
 
