@@ -60,9 +60,9 @@ namespace ElmaSmartFarm.DataLibraryCore.SqlServer
             return await DataAccess.SaveDataAsync(SaveTempSensorData, dp);
         }
 
-        public async Task<IEnumerable<PoultryModel>> LoadPoultries()
+        public async Task<List<PoultryModel>> LoadPoultries()
         {
-            var poultries = await DataAccess.LoadDataAsync<PoultryModel, DynamicParameters>(LoadPoultriesQuery, null);
+            var poultries = (await DataAccess.LoadDataAsync<PoultryModel, DynamicParameters>(LoadPoultriesQuery, null)).ToList();
             if (poultries != null && poultries.Any())
             {
                 var farms = await DataAccess.LoadDataAsync<FarmModel, DynamicParameters>(LoadFarmsQuery, null);
@@ -85,38 +85,38 @@ namespace ElmaSmartFarm.DataLibraryCore.SqlServer
                     var farmInPeriodErrors = await DataAccess.LoadDataAsync<FarmInPeriodErrorModel, DynamicParameters>(LoadFarmInPeriodErrors, null);
                     if (sensorErrors != null && sensorErrors.Any())
                     {
-                        if (farmTempSensors != null) foreach (var s in farmTempSensors) s.Errors = sensorErrors.Where(se => se.SensorId == s.Id);
-                        if (farmHumidSensors != null) foreach (var s in farmHumidSensors) s.Errors = sensorErrors.Where(se => se.SensorId == s.Id);
-                        if (farmAmbientSensors != null) foreach (var s in farmAmbientSensors) s.Errors = sensorErrors.Where(se => se.SensorId == s.Id);
-                        if (farmFeedSensors != null) foreach (var s in farmFeedSensors) s.Errors = sensorErrors.Where(se => se.SensorId == s.Id);
-                        if (farmCheckupSensors != null) foreach (var s in farmCheckupSensors) s.Errors = sensorErrors.Where(se => se.SensorId == s.Id);
-                        if (farmCommuteSensors != null) foreach (var s in farmCommuteSensors) s.Errors = sensorErrors.Where(se => se.SensorId == s.Id);
-                        if (farmPowerSensors != null) foreach (var s in farmPowerSensors) s.Errors = sensorErrors.Where(se => se.SensorId == s.Id);
-                        if (farmPoultryMPowerSensors != null) foreach (var s in farmPoultryMPowerSensors) s.Errors = sensorErrors.Where(se => se.SensorId == s.Id);
-                        if (farmPoultryBPowerSensors != null) foreach (var s in farmPoultryBPowerSensors) s.Errors = sensorErrors.Where(se => se.SensorId == s.Id);
+                        if (farmTempSensors != null) foreach (var s in farmTempSensors) s.Errors = sensorErrors.Where(se => se.SensorId == s.Id).ToList();
+                        if (farmHumidSensors != null) foreach (var s in farmHumidSensors) s.Errors = sensorErrors.Where(se => se.SensorId == s.Id).ToList();
+                        if (farmAmbientSensors != null) foreach (var s in farmAmbientSensors) s.Errors = sensorErrors.Where(se => se.SensorId == s.Id).ToList();
+                        if (farmFeedSensors != null) foreach (var s in farmFeedSensors) s.Errors = sensorErrors.Where(se => se.SensorId == s.Id).ToList();
+                        if (farmCheckupSensors != null) foreach (var s in farmCheckupSensors) s.Errors = sensorErrors.Where(se => se.SensorId == s.Id).ToList();
+                        if (farmCommuteSensors != null) foreach (var s in farmCommuteSensors) s.Errors = sensorErrors.Where(se => se.SensorId == s.Id).ToList();
+                        if (farmPowerSensors != null) foreach (var s in farmPowerSensors) s.Errors = sensorErrors.Where(se => se.SensorId == s.Id).ToList();
+                        if (farmPoultryMPowerSensors != null) foreach (var s in farmPoultryMPowerSensors) s.Errors = sensorErrors.Where(se => se.SensorId == s.Id).ToList();
+                        if (farmPoultryBPowerSensors != null) foreach (var s in farmPoultryBPowerSensors) s.Errors = sensorErrors.Where(se => se.SensorId == s.Id).ToList();
                     }
                     foreach (var f in farms)
                     {
-                        f.Temperatures.Sensors = farmTempSensors?.Where(s => s.LocationId == f.Id);
-                        f.Humidities.Sensors = farmHumidSensors?.Where(s => s.LocationId == f.Id);
-                        f.AmbientLights.Sensors = farmAmbientSensors?.Where(s => s.LocationId == f.Id);
-                        f.Feeds.Sensors = farmFeedSensors?.Where(s => s.LocationId == f.Id);
-                        f.Checkups.Sensors = farmCheckupSensors?.Where(s => s.LocationId == f.Id);
-                        f.Commutes.Sensors = farmCommuteSensors?.Where(s => s.LocationId == f.Id);
-                        f.ElectricPowers.Sensors = farmPowerSensors?.Where(s => s.LocationId == f.Id);
+                        f.Temperatures.Sensors = farmTempSensors?.Where(s => s.LocationId == f.Id).ToList();
+                        f.Humidities.Sensors = farmHumidSensors?.Where(s => s.LocationId == f.Id).ToList();
+                        f.AmbientLights.Sensors = farmAmbientSensors?.Where(s => s.LocationId == f.Id).ToList();
+                        f.Feeds.Sensors = farmFeedSensors?.Where(s => s.LocationId == f.Id).ToList();
+                        f.Checkups.Sensors = farmCheckupSensors?.Where(s => s.LocationId == f.Id).ToList();
+                        f.Commutes.Sensors = farmCommuteSensors?.Where(s => s.LocationId == f.Id).ToList();
+                        f.ElectricPowers.Sensors = farmPowerSensors?.Where(s => s.LocationId == f.Id).ToList();
                         f.Period = periods?.Where(p => p.FarmId == f.Id)?.FirstOrDefault();
-                        if (periods != null && periods.Any()) f.InPeriodErrors = farmInPeriodErrors?.Where(e => e.FarmId == f.Id);
+                        if (periods != null && periods.Any()) f.InPeriodErrors = farmInPeriodErrors?.Where(e => e.FarmId == f.Id).ToList();
                     }
                 }
                 foreach (var p in poultries)
                 {
-                    p.Farms = farms?.Where(f => f.PoultryId == p.Id);
+                    p.Farms = farms?.Where(f => f.PoultryId == p.Id).ToList();
                     p.OutdoorTemperature = outdoorTempSensors?.Where(s => s.LocationId == p.Id)?.FirstOrDefault();
                     p.OutdoorHumidity = outdoorHumidSensors?.Where(s => s.LocationId == p.Id)?.FirstOrDefault();
-                    if (periods != null && periods.Any()) p.InPeriodErrors = poultryInPeriodErrors?.Where(e => e.PoultryId == p.Id);
+                    if (periods != null && periods.Any()) p.InPeriodErrors = poultryInPeriodErrors?.Where(e => e.PoultryId == p.Id).ToList();
                 }
             }
-            Log.Information("Poultries loaded");
+            Log.Information("Poultries loaded.");
             return poultries;
         }
 
@@ -129,8 +129,8 @@ namespace ElmaSmartFarm.DataLibraryCore.SqlServer
             var feeds = (await reader.ReadAsync<FeedModel>()).GroupBy(cl => cl.PeriodId).ToDictionary(g => g.Key, g => g.AsEnumerable());
             foreach (var p in periods)
             {
-                if (chickelLosses.TryGetValue(p.Id, out IEnumerable<ChickenLossModel> cls)) p.ChickenStatistics.ChickenLosses = cls;
-                if (feeds.TryGetValue(p.Id, out IEnumerable<FeedModel> fs)) p.FoodStatistics.Feeds = fs;
+                if (chickelLosses.TryGetValue(p.Id, out IEnumerable<ChickenLossModel> cls)) p.ChickenStatistics.ChickenLosses = cls.ToList();
+                if (feeds.TryGetValue(p.Id, out IEnumerable<FeedModel> fs)) p.FoodStatistics.Feeds = fs.ToList();
             }
             return periods;
         }

@@ -30,8 +30,7 @@ namespace ElmaSmartFarm.Service
                 {
                     services.AddHostedService<Worker>()
                     .AddSingleton<IDataAccess, SqlDataAccess>()
-                    .AddSingleton<IDbProcessor, MsSqlDbProcessor>()
-                    .AddSingleton<IMqttProcessor, MqttProcessor>();
+                    .AddSingleton<IDbProcessor, MsSqlDbProcessor>();
                 })
                 .UseSerilog()
                 .Build();

@@ -7,6 +7,6 @@ namespace ElmaSmartFarm.DataLibraryCore.Interfaces
     public interface IDbProcessor
     {
         Task<int> SaveTemperatureToDb(TemperatureModel temp);
-        Task<IEnumerable<PoultryModel>> LoadPoultries();
+        Task<List<PoultryModel>> LoadPoultries();
     }
 }

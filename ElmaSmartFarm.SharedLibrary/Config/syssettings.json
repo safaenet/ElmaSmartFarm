@@ -1,8 +1,11 @@
 {
+  "sensor_keep_alive_interval": 15,
   "temperature": {
     "read_interval": 30, //(Seconds)
-    "min_value": 20, //Wont accept the incoming data if lower than this value. (Celsius)
-    "max_value": 35, //Wont accept the incoming data if higher than this value. (Celsius)
+    "farm_min_value": 20, //Wont accept the incoming data if lower than this value. (Celsius)
+    "farm_max_value": 35, //Wont accept the incoming data if higher than this value. (Celsius)
+    "outdoor_min_value": -10,
+    "outdoor_max_value":  60,
     "max_differ_value": 3, //Wont accept the incoming data if new value according to previous value increased/decreased more than this value. (Celsius)
     "write_to_db_interval": 30 //(Seconds)
   },

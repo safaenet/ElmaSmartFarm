@@ -4,7 +4,7 @@ namespace ElmaSmartFarm.SharedLibrary.Models
 {
     public class HumiditySensorSetModel
     {
-        public IEnumerable<HumiditySensorModel> Sensors { get; set; }
+        public List<HumiditySensorModel> Sensors { get; set; }
         public bool HasSensors => Sensors != null && Sensors.Any(t => t.IsEnabled);
         public int? MinimumValue => Sensors?.Where(s => s.IsEnabled)?.Min(t => t.LastRead)?.Value;
         public int? MaximumValue => Sensors?.Where(s => s.IsEnabled)?.Max(t => t.LastRead)?.Value;

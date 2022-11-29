@@ -4,7 +4,7 @@ namespace ElmaSmartFarm.SharedLibrary.Models
 {
     public class TemperatureSensorSetModel
     {
-        public IEnumerable<TemperatureSensorModel> Sensors { get; set; }
+        public List<TemperatureSensorModel> Sensors { get; set; }
         public bool HasSensors => Sensors != null && Sensors.Any(t => t.IsEnabled);
         public double? MinimumValue => Sensors?.Where(s => s.IsEnabled)?.Min(t => t.LastRead)?.Value;
         public double? MaximumValue => Sensors?.Where(s => s.IsEnabled)?.Max(t => t.LastRead)?.Value;
