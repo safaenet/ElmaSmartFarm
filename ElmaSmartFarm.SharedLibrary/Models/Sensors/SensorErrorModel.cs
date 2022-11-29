@@ -1,8 +1,10 @@
 ﻿namespace ElmaSmartFarm.SharedLibrary.Models.Sensors
 {
-    public class SesnorErrorModel
+    public class SensorErrorModel
     {
-        public SensorErrorType Type { get; set; }
+        public int Id { get; set; }
+        public int SensorId { get; set; }
+        public SensorErrorType ErrorType { get; set; }
         public DateTime DateHappened { get; set; }
         public DateTime? DateErased { get; set; }
         public string Descriptions { get; set; }

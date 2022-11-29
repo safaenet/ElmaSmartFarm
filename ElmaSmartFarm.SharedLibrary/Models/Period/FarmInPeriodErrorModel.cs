@@ -8,5 +8,6 @@
         public FarmInPeriodErrorType ErrorType { get; set; }
         public DateTime DateHappened { get; set; }
         public DateTime? DateErased { get; set; }
+        public string Descriptions { get; set; }
     }
 }

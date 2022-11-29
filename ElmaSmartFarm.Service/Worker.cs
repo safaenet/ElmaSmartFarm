@@ -9,14 +9,16 @@ namespace ElmaSmartFarm.Service
 {
     public class Worker : BackgroundService
     {
-        public Worker(ILogger<Worker> logger, IMqttProcessor mqttProcessor)
+        public Worker(ILogger<Worker> logger, IMqttProcessor mqttProcessor, IDbProcessor dbProcessor)
         {
             _logger = logger;
             MqttProcessor = mqttProcessor;
+            DbProcessor = dbProcessor;
         }
 
         private readonly ILogger<Worker> _logger;
         private readonly IMqttProcessor MqttProcessor;
+        private readonly IDbProcessor DbProcessor;
         private MqttFactory mqttFactory;
         private IMqttClient mqttClient;
         private MqttClientOptions options;
@@ -27,7 +29,7 @@ namespace ElmaSmartFarm.Service
         private string mqtt_password;
         private int retry_seconds;
         private string sensor_topic;
-        private List<PoultryModel> Poultries;
+        private IEnumerable<PoultryModel> Poultries;
 
         public override async Task<Task> StartAsync(CancellationToken cancellationToken)
         {
@@ -51,6 +53,8 @@ namespace ElmaSmartFarm.Service
             mqttClient.ConnectedAsync += MqttClient_ConnectedAsync;
             mqttClient.DisconnectedAsync += MqttClient_DisconnectedAsync;
             await TryReconnectAsync();
+
+            Poultries = await DbProcessor.LoadPoultries();
             return base.StartAsync(cancellationToken);
         }
 

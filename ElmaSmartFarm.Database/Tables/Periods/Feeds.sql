@@ -1,4 +1,4 @@
-﻿CREATE TABLE [dbo].[FoodStatistics]
+﻿CREATE TABLE [dbo].[Feeds]
 (
 	[Id] INT NOT NULL PRIMARY KEY, 
     [PeriodId] INT NOT NULL, 

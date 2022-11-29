@@ -25,10 +25,10 @@ namespace ElmaSmartFarm.DataLibraryCore.SqlServer
                 SET @sensorValue = @sensorValue + @offset;
                 INSERT INTO [TemperatureValues] ([Id], [SensorId], [ReadDate], [SensorValue]) VALUES (@newId, @sensorId, @readDate, @sensorValue);
             END";
-        private readonly string LoadPoultriesQuery = @$"SELECT l.* FROM dbo.Locations l WHERE l.Type = {(int)LocationType.Poultry}";
-        private readonly string LoadFarmsQuery = $@"SELECT f.*, l.[Name], l.IsEnabled, l.Descriptions FROM dbo.Farms f LEFT JOIN dbo.Locations l ON f.PoultryId = l.Id WHERE l.[Type] = {(int)LocationType.Farm}";
-        private const string LoadScalarSensorsQuery = @"SELECT s.*, sd.[Name], sd.LocationId, sd.Section, hsd.OffsetValue FROM dbo.SensorDetails sd LEFT JOIN dbo.Sensors s ON sd.SensorId = s.Id LEFT JOIN dbo.{0} hsd ON s.Id = hsd.SensorId WHERE s.[Type] = {1}";
-        private const string LoadNonScalarSensorsQuery = @"SELECT s.*, sd.[Name], sd.LocationId, sd.Section FROM dbo.SensorDetails sd LEFT JOIN dbo.Sensors s ON sd.SensorId = s.Id WHERE s.[Type] = {0}";
+        private readonly string LoadPoultriesQuery = @$"SELECT l.* FROM dbo.Locations l WHERE l.Type = {(int)LocationType.Poultry};";
+        private readonly string LoadFarmsQuery = $@"SELECT f.*, l.[Name], l.IsEnabled, l.Descriptions FROM dbo.Farms f LEFT JOIN dbo.Locations l ON f.PoultryId = l.Id WHERE l.[Type] = {(int)LocationType.Farm};";
+        private const string LoadScalarSensorsQuery = @"SELECT s.*, sd.[Name], sd.LocationId, sd.Section, hsd.OffsetValue FROM dbo.SensorDetails sd LEFT JOIN dbo.Sensors s ON sd.SensorId = s.Id LEFT JOIN dbo.{0} hsd ON s.Id = hsd.SensorId WHERE s.[Type] = {1};";
+        private const string LoadNonScalarSensorsQuery = @"SELECT s.*, sd.[Name], sd.LocationId, sd.Section FROM dbo.SensorDetails sd LEFT JOIN dbo.Sensors s ON sd.SensorId = s.Id WHERE s.[Type] = {0};";
         private readonly string LoadFarmTempSensorQuery = string.Format(LoadScalarSensorsQuery, "TemperatureSensorDetails", (int)SensorType.FarmTemperature);
         private readonly string LoadFarmHumidSensorQuery = string.Format(LoadScalarSensorsQuery, "HumiditySensorDetails", (int)SensorType.FarmHumidity);
         private readonly string LoadFarmAmbientSensorQuery = string.Format(LoadScalarSensorsQuery, "AmbientLightSensorDetails", (int)SensorType.FarmAmbientLight);
@@ -42,9 +42,13 @@ namespace ElmaSmartFarm.DataLibraryCore.SqlServer
         private readonly string LoadPoultryMPowerSensorQuery = string.Format(LoadNonScalarSensorsQuery, (int)SensorType.PoultryMainElectricPower);
         private readonly string LoadPoultryBPowerSensorQuery = string.Format(LoadNonScalarSensorsQuery, (int)SensorType.PoultryBackupElectricPower);
 
-        private const string LoadActivePeriodsQuery = @"SELECT * FROM dbo.[Periods] p WHERE p.EndDate != NULL;
-            SELECT * FROM dbo.ChickenLosses cl WHERE cl.PeriodId IN (SELECT p.Id FROM dbo.[Periods] p WHERE p.EndDate != NULL);
-            SELECT * FROM dbo.Feeds f WHERE f.PeriodId IN (SELECT p.Id FROM dbo.[Periods] p WHERE p.EndDate != NULL);";
+        private const string LoadActivePeriodsQuery = @"SELECT * FROM dbo.[Periods] p WHERE p.EndDate = NULL;
+            SELECT * FROM dbo.ChickenLosses cl WHERE cl.PeriodId IN (SELECT p.Id FROM dbo.[Periods] p WHERE p.EndDate = NULL);
+            SELECT * FROM dbo.Feeds f WHERE f.PeriodId IN (SELECT p.Id FROM dbo.[Periods] p WHERE p.EndDate = NULL);";
+
+        private const string LoadSensorErrors = "SELECT * FROM dbo.SensorErrorLogs WHERE DateErased = NULL";
+        private const string LoadFarmInPeriodErrors = "SELECT * FROM FarmInPeriodErrorLogs WHERE DateErased = NULL";
+        private const string LoadPoultryInPeriodErrors = "SELECT * FROM PoultryInPeriodErrorLogs WHERE DateErased = NULL";
 
         public async Task<int> SaveTemperatureToDb(TemperatureModel temp)
         {
@@ -57,24 +61,39 @@ namespace ElmaSmartFarm.DataLibraryCore.SqlServer
 
         public async Task<IEnumerable<PoultryModel>> LoadPoultries()
         {
-            IEnumerable<PoultryModel> poultries = await DataAccess.LoadDataAsync<PoultryModel, DynamicParameters>(LoadPoultriesQuery, null);
+            var poultries = await DataAccess.LoadDataAsync<PoultryModel, DynamicParameters>(LoadPoultriesQuery, null);
             if (poultries != null && poultries.Any())
             {
-                IEnumerable<FarmModel> farms = await DataAccess.LoadDataAsync<FarmModel, DynamicParameters>(LoadFarmsQuery, null);
-                IEnumerable<TemperatureSensorModel> outdoorTempSensors = await DataAccess.LoadDataAsync<TemperatureSensorModel, DynamicParameters>(LoadOutdoorTempSensorQuery, null);
-                IEnumerable<HumiditySensorModel> outdoorHumidSensors = await DataAccess.LoadDataAsync<HumiditySensorModel, DynamicParameters>(LoadOutdoorHumidSensorQuery, null);
+                var farms = await DataAccess.LoadDataAsync<FarmModel, DynamicParameters>(LoadFarmsQuery, null);
+                var outdoorTempSensors = await DataAccess.LoadDataAsync<TemperatureSensorModel, DynamicParameters>(LoadOutdoorTempSensorQuery, null);
+                var outdoorHumidSensors = await DataAccess.LoadDataAsync<HumiditySensorModel, DynamicParameters>(LoadOutdoorHumidSensorQuery, null);
+                var poultryInPeriodErrors = await DataAccess.LoadDataAsync<PoultryInPeriodErrorModel, DynamicParameters>(LoadPoultryInPeriodErrors, null);
+                var periods = await LoadActivePeriods();
                 if (farms != null && farms.Any())
                 {
-                    IEnumerable<TemperatureSensorModel> farmTempSensors = await DataAccess.LoadDataAsync<TemperatureSensorModel, DynamicParameters>(LoadFarmTempSensorQuery, null);
-                    IEnumerable<HumiditySensorModel> farmHumidSensors = await DataAccess.LoadDataAsync<HumiditySensorModel, DynamicParameters>(LoadFarmHumidSensorQuery, null);
-                    IEnumerable<AmbientLightSensorModel> farmAmbientSensors = await DataAccess.LoadDataAsync<AmbientLightSensorModel, DynamicParameters>(LoadFarmAmbientSensorQuery, null);
-                    IEnumerable<PushButtonSensorModel> farmFeedSensors = await DataAccess.LoadDataAsync<PushButtonSensorModel, DynamicParameters>(LoadFarmFeedSensorQuery, null);
-                    IEnumerable<PushButtonSensorModel> farmCheckupSensors = await DataAccess.LoadDataAsync<PushButtonSensorModel, DynamicParameters>(LoadFarmCheckupSensorQuery, null);
-                    IEnumerable<CommuteSensorModel> farmCommuteSensors = await DataAccess.LoadDataAsync<CommuteSensorModel, DynamicParameters>(LoadFarmCommuteSensorQuery, null);
-                    IEnumerable<BinarySensorModel> farmPowerSensors = await DataAccess.LoadDataAsync<BinarySensorModel, DynamicParameters>(LoadFarmPowerSensorQuery, null);
-                    IEnumerable<BinarySensorModel> farmPoultryMPowerSensors = await DataAccess.LoadDataAsync<BinarySensorModel, DynamicParameters>(LoadPoultryMPowerSensorQuery, null);
-                    IEnumerable<BinarySensorModel> farmPoultryBPowerSensors = await DataAccess.LoadDataAsync<BinarySensorModel, DynamicParameters>(LoadPoultryBPowerSensorQuery, null);
-                    IEnumerable<PeriodModel> periods = await LoadActivePeriods();
+                    var farmTempSensors = await DataAccess.LoadDataAsync<TemperatureSensorModel, DynamicParameters>(LoadFarmTempSensorQuery, null);
+                    var farmHumidSensors = await DataAccess.LoadDataAsync<HumiditySensorModel, DynamicParameters>(LoadFarmHumidSensorQuery, null);
+                    var farmAmbientSensors = await DataAccess.LoadDataAsync<AmbientLightSensorModel, DynamicParameters>(LoadFarmAmbientSensorQuery, null);
+                    var farmFeedSensors = await DataAccess.LoadDataAsync<PushButtonSensorModel, DynamicParameters>(LoadFarmFeedSensorQuery, null);
+                    var farmCheckupSensors = await DataAccess.LoadDataAsync<PushButtonSensorModel, DynamicParameters>(LoadFarmCheckupSensorQuery, null);
+                    var farmCommuteSensors = await DataAccess.LoadDataAsync<CommuteSensorModel, DynamicParameters>(LoadFarmCommuteSensorQuery, null);
+                    var farmPowerSensors = await DataAccess.LoadDataAsync<BinarySensorModel, DynamicParameters>(LoadFarmPowerSensorQuery, null);
+                    var farmPoultryMPowerSensors = await DataAccess.LoadDataAsync<BinarySensorModel, DynamicParameters>(LoadPoultryMPowerSensorQuery, null);
+                    var farmPoultryBPowerSensors = await DataAccess.LoadDataAsync<BinarySensorModel, DynamicParameters>(LoadPoultryBPowerSensorQuery, null);
+                    var sensorErrors = await DataAccess.LoadDataAsync<SensorErrorModel, DynamicParameters>(LoadSensorErrors, null);
+                    var farmInPeriodErrors = await DataAccess.LoadDataAsync<FarmInPeriodErrorModel, DynamicParameters>(LoadFarmInPeriodErrors, null);
+                    if (sensorErrors != null && sensorErrors.Any())
+                    {
+                        if (farmTempSensors != null) foreach (var s in farmTempSensors) s.Errors = sensorErrors.Where(se => se.SensorId == s.Id);
+                        if (farmHumidSensors != null) foreach (var s in farmHumidSensors) s.Errors = sensorErrors.Where(se => se.SensorId == s.Id);
+                        if (farmAmbientSensors != null) foreach (var s in farmAmbientSensors) s.Errors = sensorErrors.Where(se => se.SensorId == s.Id);
+                        if (farmFeedSensors != null) foreach (var s in farmFeedSensors) s.Errors = sensorErrors.Where(se => se.SensorId == s.Id);
+                        if (farmCheckupSensors != null) foreach (var s in farmCheckupSensors) s.Errors = sensorErrors.Where(se => se.SensorId == s.Id);
+                        if (farmCommuteSensors != null) foreach (var s in farmCommuteSensors) s.Errors = sensorErrors.Where(se => se.SensorId == s.Id);
+                        if (farmPowerSensors != null) foreach (var s in farmPowerSensors) s.Errors = sensorErrors.Where(se => se.SensorId == s.Id);
+                        if (farmPoultryMPowerSensors != null) foreach (var s in farmPoultryMPowerSensors) s.Errors = sensorErrors.Where(se => se.SensorId == s.Id);
+                        if (farmPoultryBPowerSensors != null) foreach (var s in farmPoultryBPowerSensors) s.Errors = sensorErrors.Where(se => se.SensorId == s.Id);
+                    }
                     foreach (var f in farms)
                     {
                         f.Temperatures.Sensors = farmTempSensors?.Where(s => s.LocationId == f.Id);
@@ -85,6 +104,7 @@ namespace ElmaSmartFarm.DataLibraryCore.SqlServer
                         f.Commutes.Sensors = farmCommuteSensors?.Where(s => s.LocationId == f.Id);
                         f.ElectricPowers.Sensors = farmPowerSensors?.Where(s => s.LocationId == f.Id);
                         f.Period = periods?.Where(p => p.FarmId == f.Id)?.FirstOrDefault();
+                        if (periods != null && periods.Any()) f.InPeriodErrors = farmInPeriodErrors?.Where(e => e.FarmId == f.Id);
                     }
                 }
                 foreach (var p in poultries)
@@ -92,8 +112,10 @@ namespace ElmaSmartFarm.DataLibraryCore.SqlServer
                     p.Farms = farms?.Where(f => f.PoultryId == p.Id);
                     p.OutdoorTemperature = outdoorTempSensors?.Where(s => s.LocationId == p.Id)?.FirstOrDefault();
                     p.OutdoorHumidity = outdoorHumidSensors?.Where(s => s.LocationId == p.Id)?.FirstOrDefault();
+                    if (periods != null && periods.Any()) p.InPeriodErrors = poultryInPeriodErrors?.Where(e => e.PoultryId == p.Id);
                 }
             }
+            Serilog.Log.Information("Poultries loaded");
             return poultries;
         }
 
