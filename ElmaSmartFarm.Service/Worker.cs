@@ -37,10 +37,10 @@ namespace ElmaSmartFarm.Service
             mqttClient.ConnectingAsync += MqttClient_ConnectingAsync;
             mqttClient.ConnectedAsync += MqttClient_ConnectedAsync;
             mqttClient.DisconnectedAsync += MqttClient_DisconnectedAsync;
-            await TryReconnectAsync();
 
             poultries = await DbProcessor.LoadPoultries();
             farms = ((from p in poultries select p.Farms) as List<FarmModel>) ?? new();
+            await TryReconnectAsync();
             return base.StartAsync(cancellationToken);
         }
 
