@@ -1,5 +1,4 @@
 using ElmaSmartFarm.DataLibraryCore.Interfaces;
-using ElmaSmartFarm.DataLibraryCore.Mqtt;
 using ElmaSmartFarm.DataLibraryCore.SqlServer;
 using MQTTnet;
 using MQTTnet.Client;

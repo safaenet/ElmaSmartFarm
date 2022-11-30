@@ -14,107 +14,109 @@ namespace ElmaSmartFarm.Service
             {
                 if (mqtt.Topic.StartsWith(config.mqtt.FullTemperatureTopic + config.mqtt.KeepAliveSubTopic)) //Keep alive
                 {
-                    var sensorId = mqtt.Topic.Replace(config.mqtt.FullTemperatureTopic + config.mqtt.KeepAliveSubTopic, "");
-                    if (string.IsNullOrEmpty(sensorId)) return -1;
-                    if (!int.TryParse(sensorId, out int SensorId)) return -1;
+                    int SensorId = GetSensorIdFromTopic(mqtt, config.mqtt.FullTemperatureTopic + config.mqtt.KeepAliveSubTopic);
+                    if(SensorId == 0)
+                    {
+                        //AddToUnknownList(); //Add mqtt to invalid list.
+                        Log.Warning($"Invalid KeepAlive MQTT message. Topic: {mqtt.Topic} , Payload: {mqtt.Payload}");
+                        return -1;
+                    }
                     var sensors = FindTempSensorsById(SensorId);
                     if (sensors == null)
                     {
                         //AddToUnknownList(); //Add sensor to unknown list.
+                        Log.Warning($"Unknown Sensor sends KeepAlive. Topic: {mqtt.Topic} , Payload: {mqtt.Payload}");
                         return -1;
                     }
-                    foreach (var s in sensors)
+                    foreach (var s in sensors) //Update KeepAlive and erase error if exists.
                     {
                         s.KeepAliveMessageDate = mqtt.ReadDate;
-                        if (s.HasError && s.Errors != null)
-                        {
-                            var e = s.Errors.FirstOrDefault(e => e.ErrorType == SensorErrorType.NotAlive);
-                            if (e != null) e.DateErased = DateTime.Now;
-                            //Save to db.
-                            if (s.Errors.Count > config.MaxSensorErrorCount) //Remove oldest record.
-                            {
-                                var error = s.Errors.Where(x => x.DateErased != null)?.MinBy(x => x.DateErased);
-                                if (error != null) s.Errors.Remove(error);
-                                else Log.Warning($"Error count in Sensor Id: {s.Id} hass reached limit but not erased! (System Error).");
-                            }
-                        }
+                        if (s.Errors != null) EraseSensorError(s.Errors, SensorErrorType.NotAlive);
                     }
                 }
                 else if (mqtt.Topic.StartsWith(config.mqtt.FullTemperatureTopic)) //Temp value
                 {
-                    var sensorId = mqtt.Topic.Replace(config.mqtt.FullTemperatureTopic, "");
-                    if (string.IsNullOrEmpty(sensorId)) return -1;
-                    if (!int.TryParse(sensorId, out int SensorId)) return -1;
-                    if (!double.TryParse(mqtt.Payload, out double Payload)) return -1;
+                    int SensorId = GetSensorIdFromTopic(mqtt, config.mqtt.FullTemperatureTopic);
+                    if (SensorId == 0)
+                    {
+                        //AddToUnknownList(); //Add mqtt to invalid list.
+                        Log.Warning($"Invalid MQTT message. Topic: {mqtt.Topic} , Payload: {mqtt.Payload}");
+                        return -1;
+                    }
                     var sensors = FindTempSensorsById(SensorId);
                     if (sensors == null)
                     {
                         //AddToUnknownList(); //Add sensor to unknown list.
+                        Log.Warning($"Unknown Sensor sends temp value. Topic: {mqtt.Topic} , Payload: {mqtt.Payload}");
+                        return -1;
+                    }
+                    if (!double.TryParse(mqtt.Payload, out double Payload))
+                    {
+                        Log.Warning($"A Sensor sends invalid value. Topic: {mqtt.Topic} , Payload: {mqtt.Payload}");
+                        if (sensors != null) foreach (var s in sensors) AddSensorError(s.AsBaseModel(), s.Errors, SensorErrorType.InvalidValue);
                         return -1;
                     }
                     foreach (var s in sensors)
                     {
-                        if (s.Type == SensorType.FarmTemperature)
-                        {
-                            if (Payload < config.system.FarmTempMinValue || Payload > config.system.FarmTempMaxValue) //Invalid value
-                            {
-                                if (s.Errors == null) s.Errors = new();
-                                if (!s.Errors.Where(e => e.ErrorType == SensorErrorType.InvalidValue).Any())
-                                {
-                                    //Save to db.
-                                    s.Errors.Add(new()
-                                    {
-                                        SensorId = s.Id,
-                                        ErrorType = SensorErrorType.InvalidValue,
-                                        DateHappened = DateTime.Now,
-                                        Descriptions = $"Invalid value: {Payload}"
-                                    });
-                                }
-                            }
-                        }
-                        else if (s.Type == SensorType.OutdoorTemperature)
-                        {
-                            if (Payload < config.system.OutdoorTempMinValue || Payload > config.system.OutdoorTempMaxValue) //Invalid value
-                            {
-                                if (s.Errors == null) s.Errors = new();
-                                if (!s.Errors.Where(e => e.ErrorType == SensorErrorType.InvalidValue).Any())
-                                {
-                                    //Save to db.
-                                    s.Errors.Add(new()
-                                    {
-                                        SensorId = s.Id,
-                                        ErrorType = SensorErrorType.InvalidValue,
-                                        DateHappened = DateTime.Now,
-                                        Descriptions = $"Invalid value: {Payload}"
-                                    });
-                                }
-                            }
-                        }
                         s.KeepAliveMessageDate = mqtt.ReadDate;
-                        if (s.HasError && s.Errors != null) //Erase error
+                        EraseSensorError(s.Errors, SensorErrorType.NotAlive);
+                        if ((s.Type == SensorType.FarmTemperature && (Payload < config.system.FarmTempMinValue || Payload > config.system.FarmTempMaxValue)) || (s.Type == SensorType.OutdoorTemperature && (Payload < config.system.OutdoorTempMinValue || Payload > config.system.OutdoorTempMaxValue))) //Invalid value.
                         {
-                            var e = s.Errors.FirstOrDefault(e => e.ErrorType == SensorErrorType.NotAlive);
-                            if (e != null) e.DateErased = DateTime.Now;
-                            if (s.Errors.Count > config.MaxSensorErrorCount) //Remove oldest record.
-                            {
-                                var error = s.Errors.Where(x => x.DateErased != null)?.MinBy(x => x.DateErased);
-                                if (error != null) s.Errors.Remove(error);
-                                else Log.Warning($"Error count in Sensor Id: {s.Id} hass reached limit but not erased! (System Error).");
-                            }
+                            AddSensorError(s.AsBaseModel(), s.Errors, SensorErrorType.InvalidValue);
                         }
-                        //
+                        else //Sensor OK, Value OK.
+                        {
+                            EraseSensorError(s.Errors, SensorErrorType.InvalidValue);
+                            if (s.Values == null) s.Values = new();
+                            s.Values.Add(new SensorReadModel<double> { Value = Payload, ReadDate = DateTime.Now });
+                            if (s.Values.Count > config.MaxSensorReadCount) s.Values.Remove(s.OldestRead);
+                            if (Math.Abs(s.LastRead.Value - Payload) >= 1 || (DateTime.Now - s.LastRead.ReadDate).TotalSeconds >= 30) 
+                        }
                     }
                 }
-
-                TemperatureModel temp = new()
-                {
-                    SensorId = mqtt.SensorId,
-                    Celsius = Payload,
-                    ReadDate = mqtt.ReadDate
-                };
-                return await DbProcessor.SaveTemperatureToDb(temp);
             }
             return 0;
+        }
+
+        private int GetSensorIdFromTopic(MqttMessageModel mqtt, string TopicTemplate)
+        {
+            var sensorId = mqtt.Topic.Replace(TopicTemplate, "");
+            if (string.IsNullOrEmpty(sensorId)) return 0;
+            if (!int.TryParse(sensorId, out int SensorId)) return 0;
+            return SensorId;
+        }
+
+        private void EraseSensorError(List<SensorErrorModel> Errors, SensorErrorType errorType)
+        {
+            if (Errors == null) return;
+            var e = Errors.FirstOrDefault(e => e.ErrorType == errorType);
+            if (e == null) return;
+            e.DateErased = DateTime.Now;
+            //Update db.
+        }
+
+        private void AddSensorError(SensorBaseModel model, List<SensorErrorModel> Errors, SensorErrorType errorType)
+        {
+            if (Errors == null) Errors = new();
+            var e = Errors.Where(e => e.ErrorType == errorType && e.DateErased == null);
+            if (e != null) return;
+            SensorErrorModel newError = new()
+            {
+                SensorId = model.Id,
+                ErrorType = errorType,
+                LocationId = model.LocationId,
+                Section = model.Section,
+                DateHappened = DateTime.Now
+            };
+            Errors.Add(newError);
+            //Update db.
+
+            if (Errors.Count > config.MaxSensorErrorCount) //Remove oldest record.
+            {
+                var error = Errors.Where(x => x.DateErased != null)?.MinBy(x => x.DateErased);
+                if (error != null) Errors.Remove(error);
+                else Log.Warning($"Error count in Sensor Id: {Errors[0].SensorId} hass reached limit but not erased! (System Error).");
+            }
         }
 
         private List<TemperatureSensorModel>? FindTempSensorsById(int id)

@@ -6,6 +6,7 @@
         {
             BaseUrl = SettingsDataAccess.AppConfiguration().GetSection("BaseUrl").Value;
             MaxSensorErrorCount = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("max_sensor_error_count").Value ?? "10");
+            MaxSensorReadCount = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("max_sensor_read_count").Value ?? "10");
             mqtt = new();
             system = new();
         }
@@ -13,6 +14,7 @@
         public System system { get; set; }
         public string BaseUrl { get; init; }
         public int MaxSensorErrorCount { get; set; }
+        public int MaxSensorReadCount { get; set; }
     }
 
     public class MQTT
