@@ -12,6 +12,7 @@ namespace ElmaSmartFarm.DataLibraryCore.Interfaces
         Task<IEnumerable<T>> LoadDataAsync<T, U>(string sql, U param);
         Task<GridReader> LoadMultipleDataAsync<T>(string sql, T param);
         Task<int> SaveDataAsync<T>(string sql, T data);
+        int SaveData<T>(string sql, T data);
         Task<T> ExecuteScalarAsync<T, U>(string sql, U param);
         Task<T> QuerySingleOrDefaultAsync<T, U>(string sql, U param);
     }

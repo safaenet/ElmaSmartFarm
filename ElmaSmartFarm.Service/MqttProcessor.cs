@@ -58,7 +58,7 @@ namespace ElmaSmartFarm.Service
                     }
                     foreach (var s in sensors)
                     {
-                        s.KeepAliveMessageDate = mqtt.ReadDate;
+                        s.KeepAliveMessageDate = DateTime.Now;
                         EraseSensorError(s.Errors, SensorErrorType.NotAlive);
                         if ((s.Type == SensorType.FarmTemperature && (Payload < config.system.FarmTempMinValue || Payload > config.system.FarmTempMaxValue)) || (s.Type == SensorType.OutdoorTemperature && (Payload < config.system.OutdoorTempMinValue || Payload > config.system.OutdoorTempMaxValue))) //Invalid value.
                         {
@@ -68,9 +68,13 @@ namespace ElmaSmartFarm.Service
                         {
                             EraseSensorError(s.Errors, SensorErrorType.InvalidValue);
                             if (s.Values == null) s.Values = new();
+                            if (s.Values.Count == 0 || Math.Abs(s.LastRead.Value - Payload) >= config.system.TempMaxDifferValue || (DateTime.Now - s.LastRead.ReadDate).TotalSeconds >= config.system.WriteTempToDbInterval)
+                            {
+                                DbProcessor.SaveSensorValueToDb(s, Payload);
+                            }
                             s.Values.Add(new SensorReadModel<double> { Value = Payload, ReadDate = DateTime.Now });
                             if (s.Values.Count > config.MaxSensorReadCount) s.Values.Remove(s.OldestRead);
-                            if (Math.Abs(s.LastRead.Value - Payload) >= 1 || (DateTime.Now - s.LastRead.ReadDate).TotalSeconds >= 30) 
+                            Log.Information($"Sensor value received: {s.LastRead.ReadDate} : {s.LastRead.Value}");
                         }
                     }
                 }
@@ -123,8 +127,8 @@ namespace ElmaSmartFarm.Service
         {
             if (poultries == null) return null;
             List<TemperatureSensorModel>? sensors = new();
-            sensors.AddRange(from p in poultries where p.OutdoorTemperature.Id == id select p.OutdoorTemperature);
-            sensors.AddRange(from s in poultries.SelectMany(p => p.Farms.SelectMany(f => f.Temperatures.Sensors)) where s.Id == id select s);
+            sensors.AddRange(from p in poultries where p != null && p.OutdoorTemperature != null && p.OutdoorTemperature.Id == id select p.OutdoorTemperature);
+            sensors.AddRange(from s in poultries.SelectMany(p => p.Farms.SelectMany(f => f.Temperatures.Sensors)) where s != null && s.Id == id select s);
             if (sensors.Count > 0) return sensors; else return null;
         }
 
@@ -132,8 +136,8 @@ namespace ElmaSmartFarm.Service
         {
             if (poultries == null) return null;
             List<HumiditySensorModel>? sensors = new();
-            sensors.AddRange(from p in poultries where p.OutdoorHumidity.Id == id select p.OutdoorHumidity);
-            sensors.AddRange(from s in poultries.SelectMany(p => p.Farms.SelectMany(f => f.Humidities.Sensors)) where s.Id == id select s);
+            sensors.AddRange(from p in poultries where p != null && p.OutdoorHumidity.Id == id select p.OutdoorHumidity);
+            sensors.AddRange(from s in poultries.SelectMany(p => p.Farms.SelectMany(f => f.Humidities.Sensors)) where s != null && s.Id == id select s);
             if (sensors.Count > 0) return sensors; else return null;
         }
 
@@ -141,7 +145,7 @@ namespace ElmaSmartFarm.Service
         {
             if (poultries == null) return null;
             List<AmbientLightSensorModel>? sensors = new();
-            sensors.AddRange(from s in poultries.SelectMany(p => p.Farms.SelectMany(f => f.AmbientLights.Sensors)) where s.Id == id select s);
+            sensors.AddRange(from s in poultries.SelectMany(p => p.Farms.SelectMany(f => f.AmbientLights.Sensors)) where s != null && s.Id == id select s);
             if (sensors.Count > 0) return sensors; else return null;
         }
 
@@ -149,8 +153,8 @@ namespace ElmaSmartFarm.Service
         {
             if (poultries == null) return null;
             List<PushButtonSensorModel>? sensors = new();
-            sensors.AddRange(from s in poultries.SelectMany(p => p.Farms.SelectMany(f => f.Checkups.Sensors)) where s.Id == id select s);
-            sensors.AddRange(from s in poultries.SelectMany(p => p.Farms.SelectMany(f => f.Feeds.Sensors)) where s.Id == id select s);
+            sensors.AddRange(from s in poultries.SelectMany(p => p.Farms.SelectMany(f => f.Checkups.Sensors)) where s != null && s.Id == id select s);
+            sensors.AddRange(from s in poultries.SelectMany(p => p.Farms.SelectMany(f => f.Feeds.Sensors)) where s != null && s.Id == id select s);
             if (sensors.Count > 0) return sensors; else return null;
         }
 
@@ -158,9 +162,9 @@ namespace ElmaSmartFarm.Service
         {
             if (poultries == null) return null;
             List<BinarySensorModel>? sensors = new();
-            sensors.AddRange(from p in poultries where p.MainElectricPower.Id == id select p.MainElectricPower);
-            sensors.AddRange(from p in poultries where p.BackupElectricPower.Id == id select p.BackupElectricPower);
-            sensors.AddRange(from s in poultries.SelectMany(p => p.Farms.SelectMany(f => f.ElectricPowers.Sensors)) where s.Id == id select s);
+            sensors.AddRange(from p in poultries where p != null && p.MainElectricPower.Id == id select p.MainElectricPower);
+            sensors.AddRange(from p in poultries where p != null && p.BackupElectricPower.Id == id select p.BackupElectricPower);
+            sensors.AddRange(from s in poultries.SelectMany(p => p.Farms.SelectMany(f => f.ElectricPowers.Sensors)) where s != null && s.Id == id select s);
             if (sensors.Count > 0) return sensors; else return null;
         }
 

@@ -55,6 +55,13 @@ namespace ElmaSmartFarm.DataLibraryCore.SqlServer
             return result;
         }
 
+        public int SaveData<T>(string sql, T data)
+        {
+            using IDbConnection conn = new SqlConnection(GetConnectionString());
+            var result = conn.Execute(sql, data);
+            return result;
+        }
+
         public async Task<T> ExecuteScalarAsync<T, U>(string sql, U param)
         {
             using IDbConnection conn = new SqlConnection(GetConnectionString());

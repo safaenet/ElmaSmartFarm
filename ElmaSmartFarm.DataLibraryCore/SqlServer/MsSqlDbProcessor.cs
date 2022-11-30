@@ -1,10 +1,13 @@
 ﻿using Dapper;
 using ElmaSmartFarm.DataLibraryCore.Interfaces;
 using ElmaSmartFarm.SharedLibrary;
+using ElmaSmartFarm.SharedLibrary.Config;
 using ElmaSmartFarm.SharedLibrary.Models;
 using ElmaSmartFarm.SharedLibrary.Models.Sensors;
 using Serilog;
+using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -12,12 +15,14 @@ namespace ElmaSmartFarm.DataLibraryCore.SqlServer
 {
     public class MsSqlDbProcessor : IDbProcessor
     {
-        public MsSqlDbProcessor(IDataAccess dataAccess)
+        public MsSqlDbProcessor(IDataAccess dataAccess, Config cfg)
         {
             DataAccess = dataAccess;
+            config = cfg;
         }
 
         private readonly IDataAccess DataAccess;
+        private readonly Config config;
         private readonly string SaveTempSensorData = @"
             DECLARE @isEnabled bit; SET @isEnabled = (SELECT [IsEnabled] FROM [TemperatureSensors] WHERE [Id] = @sensorId);
             IF ISNULL(@isEnabled, 0) = 1 BEGIN
@@ -27,7 +32,7 @@ namespace ElmaSmartFarm.DataLibraryCore.SqlServer
                 INSERT INTO [TemperatureValues] ([Id], [SensorId], [ReadDate], [SensorValue]) VALUES (@newId, @sensorId, @readDate, @sensorValue);
             END";
         private readonly string LoadPoultriesQuery = @$"SELECT l.* FROM dbo.Locations l WHERE l.Type = {(int)LocationType.Poultry};";
-        private readonly string LoadFarmsQuery = $@"SELECT f.*, l.[Name], l.IsEnabled, l.Descriptions FROM dbo.Farms f LEFT JOIN dbo.Locations l ON f.PoultryId = l.Id WHERE l.[Type] = {(int)LocationType.Farm};";
+        private readonly string LoadFarmsQuery = $@"SELECT f.*, l.[Name], l.IsEnabled, l.Descriptions FROM Farms f LEFT JOIN dbo.Locations l ON f.Id = l.Id WHERE f.PoultryId IN (SELECT p.Id FROM Locations p WHERE p.[Type] = {(int)LocationType.Poultry});";
         private const string LoadScalarSensorsQuery = @"SELECT s.*, sd.[Name], sd.LocationId, sd.Section, hsd.OffsetValue FROM dbo.SensorDetails sd LEFT JOIN dbo.Sensors s ON sd.SensorId = s.Id LEFT JOIN dbo.{0} hsd ON s.Id = hsd.SensorId WHERE s.[Type] = {1};";
         private const string LoadNonScalarSensorsQuery = @"SELECT s.*, sd.[Name], sd.LocationId, sd.Section FROM dbo.SensorDetails sd LEFT JOIN dbo.Sensors s ON sd.SensorId = s.Id WHERE s.[Type] = {0};";
         private readonly string LoadFarmTempSensorQuery = string.Format(LoadScalarSensorsQuery, "TemperatureSensorDetails", (int)SensorType.FarmTemperature);
@@ -51,13 +56,38 @@ namespace ElmaSmartFarm.DataLibraryCore.SqlServer
         private const string LoadFarmInPeriodErrors = "SELECT * FROM FarmInPeriodErrorLogs WHERE DateErased = NULL";
         private const string LoadPoultryInPeriodErrors = "SELECT * FROM PoultryInPeriodErrorLogs WHERE DateErased = NULL";
 
-        public async Task<int> SaveTemperatureToDb(TemperatureModel temp)
+        private readonly string WriteScalarSensorValueToDbCmd = @"DECLARE @newId int; SET @newId = (SELECT ISNULL(MAX([Id]), 0) FROM [{0}]) + 1;
+            INSERT INTO {0}(Id, LocationId, Section, SensorId, ReadDate, SensorValue)
+            VALUES(@id, @locationId, @section, @sensorId, @readDate, @sensorValue);
+            SELECT @Id = @newId;";
+
+        public async Task<int> SaveSensorValueToDbAsync(TemperatureSensorModel sensor, double value)
         {
             DynamicParameters dp = new();
-            dp.Add("@sensorId", temp.SensorId);
-            dp.Add("@readDate", temp.ReadDate);
-            dp.Add("@sensorValue", temp.Celsius);
-            return await DataAccess.SaveDataAsync(SaveTempSensorData, dp);
+            dp.Add("@id", 0, System.Data.DbType.Int32,System.Data.ParameterDirection.Output);
+            dp.Add("@locationId", sensor.LocationId);
+            dp.Add("@section", sensor.Section);
+            dp.Add("@sensorId", sensor.Id);
+            dp.Add("@readDate", DateTime.Now);
+            dp.Add("@sensorValue", value);
+            var sql = string.Format(WriteScalarSensorValueToDbCmd, "TemperatureValues");
+            _ = await DataAccess.SaveDataAsync(sql, dp);
+            var newId = dp.Get<int>("@Id");
+            return newId;
+        }
+        public int SaveSensorValueToDb(TemperatureSensorModel sensor, double value)
+        {
+            DynamicParameters dp = new();
+            dp.Add("@id", 0, System.Data.DbType.Int32,System.Data.ParameterDirection.Output);
+            dp.Add("@locationId", sensor.LocationId);
+            dp.Add("@section", sensor.Section);
+            dp.Add("@sensorId", sensor.Id);
+            dp.Add("@readDate", DateTime.Now);
+            dp.Add("@sensorValue", value);
+            var sql = string.Format(WriteScalarSensorValueToDbCmd, "TemperatureValues");
+            DataAccess.SaveData(sql, dp);
+            var newId = dp.Get<int>("@Id");
+            return newId;
         }
 
         public async Task<List<PoultryModel>> LoadPoultries()
@@ -122,7 +152,8 @@ namespace ElmaSmartFarm.DataLibraryCore.SqlServer
 
         private async Task<IEnumerable<PeriodModel>> LoadActivePeriods()
         {
-            var reader = await DataAccess.LoadMultipleDataAsync<DynamicParameters>(LoadActivePeriodsQuery, null);
+            using System.Data.IDbConnection conn = new SqlConnection(config.DefaultConnectionString);
+            var reader = await conn.QueryMultipleAsync(LoadActivePeriodsQuery, null);
             var periods = await reader.ReadAsync<PeriodModel>();
             if (periods == null) return null;
             var chickelLosses = (await reader.ReadAsync<ChickenLossModel>()).GroupBy(cl => cl.PeriodId).ToDictionary(g => g.Key, g => g.AsEnumerable());

@@ -4,12 +4,14 @@
     {
         public Config()
         {
+            DefaultConnectionString = SettingsDataAccess.AppConfiguration().GetSection("ConnectionStrings:default").Value;
             BaseUrl = SettingsDataAccess.AppConfiguration().GetSection("BaseUrl").Value;
             MaxSensorErrorCount = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("max_sensor_error_count").Value ?? "10");
             MaxSensorReadCount = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("max_sensor_read_count").Value ?? "10");
             mqtt = new();
             system = new();
         }
+        public string DefaultConnectionString { get; set; }
         public MQTT mqtt { get; init; }
         public System system { get; set; }
         public string BaseUrl { get; init; }
@@ -31,19 +33,10 @@
             ToSensorTopic = SettingsDataAccess.AppConfiguration().GetSection("mqtt:to_sensor_topic").Value ?? "Elma/ToSensor/"; //e.g:Elma/ToSensor/{Id}/Interval Payload={Interval}
             TemperatureSubTopic = SettingsDataAccess.AppConfiguration().GetSection("mqtt:temperature_sub_topic").Value ?? "Temp/";
             HumiditySubTopic = SettingsDataAccess.AppConfiguration().GetSection("mqtt:humidity_sub_topic").Value ?? "Humid/";
-            //FarmTemperatureSubTopic = SettingsDataAccess.AppConfiguration().GetSection("mqtt:farm_temperature_sub_topic").Value ?? "FarmTemp/";
-            //FarmHumiditySubTopic = SettingsDataAccess.AppConfiguration().GetSection("mqtt:farm_humidity_sub_topic").Value ?? "FarmHumid/";
-            //OutdoorTemperatureSubTopic = SettingsDataAccess.AppConfiguration().GetSection("mqtt:outdoor_temperature_sub_topic").Value ?? "OutTemp/";
-            //OutdoorHumiditySubTopic = SettingsDataAccess.AppConfiguration().GetSection("mqtt:outdoor_humidity_sub_topic").Value ?? "OutHumid/";
             AmbientLightSubTopic = SettingsDataAccess.AppConfiguration().GetSection("mqtt:ambient_light_sub_topic").Value ?? "Ambient/";
             PushButtonSubTopic = SettingsDataAccess.AppConfiguration().GetSection("mqtt:push_button_sub_topic").Value ?? "PushButton/";
-            //FeedSubTopic = SettingsDataAccess.AppConfiguration().GetSection("mqtt:feed_sub_topic").Value ?? "Feed/";
-            //CheckupSubTopic = SettingsDataAccess.AppConfiguration().GetSection("mqtt:checkup_sub_topic").Value ?? "Checkup/";
             CommuteSubTopic = SettingsDataAccess.AppConfiguration().GetSection("mqtt:commute_sub_topic").Value ?? "Commute/";
             BinarySubTopic = SettingsDataAccess.AppConfiguration().GetSection("mqtt:binary_sub_topic").Value ?? "Binary/";
-            //FarmElectricSubTopic = SettingsDataAccess.AppConfiguration().GetSection("mqtt:farm_electric_sub_topic").Value ?? "FarmElec/";
-            //MainElectricSubTopic = SettingsDataAccess.AppConfiguration().GetSection("mqtt:main_electric_sub_topic").Value ?? "MainElec/";
-            //BackupElectricSubTopic = SettingsDataAccess.AppConfiguration().GetSection("mqtt:backup_electric_sub_topic").Value ?? "BackElec/";
             KeepAliveSubTopic = SettingsDataAccess.AppConfiguration().GetSection("mqtt:keep_alive_sub_topic").Value ?? "Alive/"; //e.g:Elma/ToServer/Sensors/Temp/Alive/{Id}
         }
         public string Broker { get; init; }
@@ -56,35 +49,31 @@
         public string ToSensorTopic { get; init; }
         public string TemperatureSubTopic { get; init; }
         public string HumiditySubTopic { get; init; }
-        //public string FarmTemperatureSubTopic { get; init; }
-        //public string FarmHumiditySubTopic { get; init; }
-        //public string OutdoorTemperatureSubTopic { get; init; }
-        //public string OutdoorHumiditySubTopic { get; init; }
         public string AmbientLightSubTopic { get; init; }
         public string PushButtonSubTopic { get; init; }
-        //public string FeedSubTopic { get; init; }
-        //public string CheckupSubTopic { get; init; }
         public string CommuteSubTopic { get; init; }
         public string BinarySubTopic { get; init; }
-        //public string FarmElectricSubTopic { get; init; }
-        //public string MainElectricSubTopic { get; init; }
-        //public string BackupElectricSubTopic { get; init; }
         public string KeepAliveSubTopic { get; init; }
         public string FullTemperatureTopic => ToServerTopic + TemperatureSubTopic;
         public string FullHumidityTopic => ToServerTopic + HumiditySubTopic;
         public string FullAmbientLightTopic => ToServerTopic + AmbientLightSubTopic;
-        //public string FullFeedTopic => ToServerTopic + FeedSubTopic;
-        //public string FullCheckupTopic => ToServerTopic + CheckupSubTopic;
         public string FullPushButtonTopic => ToServerTopic + PushButtonSubTopic;
         public string FullCommuteTopic => ToServerTopic + CommuteSubTopic;
         public string FullBinaryTopic => ToServerTopic + BinarySubTopic;
-        //public string FullFarmElectricTopic => ToServerTopic + FarmElectricSubTopic;
-        //public string FullMainElectricTopic => ToServerTopic + MainElectricSubTopic;
-        //public string FullBackupElectricTopic => ToServerTopic + BackupElectricSubTopic;
     }
 
     public class System
     {
+        public System()
+        {
+            TempReadInterval = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("temperature:read_interval").Value ?? "30");
+            FarmTempMinValue = double.Parse(SettingsDataAccess.AppConfiguration().GetSection("temperature:farm_min_value").Value ?? "20");
+            FarmTempMaxValue = double.Parse(SettingsDataAccess.AppConfiguration().GetSection("temperature:farm_max_value").Value ?? "35");
+            OutdoorTempMinValue = double.Parse(SettingsDataAccess.AppConfiguration().GetSection("temperature:outdoor_min_value").Value ?? "-10");
+            OutdoorTempMaxValue = double.Parse(SettingsDataAccess.AppConfiguration().GetSection("temperature:outdoor_max_value").Value ?? "60");
+            TempMaxDifferValue = double.Parse(SettingsDataAccess.AppConfiguration().GetSection("temperature:max_differ_value").Value ?? "1");
+            WriteTempToDbInterval = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("temperature:write_to_db_max_interval").Value ?? "30");
+        }
         public double TempReadInterval { get; set; }
         public double FarmTempMinValue { get; set; }
         public double FarmTempMaxValue { get; set; }
