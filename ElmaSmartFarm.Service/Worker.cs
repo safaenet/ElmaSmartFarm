@@ -117,7 +117,7 @@ namespace ElmaSmartFarm.Service
                 Retained = arg.ApplicationMessage.Retain,
                 QoS = (int)arg.ApplicationMessage.QualityOfServiceLevel
             };
-            await ProcessMqttMessageAsync(message);
+            await Task.Run(() => ProcessMqttMessageAsync(message));
         }
     }
 }

@@ -58,8 +58,8 @@ namespace ElmaSmartFarm.DataLibraryCore.SqlServer
 
         private readonly string WriteScalarSensorValueToDbCmd = @"DECLARE @newId int; SET @newId = (SELECT ISNULL(MAX([Id]), 0) FROM [{0}]) + 1;
             INSERT INTO {0}(Id, LocationId, Section, SensorId, ReadDate, SensorValue)
-            VALUES(@id, @locationId, @section, @sensorId, @readDate, @sensorValue);
-            SELECT @Id = @newId;";
+            VALUES(@newId, @locationId, @section, @sensorId, @readDate, @sensorValue);
+            SELECT @id = @newId;";
 
         public async Task<int> SaveSensorValueToDbAsync(TemperatureSensorModel sensor, double value)
         {
@@ -69,12 +69,13 @@ namespace ElmaSmartFarm.DataLibraryCore.SqlServer
             dp.Add("@section", sensor.Section);
             dp.Add("@sensorId", sensor.Id);
             dp.Add("@readDate", DateTime.Now);
-            dp.Add("@sensorValue", value);
+            dp.Add("@sensorValue", value + sensor.Offset);
             var sql = string.Format(WriteScalarSensorValueToDbCmd, "TemperatureValues");
             _ = await DataAccess.SaveDataAsync(sql, dp);
-            var newId = dp.Get<int>("@Id");
+            var newId = dp.Get<int>("@id");
             return newId;
         }
+
         public int SaveSensorValueToDb(TemperatureSensorModel sensor, double value)
         {
             DynamicParameters dp = new();
@@ -83,10 +84,10 @@ namespace ElmaSmartFarm.DataLibraryCore.SqlServer
             dp.Add("@section", sensor.Section);
             dp.Add("@sensorId", sensor.Id);
             dp.Add("@readDate", DateTime.Now);
-            dp.Add("@sensorValue", value);
+            dp.Add("@sensorValue", value + sensor.Offset);
             var sql = string.Format(WriteScalarSensorValueToDbCmd, "TemperatureValues");
             DataAccess.SaveData(sql, dp);
-            var newId = dp.Get<int>("@Id");
+            var newId = dp.Get<int>("@id");
             return newId;
         }
 

@@ -68,11 +68,12 @@ namespace ElmaSmartFarm.Service
                         {
                             EraseSensorError(s.Errors, SensorErrorType.InvalidValue);
                             if (s.Values == null) s.Values = new();
+                            SensorReadModel<double> newRead = new() { Value = Payload, ReadDate = DateTime.Now };
                             if (s.Values.Count == 0 || Math.Abs(s.LastRead.Value - Payload) >= config.system.TempMaxDifferValue || (DateTime.Now - s.LastRead.ReadDate).TotalSeconds >= config.system.WriteTempToDbInterval)
                             {
-                                DbProcessor.SaveSensorValueToDb(s, Payload);
+                                await DbProcessor.SaveSensorValueToDbAsync(s, Payload);
                             }
-                            s.Values.Add(new SensorReadModel<double> { Value = Payload, ReadDate = DateTime.Now });
+                            s.Values.Add(newRead);
                             if (s.Values.Count > config.MaxSensorReadCount) s.Values.Remove(s.OldestRead);
                             Log.Information($"Sensor value received: {s.LastRead.ReadDate} : {s.LastRead.Value}");
                         }
