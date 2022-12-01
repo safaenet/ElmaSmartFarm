@@ -117,6 +117,7 @@ namespace ElmaSmartFarm.Service
                 Retained = arg.ApplicationMessage.Retain,
                 QoS = (int)arg.ApplicationMessage.QualityOfServiceLevel
             };
+            if (config.VerboseMode) Log.Information($"MQTT Message received. Topic: {message.Topic}, Payload: {message.Payload}");
             await Task.Run(() => ProcessMqttMessageAsync(message));
         }
     }

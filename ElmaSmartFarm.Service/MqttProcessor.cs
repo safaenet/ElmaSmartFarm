@@ -12,8 +12,10 @@ namespace ElmaSmartFarm.Service
             if (mqtt == null) return -1;
             if (mqtt.Topic.StartsWith(config.mqtt.FullTemperatureTopic)) //Temp Sensor
             {
+                if (config.VerboseMode) Log.Information($"MQTT Message is from a Temp sensor. Topic: {mqtt.Topic}, Payload: {mqtt.Payload}");
                 if (mqtt.Topic.StartsWith(config.mqtt.FullTemperatureTopic + config.mqtt.KeepAliveSubTopic)) //Keep alive
                 {
+                    if (config.VerboseMode) Log.Information($"MQTT Message is KeepAlive from a Temp sensor. Topic: {mqtt.Topic}, Payload: {mqtt.Payload}");
                     int SensorId = GetSensorIdFromTopic(mqtt, config.mqtt.FullTemperatureTopic + config.mqtt.KeepAliveSubTopic);
                     if(SensorId == 0)
                     {
@@ -21,6 +23,7 @@ namespace ElmaSmartFarm.Service
                         Log.Warning($"Invalid KeepAlive MQTT message. Topic: {mqtt.Topic} , Payload: {mqtt.Payload}");
                         return -1;
                     }
+                    if (config.VerboseMode) Log.Information($"Sensor ID extracted from MQTT Message. Sensor ID: {SensorId}");
                     var sensors = FindTempSensorsById(SensorId);
                     if (sensors == null)
                     {
@@ -30,12 +33,18 @@ namespace ElmaSmartFarm.Service
                     }
                     foreach (var s in sensors) //Update KeepAlive and erase error if exists.
                     {
+                        if (config.VerboseMode) Log.Information($"Sensor ID is found in Poultries/Farms. Type: {s.Type}, LocationID: {s.LocationId}, Section: {s.Section}");
                         s.KeepAliveMessageDate = mqtt.ReadDate;
-                        if (s.Errors != null) EraseSensorError(s.Errors, SensorErrorType.NotAlive);
+                        if (s.Errors != null && s.EraseError(SensorErrorType.NotAlive))
+                        {
+                            if (config.VerboseMode) Log.Information($"Updating sensor KeepAlive error in database. Sensor ID: {s.Id}, LocationID: {s.LocationId}, Section: {s.Section}");
+                            //Update error in db
+                        }
                     }
                 }
                 else if (mqtt.Topic.StartsWith(config.mqtt.FullTemperatureTopic)) //Temp value
                 {
+                    if (config.VerboseMode) Log.Information($"MQTT Message is a Temp sensor value. Topic: {mqtt.Topic}, Payload: {mqtt.Payload}");
                     int SensorId = GetSensorIdFromTopic(mqtt, config.mqtt.FullTemperatureTopic);
                     if (SensorId == 0)
                     {
@@ -43,43 +52,65 @@ namespace ElmaSmartFarm.Service
                         Log.Warning($"Invalid MQTT message. Topic: {mqtt.Topic} , Payload: {mqtt.Payload}");
                         return -1;
                     }
+                    if (config.VerboseMode) Log.Information($"Sensor ID extracted from MQTT Message. Sensor ID: {SensorId}");
                     var sensors = FindTempSensorsById(SensorId);
                     if (sensors == null)
                     {
                         //AddToUnknownList(); //Add sensor to unknown list.
-                        Log.Warning($"Unknown Sensor sends temp value. Topic: {mqtt.Topic} , Payload: {mqtt.Payload}");
+                        Log.Warning($"Unknown Temp Sensor sends value. Topic: {mqtt.Topic} , Payload: {mqtt.Payload}");
                         return -1;
                     }
                     if (!double.TryParse(mqtt.Payload, out double Payload))
                     {
-                        Log.Warning($"A Sensor sends invalid value. Topic: {mqtt.Topic} , Payload: {mqtt.Payload}");
-                        if (sensors != null) foreach (var s in sensors) AddSensorError(s.AsBaseModel(), s.Errors, SensorErrorType.InvalidValue);
+                        Log.Warning($"A Sensor sends invalid data. Topic: {mqtt.Topic} , Payload: {mqtt.Payload}");
+                        if (sensors != null) 
+                            foreach (var s in sensors)
+                            {
+                                if (s.AddError(SensorErrorType.InvalidValue, config.system.MaxSensorErrorCount))
+                                {
+                                    //Save error to Db
+                                }
+                            }
                         return -1;
                     }
                     foreach (var s in sensors)
                     {
+                        if (config.VerboseMode) Log.Information($"Sensor ID is found in Poultries/Farms. Type: {s.Type}, LocationID: {s.LocationId}, Section: {s.Section}");
                         s.KeepAliveMessageDate = DateTime.Now;
-                        EraseSensorError(s.Errors, SensorErrorType.NotAlive);
+                        if (s.EraseError(SensorErrorType.NotAlive))
+                        {
+                            //Update error in db
+                        }
                         if ((s.Type == SensorType.FarmTemperature && (Payload < config.system.FarmTempMinValue || Payload > config.system.FarmTempMaxValue)) || (s.Type == SensorType.OutdoorTemperature && (Payload < config.system.OutdoorTempMinValue || Payload > config.system.OutdoorTempMaxValue))) //Invalid value.
                         {
-                            AddSensorError(s.AsBaseModel(), s.Errors, SensorErrorType.InvalidValue);
+                            Log.Error($"A Temp Sensor sends invalid value. Topic: {mqtt.Topic} , Payload: {mqtt.Payload}");
+                            if (s.AddError(SensorErrorType.InvalidValue, config.system.MaxSensorErrorCount))
+                            {
+                                //Save error to db
+                            }
                         }
-                        else //Sensor OK, Value OK.
+                        else //Sensor Valid, Value Valid.
                         {
-                            EraseSensorError(s.Errors, SensorErrorType.InvalidValue);
+                            if (config.VerboseMode) Log.Information($"Sensor is valid; Value is valid. Type: {s.Type}, LocationID: {s.LocationId}, Section: {s.Section}");
+                            if (s.EraseError(SensorErrorType.InvalidValue))
+                            {
+                                //Update error in db
+                            }
                             if (s.Values == null) s.Values = new();
                             SensorReadModel<double> newRead = new() { Value = Payload, ReadDate = DateTime.Now };
-                            if (s.IsWatched && (s.Values.Count == 0 || s.LastSavedRead == null || Math.Abs(s.LastRead.Value - Payload) >= config.system.TempMaxDifferValue || (s.LastSavedRead != null && (DateTime.Now - s.LastSavedRead.ReadDate).TotalSeconds >= config.system.WriteTempToDbInterval)))
+                            if (s.IsWatched && (s.Values.Count == 0 || s.LastSavedRead == null || (config.system.WriteOnValueChangeByDiffer && Math.Abs(s.LastRead.Value - Payload) >= config.system.TempMaxDifferValue) || (s.LastSavedRead != null && (DateTime.Now - s.LastSavedRead.ReadDate).TotalSeconds >= config.system.WriteTempToDbInterval)))
                             {
+                                if (config.VerboseMode) Log.Information($"Writing Temp sensor value to Database. Sensor ID: {s.Id}, Value: {newRead.Value}");
                                 var newId = await DbProcessor.SaveSensorValueToDbAsync(s, Payload);
                                 if (newId > 0) newRead.IsSavedToDb = true;
                             }
-                            if (s.Values.Count >= config.MaxSensorReadCount)
+                            if (s.Values.Count >= config.system.MaxSensorReadCount)
                             {
+                                if (config.VerboseMode) Log.Information($"Count of Temp value list exceeded its limit. Removing the oldest one. Sensor ID: {s.Id}, Count: {s.Values.Count}");
                                 s.Values.RemoveOldestNotSaved();
                             }
                             s.Values.Add(newRead);
-                            Log.Information($"Sensor value received: {s.LastRead.ReadDate} : {s.LastRead.Value}");
+                            if (config.VerboseMode) Log.Information($"Sensor value received: {s.LastRead.ReadDate}, : {s.LastRead.Value}, Count: {s.Values.Count}");
                         }
                     }
                 }
@@ -102,30 +133,6 @@ namespace ElmaSmartFarm.Service
             if (e == null) return;
             e.DateErased = DateTime.Now;
             //Update db.
-        }
-
-        private void AddSensorError(SensorBaseModel model, List<SensorErrorModel> Errors, SensorErrorType errorType)
-        {
-            if (Errors == null) Errors = new();
-            var e = Errors.Where(e => e.ErrorType == errorType && e.DateErased == null);
-            if (e != null && e.Count() > 0) return;
-            SensorErrorModel newError = new()
-            {
-                SensorId = model.Id,
-                ErrorType = errorType,
-                LocationId = model.LocationId,
-                Section = model.Section,
-                DateHappened = DateTime.Now
-            };
-            Errors.Add(newError);
-            //Update db.
-
-            if (Errors.Count > config.MaxSensorErrorCount) //Remove oldest record.
-            {
-                var error = Errors.Where(x => x.DateErased != null)?.MinBy(x => x.DateErased);
-                if (error != null) Errors.Remove(error);
-                else Log.Warning($"Error count in Sensor Id: {Errors[0].SensorId} hass reached limit but not erased! (System Error).");
-            }
         }
 
         private List<TemperatureSensorModel>? FindTempSensorsById(int id)

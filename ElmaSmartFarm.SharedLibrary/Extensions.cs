@@ -1,4 +1,5 @@
 ﻿using ElmaSmartFarm.SharedLibrary.Models.Sensors;
+using Serilog;
 using System.Globalization;
 
 namespace ElmaSmartFarm.SharedLibrary
@@ -105,6 +106,38 @@ namespace ElmaSmartFarm.SharedLibrary
                     return true;
                 }
             return false;
+        }
+
+        public static bool AddError(this TemperatureSensorModel s, SensorErrorType t, int MaxSensorErrorCount)
+        {
+            if (s.Errors == null) s.Errors = new();
+            var e = s.Errors.Where(e => e.ErrorType == t && e.DateErased == null);
+            if (e != null && e.Any()) return false;
+            SensorErrorModel newError = new()
+            {
+                SensorId = s.Id,
+                ErrorType = t,
+                LocationId = s.LocationId,
+                Section = s.Section,
+                DateHappened = DateTime.Now
+            };
+            s.Errors.Add(newError);
+            if (s.Errors.Count > MaxSensorErrorCount) //Remove oldest record.
+            {
+                var error = s.Errors.Where(x => x.DateErased != null)?.MinBy(x => x.DateErased);
+                if (error != null) s.Errors.Remove(error);
+                else Log.Warning($"Error count in Sensor Id: {s.Errors[0].SensorId} hass reached limit but not erased! (System Error).");
+            }
+            return true;
+        }
+
+        public static bool EraseError(this TemperatureSensorModel s, SensorErrorType t)
+        {
+            if (s.Errors == null) return false;
+            var e = s.Errors.FirstOrDefault(e => e.ErrorType == t && e.DateErased == null);
+            if (e == null) return false;
+            e.DateErased = DateTime.Now;
+            return true;
         }
     }
 }

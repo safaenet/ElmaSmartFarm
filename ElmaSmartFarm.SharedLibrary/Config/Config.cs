@@ -6,8 +6,7 @@
         {
             DefaultConnectionString = SettingsDataAccess.AppConfiguration().GetSection("ConnectionStrings:default").Value;
             BaseUrl = SettingsDataAccess.AppConfiguration().GetSection("BaseUrl").Value;
-            MaxSensorErrorCount = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("max_sensor_error_count").Value ?? "10");
-            MaxSensorReadCount = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("max_sensor_read_count").Value ?? "10");
+            VerboseMode = bool.Parse(SettingsDataAccess.AppConfiguration().GetSection("verbose_mode").Value ?? "true");
             mqtt = new();
             system = new();
         }
@@ -15,8 +14,7 @@
         public MQTT mqtt { get; init; }
         public System system { get; set; }
         public string BaseUrl { get; init; }
-        public int MaxSensorErrorCount { get; set; }
-        public int MaxSensorReadCount { get; set; }
+        public bool VerboseMode { get; set; }
     }
 
     public class MQTT
@@ -66,6 +64,8 @@
     {
         public System()
         {
+            MaxSensorErrorCount = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("max_sensor_error_count").Value ?? "10");
+            MaxSensorReadCount = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("max_sensor_read_count").Value ?? "10");
             TempReadInterval = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("temperature:read_interval").Value ?? "30");
             FarmTempMinValue = double.Parse(SettingsDataAccess.AppConfiguration().GetSection("temperature:farm_min_value").Value ?? "20");
             FarmTempMaxValue = double.Parse(SettingsDataAccess.AppConfiguration().GetSection("temperature:farm_max_value").Value ?? "35");
@@ -73,13 +73,18 @@
             OutdoorTempMaxValue = double.Parse(SettingsDataAccess.AppConfiguration().GetSection("temperature:outdoor_max_value").Value ?? "60");
             TempMaxDifferValue = double.Parse(SettingsDataAccess.AppConfiguration().GetSection("temperature:max_differ_value").Value ?? "1");
             WriteTempToDbInterval = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("temperature:write_to_db_max_interval").Value ?? "30");
+            WriteOnValueChangeByDiffer = bool.Parse(SettingsDataAccess.AppConfiguration().GetSection("temperature:write_on_value_change_by_differ").Value ?? "true");
         }
+        public int MaxSensorErrorCount { get; set; }
+        public int MaxSensorReadCount { get; set; }
+
         public double TempReadInterval { get; set; }
         public double FarmTempMinValue { get; set; }
         public double FarmTempMaxValue { get; set; }
         public double OutdoorTempMinValue { get; set; }
         public double OutdoorTempMaxValue { get; set; }
         public double TempMaxDifferValue { get; set; }
+        public bool WriteOnValueChangeByDiffer { get; set; }
         public int WriteTempToDbInterval { get; set; }
 
         public double HumidReadInterval { get; set; }
