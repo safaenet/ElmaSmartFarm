@@ -108,19 +108,12 @@ namespace ElmaSmartFarm.SharedLibrary
             return false;
         }
 
-        public static bool AddError(this TemperatureSensorModel s, SensorErrorType t, int MaxSensorErrorCount)
+        public static bool AddError(this TemperatureSensorModel s, SensorErrorModel newError, SensorErrorType t, int MaxSensorErrorCount)
         {
+            if (s == null || newError == null) return false;
             if (s.Errors == null) s.Errors = new();
             var e = s.Errors.Where(e => e.ErrorType == t && e.DateErased == null);
             if (e != null && e.Any()) return false;
-            SensorErrorModel newError = new()
-            {
-                SensorId = s.Id,
-                ErrorType = t,
-                LocationId = s.LocationId,
-                Section = s.Section,
-                DateHappened = DateTime.Now
-            };
             s.Errors.Add(newError);
             if (s.Errors.Count > MaxSensorErrorCount) //Remove oldest record.
             {
@@ -131,12 +124,12 @@ namespace ElmaSmartFarm.SharedLibrary
             return true;
         }
 
-        public static bool EraseError(this TemperatureSensorModel s, SensorErrorType t)
+        public static bool EraseError(this TemperatureSensorModel s, SensorErrorType t, DateTime now)
         {
             if (s.Errors == null) return false;
             var e = s.Errors.FirstOrDefault(e => e.ErrorType == t && e.DateErased == null);
             if (e == null) return false;
-            e.DateErased = DateTime.Now;
+            e.DateErased = now;
             return true;
         }
     }

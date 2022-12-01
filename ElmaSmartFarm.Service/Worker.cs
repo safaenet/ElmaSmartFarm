@@ -20,8 +20,8 @@ namespace ElmaSmartFarm.Service
         private MqttFactory mqttFactory;
         private IMqttClient mqttClient;
         private MqttClientOptions options;
-        private List<PoultryModel> poultries;
-        private List<FarmModel> farms;
+        private List<PoultryModel> Poultries;
+        private List<MqttMessageModel> UnknownMqttMessages = new();
 
         public override async Task<Task> StartAsync(CancellationToken cancellationToken)
         {
@@ -38,8 +38,7 @@ namespace ElmaSmartFarm.Service
             mqttClient.ConnectedAsync += MqttClient_ConnectedAsync;
             mqttClient.DisconnectedAsync += MqttClient_DisconnectedAsync;
 
-            poultries = await DbProcessor.LoadPoultries();
-            farms = ((from p in poultries select p.Farms) as List<FarmModel>) ?? new();
+            Poultries = await DbProcessor.LoadPoultriesAsync();
             await TryReconnectAsync();
             return base.StartAsync(cancellationToken);
         }

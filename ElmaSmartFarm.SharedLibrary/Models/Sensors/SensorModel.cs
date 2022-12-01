@@ -7,6 +7,7 @@
         public int BatteryLevel { get; set; }
         public DateTime? KeepAliveMessageDate { get; set; }
         public List<SensorErrorModel> Errors { get; set; }
+        public SensorErrorModel LastError => Errors?.MaxBy(x => x.DateHappened);
         public bool HasError => IsEnabled && Errors != null && Errors.Any(e => e.DateErased == null);
     }
 }

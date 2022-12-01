@@ -23,14 +23,6 @@ namespace ElmaSmartFarm.DataLibraryCore.SqlServer
 
         private readonly IDataAccess DataAccess;
         private readonly Config config;
-        private readonly string SaveTempSensorData = @"
-            DECLARE @isEnabled bit; SET @isEnabled = (SELECT [IsEnabled] FROM [TemperatureSensors] WHERE [Id] = @sensorId);
-            IF ISNULL(@isEnabled, 0) = 1 BEGIN
-                DECLARE @offset decimal(5, 2); SET @offset = (SELECT [OffsetValue] FROM [TemperatureSensors] WHERE [Id] = @sensorId);
-                DECLARE @newId int; SET @newId = (SELECT ISNULL(MAX([Id]), 0) FROM [TemperatureValues]) + 1;
-                SET @sensorValue = @sensorValue + @offset;
-                INSERT INTO [TemperatureValues] ([Id], [SensorId], [ReadDate], [SensorValue]) VALUES (@newId, @sensorId, @readDate, @sensorValue);
-            END";
         private readonly string LoadPoultriesQuery = @$"SELECT l.* FROM dbo.Locations l WHERE l.Type = {(int)LocationType.Poultry};";
         private readonly string LoadFarmsQuery = $@"SELECT f.*, l.[Name], l.IsEnabled, l.Descriptions FROM Farms f LEFT JOIN dbo.Locations l ON f.Id = l.Id WHERE f.PoultryId IN (SELECT p.Id FROM Locations p WHERE p.[Type] = {(int)LocationType.Poultry});";
         private const string LoadScalarSensorsQuery = @"SELECT s.*, sd.[Name], sd.LocationId, sd.Section, hsd.OffsetValue FROM dbo.SensorDetails sd LEFT JOIN dbo.Sensors s ON sd.SensorId = s.Id LEFT JOIN dbo.{0} hsd ON s.Id = hsd.SensorId WHERE s.[Type] = {1};";
@@ -52,31 +44,65 @@ namespace ElmaSmartFarm.DataLibraryCore.SqlServer
             SELECT * FROM dbo.ChickenLosses cl WHERE cl.PeriodId IN (SELECT p.Id FROM dbo.[Periods] p WHERE p.EndDate = NULL);
             SELECT * FROM dbo.Feeds f WHERE f.PeriodId IN (SELECT p.Id FROM dbo.[Periods] p WHERE p.EndDate = NULL);";
 
-        private const string LoadSensorErrors = "SELECT * FROM dbo.SensorErrorLogs WHERE DateErased = NULL";
-        private const string LoadFarmInPeriodErrors = "SELECT * FROM FarmInPeriodErrorLogs WHERE DateErased = NULL";
-        private const string LoadPoultryInPeriodErrors = "SELECT * FROM PoultryInPeriodErrorLogs WHERE DateErased = NULL";
+        private const string LoadSensorErrors = "SELECT * FROM dbo.SensorErrorLogs WHERE DateErased = NULL;";
+        private const string LoadFarmInPeriodErrors = "SELECT * FROM FarmInPeriodErrorLogs WHERE DateErased = NULL;";
+        private const string LoadPoultryInPeriodErrors = "SELECT * FROM PoultryInPeriodErrorLogs WHERE DateErased = NULL;";
 
-        private readonly string WriteScalarSensorValueToDbCmd = @"DECLARE @newId int; SET @newId = (SELECT ISNULL(MAX([Id]), 0) FROM [{0}]) + 1;
+        private readonly string WriteScalarSensorValueCmd = @"DECLARE @newId int; SET @newId = (SELECT ISNULL(MAX([Id]), 0) FROM [{0}]) + 1;
             INSERT INTO {0}(Id, LocationId, Section, SensorId, ReadDate, SensorValue)
-            VALUES(@newId, @locationId, @section, @sensorId, @readDate, @sensorValue);
-            SELECT @id = @newId;";
+            VALUES(@newId, @LocationId, @Section, @SensorId, @ReadDate, @SensorValue);
+            SELECT @Id = @newId;";
+        private readonly string WriteSensorErrorCmd = @"DECLARE @newId int; SET @newId = (SELECT ISNULL(MAX([Id]), 0) FROM [SensorErrorLogs]) + 1;
+            INSERT INTO SensorErrorLogs (Id, SensorId, LocationId, Section, ErrorType, DateHappened, Descriptions)
+            VALUES (@newId, @SensorId, @LocationId, @Section, @ErrorType, @DateHappened, @Descriptions);";
+        private readonly string EraseSensorErrorCmd = @"UPDATE SensorErrorLogs SET DateErased = @DateErased WHERE SensorId = @SensorId AND LocationId = @LocationId AND Section = @Section AND ErrorType = @ErrorType;";
 
-        public async Task<int> SaveSensorValueToDbAsync(TemperatureSensorModel sensor, double value)
+        public async Task<int> SaveSensorValueToDbAsync(TemperatureSensorModel sensor, double value, DateTime now)
         {
             DynamicParameters dp = new();
-            dp.Add("@id", 0, System.Data.DbType.Int32,System.Data.ParameterDirection.Output);
-            dp.Add("@locationId", sensor.LocationId);
-            dp.Add("@section", sensor.Section);
-            dp.Add("@sensorId", sensor.Id);
-            dp.Add("@readDate", DateTime.Now);
-            dp.Add("@sensorValue", value + sensor.Offset);
-            var sql = string.Format(WriteScalarSensorValueToDbCmd, "TemperatureValues");
+            dp.Add("@Id", 0, System.Data.DbType.Int32,System.Data.ParameterDirection.Output);
+            dp.Add("@LocationId", sensor.LocationId);
+            dp.Add("@Section", sensor.Section);
+            dp.Add("@SensorId", sensor.Id);
+            dp.Add("@ReadDate", now);
+            dp.Add("@SensorValue", value + sensor.Offset);
+            var sql = string.Format(WriteScalarSensorValueCmd, "TemperatureValues");
             _ = await DataAccess.SaveDataAsync(sql, dp);
-            var newId = dp.Get<int>("@id");
+            var newId = dp.Get<int>("@Id");
             return newId;
         }
 
-        public async Task<List<PoultryModel>> LoadPoultries()
+        public async Task<int> WriteSensorErrorToDbAsync(SensorErrorModel error, DateTime now)
+        {
+            DynamicParameters dp = new();
+            dp.Add("@Id", 0, System.Data.DbType.Int32,System.Data.ParameterDirection.Output);
+            dp.Add("@SensorId", error.SensorId);
+            dp.Add("@LocationId", error.LocationId);
+            dp.Add("@Section", error.Section);
+            dp.Add("@ErrorType", error.ErrorType);
+            dp.Add("@DateHappened", now);
+            dp.Add("@Descriptions", error.Descriptions);
+            _ = await DataAccess.SaveDataAsync(WriteSensorErrorCmd, dp);
+            var newId = dp.Get<int>("@Id");
+            if(newId == 0) Log.Error($"Error when writing sensor error. Sensor ID: {error.SensorId}, Location: {error.LocationId}, Section: {error.Section}, Error Type: {error.ErrorType}. (System Error)");
+            return newId;
+        }
+
+        public async Task<bool> EraseSensorErrorFromDbAsync(SensorBaseModel sensor, SensorErrorType type, DateTime eraseDate)
+        {
+            if (config.VerboseMode) Log.Information($"Updating sensor KeepAlive error in database. Sensor ID: {sensor.Id}, LocationID: {sensor.LocationId}, Section: {sensor.Section}");
+            DynamicParameters dp = new();
+            dp.Add("@SensorId", sensor.Id);
+            dp.Add("@LocationId", sensor.LocationId);
+            dp.Add("@Section", sensor.Section);
+            dp.Add("@ErrorType", type);
+            dp.Add("@DateErased", eraseDate);
+            var i = await DataAccess.SaveDataAsync(EraseSensorErrorCmd, dp);
+            if (i == 0) Log.Error($"Error when erasing sensor error. Sensor Type: {sensor.Type}, Sensor ID: {sensor.Id}, Location: {sensor.LocationId}, Section: {sensor.Section}, ErrorType: {type}. (System Error)");
+            return i > 0;
+        }
+
+        public async Task<List<PoultryModel>> LoadPoultriesAsync()
         {
             var poultries = (await DataAccess.LoadDataAsync<PoultryModel, DynamicParameters>(LoadPoultriesQuery, null)).ToList();
             if (poultries != null && poultries.Any())
@@ -85,7 +111,7 @@ namespace ElmaSmartFarm.DataLibraryCore.SqlServer
                 var outdoorTempSensors = await DataAccess.LoadDataAsync<TemperatureSensorModel, DynamicParameters>(LoadOutdoorTempSensorQuery, null);
                 var outdoorHumidSensors = await DataAccess.LoadDataAsync<HumiditySensorModel, DynamicParameters>(LoadOutdoorHumidSensorQuery, null);
                 var poultryInPeriodErrors = await DataAccess.LoadDataAsync<PoultryInPeriodErrorModel, DynamicParameters>(LoadPoultryInPeriodErrors, null);
-                var periods = await LoadActivePeriods();
+                var periods = await LoadActivePeriodsAsync();
                 if (farms != null && farms.Any())
                 {
                     var farmTempSensors = await DataAccess.LoadDataAsync<TemperatureSensorModel, DynamicParameters>(LoadFarmTempSensorQuery, null);
@@ -136,7 +162,7 @@ namespace ElmaSmartFarm.DataLibraryCore.SqlServer
             return poultries;
         }
 
-        private async Task<IEnumerable<PeriodModel>> LoadActivePeriods()
+        private async Task<IEnumerable<PeriodModel>> LoadActivePeriodsAsync()
         {
             using System.Data.IDbConnection conn = new SqlConnection(config.DefaultConnectionString);
             var reader = await conn.QueryMultipleAsync(LoadActivePeriodsQuery, null);

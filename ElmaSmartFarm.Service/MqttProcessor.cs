@@ -10,6 +10,7 @@ namespace ElmaSmartFarm.Service
         private async Task<int> ProcessMqttMessageAsync(MqttMessageModel mqtt)
         {
             if (mqtt == null) return -1;
+            var Now = DateTime.Now;
             if (mqtt.Topic.StartsWith(config.mqtt.FullTemperatureTopic)) //Temp Sensor
             {
                 if (config.VerboseMode) Log.Information($"MQTT Message is from a Temp sensor. Topic: {mqtt.Topic}, Payload: {mqtt.Payload}");
@@ -19,7 +20,7 @@ namespace ElmaSmartFarm.Service
                     int SensorId = GetSensorIdFromTopic(mqtt, config.mqtt.FullTemperatureTopic + config.mqtt.KeepAliveSubTopic);
                     if(SensorId == 0)
                     {
-                        //AddToUnknownList(); //Add mqtt to invalid list.
+                        if (!UnknownMqttMessages.Any(m => m.Topic == mqtt.Topic)) UnknownMqttMessages.Add(mqtt);
                         Log.Warning($"Invalid KeepAlive MQTT message. Topic: {mqtt.Topic} , Payload: {mqtt.Payload}");
                         return -1;
                     }
@@ -27,7 +28,7 @@ namespace ElmaSmartFarm.Service
                     var sensors = FindTempSensorsById(SensorId);
                     if (sensors == null)
                     {
-                        //AddToUnknownList(); //Add sensor to unknown list.
+                        if (!UnknownMqttMessages.Any(m => m.Topic == mqtt.Topic)) UnknownMqttMessages.Add(mqtt);
                         Log.Warning($"Unknown Sensor sends KeepAlive. Topic: {mqtt.Topic} , Payload: {mqtt.Payload}");
                         return -1;
                     }
@@ -35,10 +36,9 @@ namespace ElmaSmartFarm.Service
                     {
                         if (config.VerboseMode) Log.Information($"Sensor ID is found in Poultries/Farms. Type: {s.Type}, LocationID: {s.LocationId}, Section: {s.Section}");
                         s.KeepAliveMessageDate = mqtt.ReadDate;
-                        if (s.Errors != null && s.EraseError(SensorErrorType.NotAlive))
+                        if (s.Errors != null && s.EraseError(SensorErrorType.NotAlive, Now))
                         {
-                            if (config.VerboseMode) Log.Information($"Updating sensor KeepAlive error in database. Sensor ID: {s.Id}, LocationID: {s.LocationId}, Section: {s.Section}");
-                            //Update error in db
+                            await DbProcessor.EraseSensorErrorFromDbAsync(s.AsBaseModel(), SensorErrorType.NotAlive, Now);
                         }
                     }
                 }
@@ -48,7 +48,7 @@ namespace ElmaSmartFarm.Service
                     int SensorId = GetSensorIdFromTopic(mqtt, config.mqtt.FullTemperatureTopic);
                     if (SensorId == 0)
                     {
-                        //AddToUnknownList(); //Add mqtt to invalid list.
+                        if (!UnknownMqttMessages.Any(m => m.Topic == mqtt.Topic)) UnknownMqttMessages.Add(mqtt);
                         Log.Warning($"Invalid MQTT message. Topic: {mqtt.Topic} , Payload: {mqtt.Payload}");
                         return -1;
                     }
@@ -56,19 +56,22 @@ namespace ElmaSmartFarm.Service
                     var sensors = FindTempSensorsById(SensorId);
                     if (sensors == null)
                     {
-                        //AddToUnknownList(); //Add sensor to unknown list.
+                        if (!UnknownMqttMessages.Any(m => m.Topic == mqtt.Topic)) UnknownMqttMessages.Add(mqtt);
                         Log.Warning($"Unknown Temp Sensor sends value. Topic: {mqtt.Topic} , Payload: {mqtt.Payload}");
                         return -1;
                     }
                     if (!double.TryParse(mqtt.Payload, out double Payload))
                     {
+                        if (!UnknownMqttMessages.Any(m => m.Topic == mqtt.Topic)) UnknownMqttMessages.Add(mqtt);
                         Log.Warning($"A Sensor sends invalid data. Topic: {mqtt.Topic} , Payload: {mqtt.Payload}");
                         if (sensors != null) 
                             foreach (var s in sensors)
                             {
-                                if (s.AddError(SensorErrorType.InvalidValue, config.system.MaxSensorErrorCount))
+                                SensorErrorModel newErr = GenerateSensorError(s.AsBaseModel(), SensorErrorType.InvalidValue, $"Data: {mqtt.Payload}");
+                                if (s.AddError(newErr, SensorErrorType.InvalidValue, config.system.MaxSensorErrorCount))
                                 {
-                                    //Save error to Db
+                                    var newId = await DbProcessor.WriteSensorErrorToDbAsync(newErr, Now);
+                                    if (newId > 0) s.LastError.Id = newId;
                                 }
                             }
                         return -1;
@@ -76,33 +79,39 @@ namespace ElmaSmartFarm.Service
                     foreach (var s in sensors)
                     {
                         if (config.VerboseMode) Log.Information($"Sensor ID is found in Poultries/Farms. Type: {s.Type}, LocationID: {s.LocationId}, Section: {s.Section}");
-                        s.KeepAliveMessageDate = DateTime.Now;
-                        if (s.EraseError(SensorErrorType.NotAlive))
+                        s.KeepAliveMessageDate = Now;
+                        if (s.EraseError(SensorErrorType.NotAlive, Now))
                         {
-                            //Update error in db
+                            await DbProcessor.EraseSensorErrorFromDbAsync(s.AsBaseModel(), SensorErrorType.NotAlive, Now);
                         }
                         if ((s.Type == SensorType.FarmTemperature && (Payload < config.system.FarmTempMinValue || Payload > config.system.FarmTempMaxValue)) || (s.Type == SensorType.OutdoorTemperature && (Payload < config.system.OutdoorTempMinValue || Payload > config.system.OutdoorTempMaxValue))) //Invalid value.
                         {
                             Log.Error($"A Temp Sensor sends invalid value. Topic: {mqtt.Topic} , Payload: {mqtt.Payload}");
-                            if (s.AddError(SensorErrorType.InvalidValue, config.system.MaxSensorErrorCount))
+                            SensorErrorModel newErr = GenerateSensorError(s.AsBaseModel(), SensorErrorType.InvalidValue, $"Data: {mqtt.Payload}");
+                            if (s.AddError(newErr, SensorErrorType.InvalidValue, config.system.MaxSensorErrorCount))
                             {
-                                //Save error to db
+                                var newId = await DbProcessor.WriteSensorErrorToDbAsync(newErr, Now);
+                                if (newId > 0) s.LastError.Id = newId;
                             }
                         }
                         else //Sensor Valid, Value Valid.
                         {
                             if (config.VerboseMode) Log.Information($"Sensor is valid; Value is valid. Type: {s.Type}, LocationID: {s.LocationId}, Section: {s.Section}");
-                            if (s.EraseError(SensorErrorType.InvalidValue))
+                            if (s.EraseError(SensorErrorType.InvalidValue, Now))
                             {
-                                //Update error in db
+                                await DbProcessor.EraseSensorErrorFromDbAsync(s.AsBaseModel(), SensorErrorType.InvalidValue, Now);
                             }
                             if (s.Values == null) s.Values = new();
-                            SensorReadModel<double> newRead = new() { Value = Payload, ReadDate = DateTime.Now };
+                            SensorReadModel<double> newRead = new() { Value = Payload, ReadDate = Now };
                             if (s.IsWatched && (s.Values.Count == 0 || s.LastSavedRead == null || (config.system.WriteOnValueChangeByDiffer && Math.Abs(s.LastRead.Value - Payload) >= config.system.TempMaxDifferValue) || (s.LastSavedRead != null && (DateTime.Now - s.LastSavedRead.ReadDate).TotalSeconds >= config.system.WriteTempToDbInterval)))
                             {
                                 if (config.VerboseMode) Log.Information($"Writing Temp sensor value to Database. Sensor ID: {s.Id}, Value: {newRead.Value}");
-                                var newId = await DbProcessor.SaveSensorValueToDbAsync(s, Payload);
-                                if (newId > 0) newRead.IsSavedToDb = true;
+                                var newId = await DbProcessor.SaveSensorValueToDbAsync(s, Payload, Now);
+                                if (newId > 0) 
+                                {
+                                    newRead.IsSavedToDb = true;
+                                    newRead.Id = newId;
+                                }
                             }
                             if (s.Values.Count >= config.system.MaxSensorReadCount)
                             {
@@ -115,7 +124,21 @@ namespace ElmaSmartFarm.Service
                     }
                 }
             }
+            UnknownMqttMessages.Remove(mqtt);
             return 0;
+        }
+
+        private SensorErrorModel GenerateSensorError(SensorBaseModel sensor, SensorErrorType type, string description = "")
+        {
+            return new SensorErrorModel()
+            {
+                SensorId = sensor.Id,
+                LocationId = sensor.LocationId,
+                Section = sensor.Section,
+                ErrorType = type,
+                DateHappened = DateTime.Now,
+                Descriptions = description
+            };
         }
 
         private int GetSensorIdFromTopic(MqttMessageModel mqtt, string TopicTemplate)
@@ -126,64 +149,55 @@ namespace ElmaSmartFarm.Service
             return SensorId;
         }
 
-        private void EraseSensorError(List<SensorErrorModel> Errors, SensorErrorType errorType)
-        {
-            if (Errors == null) return;
-            var e = Errors.FirstOrDefault(e => e.ErrorType == errorType);
-            if (e == null) return;
-            e.DateErased = DateTime.Now;
-            //Update db.
-        }
-
         private List<TemperatureSensorModel>? FindTempSensorsById(int id)
         {
-            if (poultries == null) return null;
+            if (Poultries == null) return null;
             List<TemperatureSensorModel>? sensors = new();
-            sensors.AddRange(from p in poultries where p != null && p.OutdoorTemperature != null && p.OutdoorTemperature.Id == id select p.OutdoorTemperature);
-            sensors.AddRange(from s in poultries.SelectMany(p => p.Farms.SelectMany(f => f.Temperatures.Sensors)) where s != null && s.Id == id select s);
+            sensors.AddRange(from p in Poultries where p != null && p.OutdoorTemperature != null && p.OutdoorTemperature.Id == id select p.OutdoorTemperature);
+            sensors.AddRange(from s in Poultries.SelectMany(p => p.Farms.SelectMany(f => f.Temperatures.Sensors)) where s != null && s.Id == id select s);
             if (sensors.Count > 0) return sensors; else return null;
         }
 
         private List<HumiditySensorModel>? FindHumidSensorsById(int id)
         {
-            if (poultries == null) return null;
+            if (Poultries == null) return null;
             List<HumiditySensorModel>? sensors = new();
-            sensors.AddRange(from p in poultries where p != null && p.OutdoorHumidity.Id == id select p.OutdoorHumidity);
-            sensors.AddRange(from s in poultries.SelectMany(p => p.Farms.SelectMany(f => f.Humidities.Sensors)) where s != null && s.Id == id select s);
+            sensors.AddRange(from p in Poultries where p != null && p.OutdoorHumidity.Id == id select p.OutdoorHumidity);
+            sensors.AddRange(from s in Poultries.SelectMany(p => p.Farms.SelectMany(f => f.Humidities.Sensors)) where s != null && s.Id == id select s);
             if (sensors.Count > 0) return sensors; else return null;
         }
 
         private List<AmbientLightSensorModel>? FindAmbientLightSensorsById(int id)
         {
-            if (poultries == null) return null;
+            if (Poultries == null) return null;
             List<AmbientLightSensorModel>? sensors = new();
-            sensors.AddRange(from s in poultries.SelectMany(p => p.Farms.SelectMany(f => f.AmbientLights.Sensors)) where s != null && s.Id == id select s);
+            sensors.AddRange(from s in Poultries.SelectMany(p => p.Farms.SelectMany(f => f.AmbientLights.Sensors)) where s != null && s.Id == id select s);
             if (sensors.Count > 0) return sensors; else return null;
         }
 
         private List<PushButtonSensorModel>? FindPushButtonSensorsById(int id)
         {
-            if (poultries == null) return null;
+            if (Poultries == null) return null;
             List<PushButtonSensorModel>? sensors = new();
-            sensors.AddRange(from s in poultries.SelectMany(p => p.Farms.SelectMany(f => f.Checkups.Sensors)) where s != null && s.Id == id select s);
-            sensors.AddRange(from s in poultries.SelectMany(p => p.Farms.SelectMany(f => f.Feeds.Sensors)) where s != null && s.Id == id select s);
+            sensors.AddRange(from s in Poultries.SelectMany(p => p.Farms.SelectMany(f => f.Checkups.Sensors)) where s != null && s.Id == id select s);
+            sensors.AddRange(from s in Poultries.SelectMany(p => p.Farms.SelectMany(f => f.Feeds.Sensors)) where s != null && s.Id == id select s);
             if (sensors.Count > 0) return sensors; else return null;
         }
 
         private List<BinarySensorModel>? FindBinarySensorsById(int id)
         {
-            if (poultries == null) return null;
+            if (Poultries == null) return null;
             List<BinarySensorModel>? sensors = new();
-            sensors.AddRange(from p in poultries where p != null && p.MainElectricPower.Id == id select p.MainElectricPower);
-            sensors.AddRange(from p in poultries where p != null && p.BackupElectricPower.Id == id select p.BackupElectricPower);
-            sensors.AddRange(from s in poultries.SelectMany(p => p.Farms.SelectMany(f => f.ElectricPowers.Sensors)) where s != null && s.Id == id select s);
+            sensors.AddRange(from p in Poultries where p != null && p.MainElectricPower.Id == id select p.MainElectricPower);
+            sensors.AddRange(from p in Poultries where p != null && p.BackupElectricPower.Id == id select p.BackupElectricPower);
+            sensors.AddRange(from s in Poultries.SelectMany(p => p.Farms.SelectMany(f => f.ElectricPowers.Sensors)) where s != null && s.Id == id select s);
             if (sensors.Count > 0) return sensors; else return null;
         }
 
         private TemperatureSensorModel? FindFarmTempSensorById(int id)
         {
-            if (poultries == null) return null;
-            foreach (var p in poultries)
+            if (Poultries == null) return null;
+            foreach (var p in Poultries)
             {
                 if (p.Farms == null || p.Farms.Count == 0) continue;
                 foreach (var f in p.Farms)
@@ -197,8 +211,8 @@ namespace ElmaSmartFarm.Service
 
         private HumiditySensorModel? FindFarmHumidSensorById(int id)
         {
-            if (poultries == null) return null;
-            foreach (var p in poultries)
+            if (Poultries == null) return null;
+            foreach (var p in Poultries)
             {
                 if (p.Farms == null || p.Farms.Count == 0) continue;
                 foreach (var f in p.Farms)
@@ -212,8 +226,8 @@ namespace ElmaSmartFarm.Service
 
         private AmbientLightSensorModel? FindFarmAmbientLightSensorById(int id)
         {
-            if (poultries == null) return null;
-            foreach (var p in poultries)
+            if (Poultries == null) return null;
+            foreach (var p in Poultries)
             {
                 if (p.Farms == null || p.Farms.Count == 0) continue;
                 foreach (var f in p.Farms)
@@ -227,8 +241,8 @@ namespace ElmaSmartFarm.Service
 
         private PushButtonSensorModel? FindFarmPushButtonSensorById(int id) //Feed and Checkup
         {
-            if (poultries == null) return null;
-            foreach (var p in poultries)
+            if (Poultries == null) return null;
+            foreach (var p in Poultries)
             {
                 if (p.Farms == null || p.Farms.Count == 0) continue;
                 foreach (var f in p.Farms)
@@ -244,8 +258,8 @@ namespace ElmaSmartFarm.Service
 
         private CommuteSensorModel? FindFarmCommuteSensorById(int id)
         {
-            if (poultries == null) return null;
-            foreach (var p in poultries)
+            if (Poultries == null) return null;
+            foreach (var p in Poultries)
             {
                 if (p.Farms == null || p.Farms.Count == 0) continue;
                 foreach (var f in p.Farms)
@@ -259,8 +273,8 @@ namespace ElmaSmartFarm.Service
 
         private BinarySensorModel? FindFarmElectricPowerSensorById(int id)
         {
-            if (poultries == null) return null;
-            foreach (var p in poultries)
+            if (Poultries == null) return null;
+            foreach (var p in Poultries)
             {
                 if (p.Farms == null || p.Farms.Count == 0) continue;
                 foreach (var f in p.Farms)
@@ -274,17 +288,17 @@ namespace ElmaSmartFarm.Service
 
         private List<TemperatureSensorModel>? FindOutdoorTempSensorById(int id)
         {
-            if (poultries == null) return null;
+            if (Poultries == null) return null;
             List<TemperatureSensorModel>? sensors = new();
-            foreach (var p in poultries) if (p.OutdoorTemperature != null && p.OutdoorTemperature.Id == id) sensors.Add(p.OutdoorTemperature);
+            foreach (var p in Poultries) if (p.OutdoorTemperature != null && p.OutdoorTemperature.Id == id) sensors.Add(p.OutdoorTemperature);
             if (sensors.Count == 0) return null; else return sensors;
         }
 
         private List<HumiditySensorModel>? FindOutdoorHumidSensorById(int id)
         {
-            if (poultries == null) return null;
+            if (Poultries == null) return null;
             List<HumiditySensorModel>? sensors = new();
-            foreach (var p in poultries) if (p.OutdoorHumidity != null && p.OutdoorHumidity.Id == id) sensors.Add(p.OutdoorHumidity);
+            foreach (var p in Poultries) if (p.OutdoorHumidity != null && p.OutdoorHumidity.Id == id) sensors.Add(p.OutdoorHumidity);
             if (sensors.Count == 0) return null; else return sensors;
         }
     }
