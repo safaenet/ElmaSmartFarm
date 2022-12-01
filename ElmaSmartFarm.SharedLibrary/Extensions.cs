@@ -94,5 +94,17 @@ namespace ElmaSmartFarm.SharedLibrary
                 Descriptions = s.Descriptions
             };
         }
+
+        public static bool RemoveOldestNotSaved<T>(this List<SensorReadModel<T>> l)
+        {
+            if (l == null || l.Count == 0) return false;
+            for (int i = 0; i < l.Count; i++)
+                if (l[i].IsSavedToDb == false)
+                {
+                    l.Remove(l[i]);
+                    return true;
+                }
+            return false;
+        }
     }
 }

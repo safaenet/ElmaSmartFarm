@@ -69,12 +69,16 @@ namespace ElmaSmartFarm.Service
                             EraseSensorError(s.Errors, SensorErrorType.InvalidValue);
                             if (s.Values == null) s.Values = new();
                             SensorReadModel<double> newRead = new() { Value = Payload, ReadDate = DateTime.Now };
-                            if (s.Values.Count == 0 || Math.Abs(s.LastRead.Value - Payload) >= config.system.TempMaxDifferValue || (DateTime.Now - s.LastRead.ReadDate).TotalSeconds >= config.system.WriteTempToDbInterval)
+                            if (s.IsWatched && (s.Values.Count == 0 || s.LastSavedRead == null || Math.Abs(s.LastRead.Value - Payload) >= config.system.TempMaxDifferValue || (s.LastSavedRead != null && (DateTime.Now - s.LastSavedRead.ReadDate).TotalSeconds >= config.system.WriteTempToDbInterval)))
                             {
-                                await DbProcessor.SaveSensorValueToDbAsync(s, Payload);
+                                var newId = await DbProcessor.SaveSensorValueToDbAsync(s, Payload);
+                                if (newId > 0) newRead.IsSavedToDb = true;
+                            }
+                            if (s.Values.Count >= config.MaxSensorReadCount)
+                            {
+                                s.Values.RemoveOldestNotSaved();
                             }
                             s.Values.Add(newRead);
-                            if (s.Values.Count > config.MaxSensorReadCount) s.Values.Remove(s.OldestRead);
                             Log.Information($"Sensor value received: {s.LastRead.ReadDate} : {s.LastRead.Value}");
                         }
                     }
@@ -104,7 +108,7 @@ namespace ElmaSmartFarm.Service
         {
             if (Errors == null) Errors = new();
             var e = Errors.Where(e => e.ErrorType == errorType && e.DateErased == null);
-            if (e != null) return;
+            if (e != null && e.Count() > 0) return;
             SensorErrorModel newError = new()
             {
                 SensorId = model.Id,

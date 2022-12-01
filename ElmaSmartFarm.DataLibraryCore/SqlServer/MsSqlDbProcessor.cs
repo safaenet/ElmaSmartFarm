@@ -76,21 +76,6 @@ namespace ElmaSmartFarm.DataLibraryCore.SqlServer
             return newId;
         }
 
-        public int SaveSensorValueToDb(TemperatureSensorModel sensor, double value)
-        {
-            DynamicParameters dp = new();
-            dp.Add("@id", 0, System.Data.DbType.Int32,System.Data.ParameterDirection.Output);
-            dp.Add("@locationId", sensor.LocationId);
-            dp.Add("@section", sensor.Section);
-            dp.Add("@sensorId", sensor.Id);
-            dp.Add("@readDate", DateTime.Now);
-            dp.Add("@sensorValue", value + sensor.Offset);
-            var sql = string.Format(WriteScalarSensorValueToDbCmd, "TemperatureValues");
-            DataAccess.SaveData(sql, dp);
-            var newId = dp.Get<int>("@id");
-            return newId;
-        }
-
         public async Task<List<PoultryModel>> LoadPoultries()
         {
             var poultries = (await DataAccess.LoadDataAsync<PoultryModel, DynamicParameters>(LoadPoultriesQuery, null)).ToList();

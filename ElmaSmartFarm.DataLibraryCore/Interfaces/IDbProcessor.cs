@@ -8,7 +8,6 @@ namespace ElmaSmartFarm.DataLibraryCore.Interfaces
     public interface IDbProcessor
     {
         Task<int> SaveSensorValueToDbAsync(TemperatureSensorModel sensor, double value);
-        int SaveSensorValueToDb(TemperatureSensorModel sensor, double value);
         Task<List<PoultryModel>> LoadPoultries();
     }
 }

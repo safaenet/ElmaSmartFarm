@@ -9,7 +9,7 @@
     "outdoor_min_value": -10,
     "outdoor_max_value":  60,
     "max_differ_value": 1, //Wont accept the incoming data if new value according to previous value increased/decreased more than this value. (Celsius)
-    "write_to_db_max_interval": 30 //(Seconds)
+    "write_to_db_max_interval": 10 //(Seconds)
   },
   "humidity": {
     "read_interval": 30, //(Seconds)
