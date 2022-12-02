@@ -58,7 +58,7 @@ namespace ElmaSmartFarm.DataLibraryCore.SqlServer
         private readonly string EraseSensorErrorCmd = @"UPDATE SensorErrorLogs SET DateErased = @DateErased WHERE DateErased IS NULL AND SensorId = @SensorId AND LocationId = @LocationId AND Section = @Section AND ErrorType = @ErrorType;";
         private readonly string EraseSensorErrorCmd2 = @"UPDATE SensorErrorLogs SET DateErased = @DateErased WHERE DateErased IS NULL AND SensorId = @SensorId AND ErrorType = @ErrorType;";
 
-        public async Task<int> WriteSensorValueToDbAsync(TemperatureSensorModel sensor, double value, DateTime now)
+        public async Task<int> WriteSensorValueToDbAsync(SensorModel sensor, double value, DateTime now, double offset = 0)
         {
             try
             {
@@ -69,8 +69,11 @@ namespace ElmaSmartFarm.DataLibraryCore.SqlServer
                 dp.Add("@Section", sensor.Section);
                 dp.Add("@SensorId", sensor.Id);
                 dp.Add("@ReadDate", now);
-                dp.Add("@SensorValue", value + sensor.Offset);
-                var sql = string.Format(WriteScalarSensorValueCmd, "TemperatureValues");
+                dp.Add("@SensorValue", value + offset);
+                string sql = string.Empty;
+                if (sensor.Type == SensorType.FarmTemperature || sensor.Type == SensorType.OutdoorTemperature) sql = string.Format(WriteScalarSensorValueCmd, "TemperatureValues");
+                else if (sensor.Type == SensorType.FarmHumidity || sensor.Type == SensorType.OutdoorHumidity) sql = string.Format(WriteScalarSensorValueCmd, "HumidityValues");
+                else if (sensor.Type == SensorType.FarmAmbientLight) sql = string.Format(WriteScalarSensorValueCmd, "AmbientLightValues");
                 _ = await DataAccess.SaveDataAsync(sql, dp);
                 var newId = dp.Get<int>("@Id");
                 return newId;

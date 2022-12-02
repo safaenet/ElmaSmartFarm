@@ -105,7 +105,7 @@ namespace ElmaSmartFarm.Service
                             SensorReadModel<double> newRead = new() { Value = Payload, ReadDate = Now };
                             if (s.IsWatched && (s.Values.Count == 0 || s.LastSavedRead == null || (config.system.WriteOnValueChangeByDiffer && Math.Abs(s.LastRead.Value - Payload) >= config.system.TempMaxDifferValue) || (s.LastSavedRead != null && (Now - s.LastSavedRead.ReadDate).TotalSeconds >= config.system.WriteTempToDbInterval))) //Writable to db.
                             {
-                                var newId = await DbProcessor.WriteSensorValueToDbAsync(s, Payload, Now);
+                                var newId = await DbProcessor.WriteSensorValueToDbAsync(s, Payload, Now, s.Offset);
                                 if (newId > 0)
                                 {
                                     newRead.IsSavedToDb = true;
@@ -134,7 +134,7 @@ namespace ElmaSmartFarm.Service
                         Log.Warning($"Unknown humid sensor sends value. Topic: {mqtt.Topic} , Payload: {mqtt.Payload}");
                         return -1;
                     }
-                    if (!double.TryParse(mqtt.Payload, out double Payload)) //Invalid data.
+                    if (!int.TryParse(mqtt.Payload, out int Payload)) //Invalid data.
                     {
                         AddMqttToUnknownList(mqtt);
                         Log.Warning($"A humid sensor sends invalid data. Topic: {mqtt.Topic} , Payload: {mqtt.Payload}");
@@ -179,7 +179,7 @@ namespace ElmaSmartFarm.Service
                             SensorReadModel<int> newRead = new() { Value = Payload, ReadDate = Now };
                             if (s.IsWatched && (s.Values.Count == 0 || s.LastSavedRead == null || (config.system.WriteOnValueChangeByDiffer && Math.Abs(s.LastRead.Value - Payload) >= config.system.TempMaxDifferValue) || (s.LastSavedRead != null && (Now - s.LastSavedRead.ReadDate).TotalSeconds >= config.system.WriteTempToDbInterval))) //Writable to db.
                             {
-                                var newId = await DbProcessor.WriteSensorValueToDbAsync(s, Payload, Now);
+                                var newId = await DbProcessor.WriteSensorValueToDbAsync(s, Payload, Now, s.Offset);
                                 if (newId > 0)
                                 {
                                     newRead.IsSavedToDb = true;

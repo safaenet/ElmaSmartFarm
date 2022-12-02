@@ -9,7 +9,7 @@ namespace ElmaSmartFarm.DataLibraryCore.Interfaces
 {
     public interface IDbProcessor
     {
-        Task<int> WriteSensorValueToDbAsync(TemperatureSensorModel sensor, double value, DateTime now);
+        Task<int> WriteSensorValueToDbAsync(SensorModel sensor, double value, DateTime now, double offset = 0);
         Task<List<PoultryModel>> LoadPoultriesAsync();
         Task<int> WriteSensorErrorToDbAsync(SensorErrorModel error, DateTime now);
         Task<bool> EraseSensorErrorFromDbAsync(SensorBaseModel sensor, SensorErrorType type, DateTime eraseDate);
