@@ -73,6 +73,7 @@
         public System()
         {
             MaxSensorErrorCount = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("max_sensor_error_count").Value ?? "10");
+            KeepAliveInterval = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("keep_alive_interval").Value ?? "15");
             MaxSensorReadCount = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("max_sensor_read_count").Value ?? "10");
             SensorLowBatteryLevel = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("sensor_low_battery_level").Value ?? "15");
             TempReadInterval = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("temperature:read_interval").Value ?? "30");
@@ -84,6 +85,7 @@
             WriteTempToDbInterval = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("temperature:write_to_db_max_interval").Value ?? "30");
             WriteOnValueChangeByDiffer = bool.Parse(SettingsDataAccess.AppConfiguration().GetSection("temperature:write_on_value_change_by_differ").Value ?? "true");
         }
+        public int KeepAliveInterval { get; set; }
         public int MaxSensorErrorCount { get; set; }
         public int MaxSensorReadCount { get; set; }
         public int SensorLowBatteryLevel { get; set; }

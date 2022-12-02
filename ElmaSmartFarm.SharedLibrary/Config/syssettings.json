@@ -1,5 +1,5 @@
 {
-  "sensor_keep_alive_interval": 15,
+  "keep_alive_interval": 15,
   "max_sensor_error_count": 10,
   "max_sensor_read_count": 10,
   "sensor_low_battery_level": 15,

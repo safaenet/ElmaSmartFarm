@@ -25,7 +25,12 @@ namespace ElmaSmartFarm.Service
                 if (SubTopics[1] == config.mqtt.KeepAliveSubTopic) //Keep Alive message from sensor.
                 {
                     if (config.VerboseMode) Log.Information($"MQTT Message is KeepAlive from a sensor. Topic: {mqtt.Topic}, Payload: {mqtt.Payload}");
-                    await UpdateSensorKeepAliveAsync(SensorId, Now);
+                    if (await UpdateSensorKeepAliveAsync(SensorId, Now) == 0)
+                    {
+                        Log.Warning($"An unregistered sensor is sending KeepAlive Mqtt message: {mqtt.Topic} , Payload: {mqtt.Payload}");
+                        AddMqttToUnknownList(mqtt);
+                        return -1;
+                    }
                 }
                 else if (SubTopics[1] == config.mqtt.IPAddressSubTopic) //IP Address message from sensor.
                 {
@@ -44,45 +49,46 @@ namespace ElmaSmartFarm.Service
                         return -1;
                     }
                 }
+                #region Temp Value Handler.
                 else if (SubTopics[1] == config.mqtt.TemperatureSubTopic) //Value from temp sensor.
                 {
                     if (config.VerboseMode) Log.Information($"MQTT Message is value from a temp sensor. Topic: {mqtt.Topic}, Payload: {mqtt.Payload}");
-                    var sensors = FindTempSensorsById(SensorId);
+                    var sensors = FindSensorsById<TemperatureSensorModel>(SensorId);
                     if (sensors == null)
                     {
                         AddMqttToUnknownList(mqtt);
-                        Log.Warning($"Unknown Temp Sensor sends value. Topic: {mqtt.Topic} , Payload: {mqtt.Payload}");
+                        Log.Warning($"Unknown temp sensor sends value. Topic: {mqtt.Topic} , Payload: {mqtt.Payload}");
                         return -1;
                     }
                     if (!double.TryParse(mqtt.Payload, out double Payload)) //Invalid data.
                     {
                         AddMqttToUnknownList(mqtt);
-                        Log.Warning($"A Sensor sends invalid data. Topic: {mqtt.Topic} , Payload: {mqtt.Payload}");
+                        Log.Warning($"A temp sensor sends invalid data. Topic: {mqtt.Topic} , Payload: {mqtt.Payload}");
                         if (sensors != null)
                             foreach (var s in sensors)
                             {
                                 SensorErrorModel newErr = GenerateSensorError(s.AsBaseModel(), SensorErrorType.InvalidData, Now, $"Data: {mqtt.Payload}");
-                                if (s.AddError(newErr, SensorErrorType.InvalidData, config.system.MaxSensorErrorCount))
+                                if (s.Errors.AddError(newErr, SensorErrorType.InvalidData, config.system.MaxSensorErrorCount))
                                 {
                                     var newId = await DbProcessor.WriteSensorErrorToDbAsync(newErr, Now);
                                     if (newId > 0) s.LastError.Id = newId;
                                 }
-                                s.EraseError(SensorErrorType.NotAlive, Now);
+                                s.Errors.EraseError(SensorErrorType.NotAlive, Now);
                                 await DbProcessor.EraseSensorErrorFromDbAsync(s.AsBaseModel(), SensorErrorType.NotAlive, Now);
                             }
                         return -1;
                     }
                     foreach (var s in sensors) //Sensor(s) found. Check value.
                     {
-                        if (config.VerboseMode) Log.Information($"Sensor ID is found in Poultries/Farms. Type: {s.Type}, LocationID: {s.LocationId}, Section: {s.Section}");
+                        if (config.VerboseMode) Log.Information($"Temp sensor ID is found in Poultries/Farms. Type: {s.Type}, LocationID: {s.LocationId}, Section: {s.Section}");
                         s.KeepAliveMessageDate = Now;
-                        s.EraseError(SensorErrorType.NotAlive, Now);
+                        s.Errors.EraseError(SensorErrorType.NotAlive, Now);
                         await DbProcessor.EraseSensorErrorFromDbAsync(s.AsBaseModel(), SensorErrorType.NotAlive, Now);
                         if ((s.Type == SensorType.FarmTemperature && (Payload < config.system.FarmTempMinValue || Payload > config.system.FarmTempMaxValue)) || (s.Type == SensorType.OutdoorTemperature && (Payload < config.system.OutdoorTempMinValue || Payload > config.system.OutdoorTempMaxValue))) //Invalid value.
                         {
-                            Log.Error($"A Temp Sensor sends invalid value. Topic: {mqtt.Topic} , Payload: {mqtt.Payload}");
+                            Log.Error($"A temp sensor sends invalid value. Topic: {mqtt.Topic} , Payload: {mqtt.Payload}");
                             SensorErrorModel newErr = GenerateSensorError(s.AsBaseModel(), SensorErrorType.InvalidValue, Now, $"Data: {mqtt.Payload}");
-                            if (s.AddError(newErr, SensorErrorType.InvalidValue, config.system.MaxSensorErrorCount))
+                            if (s.Errors.AddError(newErr, SensorErrorType.InvalidValue, config.system.MaxSensorErrorCount))
                             {
                                 var newId = await DbProcessor.WriteSensorErrorToDbAsync(newErr, Now);
                                 if (newId > 0) s.LastError.Id = newId;
@@ -90,10 +96,10 @@ namespace ElmaSmartFarm.Service
                         }
                         else //Sensor Valid, Value Valid.
                         {
-                            if (config.VerboseMode) Log.Information($"Sensor is valid; Value is valid. Type: {s.Type}, LocationID: {s.LocationId}, Section: {s.Section}");
-                            s.EraseError(SensorErrorType.InvalidData, Now);
+                            if (config.VerboseMode) Log.Information($"Temp sensor is valid; Value is valid. Type: {s.Type}, LocationID: {s.LocationId}, Section: {s.Section}");
+                            s.Errors.EraseError(SensorErrorType.InvalidData, Now);
                             await DbProcessor.EraseSensorErrorFromDbAsync(s.AsBaseModel(), SensorErrorType.InvalidData, Now);
-                            s.EraseError(SensorErrorType.InvalidValue, Now);
+                            s.Errors.EraseError(SensorErrorType.InvalidValue, Now);
                             await DbProcessor.EraseSensorErrorFromDbAsync(s.AsBaseModel(), SensorErrorType.InvalidValue, Now);
                             if (s.Values == null) s.Values = new();
                             SensorReadModel<double> newRead = new() { Value = Payload, ReadDate = Now };
@@ -108,14 +114,89 @@ namespace ElmaSmartFarm.Service
                             }
                             if (s.Values.Count >= config.system.MaxSensorReadCount)
                             {
-                                if (config.VerboseMode) Log.Information($"Count of Temp value list exceeded it's limit. Removing the oldest one. Sensor ID: {s.Id}, Count: {s.Values.Count}");
+                                if (config.VerboseMode) Log.Information($"Count of temp value list exceeded it's limit. Removing the oldest one. Sensor ID: {s.Id}, Count: {s.Values.Count}");
                                 s.Values.RemoveOldestNotSaved();
                             }
                             s.Values.Add(newRead);
-                            if (config.VerboseMode) Log.Information($"Sensor value received: {s.LastRead.ReadDate}, : {s.LastRead.Value}, Count: {s.Values.Count}");
+                            if (config.VerboseMode) Log.Information($"Temp sensor value done processing: {s.LastRead.ReadDate}, : {s.LastRead.Value}, Count: {s.Values.Count}");
                         }
                     }
                 }
+                #endregion
+                #region Humidity Value Handler.
+                else if (SubTopics[1] == config.mqtt.HumiditySubTopic) //Value from temp sensor.
+                {
+                    if (config.VerboseMode) Log.Information($"MQTT Message is value from a humid sensor. Topic: {mqtt.Topic}, Payload: {mqtt.Payload}");
+                    var sensors = FindSensorsById<HumiditySensorModel>(SensorId);
+                    if (sensors == null)
+                    {
+                        AddMqttToUnknownList(mqtt);
+                        Log.Warning($"Unknown humid sensor sends value. Topic: {mqtt.Topic} , Payload: {mqtt.Payload}");
+                        return -1;
+                    }
+                    if (!double.TryParse(mqtt.Payload, out double Payload)) //Invalid data.
+                    {
+                        AddMqttToUnknownList(mqtt);
+                        Log.Warning($"A humid sensor sends invalid data. Topic: {mqtt.Topic} , Payload: {mqtt.Payload}");
+                        if (sensors != null)
+                            foreach (var s in sensors)
+                            {
+                                SensorErrorModel newErr = GenerateSensorError(s.AsBaseModel(), SensorErrorType.InvalidData, Now, $"Data: {mqtt.Payload}");
+                                if (s.Errors.AddError(newErr, SensorErrorType.InvalidData, config.system.MaxSensorErrorCount))
+                                {
+                                    var newId = await DbProcessor.WriteSensorErrorToDbAsync(newErr, Now);
+                                    if (newId > 0) s.LastError.Id = newId;
+                                }
+                                s.Errors.EraseError(SensorErrorType.NotAlive, Now);
+                                await DbProcessor.EraseSensorErrorFromDbAsync(s.AsBaseModel(), SensorErrorType.NotAlive, Now);
+                            }
+                        return -1;
+                    }
+                    foreach (var s in sensors) //Sensor(s) found. Check value.
+                    {
+                        if (config.VerboseMode) Log.Information($"Humid sensor ID is found in Poultries/Farms. Type: {s.Type}, LocationID: {s.LocationId}, Section: {s.Section}");
+                        s.KeepAliveMessageDate = Now;
+                        s.Errors.EraseError(SensorErrorType.NotAlive, Now);
+                        await DbProcessor.EraseSensorErrorFromDbAsync(s.AsBaseModel(), SensorErrorType.NotAlive, Now);
+                        if ((Payload < config.system.HumidMinValue || Payload > config.system.HumidMaxValue)) //Invalid value.
+                        {
+                            Log.Error($"A humid sensor sends invalid value. Topic: {mqtt.Topic} , Payload: {mqtt.Payload}");
+                            SensorErrorModel newErr = GenerateSensorError(s.AsBaseModel(), SensorErrorType.InvalidValue, Now, $"Data: {mqtt.Payload}");
+                            if (s.Errors.AddError(newErr, SensorErrorType.InvalidValue, config.system.MaxSensorErrorCount))
+                            {
+                                var newId = await DbProcessor.WriteSensorErrorToDbAsync(newErr, Now);
+                                if (newId > 0) s.LastError.Id = newId;
+                            }
+                        }
+                        else //Sensor Valid, Value Valid.
+                        {
+                            if (config.VerboseMode) Log.Information($"Humid sensor is valid; Value is valid. Type: {s.Type}, LocationID: {s.LocationId}, Section: {s.Section}");
+                            s.Errors.EraseError(SensorErrorType.InvalidData, Now);
+                            await DbProcessor.EraseSensorErrorFromDbAsync(s.AsBaseModel(), SensorErrorType.InvalidData, Now);
+                            s.Errors.EraseError(SensorErrorType.InvalidValue, Now);
+                            await DbProcessor.EraseSensorErrorFromDbAsync(s.AsBaseModel(), SensorErrorType.InvalidValue, Now);
+                            if (s.Values == null) s.Values = new();
+                            SensorReadModel<int> newRead = new() { Value = Payload, ReadDate = Now };
+                            if (s.IsWatched && (s.Values.Count == 0 || s.LastSavedRead == null || (config.system.WriteOnValueChangeByDiffer && Math.Abs(s.LastRead.Value - Payload) >= config.system.TempMaxDifferValue) || (s.LastSavedRead != null && (Now - s.LastSavedRead.ReadDate).TotalSeconds >= config.system.WriteTempToDbInterval))) //Writable to db.
+                            {
+                                var newId = await DbProcessor.WriteSensorValueToDbAsync(s, Payload, Now);
+                                if (newId > 0)
+                                {
+                                    newRead.IsSavedToDb = true;
+                                    newRead.Id = newId;
+                                }
+                            }
+                            if (s.Values.Count >= config.system.MaxSensorReadCount)
+                            {
+                                if (config.VerboseMode) Log.Information($"Count of temp value list exceeded it's limit. Removing the oldest one. Sensor ID: {s.Id}, Count: {s.Values.Count}");
+                                s.Values.RemoveOldestNotSaved();
+                            }
+                            s.Values.Add(newRead);
+                            if (config.VerboseMode) Log.Information($"Temp sensor value done processing: {s.LastRead.ReadDate}, : {s.LastRead.Value}, Count: {s.Values.Count}");
+                        }
+                    }
+                }
+                #endregion
             }
             else //Unknown message.
             {
@@ -123,127 +204,6 @@ namespace ElmaSmartFarm.Service
                 Log.Warning($"Invalid MQTT message from sensor. Topic: {mqtt.Topic} , Payload: {mqtt.Payload}");
                 return -1;
             }
-
-
-
-
-
-
-
-
-                #region Temperature sensor handler.
-            //if (mqtt.Topic.StartsWith(config.mqtt.FullTemperatureTopic)) //Temp Sensor
-            //{
-            //    if (config.VerboseMode) Log.Information($"MQTT Message is from a Temp sensor. Topic: {mqtt.Topic}, Payload: {mqtt.Payload}");
-            //    if (mqtt.Topic.StartsWith(config.mqtt.FullTemperatureTopic + config.mqtt.KeepAliveSubTopic)) //Keep alive
-            //    {
-            //        if (config.VerboseMode) Log.Information($"MQTT Message is KeepAlive from a Temp sensor. Topic: {mqtt.Topic}, Payload: {mqtt.Payload}");
-            //        int SensorId = GetSensorIdFromTopic(mqtt, config.mqtt.FullTemperatureTopic + config.mqtt.KeepAliveSubTopic);
-            //        if (SensorId == 0)
-            //        {
-            //            AddMqttToUnknownList(mqtt);
-            //            Log.Warning($"Invalid KeepAlive MQTT message. Topic: {mqtt.Topic} , Payload: {mqtt.Payload}");
-            //            return -1;
-            //        }
-            //        if (config.VerboseMode) Log.Information($"Sensor ID extracted from MQTT Message. Sensor ID: {SensorId}");
-            //        var sensors = FindTempSensorsById(SensorId);
-            //        if (sensors == null)
-            //        {
-            //            AddMqttToUnknownList(mqtt);
-            //            Log.Warning($"Unknown Sensor sends KeepAlive. Topic: {mqtt.Topic} , Payload: {mqtt.Payload}");
-            //            return -1;
-            //        }
-            //        foreach (var s in sensors) //Update KeepAlive and erase error if exists.
-            //        {
-            //            if (config.VerboseMode) Log.Information($"Sensor ID is found in Poultries/Farms. Type: {s.Type}, LocationID: {s.LocationId}, Section: {s.Section}");
-            //            s.KeepAliveMessageDate = mqtt.ReadDate;
-            //            s.EraseError(SensorErrorType.NotAlive, Now);
-            //            await DbProcessor.EraseSensorErrorFromDbAsync(s.AsBaseModel(), SensorErrorType.NotAlive, Now);
-            //        }
-            //    }
-            //    else if (mqtt.Topic.StartsWith(config.mqtt.FullTemperatureTopic)) //Temp value
-            //    {
-            //        if (config.VerboseMode) Log.Information($"MQTT Message is a Temp sensor value. Topic: {mqtt.Topic}, Payload: {mqtt.Payload}");
-            //        int SensorId = GetSensorIdFromTopic(mqtt, config.mqtt.FullTemperatureTopic);
-            //        if (SensorId == 0)
-            //        {
-            //            AddMqttToUnknownList(mqtt);
-            //            Log.Warning($"Invalid MQTT message. Topic: {mqtt.Topic} , Payload: {mqtt.Payload}");
-            //            return -1;
-            //        }
-            //        if (config.VerboseMode) Log.Information($"Sensor ID extracted from MQTT Message. Sensor ID: {SensorId}");
-            //        var sensors = FindTempSensorsById(SensorId);
-            //        if (sensors == null)
-            //        {
-            //            AddMqttToUnknownList(mqtt);
-            //            Log.Warning($"Unknown Temp Sensor sends value. Topic: {mqtt.Topic} , Payload: {mqtt.Payload}");
-            //            return -1;
-            //        }
-            //        if (!double.TryParse(mqtt.Payload, out double Payload)) //Invalid data.
-            //        {
-            //            AddMqttToUnknownList(mqtt);
-            //            Log.Warning($"A Sensor sends invalid data. Topic: {mqtt.Topic} , Payload: {mqtt.Payload}");
-            //            if (sensors != null)
-            //                foreach (var s in sensors)
-            //                {
-            //                    SensorErrorModel newErr = GenerateSensorError(s.AsBaseModel(), SensorErrorType.InvalidData, Now, $"Data: {mqtt.Payload}");
-            //                    if (s.AddError(newErr, SensorErrorType.InvalidData, config.system.MaxSensorErrorCount))
-            //                    {
-            //                        var newId = await DbProcessor.WriteSensorErrorToDbAsync(newErr, Now);
-            //                        if (newId > 0) s.LastError.Id = newId;
-            //                    }
-            //                    s.EraseError(SensorErrorType.NotAlive, Now);
-            //                    await DbProcessor.EraseSensorErrorFromDbAsync(s.AsBaseModel(), SensorErrorType.NotAlive, Now);
-            //                }
-            //            return -1;
-            //        }
-            //        foreach (var s in sensors)
-            //        {
-            //            if (config.VerboseMode) Log.Information($"Sensor ID is found in Poultries/Farms. Type: {s.Type}, LocationID: {s.LocationId}, Section: {s.Section}");
-            //            s.KeepAliveMessageDate = Now;
-            //            s.EraseError(SensorErrorType.NotAlive, Now);
-            //            await DbProcessor.EraseSensorErrorFromDbAsync(s.AsBaseModel(), SensorErrorType.NotAlive, Now);
-            //            if ((s.Type == SensorType.FarmTemperature && (Payload < config.system.FarmTempMinValue || Payload > config.system.FarmTempMaxValue)) || (s.Type == SensorType.OutdoorTemperature && (Payload < config.system.OutdoorTempMinValue || Payload > config.system.OutdoorTempMaxValue))) //Invalid value.
-            //            {
-            //                Log.Error($"A Temp Sensor sends invalid value. Topic: {mqtt.Topic} , Payload: {mqtt.Payload}");
-            //                SensorErrorModel newErr = GenerateSensorError(s.AsBaseModel(), SensorErrorType.InvalidValue, Now, $"Data: {mqtt.Payload}");
-            //                if (s.AddError(newErr, SensorErrorType.InvalidValue, config.system.MaxSensorErrorCount))
-            //                {
-            //                    var newId = await DbProcessor.WriteSensorErrorToDbAsync(newErr, Now);
-            //                    if (newId > 0) s.LastError.Id = newId;
-            //                }
-            //            }
-            //            else //Sensor Valid, Value Valid.
-            //            {
-            //                if (config.VerboseMode) Log.Information($"Sensor is valid; Value is valid. Type: {s.Type}, LocationID: {s.LocationId}, Section: {s.Section}");
-            //                s.EraseError(SensorErrorType.InvalidData, Now);
-            //                await DbProcessor.EraseSensorErrorFromDbAsync(s.AsBaseModel(), SensorErrorType.InvalidData, Now);
-            //                s.EraseError(SensorErrorType.InvalidValue, Now);
-            //                await DbProcessor.EraseSensorErrorFromDbAsync(s.AsBaseModel(), SensorErrorType.InvalidValue, Now);
-            //                if (s.Values == null) s.Values = new();
-            //                SensorReadModel<double> newRead = new() { Value = Payload, ReadDate = Now };
-            //                if (s.IsWatched && (s.Values.Count == 0 || s.LastSavedRead == null || (config.system.WriteOnValueChangeByDiffer && Math.Abs(s.LastRead.Value - Payload) >= config.system.TempMaxDifferValue) || (s.LastSavedRead != null && (DateTime.Now - s.LastSavedRead.ReadDate).TotalSeconds >= config.system.WriteTempToDbInterval)))
-            //                {
-            //                    if (config.VerboseMode) Log.Information($"Writing Temp sensor value to Database. Sensor ID: {s.Id}, Value: {newRead.Value}");
-            //                    var newId = await DbProcessor.WriteSensorValueToDbAsync(s, Payload, Now);
-            //                    if (newId > 0)
-            //                    {
-            //                        newRead.IsSavedToDb = true;
-            //                        newRead.Id = newId;
-            //                    }
-            //                }
-            //                if (s.Values.Count >= config.system.MaxSensorReadCount)
-            //                {
-            //                    if (config.VerboseMode) Log.Information($"Count of Temp value list exceeded its limit. Removing the oldest one. Sensor ID: {s.Id}, Count: {s.Values.Count}");
-            //                    s.Values.RemoveOldestNotSaved();
-            //                }
-            //                s.Values.Add(newRead);
-            //                if (config.VerboseMode) Log.Information($"Sensor value received: {s.LastRead.ReadDate}, : {s.LastRead.Value}, Count: {s.Values.Count}");
-            //            }
-            //        }
-            //    }
-            //}
-                #endregion
             if (UnknownMqttMessages.Any(m => m.Topic == mqtt.Topic)) UnknownMqttMessages.Remove(UnknownMqttMessages.First(m => m.Topic == mqtt.Topic));
             return 0;
         }
@@ -251,78 +211,75 @@ namespace ElmaSmartFarm.Service
         private async Task<int> UpdateSensorBatteryLevelAsync(int sensorId, int battery, DateTime now)
         {
             if (Poultries == null) return 0;
-            int returnValue = 0;
-            List<TemperatureSensorModel>? temps;
-            temps = FindTempSensorsById(sensorId);
-            if (temps != null && temps.Any())
+            List<SensorModel>? sensors;
+            sensors = new(FindSensorsById<TemperatureSensorModel>(sensorId) ?? new());
+            if (!sensors.Any()) sensors = new(FindSensorsById<HumiditySensorModel>(sensorId) ?? new());
+            if (!sensors.Any()) sensors = new(FindSensorsById<AmbientLightSensorModel>(sensorId) ?? new());
+            if (!sensors.Any()) sensors = new(FindSensorsById<CommuteSensorModel>(sensorId) ?? new());
+            if (!sensors.Any()) sensors = new(FindSensorsById<PushButtonSensorModel>(sensorId) ?? new());
+            if (!sensors.Any()) sensors = new(FindSensorsById<BinarySensorModel>(sensorId) ?? new());
+            if (sensors.Any())
             {
-                foreach (var s in temps)
+                foreach (var s in sensors)
                 {
                     s.BatteryLevel = battery;
-                    s.EraseError(SensorErrorType.NotAlive, now);
+                    s.Errors.EraseError(SensorErrorType.NotAlive, now);
                     if (battery != -1 && battery <= config.system.SensorLowBatteryLevel)
                     {
                         SensorErrorModel newErr = GenerateSensorError(s.AsBaseModel(), SensorErrorType.LowBattery, now, $"Level: {battery}");
-                        s.AddError(newErr, SensorErrorType.LowBattery, config.system.MaxSensorErrorCount);
+                        s.Errors.AddError(newErr, SensorErrorType.LowBattery, config.system.MaxSensorErrorCount);
                         await DbProcessor.WriteSensorErrorToDbAsync(newErr, now);
                     }
                     else
                     {
-                        s.EraseError(SensorErrorType.LowBattery, now);
+                        s.Errors.EraseError(SensorErrorType.LowBattery, now);
                         await DbProcessor.EraseSensorErrorFromDbAsync(s.AsBaseModel(), SensorErrorType.LowBattery, now);
                     }
                 }
                 await DbProcessor.EraseSensorErrorFromDbAsync(sensorId, SensorErrorType.NotAlive, now);
-                return returnValue;
             }
-            temps = null;
-            //...
-            return 0;
+            return sensors.Count;
         }
 
         private async Task<int> UpdateSensorIPAddressAsync(int sensorId, string ip, DateTime now)
         {
             if (Poultries == null) return 0;
-            int returnValue = 0;
-            List<TemperatureSensorModel>? temps;
-            temps = FindTempSensorsById(sensorId);
-            if (temps != null && temps.Any())
+            List<SensorModel>? sensors;
+            sensors = new(FindSensorsById<TemperatureSensorModel>(sensorId) ?? new());
+            if (!sensors.Any()) sensors = new(FindSensorsById<HumiditySensorModel>(sensorId) ?? new());
+            if (!sensors.Any()) sensors = new(FindSensorsById<AmbientLightSensorModel>(sensorId) ?? new());
+            if (!sensors.Any()) sensors = new(FindSensorsById<CommuteSensorModel>(sensorId) ?? new());
+            if (!sensors.Any()) sensors = new(FindSensorsById<PushButtonSensorModel>(sensorId) ?? new());
+            if (!sensors.Any()) sensors = new(FindSensorsById<BinarySensorModel>(sensorId) ?? new());
+            if (sensors.Any())
             {
-                temps.ForEach(s => { s.IPAddress = ip; s.EraseError(SensorErrorType.NotAlive, now); });
-                returnValue = temps.Count();
+                sensors.ForEach(s => { s.IPAddress = ip; s.Errors.EraseError(SensorErrorType.NotAlive, now); });
                 await DbProcessor.EraseSensorErrorFromDbAsync(sensorId, SensorErrorType.NotAlive, now);
-                return returnValue;
             }
-            temps = null;
-            //...
-            return 0;
+            return sensors.Count;
         }
 
         private async Task<int> UpdateSensorKeepAliveAsync(int sensorId, DateTime now)
         {
             if (Poultries == null) return 0;
-            int returnValue = 0;
-            List<TemperatureSensorModel>? temps;
-            temps = FindTempSensorsById(sensorId);
-            if (temps != null && temps.Any())
+            if (config.system.KeepAliveInterval == 0)
             {
-                temps.ForEach(s => { s.KeepAliveMessageDate = now; s.EraseError(SensorErrorType.NotAlive, now); });
-                await DbProcessor.EraseSensorErrorFromDbAsync(sensorId, SensorErrorType.NotAlive, now);
-                return returnValue;
+                Log.Warning($"KeepAlive is disabled but sensor a is sending KeepAlive message. Sensor ID: {sensorId}");
+                return -1;
             }
-            temps = null;
-            //...
-            return 0;
-        }
-
-        private int GetSensorIdFromTopic(string SubTopics)
-        {
-            if (string.IsNullOrEmpty(SubTopics)) return 0;
-            var splits = SubTopics.Split("/");
-            if (splits.Length < 3) return 0;
-            if (string.IsNullOrEmpty(splits[2])) return 0;
-            if (int.TryParse(splits[2], out int id)) return id;
-            return 0;
+            List<SensorModel>? sensors;            
+            sensors = new(FindSensorsById<TemperatureSensorModel>(sensorId) ?? new());
+            if (!sensors.Any()) sensors = new(FindSensorsById<HumiditySensorModel>(sensorId) ?? new());
+            if (!sensors.Any()) sensors = new(FindSensorsById<AmbientLightSensorModel>(sensorId) ?? new());
+            if (!sensors.Any()) sensors = new(FindSensorsById<CommuteSensorModel>(sensorId) ?? new());
+            if (!sensors.Any()) sensors = new(FindSensorsById<PushButtonSensorModel>(sensorId) ?? new());
+            if (!sensors.Any()) sensors = new(FindSensorsById<BinarySensorModel>(sensorId) ?? new());
+            if (sensors.Any())
+            {
+                sensors.ForEach(s => { s.KeepAliveMessageDate = now; s.Errors.EraseError(SensorErrorType.NotAlive, now); });
+                await DbProcessor.EraseSensorErrorFromDbAsync(sensorId, SensorErrorType.NotAlive, now);                
+            }
+            return sensors.Count;
         }
 
         private void AddMqttToUnknownList(MqttMessageModel mqtt)
@@ -332,7 +289,7 @@ namespace ElmaSmartFarm.Service
             if (UnknownMqttMessages != null && UnknownMqttMessages.Count > config.mqtt.MaxUnknownMqttCount) UnknownMqttMessages.Remove(UnknownMqttMessages.First());
         }
 
-        private SensorErrorModel GenerateSensorError(SensorBaseModel sensor, SensorErrorType type, DateTime Now, string description = "")
+        private static SensorErrorModel GenerateSensorError(SensorBaseModel sensor, SensorErrorType type, DateTime Now, string description = "")
         {
             return new SensorErrorModel()
             {
@@ -345,57 +302,39 @@ namespace ElmaSmartFarm.Service
             };
         }
 
-        private int GetSensorIdFromTopic(MqttMessageModel mqtt, string TopicTemplate)
-        {
-            var sensorId = mqtt.Topic.Replace(TopicTemplate, "");
-            if (string.IsNullOrEmpty(sensorId)) return 0;
-            if (!int.TryParse(sensorId, out int SensorId)) return 0;
-            return SensorId;
-        }
-
-        private List<TemperatureSensorModel>? FindTempSensorsById(int id)
+        /// <summary>
+        /// Looks for the sensors in all sensors of the Poultries.
+        /// </summary>
+        private List<T>? FindSensorsById<T>(int id) where T : new()
         {
             if (Poultries == null) return null;
-            List<TemperatureSensorModel>? sensors = new();
-            sensors.AddRange(from p in Poultries where p != null && p.OutdoorTemperature != null && p.OutdoorTemperature.Id == id select p.OutdoorTemperature);
-            sensors.AddRange(from s in Poultries.SelectMany(p => p.Farms.SelectMany(f => f.Temperatures.Sensors)) where s != null && s.Id == id select s);
-            if (sensors.Count > 0) return sensors; else return null;
-        }
-
-        private List<HumiditySensorModel>? FindHumidSensorsById(int id)
-        {
-            if (Poultries == null) return null;
-            List<HumiditySensorModel>? sensors = new();
-            sensors.AddRange(from p in Poultries where p != null && p.OutdoorHumidity.Id == id select p.OutdoorHumidity);
-            sensors.AddRange(from s in Poultries.SelectMany(p => p.Farms.SelectMany(f => f.Humidities.Sensors)) where s != null && s.Id == id select s);
-            if (sensors.Count > 0) return sensors; else return null;
-        }
-
-        private List<AmbientLightSensorModel>? FindAmbientLightSensorsById(int id)
-        {
-            if (Poultries == null) return null;
-            List<AmbientLightSensorModel>? sensors = new();
-            sensors.AddRange(from s in Poultries.SelectMany(p => p.Farms.SelectMany(f => f.AmbientLights.Sensors)) where s != null && s.Id == id select s);
-            if (sensors.Count > 0) return sensors; else return null;
-        }
-
-        private List<PushButtonSensorModel>? FindPushButtonSensorsById(int id)
-        {
-            if (Poultries == null) return null;
-            List<PushButtonSensorModel>? sensors = new();
-            sensors.AddRange(from s in Poultries.SelectMany(p => p.Farms.SelectMany(f => f.Checkups.Sensors)) where s != null && s.Id == id select s);
-            sensors.AddRange(from s in Poultries.SelectMany(p => p.Farms.SelectMany(f => f.Feeds.Sensors)) where s != null && s.Id == id select s);
-            if (sensors.Count > 0) return sensors; else return null;
-        }
-
-        private List<BinarySensorModel>? FindBinarySensorsById(int id)
-        {
-            if (Poultries == null) return null;
-            List<BinarySensorModel>? sensors = new();
-            sensors.AddRange(from p in Poultries where p != null && p.MainElectricPower.Id == id select p.MainElectricPower);
-            sensors.AddRange(from p in Poultries where p != null && p.BackupElectricPower.Id == id select p.BackupElectricPower);
-            sensors.AddRange(from s in Poultries.SelectMany(p => p.Farms.SelectMany(f => f.ElectricPowers.Sensors)) where s != null && s.Id == id select s);
-            if (sensors.Count > 0) return sensors; else return null;
+            List<T>? sensors = new();
+            if (typeof(T) == typeof(TemperatureSensorModel))
+            {
+                sensors.AddRange((IEnumerable<T>)(from s in Poultries.SelectMany(p => p.Farms.SelectMany(f => f.Temperatures.Sensors)) where s != null && s.Id == id select s));
+                sensors.AddRange((IEnumerable<T>)(from p in Poultries where p != null && p.OutdoorTemperature != null && p.OutdoorTemperature.Id == id select p.OutdoorTemperature));
+            }
+            else if (typeof(T) == typeof(HumiditySensorModel))
+            {
+                sensors.AddRange((IEnumerable<T>)(from s in Poultries.SelectMany(p => p.Farms.SelectMany(f => f.Humidities.Sensors)) where s != null && s.Id == id select s));
+                sensors.AddRange((IEnumerable<T>)(from p in Poultries where p != null && p.OutdoorHumidity != null && p.OutdoorHumidity.Id == id select p.OutdoorHumidity));
+            }
+            else if (typeof(T) == typeof(AmbientLightSensorModel))
+                sensors.AddRange((IEnumerable<T>)(from s in Poultries.SelectMany(p => p.Farms.SelectMany(f => f.AmbientLights.Sensors)) where s != null && s.Id == id select s));
+            else if (typeof(T) == typeof(CommuteSensorModel))
+                sensors.AddRange((IEnumerable<T>)(from s in Poultries.SelectMany(p => p.Farms.SelectMany(f => f.Commutes.Sensors)) where s != null && s.Id == id select s));
+            else if (typeof(T) == typeof(PushButtonSensorModel))
+            {
+                sensors.AddRange((IEnumerable<T>)(from s in Poultries.SelectMany(p => p.Farms.SelectMany(f => f.Checkups.Sensors)) where s != null && s.Id == id select s));
+                sensors.AddRange((IEnumerable<T>)(from s in Poultries.SelectMany(p => p.Farms.SelectMany(f => f.Feeds.Sensors)) where s != null && s.Id == id select s));
+            }
+            else if (typeof(T) == typeof(BinarySensorModel))
+            {
+                sensors.AddRange((IEnumerable<T>)(from s in Poultries.SelectMany(p => p.Farms.SelectMany(f => f.ElectricPowers.Sensors)) where s != null && s.Id == id select s));
+                sensors.AddRange((IEnumerable<T>)(from p in Poultries where p != null && p.MainElectricPower != null && p.MainElectricPower.Id == id select p.MainElectricPower));
+                sensors.AddRange((IEnumerable<T>)(from p in Poultries where p != null && p.BackupElectricPower != null && p.BackupElectricPower.Id == id select p.BackupElectricPower));
+            }
+            if (sensors.Count > 0) return (List<T>)Convert.ChangeType(sensors, typeof(List<T>)); else return null;
         }
     }
 }

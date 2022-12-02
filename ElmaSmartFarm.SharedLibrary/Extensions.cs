@@ -96,6 +96,20 @@ namespace ElmaSmartFarm.SharedLibrary
             };
         }
 
+        public static SensorBaseModel AsBaseModel(this SensorModel s)
+        {
+            return new SensorBaseModel()
+            {
+                Id = s.Id,
+                Name = s.Name,
+                LocationId = s.LocationId,
+                Section=s.Section,
+                IsEnabled = s.IsEnabled,
+                Type = s.Type,
+                Descriptions = s.Descriptions
+            };
+        }
+
         public static bool RemoveOldestNotSaved<T>(this List<SensorReadModel<T>> l)
         {
             if (l == null || l.Count == 0) return false;
@@ -108,26 +122,25 @@ namespace ElmaSmartFarm.SharedLibrary
             return false;
         }
 
-        public static bool AddError(this TemperatureSensorModel s, SensorErrorModel newError, SensorErrorType t, int MaxSensorErrorCount)
+        public static bool AddError(this List<SensorErrorModel> Errors, SensorErrorModel newError, SensorErrorType t, int MaxSensorErrorCount)
         {
-            if (s == null || newError == null) return false;
-            if (s.Errors == null) s.Errors = new();
-            var e = s.Errors.Where(e => e.ErrorType == t && e.DateErased == null);
+            if (newError == null) return false;
+            var e = Errors.Where(e => e.ErrorType == t && e.DateErased == null);
             if (e != null && e.Any()) return false;
-            s.Errors.Add(newError);
-            if (s.Errors.Count > MaxSensorErrorCount) //Remove oldest record.
+            Errors.Add(newError);
+            if (Errors.Count > MaxSensorErrorCount) //Remove oldest record.
             {
-                var error = s.Errors.Where(x => x.DateErased != null)?.MinBy(x => x.DateErased);
-                if (error != null) s.Errors.Remove(error);
-                else Log.Warning($"Error count in Sensor Id: {s.Errors[0].SensorId} has reached limit but not erased! (System Error).");
+                var error = Errors.Where(x => x.DateErased != null)?.MinBy(x => x.DateErased);
+                if (error != null) Errors.Remove(error);
+                else Log.Warning($"Error count in Sensor Id: {Errors[0].SensorId} has reached limit but not erased! (System Error).");
             }
             return true;
         }
 
-        public static bool EraseError(this TemperatureSensorModel s, SensorErrorType t, DateTime now)
+        public static bool EraseError(this List<SensorErrorModel> Errors, SensorErrorType t, DateTime now)
         {
-            if (s.Errors == null) return false;
-            var err = s.Errors.FirstOrDefault(e => e.ErrorType == t && e.DateErased == null);
+            if (Errors == null) return false;
+            var err = Errors.FirstOrDefault(e => e.ErrorType == t && e.DateErased == null);
             if (err == null) return false;
             err.DateErased = now;
             return true;
