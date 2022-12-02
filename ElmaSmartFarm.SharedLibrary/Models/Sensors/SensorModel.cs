@@ -9,5 +9,6 @@
         public List<SensorErrorModel> Errors { get; set; } = new();
         public SensorErrorModel LastError => Errors?.MaxBy(x => x.DateHappened);
         public bool HasError => IsEnabled && Errors != null && Errors.Any(e => e.DateErased == null);
+        public bool IsWatched { get; set; } = true;
     }
 }

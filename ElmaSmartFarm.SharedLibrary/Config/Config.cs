@@ -60,12 +60,6 @@
         public string IPAddressSubTopic { get; init; }
         public string BatteryLevelSubTopic { get; init; }
         public int MaxUnknownMqttCount { get; init; }
-        public string FullTemperatureTopic => ToServerTopic + TemperatureSubTopic;
-        public string FullHumidityTopic => ToServerTopic + HumiditySubTopic;
-        public string FullAmbientLightTopic => ToServerTopic + AmbientLightSubTopic;
-        public string FullPushButtonTopic => ToServerTopic + PushButtonSubTopic;
-        public string FullCommuteTopic => ToServerTopic + CommuteSubTopic;
-        public string FullBinaryTopic => ToServerTopic + BinarySubTopic;
     }
 
     public class System

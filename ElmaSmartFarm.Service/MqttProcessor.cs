@@ -271,6 +271,66 @@ namespace ElmaSmartFarm.Service
                     }
                 }
                 #endregion
+                #region Commute Value Handler.
+                else if (SubTopics[1] == config.mqtt.CommuteSubTopic) //Value from commute sensor.
+                {
+                    if (config.VerboseMode) Log.Information($"MQTT Message is value from a commute sensor. Topic: {mqtt.Topic}, Payload: {mqtt.Payload}");
+                    var sensors = FindSensorsById<CommuteSensorModel>(SensorId);
+                    if (sensors == null)
+                    {
+                        AddMqttToUnknownList(mqtt);
+                        Log.Warning($"Unknown commute sensor sends value. Topic: {mqtt.Topic} , Payload: {mqtt.Payload}");
+                        return -1;
+                    }
+                    if (!Enum.TryParse(mqtt.Payload, out CommuteSensorValueType Payload)) //Invalid data.
+                    {
+                        AddMqttToUnknownList(mqtt);
+                        Log.Warning($"A commute sensor sends invalid data. Topic: {mqtt.Topic} , Payload: {mqtt.Payload}");
+                        if (sensors != null)
+                            foreach (var s in sensors)
+                            {
+                                SensorErrorModel newErr = GenerateSensorError(s.AsBaseModel(), SensorErrorType.InvalidData, Now, $"Data: {mqtt.Payload}");
+                                if (s.Errors.AddError(newErr, SensorErrorType.InvalidData, config.system.MaxSensorErrorCount))
+                                {
+                                    var newId = await DbProcessor.WriteSensorErrorToDbAsync(newErr, Now);
+                                    if (newId > 0) s.LastError.Id = newId;
+                                }
+                                s.Errors.EraseError(SensorErrorType.NotAlive, Now);
+                                await DbProcessor.EraseSensorErrorFromDbAsync(s.AsBaseModel(), SensorErrorType.NotAlive, Now);
+                            }
+                        return -1;
+                    }
+                    foreach (var s in sensors) //Sensor(s) found. Check value.
+                    {
+                        if (config.VerboseMode) Log.Information($"Commute sensor ID is found in Farms. Type: {s.Type}, LocationID: {s.LocationId}, Section: {s.Section}");
+                        s.KeepAliveMessageDate = Now;
+                        s.Errors.EraseError(SensorErrorType.NotAlive, Now);
+                        await DbProcessor.EraseSensorErrorFromDbAsync(s.AsBaseModel(), SensorErrorType.NotAlive, Now);
+                        //Sensor valid, Value valid.
+                        if (config.VerboseMode) Log.Information($"Commute sensor is valid; Value is valid. Type: {s.Type}, LocationID: {s.LocationId}, Section: {s.Section}");
+                        s.Errors.EraseError(SensorErrorType.InvalidData, Now);
+                        await DbProcessor.EraseSensorErrorFromDbAsync(s.AsBaseModel(), SensorErrorType.InvalidData, Now);
+                        if (s.Values == null) s.Values = new();
+                        SensorReadModel<CommuteSensorValueType> newRead = new() { Value = Payload, ReadDate = Now };
+                        if (s.IsWatched && (s.Values.Count == 0 || (Payload == CommuteSensorValueType.StepIn && s.LastStepInSavedRead == null) || (Payload == CommuteSensorValueType.StepOut && s.LastStepOutSavedRead == null) || s.LastRead.Value != Payload)) //Writable to db.
+                        {
+                            var newId = await DbProcessor.WriteSensorValueToDbAsync(s, (double)Payload, Now);
+                            if (newId > 0)
+                            {
+                                newRead.IsSavedToDb = true;
+                                newRead.Id = newId;
+                            }
+                        }
+                        if (s.Values.Count >= config.system.MaxSensorReadCount)
+                        {
+                            if (config.VerboseMode) Log.Information($"Count of commute value list exceeded it's limit. Removing the oldest one. Sensor ID: {s.Id}, Count: {s.Values.Count}");
+                            s.Values.RemoveOldestNotSaved();
+                        }
+                        s.Values.Add(newRead);
+                        if (config.VerboseMode) Log.Information($"Commute sensor value done processing: {s.LastRead.ReadDate}, : {s.LastRead.Value}, Count: {s.Values.Count}");
+                    }
+                }
+                #endregion
             }
             else //Unknown message.
             {

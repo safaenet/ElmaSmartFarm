@@ -126,4 +126,25 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="ChickenPrimaryCount" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="289addaf-8b9f-40e8-b5df-408799c309b0" ChangeDateTime="12/02/2022 20:48:22">
+    <Property Name="ElementName" Value="[dbo].[CommuteValues].[StepDate]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[CommuteValues]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="ReadDate" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="f6be214a-6160-4f5a-9dd5-e92f8409d955" ChangeDateTime="12/02/2022 21:00:28">
+    <Property Name="ElementName" Value="[dbo].[CommuteValues].[StepType]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[CommuteValues]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="SensorValue" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="0c9e063b-cc66-491e-9496-0d6885e41a71" ChangeDateTime="12/02/2022 21:18:09">
+    <Property Name="ElementName" Value="[dbo].[BinarySensorValues].[Status]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[BinarySensorValues]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="SensorValue" />
+  </Operation>
 </Operations>

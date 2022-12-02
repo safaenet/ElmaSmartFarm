@@ -145,5 +145,30 @@ namespace ElmaSmartFarm.SharedLibrary
             err.DateErased = now;
             return true;
         }
+
+        public static bool IsPushButtonSensor(this SensorType sensorType)
+        {
+            return new[] { SensorType.FarmCheckup, SensorType.FarmFeed }.Contains(sensorType);
+        }
+
+        public static bool IsBinarySensor(this SensorType sensorType)
+        {
+            return new[] { SensorType.FarmElectricPower, SensorType.PoultryMainElectricPower, SensorType.PoultryBackupElectricPower }.Contains(sensorType);
+        }
+
+        public static bool IsTemperatureSensor(this SensorType sensorType)
+        {
+            return new[] { SensorType.FarmTemperature, SensorType.OutdoorTemperature }.Contains(sensorType);
+        }
+
+        public static bool IsHumiditySensor(this SensorType sensorType)
+        {
+            return new[] { SensorType.FarmHumidity, SensorType.OutdoorHumidity }.Contains(sensorType);
+        }
+
+        public static bool IsScalarSensor(this SensorType sensorType)
+        {
+            return new[] { SensorType.FarmTemperature, SensorType.FarmHumidity, SensorType.FarmAmbientLight, SensorType.OutdoorTemperature, SensorType.OutdoorHumidity, }.Contains(sensorType);
+        }
     }
 }

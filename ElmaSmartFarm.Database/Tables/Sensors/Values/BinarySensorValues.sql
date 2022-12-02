@@ -4,6 +4,6 @@
     [LocationId] INT NOT NULL,
     [Section] TINYINT NOT NULL,
 	[SensorId] INT NOT NULL,
-	[Status] BIT NOT NULL,
+	[SensorValue] BIT NOT NULL,
     [ReadDate] DATETIME NOT NULL
 )

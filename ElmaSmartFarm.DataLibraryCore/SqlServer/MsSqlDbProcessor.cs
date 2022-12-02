@@ -49,8 +49,8 @@ namespace ElmaSmartFarm.DataLibraryCore.SqlServer
         private const string LoadPoultryInPeriodErrors = "SELECT * FROM PoultryInPeriodErrorLogs WHERE DateErased = NULL;";
 
         private readonly string WriteScalarSensorValueCmd = @"DECLARE @newId int; SET @newId = (SELECT ISNULL(MAX([Id]), 0) FROM [{0}]) + 1;
-            INSERT INTO {0}(Id, LocationId, Section, SensorId, ReadDate, SensorValue)
-            VALUES(@newId, @LocationId, @Section, @SensorId, @ReadDate, @SensorValue);
+            INSERT INTO {0}(Id, LocationId, Section, SensorId, ReadDate{1})
+            VALUES(@newId, @LocationId, @Section, @SensorId, @ReadDate{2});
             SELECT @Id = @newId;";
         private readonly string WriteSensorErrorCmd = @"DECLARE @newId int; SET @newId = (SELECT ISNULL(MAX([Id]), 0) FROM [SensorErrorLogs]) + 1;
             INSERT INTO SensorErrorLogs (Id, SensorId, LocationId, Section, ErrorType, DateHappened, Descriptions)
@@ -69,11 +69,15 @@ namespace ElmaSmartFarm.DataLibraryCore.SqlServer
                 dp.Add("@Section", sensor.Section);
                 dp.Add("@SensorId", sensor.Id);
                 dp.Add("@ReadDate", now);
+                //if (!sensor.Type.IsPushButtonSensor())
                 dp.Add("@SensorValue", value + offset);
                 string sql = string.Empty;
-                if (sensor.Type == SensorType.FarmTemperature || sensor.Type == SensorType.OutdoorTemperature) sql = string.Format(WriteScalarSensorValueCmd, "TemperatureValues");
-                else if (sensor.Type == SensorType.FarmHumidity || sensor.Type == SensorType.OutdoorHumidity) sql = string.Format(WriteScalarSensorValueCmd, "HumidityValues");
-                else if (sensor.Type == SensorType.FarmAmbientLight) sql = string.Format(WriteScalarSensorValueCmd, "AmbientLightValues");
+                if (sensor.Type.IsTemperatureSensor()) sql = string.Format(WriteScalarSensorValueCmd, "TemperatureValues", ", SensorValue", ", @SensorValue");
+                else if (sensor.Type.IsHumiditySensor()) sql = string.Format(WriteScalarSensorValueCmd, "HumidityValues", ", SensorValue", ", @SensorValue");
+                else if (sensor.Type == SensorType.FarmAmbientLight) sql = string.Format(WriteScalarSensorValueCmd, "AmbientLightValues", ", SensorValue", ", @SensorValue");
+                else if (sensor.Type == SensorType.FarmCommute) sql = string.Format(WriteScalarSensorValueCmd, "CommuteValues", ", SensorValue", ", @SensorValue");
+                else if (sensor.Type.IsPushButtonSensor()) sql = string.Format(WriteScalarSensorValueCmd, "PushButtonSensorValues", "", "");
+                else if (sensor.Type.IsBinarySensor()) sql = string.Format(WriteScalarSensorValueCmd, "BinarySensorValues", ", SensorValue", ", @SensorValue");
                 _ = await DataAccess.SaveDataAsync(sql, dp);
                 var newId = dp.Get<int>("@Id");
                 return newId;

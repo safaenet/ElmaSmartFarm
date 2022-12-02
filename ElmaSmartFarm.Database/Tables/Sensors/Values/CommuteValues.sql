@@ -4,6 +4,6 @@
     [LocationId] INT NOT NULL,
     [Section] TINYINT NOT NULL,
     [SensorId] INT NOT NULL,
-    [StepType] TINYINT NOT NULL, 
-    [StepDate] DATETIME NOT NULL
+    [ReadDate] DATETIME NOT NULL,
+    [SensorValue] TINYINT NOT NULL
 )
