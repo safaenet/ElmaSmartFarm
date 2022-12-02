@@ -108,6 +108,7 @@
         public double AmbientLightReadInterval { get; set; }
         public double AmbientLightMinValue { get; set; }
         public double AmbientLightMaxValue { get; set; }
+        public double AmbientLightMaxDifferValue { get; set; }
         public int WriteAmbientLightToDbInterval { get; set; }
     }
 }

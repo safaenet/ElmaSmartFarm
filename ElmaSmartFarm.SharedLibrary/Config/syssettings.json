@@ -24,6 +24,7 @@
     "read_interval": 30, //(Seconds)
     "min_value": 0, //Wont accept the incoming data if lower than this value. (Percent)
     "max_value": 100, //Wont accept the incoming data if higher than this value. (Percent)
+    "max_differ_value": 10,
     "write_to_db_max_threshold": 30 //(Percent)
   }
 }

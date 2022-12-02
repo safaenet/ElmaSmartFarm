@@ -177,7 +177,7 @@ namespace ElmaSmartFarm.Service
                             await DbProcessor.EraseSensorErrorFromDbAsync(s.AsBaseModel(), SensorErrorType.InvalidValue, Now);
                             if (s.Values == null) s.Values = new();
                             SensorReadModel<int> newRead = new() { Value = Payload, ReadDate = Now };
-                            if (s.IsWatched && (s.Values.Count == 0 || s.LastSavedRead == null || (config.system.WriteOnValueChangeByDiffer && Math.Abs(s.LastRead.Value - Payload) >= config.system.TempMaxDifferValue) || (s.LastSavedRead != null && (Now - s.LastSavedRead.ReadDate).TotalSeconds >= config.system.WriteTempToDbInterval))) //Writable to db.
+                            if (s.IsWatched && (s.Values.Count == 0 || s.LastSavedRead == null || (config.system.WriteOnValueChangeByDiffer && Math.Abs(s.LastRead.Value - Payload) >= config.system.HumidMaxDifferValue) || (s.LastSavedRead != null && (Now - s.LastSavedRead.ReadDate).TotalSeconds >= config.system.WriteHumidToDbInterval))) //Writable to db.
                             {
                                 var newId = await DbProcessor.WriteSensorValueToDbAsync(s, Payload, Now, s.Offset);
                                 if (newId > 0)
@@ -188,11 +188,85 @@ namespace ElmaSmartFarm.Service
                             }
                             if (s.Values.Count >= config.system.MaxSensorReadCount)
                             {
-                                if (config.VerboseMode) Log.Information($"Count of temp value list exceeded it's limit. Removing the oldest one. Sensor ID: {s.Id}, Count: {s.Values.Count}");
+                                if (config.VerboseMode) Log.Information($"Count of ambient light value list exceeded it's limit. Removing the oldest one. Sensor ID: {s.Id}, Count: {s.Values.Count}");
                                 s.Values.RemoveOldestNotSaved();
                             }
                             s.Values.Add(newRead);
                             if (config.VerboseMode) Log.Information($"Temp sensor value done processing: {s.LastRead.ReadDate}, : {s.LastRead.Value}, Count: {s.Values.Count}");
+                        }
+                    }
+                }
+                #endregion
+                #region Ambient Light Value Handler.
+                else if (SubTopics[1] == config.mqtt.AmbientLightSubTopic) //Value from ambient light sensor.
+                {
+                    if (config.VerboseMode) Log.Information($"MQTT Message is value from a ambient light sensor. Topic: {mqtt.Topic}, Payload: {mqtt.Payload}");
+                    var sensors = FindSensorsById<AmbientLightSensorModel>(SensorId);
+                    if (sensors == null)
+                    {
+                        AddMqttToUnknownList(mqtt);
+                        Log.Warning($"Unknown ambient light sensor sends value. Topic: {mqtt.Topic} , Payload: {mqtt.Payload}");
+                        return -1;
+                    }
+                    if (!int.TryParse(mqtt.Payload, out int Payload)) //Invalid data.
+                    {
+                        AddMqttToUnknownList(mqtt);
+                        Log.Warning($"A ambient light sensor sends invalid data. Topic: {mqtt.Topic} , Payload: {mqtt.Payload}");
+                        if (sensors != null)
+                            foreach (var s in sensors)
+                            {
+                                SensorErrorModel newErr = GenerateSensorError(s.AsBaseModel(), SensorErrorType.InvalidData, Now, $"Data: {mqtt.Payload}");
+                                if (s.Errors.AddError(newErr, SensorErrorType.InvalidData, config.system.MaxSensorErrorCount))
+                                {
+                                    var newId = await DbProcessor.WriteSensorErrorToDbAsync(newErr, Now);
+                                    if (newId > 0) s.LastError.Id = newId;
+                                }
+                                s.Errors.EraseError(SensorErrorType.NotAlive, Now);
+                                await DbProcessor.EraseSensorErrorFromDbAsync(s.AsBaseModel(), SensorErrorType.NotAlive, Now);
+                            }
+                        return -1;
+                    }
+                    foreach (var s in sensors) //Sensor(s) found. Check value.
+                    {
+                        if (config.VerboseMode) Log.Information($"Humid sensor ID is found in Poultries/Farms. Type: {s.Type}, LocationID: {s.LocationId}, Section: {s.Section}");
+                        s.KeepAliveMessageDate = Now;
+                        s.Errors.EraseError(SensorErrorType.NotAlive, Now);
+                        await DbProcessor.EraseSensorErrorFromDbAsync(s.AsBaseModel(), SensorErrorType.NotAlive, Now);
+                        if ((Payload < config.system.HumidMinValue || Payload > config.system.HumidMaxValue)) //Invalid value.
+                        {
+                            Log.Error($"A ambient light sensor sends invalid value. Topic: {mqtt.Topic} , Payload: {mqtt.Payload}");
+                            SensorErrorModel newErr = GenerateSensorError(s.AsBaseModel(), SensorErrorType.InvalidValue, Now, $"Data: {mqtt.Payload}");
+                            if (s.Errors.AddError(newErr, SensorErrorType.InvalidValue, config.system.MaxSensorErrorCount))
+                            {
+                                var newId = await DbProcessor.WriteSensorErrorToDbAsync(newErr, Now);
+                                if (newId > 0) s.LastError.Id = newId;
+                            }
+                        }
+                        else //Sensor Valid, Value Valid.
+                        {
+                            if (config.VerboseMode) Log.Information($"Ambient light sensor is valid; Value is valid. Type: {s.Type}, LocationID: {s.LocationId}, Section: {s.Section}");
+                            s.Errors.EraseError(SensorErrorType.InvalidData, Now);
+                            await DbProcessor.EraseSensorErrorFromDbAsync(s.AsBaseModel(), SensorErrorType.InvalidData, Now);
+                            s.Errors.EraseError(SensorErrorType.InvalidValue, Now);
+                            await DbProcessor.EraseSensorErrorFromDbAsync(s.AsBaseModel(), SensorErrorType.InvalidValue, Now);
+                            if (s.Values == null) s.Values = new();
+                            SensorReadModel<int> newRead = new() { Value = Payload, ReadDate = Now };
+                            if (s.IsWatched && (s.Values.Count == 0 || s.LastSavedRead == null || (config.system.WriteOnValueChangeByDiffer && Math.Abs(s.LastRead.Value - Payload) >= config.system.AmbientLightMaxDifferValue) || (s.LastSavedRead != null && (Now - s.LastSavedRead.ReadDate).TotalSeconds >= config.system.WriteAmbientLightToDbInterval))) //Writable to db.
+                            {
+                                var newId = await DbProcessor.WriteSensorValueToDbAsync(s, Payload, Now, s.Offset);
+                                if (newId > 0)
+                                {
+                                    newRead.IsSavedToDb = true;
+                                    newRead.Id = newId;
+                                }
+                            }
+                            if (s.Values.Count >= config.system.MaxSensorReadCount)
+                            {
+                                if (config.VerboseMode) Log.Information($"Count of ambient light value list exceeded it's limit. Removing the oldest one. Sensor ID: {s.Id}, Count: {s.Values.Count}");
+                                s.Values.RemoveOldestNotSaved();
+                            }
+                            s.Values.Add(newRead);
+                            if (config.VerboseMode) Log.Information($"Ambient light sensor value done processing: {s.LastRead.ReadDate}, : {s.LastRead.Value}, Count: {s.Values.Count}");
                         }
                     }
                 }
