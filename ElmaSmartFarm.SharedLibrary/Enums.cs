@@ -46,8 +46,8 @@
     {
         LowBattery = 1,
         NotAlive,
-        InvalidValue,
-        InvalidRange
+        InvalidData,
+        InvalidValue
     }
 
     public enum AlarmDeviceType

@@ -108,16 +108,28 @@ namespace ElmaSmartFarm.Service
         //Elma/ToServer/Sensors/Humid/{Id}
         private async Task MqttClient_ApplicationMessageReceivedAsync(MqttApplicationMessageReceivedEventArgs arg)
         {
-            MqttMessageModel message = new()
+            try
             {
-                Topic = arg.ApplicationMessage.Topic,
-                Payload = Encoding.UTF8.GetString(arg.ApplicationMessage.Payload),
-                ReadDate = DateTime.Now,
-                Retained = arg.ApplicationMessage.Retain,
-                QoS = (int)arg.ApplicationMessage.QualityOfServiceLevel
-            };
-            if (config.VerboseMode) Log.Information($"MQTT Message received. Topic: {message.Topic}, Payload: {message.Payload}");
-            await Task.Run(() => ProcessMqttMessageAsync(message));
+                if (config.VerboseMode) Log.Information("===============  Begin mqtt process  ===============");
+                MqttMessageModel message = new()
+                {
+                    Topic = arg.ApplicationMessage.Topic,
+                    Payload = Encoding.UTF8.GetString(arg.ApplicationMessage.Payload),
+                    ReadDate = DateTime.Now,
+                    Retained = arg.ApplicationMessage.Retain,
+                    QoS = (int)arg.ApplicationMessage.QualityOfServiceLevel
+                };
+                if (config.VerboseMode) Log.Information($"MQTT Message received. Topic: {message.Topic}, Payload: {message.Payload}");
+                await Task.Run(() => ProcessMqttMessageAsync(message));
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, $"Error when handling mqtt message.");
+            }
+            finally
+            {
+                if (config.VerboseMode) Log.Information("===============  End of mqtt process  ===============");
+            }
         }
     }
 }

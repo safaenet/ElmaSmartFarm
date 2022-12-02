@@ -4,7 +4,7 @@
     {
         public string IPAddress { get; set; }
         public bool IsInPeriod { get; set; }
-        public int BatteryLevel { get; set; }
+        public int BatteryLevel { get; set; } = -1;
         public DateTime? KeepAliveMessageDate { get; set; }
         public List<SensorErrorModel> Errors { get; set; }
         public SensorErrorModel LastError => Errors?.MaxBy(x => x.DateHappened);

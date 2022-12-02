@@ -119,7 +119,7 @@ namespace ElmaSmartFarm.SharedLibrary
             {
                 var error = s.Errors.Where(x => x.DateErased != null)?.MinBy(x => x.DateErased);
                 if (error != null) s.Errors.Remove(error);
-                else Log.Warning($"Error count in Sensor Id: {s.Errors[0].SensorId} hass reached limit but not erased! (System Error).");
+                else Log.Warning($"Error count in Sensor Id: {s.Errors[0].SensorId} has reached limit but not erased! (System Error).");
             }
             return true;
         }
@@ -127,9 +127,9 @@ namespace ElmaSmartFarm.SharedLibrary
         public static bool EraseError(this TemperatureSensorModel s, SensorErrorType t, DateTime now)
         {
             if (s.Errors == null) return false;
-            var e = s.Errors.FirstOrDefault(e => e.ErrorType == t && e.DateErased == null);
-            if (e == null) return false;
-            e.DateErased = now;
+            var err = s.Errors.FirstOrDefault(e => e.ErrorType == t && e.DateErased == null);
+            if (err == null) return false;
+            err.DateErased = now;
             return true;
         }
     }
