@@ -57,7 +57,7 @@ namespace ElmaSmartFarm.Service
                 {
                     if (config.VerboseMode) Log.Information($"MQTT Message is value from a temp sensor. Topic: {mqtt.Topic}, Payload: {mqtt.Payload}");
                     var sensors = FindSensorsById<TemperatureSensorModel>(SensorId);
-                    if (sensors == null)
+                    if (sensors == null || sensors.All(s => s.IsEnabled == false))
                     {
                         AddMqttToUnknownList(mqtt);
                         return -1;
@@ -98,7 +98,7 @@ namespace ElmaSmartFarm.Service
                 {
                     if (config.VerboseMode) Log.Information($"MQTT Message is value from a humid sensor. Topic: {mqtt.Topic}, Payload: {mqtt.Payload}");
                     var sensors = FindSensorsById<HumiditySensorModel>(SensorId);
-                    if (sensors == null)
+                    if (sensors == null || sensors.All(s => s.IsEnabled == false))
                     {
                         AddMqttToUnknownList(mqtt);
                         return -1;
@@ -138,7 +138,7 @@ namespace ElmaSmartFarm.Service
                 {
                     if (config.VerboseMode) Log.Information($"MQTT Message is value from a ambient light sensor. Topic: {mqtt.Topic}, Payload: {mqtt.Payload}");
                     var sensors = FindSensorsById<AmbientLightSensorModel>(SensorId);
-                    if (sensors == null)
+                    if (sensors == null || sensors.All(s => s.IsEnabled == false))
                     {
                         AddMqttToUnknownList(mqtt);
                         return -1;
@@ -178,7 +178,7 @@ namespace ElmaSmartFarm.Service
                 {
                     if (config.VerboseMode) Log.Information($"MQTT Message is value from a commute sensor. Topic: {mqtt.Topic}, Payload: {mqtt.Payload}");
                     var sensors = FindSensorsById<CommuteSensorModel>(SensorId);
-                    if (sensors == null)
+                    if (sensors == null || sensors.All(s => s.IsEnabled == false))
                     {
                         AddMqttToUnknownList(mqtt);
                         return -1;
@@ -214,7 +214,7 @@ namespace ElmaSmartFarm.Service
                 {
                     if (config.VerboseMode) Log.Information($"MQTT Message is value from a push button sensor. Topic: {mqtt.Topic}, Payload: {mqtt.Payload}");
                     var sensors = FindSensorsById<PushButtonSensorModel>(SensorId);
-                    if (sensors == null)
+                    if (sensors == null || sensors.All(s => s.IsEnabled == false))
                     {
                         AddMqttToUnknownList(mqtt);
                         return -1;
@@ -243,7 +243,7 @@ namespace ElmaSmartFarm.Service
                 {
                     if (config.VerboseMode) Log.Information($"MQTT Message is value from a ambient light sensor. Topic: {mqtt.Topic}, Payload: {mqtt.Payload}");
                     var sensors = FindSensorsById<BinarySensorModel>(SensorId);
-                    if (sensors == null)
+                    if (sensors == null || sensors.All(s => s.IsEnabled == false))
                     {
                         AddMqttToUnknownList(mqtt);
                         return -1;
@@ -296,7 +296,7 @@ namespace ElmaSmartFarm.Service
         private async Task InvalidSensorValueHandler<T>(T s, MqttMessageModel mqtt, DateTime Now) where T : SensorModel
         {
             Log.Error($"A sensor sends invalid value. Topic: {mqtt.Topic} , Payload: {mqtt.Payload}");
-            SensorErrorModel newErr = GenerateSensorError(s.AsBaseModel(), SensorErrorType.InvalidValue, Now, $"Data: {mqtt.Payload}");
+            var newErr = GenerateSensorError(s.AsBaseModel(), SensorErrorType.InvalidValue, Now, $"Data: {mqtt.Payload}");
             if (s.Errors.AddError(newErr, SensorErrorType.InvalidValue, config.system.MaxSensorErrorCount))
             {
                 var newId = await DbProcessor.WriteSensorErrorToDbAsync(newErr, Now);
@@ -318,7 +318,7 @@ namespace ElmaSmartFarm.Service
             if (sensors != null)
                 foreach (var s in sensors)
                 {
-                    SensorErrorModel newErr = GenerateSensorError(s.AsBaseModel(), SensorErrorType.InvalidData, Now, $"Data: {mqtt.Payload}");
+                    var newErr = GenerateSensorError(s.AsBaseModel(), SensorErrorType.InvalidData, Now, $"Data: {mqtt.Payload}");
                     if (s.Errors.AddError(newErr, SensorErrorType.InvalidData, config.system.MaxSensorErrorCount))
                     {
                         var newId = await DbProcessor.WriteSensorErrorToDbAsync(newErr, Now);
@@ -347,7 +347,7 @@ namespace ElmaSmartFarm.Service
                     s.Errors.EraseError(SensorErrorType.NotAlive, now);
                     if (battery != -1 && battery <= config.system.SensorLowBatteryLevel)
                     {
-                        SensorErrorModel newErr = GenerateSensorError(s.AsBaseModel(), SensorErrorType.LowBattery, now, $"Level: {battery}");
+                        var newErr = GenerateSensorError(s.AsBaseModel(), SensorErrorType.LowBattery, now, $"Level: {battery}");
                         s.Errors.AddError(newErr, SensorErrorType.LowBattery, config.system.MaxSensorErrorCount);
                         await DbProcessor.WriteSensorErrorToDbAsync(newErr, now);
                     }
