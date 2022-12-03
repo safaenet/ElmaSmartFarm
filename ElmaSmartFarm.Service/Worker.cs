@@ -14,7 +14,7 @@ namespace ElmaSmartFarm.Service
         {
             DbProcessor = dbProcessor;
             config = cfg;
-            Task.Run(() => RunObserverTimer());
+            Task.Run(() => RunObserverTimerAsync());
         }
 
         private Config config;

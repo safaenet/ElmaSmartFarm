@@ -5,7 +5,7 @@ namespace ElmaSmartFarm.Service
 {
     public partial class Worker
     {
-        private async Task<string?> ObservePoultries()
+        private async Task<string?> ObservePoultriesAsync()
         {
             
             //var m = new MqttApplicationMessageBuilder().WithTopic("safa").WithPayload("dana").Build();
@@ -13,7 +13,7 @@ namespace ElmaSmartFarm.Service
             return null;
         }
 
-        private async Task RunObserverTimer()
+        private async Task RunObserverTimerAsync()
         {
             while (true)
             {
@@ -23,7 +23,7 @@ namespace ElmaSmartFarm.Service
                     {
                         if (Poultries.Any(p => p.IsInPeriod) || config.system.ObserveAlways)
                         {
-                            var result = await ObservePoultries();
+                            var result = await ObservePoultriesAsync();
                             if (!string.IsNullOrEmpty(result))
                                 Log.Error($"Observation process returned with error: {result}");
                         }
