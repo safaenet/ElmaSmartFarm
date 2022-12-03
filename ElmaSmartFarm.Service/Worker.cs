@@ -10,9 +10,11 @@ namespace ElmaSmartFarm.Service
 {
     public partial class Worker : BackgroundService
     {
-        public Worker(IDbProcessor dbProcessor)
+        public Worker(IDbProcessor dbProcessor, Config cfg)
         {
             DbProcessor = dbProcessor;
+            config = cfg;
+            Task.Run(() => RunObserverTimer());
         }
 
         private Config config;
@@ -22,6 +24,7 @@ namespace ElmaSmartFarm.Service
         private MqttClientOptions options;
         private List<PoultryModel> Poultries;
         private readonly List<MqttMessageModel> UnknownMqttMessages = new();
+        private bool CanRunObserver;
 
         public override async Task<Task> StartAsync(CancellationToken cancellationToken)
         {
@@ -40,6 +43,7 @@ namespace ElmaSmartFarm.Service
 
             Poultries = await DbProcessor.LoadPoultriesAsync();
             await TryReconnectAsync();
+            CanRunObserver = true;
             return base.StartAsync(cancellationToken);
         }
 
@@ -73,8 +77,6 @@ namespace ElmaSmartFarm.Service
                     var mqttTopicFilterBuilder = new MqttTopicFilterBuilder().WithTopic(config.mqtt.ToServerTopic + "#").Build();
                     await mqttClient.SubscribeAsync(mqttTopicFilterBuilder);
                     Log.Information("Subscribed to MQTT topic {topic}.", config.mqtt.ToServerTopic + "#");
-                    //var m = new MqttApplicationMessageBuilder().WithTopic("safa").WithPayload("dana").Build();
-                    //if(mqttClient.IsConnected) await mqttClient.PublishAsync(m);
                 }
                 catch
                 {
@@ -88,6 +90,7 @@ namespace ElmaSmartFarm.Service
         {
             await mqttClient.DisconnectAsync();
             mqttClient.Dispose();
+            CanRunObserver = false;
             return base.StopAsync(cancellationToken);
         }
 

@@ -70,6 +70,8 @@
             KeepAliveInterval = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("keep_alive_interval").Value ?? "15");
             MaxSensorReadCount = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("max_sensor_read_count").Value ?? "10");
             SensorLowBatteryLevel = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("sensor_low_battery_level").Value ?? "10");
+            ObserverCheckInterval = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("observer_check_interval").Value ?? "5");
+            ObserveAlways = bool.Parse(SettingsDataAccess.AppConfiguration().GetSection("observe_always").Value ?? "false");
 
             TempReadInterval = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("temperature:read_interval").Value ?? "30");
             FarmTempMinValue = double.Parse(SettingsDataAccess.AppConfiguration().GetSection("temperature:farm_min_value").Value ?? "20");
@@ -102,6 +104,8 @@
         public int MaxSensorErrorCount { get; set; }
         public int MaxSensorReadCount { get; set; }
         public int SensorLowBatteryLevel { get; set; }
+        public int ObserverCheckInterval { get; set; }
+        public bool ObserveAlways { get; set; }
 
         public double TempReadInterval { get; set; }
         public double FarmTempMinValue { get; set; }

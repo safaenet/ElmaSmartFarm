@@ -3,6 +3,8 @@
   "max_sensor_error_count": 10,
   "max_sensor_read_count": 10,
   "sensor_low_battery_level": 10,
+  "observer_check_interval": 5,
+  "observe_always":  false,
   "temperature": {
     "read_interval": 30, //(Seconds)
     "farm_min_value": 20, //Wont accept the incoming data if lower than this value. (Celsius)
