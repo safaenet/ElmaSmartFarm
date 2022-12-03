@@ -69,8 +69,8 @@ namespace ElmaSmartFarm.DataLibraryCore.SqlServer
                 dp.Add("@Section", sensor.Section);
                 dp.Add("@SensorId", sensor.Id);
                 dp.Add("@ReadDate", now);
-                //if (!sensor.Type.IsPushButtonSensor())
-                dp.Add("@SensorValue", value + offset);
+                if (!sensor.Type.IsPushButtonSensor())
+                    dp.Add("@SensorValue", value + offset);
                 string sql = string.Empty;
                 if (sensor.Type.IsTemperatureSensor()) sql = string.Format(WriteScalarSensorValueCmd, "TemperatureValues", ", SensorValue", ", @SensorValue");
                 else if (sensor.Type.IsHumiditySensor()) sql = string.Format(WriteScalarSensorValueCmd, "HumidityValues", ", SensorValue", ", @SensorValue");

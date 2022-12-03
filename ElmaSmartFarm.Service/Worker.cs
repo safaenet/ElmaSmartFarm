@@ -21,7 +21,7 @@ namespace ElmaSmartFarm.Service
         private IMqttClient mqttClient;
         private MqttClientOptions options;
         private List<PoultryModel> Poultries;
-        private List<MqttMessageModel> UnknownMqttMessages = new();
+        private readonly List<MqttMessageModel> UnknownMqttMessages = new();
 
         public override async Task<Task> StartAsync(CancellationToken cancellationToken)
         {

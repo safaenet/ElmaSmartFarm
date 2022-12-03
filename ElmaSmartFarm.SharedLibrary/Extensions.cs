@@ -110,13 +110,14 @@ namespace ElmaSmartFarm.SharedLibrary
             };
         }
 
-        public static bool RemoveOldestNotSaved<T>(this List<SensorReadModel<T>> l)
+        public static bool RemoveOldestNotSaved<T>(this List<SensorReadModel<T>> list, bool log)
         {
-            if (l == null || l.Count == 0) return false;
-            for (int i = 0; i < l.Count; i++)
-                if (l[i].IsSavedToDb == false)
+            if (log) Log.Information($"Count of commute value list exceeded it's limit. Removing the oldest one. Count: {list.Count}");
+            if (list == null || list.Count == 0) return false;
+            for (int i = 0; i < list.Count; i++)
+                if (list[i].IsSavedToDb == false)
                 {
-                    l.Remove(l[i]);
+                    list.Remove(list[i]);
                     return true;
                 }
             return false;

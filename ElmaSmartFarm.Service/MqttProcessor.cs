@@ -19,24 +19,27 @@ namespace ElmaSmartFarm.Service
                 if (SubTopics.Length < 3 || string.IsNullOrEmpty(SubTopics[2]) || int.TryParse(SubTopics[2], out int SensorId) == false)
                 {
                     AddMqttToUnknownList(mqtt);
-                    Log.Warning($"Invalid MQTT message from sensor. Topic: {mqtt.Topic} , Payload: {mqtt.Payload}");
                     return -1;
                 }
+                #region KeepAlive Message Handler
                 if (SubTopics[1] == config.mqtt.KeepAliveSubTopic) //Keep Alive message from sensor.
                 {
                     if (config.VerboseMode) Log.Information($"MQTT Message is KeepAlive from a sensor. Topic: {mqtt.Topic}, Payload: {mqtt.Payload}");
                     if (await UpdateSensorKeepAliveAsync(SensorId, Now) == 0)
                     {
-                        Log.Warning($"An unregistered sensor is sending KeepAlive Mqtt message: {mqtt.Topic} , Payload: {mqtt.Payload}");
                         AddMqttToUnknownList(mqtt);
                         return -1;
                     }
                 }
+                #endregion
+                #region IP Address Message Handler
                 else if (SubTopics[1] == config.mqtt.IPAddressSubTopic) //IP Address message from sensor.
                 {
                     if (config.VerboseMode) Log.Information($"MQTT Message is IP Address from a sensor. Topic: {mqtt.Topic}, Payload: {mqtt.Payload}");
                     await UpdateSensorIPAddressAsync(SensorId, mqtt.Payload, Now);
                 }
+                #endregion
+                #region Battery Level Message Handler
                 else if (SubTopics[1] == config.mqtt.BatteryLevelSubTopic) //Battery Level message from sensor.
                 {
                     if (config.VerboseMode) Log.Information($"MQTT Message is Battery Level from a sensor. Topic: {mqtt.Topic}, Payload: {mqtt.Payload}");
@@ -44,11 +47,11 @@ namespace ElmaSmartFarm.Service
                         await UpdateSensorBatteryLevelAsync(SensorId, level, Now);
                     else
                     {
-                        Log.Error($"Payload for sensor Battery Level is invlid. Topic: {mqtt.Topic}, Payload: {mqtt.Payload}");
                         AddMqttToUnknownList(mqtt);
                         return -1;
                     }
                 }
+                #endregion
                 #region Temp Value Handler.
                 else if (SubTopics[1] == config.mqtt.TemperatureSubTopic) //Value from temp sensor.
                 {
@@ -57,53 +60,24 @@ namespace ElmaSmartFarm.Service
                     if (sensors == null)
                     {
                         AddMqttToUnknownList(mqtt);
-                        Log.Warning($"Unknown temp sensor sends value. Topic: {mqtt.Topic} , Payload: {mqtt.Payload}");
                         return -1;
                     }
                     if (!double.TryParse(mqtt.Payload, out double Payload)) //Invalid data.
                     {
-                        AddMqttToUnknownList(mqtt);
-                        Log.Warning($"A temp sensor sends invalid data. Topic: {mqtt.Topic} , Payload: {mqtt.Payload}");
-                        if (sensors != null)
-                            foreach (var s in sensors)
-                            {
-                                SensorErrorModel newErr = GenerateSensorError(s.AsBaseModel(), SensorErrorType.InvalidData, Now, $"Data: {mqtt.Payload}");
-                                if (s.Errors.AddError(newErr, SensorErrorType.InvalidData, config.system.MaxSensorErrorCount))
-                                {
-                                    var newId = await DbProcessor.WriteSensorErrorToDbAsync(newErr, Now);
-                                    if (newId > 0) s.LastError.Id = newId;
-                                }
-                                s.Errors.EraseError(SensorErrorType.NotAlive, Now);
-                                await DbProcessor.EraseSensorErrorFromDbAsync(s.AsBaseModel(), SensorErrorType.NotAlive, Now);
-                            }
+                        await InvalidMqttPayloadHandler(mqtt, sensors, Now);
                         return -1;
                     }
                     foreach (var s in sensors) //Sensor(s) found. Check value.
                     {
-                        if (config.VerboseMode) Log.Information($"Temp sensor ID is found in Poultries/Farms. Type: {s.Type}, LocationID: {s.LocationId}, Section: {s.Section}");
-                        s.KeepAliveMessageDate = Now;
-                        s.Errors.EraseError(SensorErrorType.NotAlive, Now);
-                        await DbProcessor.EraseSensorErrorFromDbAsync(s.AsBaseModel(), SensorErrorType.NotAlive, Now);
+                        await EraseSensorNotAliveErrorIfExists(s, Now);
                         if ((s.Type == SensorType.FarmTemperature && (Payload < config.system.FarmTempMinValue || Payload > config.system.FarmTempMaxValue)) || (s.Type == SensorType.OutdoorTemperature && (Payload < config.system.OutdoorTempMinValue || Payload > config.system.OutdoorTempMaxValue))) //Invalid value.
-                        {
-                            Log.Error($"A temp sensor sends invalid value. Topic: {mqtt.Topic} , Payload: {mqtt.Payload}");
-                            SensorErrorModel newErr = GenerateSensorError(s.AsBaseModel(), SensorErrorType.InvalidValue, Now, $"Data: {mqtt.Payload}");
-                            if (s.Errors.AddError(newErr, SensorErrorType.InvalidValue, config.system.MaxSensorErrorCount))
-                            {
-                                var newId = await DbProcessor.WriteSensorErrorToDbAsync(newErr, Now);
-                                if (newId > 0) s.LastError.Id = newId;
-                            }
-                        }
+                            await InvalidSensorValueHandler(s, mqtt, Now); //Invalid sensor value.
                         else //Sensor Valid, Value Valid.
                         {
-                            if (config.VerboseMode) Log.Information($"Temp sensor is valid; Value is valid. Type: {s.Type}, LocationID: {s.LocationId}, Section: {s.Section}");
-                            s.Errors.EraseError(SensorErrorType.InvalidData, Now);
-                            await DbProcessor.EraseSensorErrorFromDbAsync(s.AsBaseModel(), SensorErrorType.InvalidData, Now);
-                            s.Errors.EraseError(SensorErrorType.InvalidValue, Now);
-                            await DbProcessor.EraseSensorErrorFromDbAsync(s.AsBaseModel(), SensorErrorType.InvalidValue, Now);
+                            await EraseInvalidDataAndValueErrors(s, Now);
                             if (s.Values == null) s.Values = new();
                             SensorReadModel<double> newRead = new() { Value = Payload, ReadDate = Now };
-                            if (s.IsWatched && (s.Values.Count == 0 || s.LastSavedRead == null || (config.system.WriteOnValueChangeByDiffer && Math.Abs(s.LastRead.Value - Payload) >= config.system.TempMaxDifferValue) || (s.LastSavedRead != null && (Now - s.LastSavedRead.ReadDate).TotalSeconds >= config.system.WriteTempToDbInterval))) //Writable to db.
+                            if (s.IsWatched && (s.Values.Count == 0 || s.LastSavedRead == null || (config.system.WriteTempOnValueChangeByDiffer && Math.Abs(s.LastSavedRead.Value - Payload) >= config.system.TempMaxDifferValue) || (Now - s.LastSavedRead.ReadDate).TotalSeconds >= config.system.WriteTempToDbInterval)) //Writable to db.
                             {
                                 var newId = await DbProcessor.WriteSensorValueToDbAsync(s, Payload, Now, s.Offset);
                                 if (newId > 0)
@@ -112,11 +86,7 @@ namespace ElmaSmartFarm.Service
                                     newRead.Id = newId;
                                 }
                             }
-                            if (s.Values.Count >= config.system.MaxSensorReadCount)
-                            {
-                                if (config.VerboseMode) Log.Information($"Count of temp value list exceeded it's limit. Removing the oldest one. Sensor ID: {s.Id}, Count: {s.Values.Count}");
-                                s.Values.RemoveOldestNotSaved();
-                            }
+                            if (s.Values.Count >= config.system.MaxSensorReadCount) s.Values.RemoveOldestNotSaved(config.VerboseMode);
                             s.Values.Add(newRead);
                             if (config.VerboseMode) Log.Information($"Temp sensor value done processing: {s.LastRead.ReadDate}, : {s.LastRead.Value}, Count: {s.Values.Count}");
                         }
@@ -131,53 +101,23 @@ namespace ElmaSmartFarm.Service
                     if (sensors == null)
                     {
                         AddMqttToUnknownList(mqtt);
-                        Log.Warning($"Unknown humid sensor sends value. Topic: {mqtt.Topic} , Payload: {mqtt.Payload}");
                         return -1;
                     }
                     if (!int.TryParse(mqtt.Payload, out int Payload)) //Invalid data.
                     {
-                        AddMqttToUnknownList(mqtt);
-                        Log.Warning($"A humid sensor sends invalid data. Topic: {mqtt.Topic} , Payload: {mqtt.Payload}");
-                        if (sensors != null)
-                            foreach (var s in sensors)
-                            {
-                                SensorErrorModel newErr = GenerateSensorError(s.AsBaseModel(), SensorErrorType.InvalidData, Now, $"Data: {mqtt.Payload}");
-                                if (s.Errors.AddError(newErr, SensorErrorType.InvalidData, config.system.MaxSensorErrorCount))
-                                {
-                                    var newId = await DbProcessor.WriteSensorErrorToDbAsync(newErr, Now);
-                                    if (newId > 0) s.LastError.Id = newId;
-                                }
-                                s.Errors.EraseError(SensorErrorType.NotAlive, Now);
-                                await DbProcessor.EraseSensorErrorFromDbAsync(s.AsBaseModel(), SensorErrorType.NotAlive, Now);
-                            }
+                        await InvalidMqttPayloadHandler(mqtt, sensors, Now);
                         return -1;
                     }
                     foreach (var s in sensors) //Sensor(s) found. Check value.
                     {
-                        if (config.VerboseMode) Log.Information($"Humid sensor ID is found in Poultries/Farms. Type: {s.Type}, LocationID: {s.LocationId}, Section: {s.Section}");
-                        s.KeepAliveMessageDate = Now;
-                        s.Errors.EraseError(SensorErrorType.NotAlive, Now);
-                        await DbProcessor.EraseSensorErrorFromDbAsync(s.AsBaseModel(), SensorErrorType.NotAlive, Now);
-                        if ((Payload < config.system.HumidMinValue || Payload > config.system.HumidMaxValue)) //Invalid value.
-                        {
-                            Log.Error($"A humid sensor sends invalid value. Topic: {mqtt.Topic} , Payload: {mqtt.Payload}");
-                            SensorErrorModel newErr = GenerateSensorError(s.AsBaseModel(), SensorErrorType.InvalidValue, Now, $"Data: {mqtt.Payload}");
-                            if (s.Errors.AddError(newErr, SensorErrorType.InvalidValue, config.system.MaxSensorErrorCount))
-                            {
-                                var newId = await DbProcessor.WriteSensorErrorToDbAsync(newErr, Now);
-                                if (newId > 0) s.LastError.Id = newId;
-                            }
-                        }
+                        await EraseSensorNotAliveErrorIfExists(s, Now);
+                        if ((Payload < config.system.HumidMinValue || Payload > config.system.HumidMaxValue)) await InvalidSensorValueHandler(s, mqtt, Now); //Invalid sensor value.
                         else //Sensor Valid, Value Valid.
                         {
-                            if (config.VerboseMode) Log.Information($"Humid sensor is valid; Value is valid. Type: {s.Type}, LocationID: {s.LocationId}, Section: {s.Section}");
-                            s.Errors.EraseError(SensorErrorType.InvalidData, Now);
-                            await DbProcessor.EraseSensorErrorFromDbAsync(s.AsBaseModel(), SensorErrorType.InvalidData, Now);
-                            s.Errors.EraseError(SensorErrorType.InvalidValue, Now);
-                            await DbProcessor.EraseSensorErrorFromDbAsync(s.AsBaseModel(), SensorErrorType.InvalidValue, Now);
+                            await EraseInvalidDataAndValueErrors(s, Now);
                             if (s.Values == null) s.Values = new();
                             SensorReadModel<int> newRead = new() { Value = Payload, ReadDate = Now };
-                            if (s.IsWatched && (s.Values.Count == 0 || s.LastSavedRead == null || (config.system.WriteOnValueChangeByDiffer && Math.Abs(s.LastRead.Value - Payload) >= config.system.HumidMaxDifferValue) || (s.LastSavedRead != null && (Now - s.LastSavedRead.ReadDate).TotalSeconds >= config.system.WriteHumidToDbInterval))) //Writable to db.
+                            if (s.IsWatched && (s.Values.Count == 0 || s.LastSavedRead == null || (config.system.WriteHumidOnValueChangeByDiffer && Math.Abs(s.LastSavedRead.Value - Payload) >= config.system.HumidMaxDifferValue) || (Now - s.LastSavedRead.ReadDate).TotalSeconds >= config.system.WriteHumidToDbInterval)) //Writable to db.
                             {
                                 var newId = await DbProcessor.WriteSensorValueToDbAsync(s, Payload, Now, s.Offset);
                                 if (newId > 0)
@@ -186,11 +126,7 @@ namespace ElmaSmartFarm.Service
                                     newRead.Id = newId;
                                 }
                             }
-                            if (s.Values.Count >= config.system.MaxSensorReadCount)
-                            {
-                                if (config.VerboseMode) Log.Information($"Count of ambient light value list exceeded it's limit. Removing the oldest one. Sensor ID: {s.Id}, Count: {s.Values.Count}");
-                                s.Values.RemoveOldestNotSaved();
-                            }
+                            if (s.Values.Count >= config.system.MaxSensorReadCount) s.Values.RemoveOldestNotSaved(config.VerboseMode);
                             s.Values.Add(newRead);
                             if (config.VerboseMode) Log.Information($"Temp sensor value done processing: {s.LastRead.ReadDate}, : {s.LastRead.Value}, Count: {s.Values.Count}");
                         }
@@ -205,53 +141,23 @@ namespace ElmaSmartFarm.Service
                     if (sensors == null)
                     {
                         AddMqttToUnknownList(mqtt);
-                        Log.Warning($"Unknown ambient light sensor sends value. Topic: {mqtt.Topic} , Payload: {mqtt.Payload}");
                         return -1;
                     }
                     if (!int.TryParse(mqtt.Payload, out int Payload)) //Invalid data.
                     {
-                        AddMqttToUnknownList(mqtt);
-                        Log.Warning($"A ambient light sensor sends invalid data. Topic: {mqtt.Topic} , Payload: {mqtt.Payload}");
-                        if (sensors != null)
-                            foreach (var s in sensors)
-                            {
-                                SensorErrorModel newErr = GenerateSensorError(s.AsBaseModel(), SensorErrorType.InvalidData, Now, $"Data: {mqtt.Payload}");
-                                if (s.Errors.AddError(newErr, SensorErrorType.InvalidData, config.system.MaxSensorErrorCount))
-                                {
-                                    var newId = await DbProcessor.WriteSensorErrorToDbAsync(newErr, Now);
-                                    if (newId > 0) s.LastError.Id = newId;
-                                }
-                                s.Errors.EraseError(SensorErrorType.NotAlive, Now);
-                                await DbProcessor.EraseSensorErrorFromDbAsync(s.AsBaseModel(), SensorErrorType.NotAlive, Now);
-                            }
+                        await InvalidMqttPayloadHandler(mqtt, sensors, Now);
                         return -1;
                     }
                     foreach (var s in sensors) //Sensor(s) found. Check value.
                     {
-                        if (config.VerboseMode) Log.Information($"Humid sensor ID is found in Poultries/Farms. Type: {s.Type}, LocationID: {s.LocationId}, Section: {s.Section}");
-                        s.KeepAliveMessageDate = Now;
-                        s.Errors.EraseError(SensorErrorType.NotAlive, Now);
-                        await DbProcessor.EraseSensorErrorFromDbAsync(s.AsBaseModel(), SensorErrorType.NotAlive, Now);
-                        if ((Payload < config.system.HumidMinValue || Payload > config.system.HumidMaxValue)) //Invalid value.
-                        {
-                            Log.Error($"A ambient light sensor sends invalid value. Topic: {mqtt.Topic} , Payload: {mqtt.Payload}");
-                            SensorErrorModel newErr = GenerateSensorError(s.AsBaseModel(), SensorErrorType.InvalidValue, Now, $"Data: {mqtt.Payload}");
-                            if (s.Errors.AddError(newErr, SensorErrorType.InvalidValue, config.system.MaxSensorErrorCount))
-                            {
-                                var newId = await DbProcessor.WriteSensorErrorToDbAsync(newErr, Now);
-                                if (newId > 0) s.LastError.Id = newId;
-                            }
-                        }
+                        await EraseSensorNotAliveErrorIfExists(s, Now);
+                        if ((Payload < config.system.AmbientLightMinValue || Payload > config.system.AmbientLightMaxValue)) await InvalidSensorValueHandler(s, mqtt, Now); //Invalid sensor value.
                         else //Sensor Valid, Value Valid.
                         {
-                            if (config.VerboseMode) Log.Information($"Ambient light sensor is valid; Value is valid. Type: {s.Type}, LocationID: {s.LocationId}, Section: {s.Section}");
-                            s.Errors.EraseError(SensorErrorType.InvalidData, Now);
-                            await DbProcessor.EraseSensorErrorFromDbAsync(s.AsBaseModel(), SensorErrorType.InvalidData, Now);
-                            s.Errors.EraseError(SensorErrorType.InvalidValue, Now);
-                            await DbProcessor.EraseSensorErrorFromDbAsync(s.AsBaseModel(), SensorErrorType.InvalidValue, Now);
+                            await EraseInvalidDataAndValueErrors(s, Now);
                             if (s.Values == null) s.Values = new();
                             SensorReadModel<int> newRead = new() { Value = Payload, ReadDate = Now };
-                            if (s.IsWatched && (s.Values.Count == 0 || s.LastSavedRead == null || (config.system.WriteOnValueChangeByDiffer && Math.Abs(s.LastRead.Value - Payload) >= config.system.AmbientLightMaxDifferValue) || (s.LastSavedRead != null && (Now - s.LastSavedRead.ReadDate).TotalSeconds >= config.system.WriteAmbientLightToDbInterval))) //Writable to db.
+                            if (s.IsWatched && (s.Values.Count == 0 || s.LastSavedRead == null || (config.system.WriteAmbientLightOnValueChangeByDiffer && Math.Abs(s.LastSavedRead.Value - Payload) >= config.system.AmbientLightMaxDifferValue) || (Now - s.LastSavedRead.ReadDate).TotalSeconds >= config.system.WriteAmbientLightToDbInterval)) //Writable to db.
                             {
                                 var newId = await DbProcessor.WriteSensorValueToDbAsync(s, Payload, Now, s.Offset);
                                 if (newId > 0)
@@ -260,11 +166,7 @@ namespace ElmaSmartFarm.Service
                                     newRead.Id = newId;
                                 }
                             }
-                            if (s.Values.Count >= config.system.MaxSensorReadCount)
-                            {
-                                if (config.VerboseMode) Log.Information($"Count of ambient light value list exceeded it's limit. Removing the oldest one. Sensor ID: {s.Id}, Count: {s.Values.Count}");
-                                s.Values.RemoveOldestNotSaved();
-                            }
+                            if (s.Values.Count >= config.system.MaxSensorReadCount) s.Values.RemoveOldestNotSaved(config.VerboseMode);
                             s.Values.Add(newRead);
                             if (config.VerboseMode) Log.Information($"Ambient light sensor value done processing: {s.LastRead.ReadDate}, : {s.LastRead.Value}, Count: {s.Values.Count}");
                         }
@@ -279,37 +181,17 @@ namespace ElmaSmartFarm.Service
                     if (sensors == null)
                     {
                         AddMqttToUnknownList(mqtt);
-                        Log.Warning($"Unknown commute sensor sends value. Topic: {mqtt.Topic} , Payload: {mqtt.Payload}");
                         return -1;
                     }
                     if (!Enum.TryParse(mqtt.Payload, out CommuteSensorValueType Payload)) //Invalid data.
                     {
-                        AddMqttToUnknownList(mqtt);
-                        Log.Warning($"A commute sensor sends invalid data. Topic: {mqtt.Topic} , Payload: {mqtt.Payload}");
-                        if (sensors != null)
-                            foreach (var s in sensors)
-                            {
-                                SensorErrorModel newErr = GenerateSensorError(s.AsBaseModel(), SensorErrorType.InvalidData, Now, $"Data: {mqtt.Payload}");
-                                if (s.Errors.AddError(newErr, SensorErrorType.InvalidData, config.system.MaxSensorErrorCount))
-                                {
-                                    var newId = await DbProcessor.WriteSensorErrorToDbAsync(newErr, Now);
-                                    if (newId > 0) s.LastError.Id = newId;
-                                }
-                                s.Errors.EraseError(SensorErrorType.NotAlive, Now);
-                                await DbProcessor.EraseSensorErrorFromDbAsync(s.AsBaseModel(), SensorErrorType.NotAlive, Now);
-                            }
+                        await InvalidMqttPayloadHandler(mqtt, sensors, Now);
                         return -1;
                     }
-                    foreach (var s in sensors) //Sensor(s) found. Check value.
+                    foreach (var s in sensors) //Sensor(s) found. Sensor valid, Value valid.
                     {
-                        if (config.VerboseMode) Log.Information($"Commute sensor ID is found in Farms. Type: {s.Type}, LocationID: {s.LocationId}, Section: {s.Section}");
-                        s.KeepAliveMessageDate = Now;
-                        s.Errors.EraseError(SensorErrorType.NotAlive, Now);
-                        await DbProcessor.EraseSensorErrorFromDbAsync(s.AsBaseModel(), SensorErrorType.NotAlive, Now);
-                        //Sensor valid, Value valid.
-                        if (config.VerboseMode) Log.Information($"Commute sensor is valid; Value is valid. Type: {s.Type}, LocationID: {s.LocationId}, Section: {s.Section}");
-                        s.Errors.EraseError(SensorErrorType.InvalidData, Now);
-                        await DbProcessor.EraseSensorErrorFromDbAsync(s.AsBaseModel(), SensorErrorType.InvalidData, Now);
+                        await EraseSensorNotAliveErrorIfExists(s, Now);
+                        await EraseInvalidDataAndValueErrors(s, Now);
                         if (s.Values == null) s.Values = new();
                         SensorReadModel<CommuteSensorValueType> newRead = new() { Value = Payload, ReadDate = Now };
                         if (s.IsWatched && (s.Values.Count == 0 || (Payload == CommuteSensorValueType.StepIn && s.LastStepInSavedRead == null) || (Payload == CommuteSensorValueType.StepOut && s.LastStepOutSavedRead == null) || s.LastRead.Value != Payload)) //Writable to db.
@@ -321,13 +203,74 @@ namespace ElmaSmartFarm.Service
                                 newRead.Id = newId;
                             }
                         }
-                        if (s.Values.Count >= config.system.MaxSensorReadCount)
-                        {
-                            if (config.VerboseMode) Log.Information($"Count of commute value list exceeded it's limit. Removing the oldest one. Sensor ID: {s.Id}, Count: {s.Values.Count}");
-                            s.Values.RemoveOldestNotSaved();
-                        }
+                        if (s.Values.Count >= config.system.MaxSensorReadCount) s.Values.RemoveOldestNotSaved(config.VerboseMode);
                         s.Values.Add(newRead);
                         if (config.VerboseMode) Log.Information($"Commute sensor value done processing: {s.LastRead.ReadDate}, : {s.LastRead.Value}, Count: {s.Values.Count}");
+                    }
+                }
+                #endregion
+                #region PushButton Value Handler.
+                else if (SubTopics[1] == config.mqtt.PushButtonSubTopic) //Value from push button sensor.
+                {
+                    if (config.VerboseMode) Log.Information($"MQTT Message is value from a push button sensor. Topic: {mqtt.Topic}, Payload: {mqtt.Payload}");
+                    var sensors = FindSensorsById<PushButtonSensorModel>(SensorId);
+                    if (sensors == null)
+                    {
+                        AddMqttToUnknownList(mqtt);
+                        return -1;
+                    }
+                    foreach (var s in sensors) //Sensor(s) found. Check value. Sensor Valid, Value Valid.
+                    {
+                        await EraseSensorNotAliveErrorIfExists(s, Now);
+                        if (s.Values == null) s.Values = new();
+                        SensorReadModel<DateTime> newRead = new() { Value = Now, ReadDate = Now };
+                        if (s.IsWatched) //Writable to db.
+                        {
+                            var newId = await DbProcessor.WriteSensorValueToDbAsync(s, 0, Now);
+                            if (newId > 0)
+                            {
+                                newRead.IsSavedToDb = true;
+                                newRead.Id = newId;
+                            }
+                        }
+                        if (s.Values.Count >= config.system.MaxSensorReadCount) s.Values.RemoveOldestNotSaved(config.VerboseMode);
+                        s.Values.Add(newRead);
+                    }
+                }
+                #endregion
+                #region Binary Value Handler.
+                else if (SubTopics[1] == config.mqtt.BinarySubTopic) //Value from binary sensor.
+                {
+                    if (config.VerboseMode) Log.Information($"MQTT Message is value from a ambient light sensor. Topic: {mqtt.Topic}, Payload: {mqtt.Payload}");
+                    var sensors = FindSensorsById<BinarySensorModel>(SensorId);
+                    if (sensors == null)
+                    {
+                        AddMqttToUnknownList(mqtt);
+                        return -1;
+                    }
+                    if (!Enum.TryParse(mqtt.Payload, out BinarySensorValueType Payload)) //Invalid data.
+                    {
+                        await InvalidMqttPayloadHandler(mqtt, sensors, Now);
+                        return -1;
+                    }
+                    foreach (var s in sensors) //Sensor(s) found. Check value. Sensor Valid, Value Valid.
+                    {
+                        await EraseSensorNotAliveErrorIfExists(s, Now);
+                        await EraseInvalidDataAndValueErrors(s, Now);
+                        if (s.Values == null) s.Values = new();
+                        SensorReadModel<BinarySensorValueType> newRead = new() { Value = Payload, ReadDate = Now };
+                        if (s.IsWatched && (s.Values.Count == 0 || s.LastSavedRead == null || (config.system.WriteBinaryOnValueChange && s.LastSavedRead.Value != Payload) || (Now - s.LastSavedRead.ReadDate).TotalSeconds >= config.system.WriteBinaryToDbInterval)) //Writable to db.
+                        {
+                            var newId = await DbProcessor.WriteSensorValueToDbAsync(s, (double)Payload, Now);
+                            if (newId > 0)
+                            {
+                                newRead.IsSavedToDb = true;
+                                newRead.Id = newId;
+                            }
+                        }
+                        if (s.Values.Count >= config.system.MaxSensorReadCount) s.Values.RemoveOldestNotSaved(config.VerboseMode);
+                        s.Values.Add(newRead);
+                        if (config.VerboseMode) Log.Information($"Binary sensor value done processing: {s.LastRead.ReadDate}, : {s.LastRead.Value}, Count: {s.Values.Count}");
                     }
                 }
                 #endregion
@@ -335,11 +278,55 @@ namespace ElmaSmartFarm.Service
             else //Unknown message.
             {
                 AddMqttToUnknownList(mqtt);
-                Log.Warning($"Invalid MQTT message from sensor. Topic: {mqtt.Topic} , Payload: {mqtt.Payload}");
                 return -1;
             }
             if (UnknownMqttMessages.Any(m => m.Topic == mqtt.Topic)) UnknownMqttMessages.Remove(UnknownMqttMessages.First(m => m.Topic == mqtt.Topic));
             return 0;
+        }
+
+        private async Task EraseInvalidDataAndValueErrors<T>(T s, DateTime Now) where T : SensorModel
+        {
+            if (config.VerboseMode) Log.Information($"Sensor is valid; Value is valid. Type: {s.Type}, LocationID: {s.LocationId}, Section: {s.Section}");
+            s.Errors.EraseError(SensorErrorType.InvalidData, Now);
+            await DbProcessor.EraseSensorErrorFromDbAsync(s.AsBaseModel(), SensorErrorType.InvalidData, Now);
+            s.Errors.EraseError(SensorErrorType.InvalidValue, Now);
+            await DbProcessor.EraseSensorErrorFromDbAsync(s.AsBaseModel(), SensorErrorType.InvalidValue, Now);
+        }
+
+        private async Task InvalidSensorValueHandler<T>(T s, MqttMessageModel mqtt, DateTime Now) where T : SensorModel
+        {
+            Log.Error($"A sensor sends invalid value. Topic: {mqtt.Topic} , Payload: {mqtt.Payload}");
+            SensorErrorModel newErr = GenerateSensorError(s.AsBaseModel(), SensorErrorType.InvalidValue, Now, $"Data: {mqtt.Payload}");
+            if (s.Errors.AddError(newErr, SensorErrorType.InvalidValue, config.system.MaxSensorErrorCount))
+            {
+                var newId = await DbProcessor.WriteSensorErrorToDbAsync(newErr, Now);
+                if (newId > 0) s.LastError.Id = newId;
+            }
+        }
+
+        private async Task EraseSensorNotAliveErrorIfExists<T>(T s, DateTime Now) where T : SensorModel
+        {
+            if (config.VerboseMode) Log.Information($"Sensor ID is found in Poultries/Farms. Type: {s.Type}, LocationID: {s.LocationId}, Section: {s.Section}");
+            s.KeepAliveMessageDate = Now;
+            s.Errors.EraseError(SensorErrorType.NotAlive, Now);
+            await DbProcessor.EraseSensorErrorFromDbAsync(s.AsBaseModel(), SensorErrorType.NotAlive, Now);
+        }
+
+        private async Task InvalidMqttPayloadHandler<T>(MqttMessageModel mqtt, List<T>? sensors, DateTime Now) where T : SensorModel
+        {
+            AddMqttToUnknownList(mqtt);
+            if (sensors != null)
+                foreach (var s in sensors)
+                {
+                    SensorErrorModel newErr = GenerateSensorError(s.AsBaseModel(), SensorErrorType.InvalidData, Now, $"Data: {mqtt.Payload}");
+                    if (s.Errors.AddError(newErr, SensorErrorType.InvalidData, config.system.MaxSensorErrorCount))
+                    {
+                        var newId = await DbProcessor.WriteSensorErrorToDbAsync(newErr, Now);
+                        if (newId > 0) s.LastError.Id = newId;
+                    }
+                    s.Errors.EraseError(SensorErrorType.NotAlive, Now);
+                    await DbProcessor.EraseSensorErrorFromDbAsync(s.AsBaseModel(), SensorErrorType.NotAlive, Now);
+                }
         }
 
         private async Task<int> UpdateSensorBatteryLevelAsync(int sensorId, int battery, DateTime now)
@@ -418,6 +405,7 @@ namespace ElmaSmartFarm.Service
 
         private void AddMqttToUnknownList(MqttMessageModel mqtt)
         {
+            Log.Warning($"A sensor sends invalid data/value or sensor is unknown. adding to unknown mqtt list. Topic: {mqtt.Topic} , Payload: {mqtt.Payload}");
             if (UnknownMqttMessages.Any(m => m.Topic == mqtt.Topic)) UnknownMqttMessages.Remove(UnknownMqttMessages.First(m => m.Topic == mqtt.Topic));
             UnknownMqttMessages.Add(mqtt);
             if (UnknownMqttMessages != null && UnknownMqttMessages.Count > config.mqtt.MaxUnknownMqttCount) UnknownMqttMessages.Remove(UnknownMqttMessages.First());
