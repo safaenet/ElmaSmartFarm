@@ -6,6 +6,7 @@ namespace ElmaSmartFarm.SharedLibrary.Models
     {
         public List<CommuteSensorModel> Sensors { get; set; }
         public bool HasSensors => Sensors != null && Sensors.Any(t => t.IsEnabled);
+        public IEnumerable<CommuteSensorModel> ActiveSensors => Sensors?.Where(s => s.IsEnabled && s.IsWatched && !s.HasError);
         public bool HasError => HasSensors && Sensors.Any(s => s.HasError);
     }
 }
