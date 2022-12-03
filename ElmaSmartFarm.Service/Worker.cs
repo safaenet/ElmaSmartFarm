@@ -84,11 +84,6 @@ namespace ElmaSmartFarm.Service
             }
         }
 
-        private async Task MqttLoopAsync()
-        {
-            if (!mqttClient.IsConnected) await TryReconnectAsync();
-        }
-
         public override async Task<Task> StopAsync(CancellationToken cancellationToken)
         {
             await mqttClient.DisconnectAsync();
@@ -100,12 +95,10 @@ namespace ElmaSmartFarm.Service
         {
             while (!stoppingToken.IsCancellationRequested)
             {
-                await MqttLoopAsync();
+                if (!mqttClient.IsConnected) await TryReconnectAsync();
             }
         }
 
-        //Elma/ToServer/Sensors/Temp/{Id}
-        //Elma/ToServer/Sensors/Humid/{Id}
         private async Task MqttClient_ApplicationMessageReceivedAsync(MqttApplicationMessageReceivedEventArgs arg)
         {
             try
