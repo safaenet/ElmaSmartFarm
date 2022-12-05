@@ -55,8 +55,7 @@ namespace ElmaSmartFarm.DataLibraryCore.SqlServer
         private readonly string WriteSensorErrorCmd = @"DECLARE @newId int; SET @newId = (SELECT ISNULL(MAX([Id]), 0) FROM [SensorErrorLogs]) + 1;
             INSERT INTO SensorErrorLogs (Id, SensorId, LocationId, Section, ErrorType, DateHappened, Descriptions)
             VALUES (@newId, @SensorId, @LocationId, @Section, @ErrorType, @DateHappened, @Descriptions); SELECT @Id = @newId";
-        private readonly string EraseSensorErrorCmd = @"UPDATE SensorErrorLogs SET DateErased = @DateErased WHERE DateErased IS NULL AND SensorId = @SensorId AND LocationId = @LocationId AND Section = @Section AND ErrorType = @ErrorType;";
-        private readonly string EraseSensorErrorCmd2 = @"UPDATE SensorErrorLogs SET DateErased = @DateErased WHERE DateErased IS NULL AND SensorId = @SensorId AND ErrorType = @ErrorType;";
+        private readonly string EraseSensorErrorCmd = @"UPDATE SensorErrorLogs SET DateErased = @DateErased WHERE DateErased IS NULL AND SensorId = @SensorId AND ErrorType IN {0};";
 
         public async Task<int> WriteSensorValueToDbAsync(SensorModel sensor, double value, DateTime now, double offset = 0)
         {
@@ -114,44 +113,25 @@ namespace ElmaSmartFarm.DataLibraryCore.SqlServer
             return 0;
         }
 
-        public async Task<bool> EraseSensorErrorFromDbAsync(int sensorId, SensorErrorType type, DateTime eraseDate)
+        public async Task<bool> EraseSensorErrorFromDbAsync(int sensorId, SensorErrorType[] types, DateTime eraseDate)
         {
             try
             {
-                if (config.VerboseMode) Log.Information($"Updating sensor(s) error in database, if existed. Sensor ID: {sensorId}, Error Type: {type}");
+                if (config.VerboseMode) Log.Information($"Updating sensor(s) error in database, if existed. Sensor ID: {sensorId}, Error Type: {types}");
                 DynamicParameters dp = new();
                 dp.Add("@SensorId", sensorId);
-                dp.Add("@ErrorType", type);
                 dp.Add("@DateErased", eraseDate);
-                var i = await DataAccess.SaveDataAsync(EraseSensorErrorCmd2, dp);
-                //if (i == 0) Log.Error($"Error when erasing sensor error. Sensor Type: {sensor.Type}, Sensor ID: {sensor.Id}, Location: {sensor.LocationId}, Section: {sensor.Section}, ErrorType: {type}. (System Error)");
+                string errors = "";
+                foreach (var t in types) errors += ((int)t).ToString() + ",";
+                errors = errors.Remove(errors.Length - 1, 1);
+                errors = "(" + errors + ")";
+                var sql = string.Format(EraseSensorErrorCmd, errors);
+                var i = await DataAccess.SaveDataAsync(sql, dp);
                 return i > 0;
             }
             catch (Exception ex)
             {
-                Log.Error(ex, $"Error when updating sensor error in database. Sensor ID: {sensorId}, Error Type: {type}");
-            }
-            return false;
-        }
-
-        public async Task<bool> EraseSensorErrorFromDbAsync(SensorBaseModel sensor, SensorErrorType type, DateTime eraseDate)
-        {
-            try
-            {
-                if (config.VerboseMode) Log.Information($"Updating sensor error in database. Sensor ID: {sensor.Id}, LocationID: {sensor.LocationId}, Section: {sensor.Section}, Error Type: {type}");
-                DynamicParameters dp = new();
-                dp.Add("@SensorId", sensor.Id);
-                dp.Add("@LocationId", sensor.LocationId);
-                dp.Add("@Section", sensor.Section);
-                dp.Add("@ErrorType", type);
-                dp.Add("@DateErased", eraseDate);
-                var i = await DataAccess.SaveDataAsync(EraseSensorErrorCmd, dp);
-                //if (i == 0) Log.Error($"Error when erasing sensor error. Sensor Type: {sensor.Type}, Sensor ID: {sensor.Id}, Location: {sensor.LocationId}, Section: {sensor.Section}, ErrorType: {type}. (System Error)");
-                return i > 0;
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, $"Error when updating sensor error in database. Sensor ID: {sensor.Id}, LocationID: {sensor.LocationId}, Section: {sensor.Section}, Error Type: {type}");
+                Log.Error(ex, $"Error when updating sensor error in database. Sensor ID: {sensorId}, Error Type: {types}");
             }
             return false;
         }
