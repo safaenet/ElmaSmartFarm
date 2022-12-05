@@ -62,7 +62,7 @@ namespace ElmaSmartFarm.Service
                         AddMqttToUnknownList(mqtt);
                         return -1;
                     }
-                    if (!double.TryParse(mqtt.Payload, out double Payload)) //Invalid data.
+                    if (!double.TryParse(mqtt.Payload, out var Payload)) //Invalid data.
                     {
                         await InvalidMqttPayloadHandler(mqtt, sensors, Now);
                         return -1;
@@ -77,7 +77,7 @@ namespace ElmaSmartFarm.Service
                             await EraseInvalidDataAndValueErrors(s, Now);
                             if (s.Values == null) s.Values = new();
                             SensorReadModel<double> newRead = new() { Value = Payload, ReadDate = Now };
-                            if (s.IsWatched && (s.Values.Count == 0 || s.LastSavedRead == null || (config.system.WriteTempOnValueChangeByDiffer && Math.Abs(s.LastSavedRead.Value - Payload) >= config.system.TempMaxDifferValue) || (Now - s.LastSavedRead.ReadDate).TotalSeconds >= config.system.WriteTempToDbInterval)) //Writable to db.
+                            if ((s.IsWatched || config.system.WriteTempToDbAlways) && (s.Values.Count == 0 || s.LastSavedRead == null || (config.system.WriteTempOnValueChangeByDiffer && Math.Abs(s.LastSavedRead.Value - Payload) >= config.system.WriteTempDifferValue) || (Now - s.LastSavedRead.ReadDate).TotalSeconds >= config.system.WriteTempToDbInterval)) //Writable to db.
                             {
                                 var newId = await DbProcessor.WriteSensorValueToDbAsync(s, Payload, Now, s.Offset);
                                 if (newId > 0)
@@ -103,7 +103,7 @@ namespace ElmaSmartFarm.Service
                         AddMqttToUnknownList(mqtt);
                         return -1;
                     }
-                    if (!int.TryParse(mqtt.Payload, out int Payload)) //Invalid data.
+                    if (!int.TryParse(mqtt.Payload, out var Payload)) //Invalid data.
                     {
                         await InvalidMqttPayloadHandler(mqtt, sensors, Now);
                         return -1;
@@ -117,7 +117,7 @@ namespace ElmaSmartFarm.Service
                             await EraseInvalidDataAndValueErrors(s, Now);
                             if (s.Values == null) s.Values = new();
                             SensorReadModel<int> newRead = new() { Value = Payload, ReadDate = Now };
-                            if (s.IsWatched && (s.Values.Count == 0 || s.LastSavedRead == null || (config.system.WriteHumidOnValueChangeByDiffer && Math.Abs(s.LastSavedRead.Value - Payload) >= config.system.HumidMaxDifferValue) || (Now - s.LastSavedRead.ReadDate).TotalSeconds >= config.system.WriteHumidToDbInterval)) //Writable to db.
+                            if ((s.IsWatched || config.system.WriteHumidToDbAlways) && (s.Values.Count == 0 || s.LastSavedRead == null || (config.system.WriteHumidOnValueChangeByDiffer && Math.Abs(s.LastSavedRead.Value - Payload) >= config.system.WriteHumidDifferValue) || (Now - s.LastSavedRead.ReadDate).TotalSeconds >= config.system.WriteHumidToDbInterval)) //Writable to db.
                             {
                                 var newId = await DbProcessor.WriteSensorValueToDbAsync(s, Payload, Now, s.Offset);
                                 if (newId > 0)
@@ -143,7 +143,7 @@ namespace ElmaSmartFarm.Service
                         AddMqttToUnknownList(mqtt);
                         return -1;
                     }
-                    if (!int.TryParse(mqtt.Payload, out int Payload)) //Invalid data.
+                    if (!int.TryParse(mqtt.Payload, out var Payload)) //Invalid data.
                     {
                         await InvalidMqttPayloadHandler(mqtt, sensors, Now);
                         return -1;
@@ -157,7 +157,7 @@ namespace ElmaSmartFarm.Service
                             await EraseInvalidDataAndValueErrors(s, Now);
                             if (s.Values == null) s.Values = new();
                             SensorReadModel<int> newRead = new() { Value = Payload, ReadDate = Now };
-                            if (s.IsWatched && (s.Values.Count == 0 || s.LastSavedRead == null || (config.system.WriteAmbientLightOnValueChangeByDiffer && Math.Abs(s.LastSavedRead.Value - Payload) >= config.system.AmbientLightMaxDifferValue) || (Now - s.LastSavedRead.ReadDate).TotalSeconds >= config.system.WriteAmbientLightToDbInterval)) //Writable to db.
+                            if ((s.IsWatched || config.system.WriteAmbientLightToDbAlways) && (s.Values.Count == 0 || s.LastSavedRead == null || (config.system.WriteAmbientLightOnValueChangeByDiffer && Math.Abs(s.LastSavedRead.Value - Payload) >= config.system.WriteAmbientLightDifferValue) || (Now - s.LastSavedRead.ReadDate).TotalSeconds >= config.system.WriteAmbientLightToDbInterval)) //Writable to db.
                             {
                                 var newId = await DbProcessor.WriteSensorValueToDbAsync(s, Payload, Now, s.Offset);
                                 if (newId > 0)
@@ -194,7 +194,7 @@ namespace ElmaSmartFarm.Service
                         await EraseInvalidDataAndValueErrors(s, Now);
                         if (s.Values == null) s.Values = new();
                         SensorReadModel<CommuteSensorValueType> newRead = new() { Value = Payload, ReadDate = Now };
-                        if (s.IsWatched && (s.Values.Count == 0 || (Payload == CommuteSensorValueType.StepIn && s.LastStepInSavedRead == null) || (Payload == CommuteSensorValueType.StepOut && s.LastStepOutSavedRead == null) || s.LastRead.Value != Payload)) //Writable to db.
+                        if ((s.IsWatched || config.system.WriteCommuteToDbAlways) && (s.Values.Count == 0 || (Payload == CommuteSensorValueType.StepIn && s.LastStepInSavedRead == null) || (Payload == CommuteSensorValueType.StepOut && s.LastStepOutSavedRead == null) || s.LastRead.Value != Payload)) //Writable to db.
                         {
                             var newId = await DbProcessor.WriteSensorValueToDbAsync(s, (double)Payload, Now);
                             if (newId > 0)
@@ -224,7 +224,7 @@ namespace ElmaSmartFarm.Service
                         await EraseSensorNotAliveErrorIfExists(s, Now);
                         if (s.Values == null) s.Values = new();
                         SensorReadModel<DateTime> newRead = new() { Value = Now, ReadDate = Now };
-                        if (s.IsWatched) //Writable to db.
+                        if ((s.IsWatched || config.system.WritePushButtonToDbAlways)) //Writable to db.
                         {
                             var newId = await DbProcessor.WriteSensorValueToDbAsync(s, 0, Now);
                             if (newId > 0)
@@ -259,7 +259,7 @@ namespace ElmaSmartFarm.Service
                         await EraseInvalidDataAndValueErrors(s, Now);
                         if (s.Values == null) s.Values = new();
                         SensorReadModel<BinarySensorValueType> newRead = new() { Value = Payload, ReadDate = Now };
-                        if (s.IsWatched && (s.Values.Count == 0 || s.LastSavedRead == null || (config.system.WriteBinaryOnValueChange && s.LastSavedRead.Value != Payload) || (Now - s.LastSavedRead.ReadDate).TotalSeconds >= config.system.WriteBinaryToDbInterval)) //Writable to db.
+                        if ((s.IsWatched || config.system.WriteBinaryToDbAlways) && (s.Values.Count == 0 || s.LastSavedRead == null || (config.system.WriteBinaryOnValueChange && s.LastSavedRead.Value != Payload) || (Now - s.LastSavedRead.ReadDate).TotalSeconds >= config.system.WriteBinaryToDbInterval)) //Writable to db.
                         {
                             var newId = await DbProcessor.WriteSensorValueToDbAsync(s, (double)Payload, Now);
                             if (newId > 0)

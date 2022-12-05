@@ -78,27 +78,35 @@
             FarmTempMaxValue = double.Parse(SettingsDataAccess.AppConfiguration().GetSection("temperature:farm_max_value").Value ?? "35");
             OutdoorTempMinValue = double.Parse(SettingsDataAccess.AppConfiguration().GetSection("temperature:outdoor_min_value").Value ?? "-10");
             OutdoorTempMaxValue = double.Parse(SettingsDataAccess.AppConfiguration().GetSection("temperature:outdoor_max_value").Value ?? "60");
-            TempMaxDifferValue = double.Parse(SettingsDataAccess.AppConfiguration().GetSection("temperature:max_differ_value").Value ?? "1");
+            WriteTempDifferValue = double.Parse(SettingsDataAccess.AppConfiguration().GetSection("temperature:write_to_db_differ_value").Value ?? "1");
             WriteTempOnValueChangeByDiffer = bool.Parse(SettingsDataAccess.AppConfiguration().GetSection("temperature:write_on_value_change_by_differ").Value ?? "true");
             WriteTempToDbInterval = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("temperature:write_to_db_interval").Value ?? "30");
+            WriteTempToDbAlways = bool.Parse(SettingsDataAccess.AppConfiguration().GetSection("temperature:write_to_db_always").Value ?? "false");
 
             HumidReadInterval = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("humidity:read_interval").Value ?? "30");
             HumidMinValue = double.Parse(SettingsDataAccess.AppConfiguration().GetSection("humidity:min_value").Value ?? "20");
             HumidMaxValue = double.Parse(SettingsDataAccess.AppConfiguration().GetSection("humidity:max_value").Value ?? "35");
-            HumidMaxDifferValue = double.Parse(SettingsDataAccess.AppConfiguration().GetSection("humidity:max_differ_value").Value ?? "1");
+            WriteHumidDifferValue = double.Parse(SettingsDataAccess.AppConfiguration().GetSection("humidity:write_to_db_differ_value").Value ?? "1");
             WriteHumidOnValueChangeByDiffer = bool.Parse(SettingsDataAccess.AppConfiguration().GetSection("humidity:write_on_value_change_by_differ").Value ?? "true");
             WriteHumidToDbInterval = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("humidity:write_to_db_interval").Value ?? "30");
+            WriteHumidToDbAlways = bool.Parse(SettingsDataAccess.AppConfiguration().GetSection("humidity:write_to_db_always").Value ?? "false");
 
             AmbientLightReadInterval = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("ambient_light:read_interval").Value ?? "30");
             AmbientLightMinValue = double.Parse(SettingsDataAccess.AppConfiguration().GetSection("ambient_light:min_value").Value ?? "20");
             AmbientLightMaxValue = double.Parse(SettingsDataAccess.AppConfiguration().GetSection("ambient_light:max_value").Value ?? "35");
-            AmbientLightMaxDifferValue = double.Parse(SettingsDataAccess.AppConfiguration().GetSection("ambient_light:max_differ_value").Value ?? "1");
+            WriteAmbientLightDifferValue = double.Parse(SettingsDataAccess.AppConfiguration().GetSection("ambient_light:write_to_db_differ_value").Value ?? "1");
             WriteAmbientLightOnValueChangeByDiffer = bool.Parse(SettingsDataAccess.AppConfiguration().GetSection("ambient_light:write_on_value_change_by_differ").Value ?? "true");
             WriteAmbientLightToDbInterval = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("ambient_light:write_to_db_interval").Value ?? "30");
+            WriteAmbientLightToDbAlways = bool.Parse(SettingsDataAccess.AppConfiguration().GetSection("ambient_light:write_to_db_always").Value ?? "false");
+
+            WriteCommuteToDbAlways = bool.Parse(SettingsDataAccess.AppConfiguration().GetSection("commute:write_to_db_always").Value ?? "false");
+
+            WritePushButtonToDbAlways = bool.Parse(SettingsDataAccess.AppConfiguration().GetSection("push_button:write_to_db_always").Value ?? "false");
 
             BinaryReadInterval = double.Parse(SettingsDataAccess.AppConfiguration().GetSection("binary:read_interval").Value ?? "30");
             WriteBinaryOnValueChange = bool.Parse(SettingsDataAccess.AppConfiguration().GetSection("binary:write_on_value_change").Value ?? "true");
             WriteBinaryToDbInterval = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("binary:write_to_db_interval").Value ?? "30");
+            WriteBinaryToDbAlways = bool.Parse(SettingsDataAccess.AppConfiguration().GetSection("binary:write_to_db_always").Value ?? "false");
         }
         public int KeepAliveInterval { get; set; }
         public int MaxSensorErrorCount { get; set; }
@@ -107,31 +115,51 @@
         public int ObserverCheckInterval { get; set; }
         public bool ObserveAlways { get; set; }
 
+        #region Temperature Settings
         public double TempReadInterval { get; set; }
         public double FarmTempMinValue { get; set; }
         public double FarmTempMaxValue { get; set; }
         public double OutdoorTempMinValue { get; set; }
         public double OutdoorTempMaxValue { get; set; }
-        public double TempMaxDifferValue { get; set; }
+        public double WriteTempDifferValue { get; set; }
         public bool WriteTempOnValueChangeByDiffer { get; set; }
         public int WriteTempToDbInterval { get; set; }
+        public bool WriteTempToDbAlways { get; set; }
+        #endregion
 
+        #region Humidity Settings
         public double HumidReadInterval { get; set; }
         public double HumidMinValue { get; set; }
         public double HumidMaxValue { get; set; }
-        public double HumidMaxDifferValue { get; set; }
+        public double WriteHumidDifferValue { get; set; }
         public bool WriteHumidOnValueChangeByDiffer { get; set; }
         public int WriteHumidToDbInterval { get; set; }
+        public bool WriteHumidToDbAlways { get; set; }
+        #endregion
 
+        #region Ambient Light Settings
         public double AmbientLightReadInterval { get; set; }
         public double AmbientLightMinValue { get; set; }
         public double AmbientLightMaxValue { get; set; }
-        public double AmbientLightMaxDifferValue { get; set; }
+        public double WriteAmbientLightDifferValue { get; set; }
         public bool WriteAmbientLightOnValueChangeByDiffer { get; set; }
         public int WriteAmbientLightToDbInterval { get; set; }
+        public bool WriteAmbientLightToDbAlways { get; set; }
+        #endregion
 
+        #region Commute Settings
+        public bool WriteCommuteToDbAlways { get; set; }
+        #endregion
+
+        #region Push Button Settings
+        public bool WritePushButtonToDbAlways { get; set; }
+        #endregion
+
+        #region Binary Settings
         public double BinaryReadInterval { get; set; }
         public bool WriteBinaryOnValueChange { get; set; }
         public int WriteBinaryToDbInterval { get; set; }
+        public bool WriteBinaryToDbAlways { get; set; }
+        #endregion
     }
 }

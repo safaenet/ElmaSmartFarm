@@ -11,29 +11,39 @@
     "farm_max_value": 35, //Wont accept the incoming data if higher than this value. (Celsius)
     "outdoor_min_value": -10,
     "outdoor_max_value": 60,
-    "max_differ_value": 1, //Wont accept the incoming data if new value according to previous value increased/decreased more than this value. (Celsius)
+    "write_to_db_differ_value": 4, //Wont accept the incoming data if new value according to previous value increased/decreased more than this value. (Celsius)
     "write_on_value_change_by_differ": true,
-    "write_to_db_interval": 10 //(Seconds)
+    "write_to_db_interval": 10, //(Seconds)
+    "write_to_db_always": false
   },
   "humidity": {
     "read_interval": 30, //(Seconds)
     "min_value": 0, //Wont accept the incoming data if lower than this value. (Percent)
     "max_value": 100, //Wont accept the incoming data if higher than this value. (Percent)
-    "max_differ_value": 3, //Wont accept the incoming data if new value according to previous value increased/decreased more than this value. (Percent)
+    "write_to_db_differ_value": 3, //Wont accept the incoming data if new value according to previous value increased/decreased more than this value. (Percent)
     "write_on_value_change_by_differ": true,
-    "write_to_db_interval": 30 //(Seconds)
+    "write_to_db_interval": 30, //(Seconds)
+    "write_to_db_always": false
   },
   "ambient_light": {
     "read_interval": 30, //(Seconds)
     "min_value": 0, //Wont accept the incoming data if lower than this value. (Percent)
     "max_value": 100, //Wont accept the incoming data if higher than this value. (Percent)
-    "max_differ_value": 10,
+    "write_to_db_differ_value": 10,
     "write_on_value_change_by_differ": true,
-    "write_to_db_interval": 30 //(Percent)
+    "write_to_db_interval": 30, //(Seconds)
+    "write_to_db_always": false
+  },
+  "commute": {
+    "write_to_db_always": false
+  },
+  "push_button": {
+    "write_to_db_always": false
   },
   "binary": {
     "read_interval": 30,
     "write_on_value_change": true,
-    "write_to_db_interval": 30
+    "write_to_db_interval": 30, //(Seconds)
+    "write_to_db_always": false
   }
 }

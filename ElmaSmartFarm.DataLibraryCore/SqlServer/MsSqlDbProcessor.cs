@@ -160,6 +160,7 @@ namespace ElmaSmartFarm.DataLibraryCore.SqlServer
         {
             try
             {
+                var ticks = DateTime.Now.Ticks;
                 if (config.VerboseMode) Log.Information($"Loading poultries...");
                 var poultries = (await DataAccess.LoadDataAsync<PoultryModel, DynamicParameters>(LoadPoultriesQuery, null)).ToList();
                 if (poultries != null && poultries.Any())
@@ -215,7 +216,7 @@ namespace ElmaSmartFarm.DataLibraryCore.SqlServer
                         if (periods != null && periods.Any()) p.InPeriodErrors = poultryInPeriodErrors?.Where(e => e.PoultryId == p.Id).ToList();
                     }
                 }
-                Log.Information("Poultries loaded.");
+                Log.Information($"Poultries loaded. ({TimeSpan.FromTicks(DateTime.Now.Ticks - ticks).TotalMilliseconds} ms)");
                 return poultries;
             }
             catch (Exception ex)

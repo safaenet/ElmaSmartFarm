@@ -104,6 +104,7 @@ namespace ElmaSmartFarm.Service
 
         private async Task MqttClient_ApplicationMessageReceivedAsync(MqttApplicationMessageReceivedEventArgs arg)
         {
+            var ticks = DateTime.Now.Ticks;
             try
             {
                 if (config.VerboseMode) Log.Information("===============  Begin mqtt process  ===============");
@@ -124,7 +125,7 @@ namespace ElmaSmartFarm.Service
             }
             finally
             {
-                if (config.VerboseMode) Log.Information("===============  End of mqtt process  ===============");
+                if (config.VerboseMode) Log.Information($"===============  End of mqtt process {TimeSpan.FromTicks(DateTime.Now.Ticks - ticks).TotalMilliseconds} ms) ===============");
             }
         }
     }
