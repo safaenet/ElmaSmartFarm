@@ -70,8 +70,6 @@
             KeepAliveInterval = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("keep_alive_interval").Value ?? "15");
             MaxSensorReadCount = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("max_sensor_read_count").Value ?? "10");
             SensorLowBatteryLevel = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("sensor_low_battery_level").Value ?? "10");
-            ObserverCheckInterval = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("observer_check_interval").Value ?? "5");
-            ObserveAlways = bool.Parse(SettingsDataAccess.AppConfiguration().GetSection("observe_always").Value ?? "false");
 
             TempReadInterval = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("temperature:read_interval").Value ?? "30");
             FarmTempMinValue = double.Parse(SettingsDataAccess.AppConfiguration().GetSection("temperature:farm_min_value").Value ?? "20");
@@ -107,13 +105,15 @@
             WriteBinaryOnValueChange = bool.Parse(SettingsDataAccess.AppConfiguration().GetSection("binary:write_on_value_change").Value ?? "true");
             WriteBinaryToDbInterval = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("binary:write_to_db_interval").Value ?? "30");
             WriteBinaryToDbAlways = bool.Parse(SettingsDataAccess.AppConfiguration().GetSection("binary:write_to_db_always").Value ?? "false");
+
+            ObserverCheckInterval = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("observer:observer_check_interval").Value ?? "5");
+            ObserveAlways = bool.Parse(SettingsDataAccess.AppConfiguration().GetSection("observer:observe_always").Value ?? "false");
         }
+
         public int KeepAliveInterval { get; set; }
         public int MaxSensorErrorCount { get; set; }
         public int MaxSensorReadCount { get; set; }
         public int SensorLowBatteryLevel { get; set; }
-        public int ObserverCheckInterval { get; set; }
-        public bool ObserveAlways { get; set; }
 
         #region Temperature Settings
         public double TempReadInterval { get; set; }
@@ -160,6 +160,11 @@
         public bool WriteBinaryOnValueChange { get; set; }
         public int WriteBinaryToDbInterval { get; set; }
         public bool WriteBinaryToDbAlways { get; set; }
+        #endregion
+
+        #region Observer Settings
+        public int ObserverCheckInterval { get; set; }
+        public bool ObserveAlways { get; set; }
         #endregion
     }
 }

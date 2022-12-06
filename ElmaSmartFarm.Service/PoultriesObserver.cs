@@ -1,4 +1,4 @@
-﻿using ElmaSmartFarm.SharedLibrary.Models;
+﻿using ElmaSmartFarm.SharedLibrary;
 using MQTTnet;
 using Serilog;
 
@@ -10,11 +10,47 @@ public partial class Worker
     {
         var IsInPeriod = Poultries != null && Poultries.Count > 0 && Poultries.Any(p => p.IsInPeriod);
         if (IsInPeriod == false && config.system.ObserveAlways == false) return null;
-        var TempSets = Poultries?.SelectMany(p => p.Farms.Select(f => f.Temperatures));
-        if (TempSets != null)
-            foreach (var item in TempSets)
-            {
 
+        var Sets = Poultries?.SelectMany(p => p.Farms.Select(f => f.Temperatures));
+        if (Sets != null)
+            foreach (var set in Sets)
+            {
+                if (set.HasSensors)
+                    foreach (var sensor in set.Sensors)
+                    {
+                        if (sensor.HasError)
+                        {
+                            var errors = sensor.Errors.Where(e => e.DateErased == null);
+                            if (errors != null && errors.Any())
+                                foreach (var e in errors)
+                                {
+                                    if (e.ErrorType == SensorErrorType.InvalidData)
+                                    {
+                                        if (e.DateInformed == null)
+                                        {
+                                            e.InformCount = 1;
+                                            Log.Information($"Informing Alarm of {SensorErrorType.InvalidValue}. Count: {e.InformCount}");
+                                            //inform, save to db
+                                            e.DateInformed = DateTime.Now;
+                                        }
+                                        else if (e.InformCount < 3 && e.DateInformed < DateTime.Now.AddSeconds(10 * -1))
+                                        {
+                                            e.InformCount++;
+                                            Log.Information($"Informing Alarm of {SensorErrorType.InvalidValue}. Count: {e.InformCount}");
+                                            //inform, save to db
+                                            e.DateInformed = DateTime.Now;
+                                        }
+                                        else if (e.InformCount == 3 && e.DateInformed < DateTime.Now.AddSeconds(20 * -1))
+                                        {
+                                            e.InformCount = 1;
+                                            Log.Information($"Informing Alarm of {SensorErrorType.InvalidValue}. Count: {e.InformCount}");
+                                            //inform, save to db
+                                            e.DateInformed = DateTime.Now;
+                                        }
+                                    }
+                                }
+                        }
+                    }
             }
         //var m = new MqttApplicationMessageBuilder().WithTopic("safa").WithPayload("dana").Build();
         //if (mqttClient.IsConnected) await mqttClient.PublishAsync(m);
