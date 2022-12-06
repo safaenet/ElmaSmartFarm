@@ -317,14 +317,17 @@ public partial class Worker
         if (sensors != null)
             foreach (var s in sensors)
             {
-                var newErr = GenerateSensorError(s.AsBaseModel(), SensorErrorType.InvalidData, Now, $"Data: {mqtt.Payload}");
-                if (s.Errors.AddError(newErr, SensorErrorType.InvalidData, config.system.MaxSensorErrorCount))
+                if (s.IsEnabled)
                 {
-                    var newId = await DbProcessor.WriteSensorErrorToDbAsync(newErr, Now);
-                    if (newId > 0) s.LastError.Id = newId;
-                }
-                s.Errors.EraseError(SensorErrorType.NotAlive, Now);
-                await DbProcessor.EraseSensorErrorFromDbAsync(s.Id, new[] { SensorErrorType.NotAlive }, Now);
+                    var newErr = GenerateSensorError(s.AsBaseModel(), SensorErrorType.InvalidData, Now, $"Data: {mqtt.Payload}");
+                    if (s.Errors.AddError(newErr, SensorErrorType.InvalidData, config.system.MaxSensorErrorCount))
+                    {
+                        var newId = await DbProcessor.WriteSensorErrorToDbAsync(newErr, Now);
+                        if (newId > 0) s.LastError.Id = newId;
+                    }
+                    s.Errors.EraseError(SensorErrorType.NotAlive, Now);
+                    await DbProcessor.EraseSensorErrorFromDbAsync(s.Id, new[] { SensorErrorType.NotAlive }, Now);
+                }                
             }
     }
 

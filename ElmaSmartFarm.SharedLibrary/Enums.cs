@@ -57,6 +57,13 @@
         Email
     }
 
+    public enum AlarmLevel
+    {
+        Low = 1,
+        Medium,
+        High
+    }
+
     public enum CommuteSensorValueType
     {
         StepIn = 1,
