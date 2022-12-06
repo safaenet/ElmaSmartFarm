@@ -1,4 +1,5 @@
-﻿using MQTTnet;
+﻿using ElmaSmartFarm.SharedLibrary.Models;
+using MQTTnet;
 using Serilog;
 
 namespace ElmaSmartFarm.Service;
@@ -9,7 +10,12 @@ public partial class Worker
     {
         var IsInPeriod = Poultries != null && Poultries.Count > 0 && Poultries.Any(p => p.IsInPeriod);
         if (IsInPeriod == false && config.system.ObserveAlways == false) return null;
+        var TempSets = Poultries?.SelectMany(p => p.Farms.Select(f => f.Temperatures));
+        if (TempSets != null)
+            foreach (var item in TempSets)
+            {
 
+            }
         //var m = new MqttApplicationMessageBuilder().WithTopic("safa").WithPayload("dana").Build();
         //if (mqttClient.IsConnected) await mqttClient.PublishAsync(m);
         return null;
