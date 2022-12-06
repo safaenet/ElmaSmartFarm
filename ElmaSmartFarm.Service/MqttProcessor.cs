@@ -342,18 +342,21 @@ public partial class Worker
         {
             foreach (var s in sensors)
             {
-                s.BatteryLevel = battery;
-                s.Errors.EraseError(SensorErrorType.NotAlive, now);
-                if (battery != -1 && battery <= config.system.SensorLowBatteryLevel)
+                if (s.IsEnabled)
                 {
-                    var newErr = GenerateSensorError(s.AsBaseModel(), SensorErrorType.LowBattery, now, $"Level: {battery}");
-                    s.Errors.AddError(newErr, SensorErrorType.LowBattery, config.system.MaxSensorErrorCount);
-                    await DbProcessor.WriteSensorErrorToDbAsync(newErr, now);
-                }
-                else
-                {
-                    s.Errors.EraseError(SensorErrorType.LowBattery, now);
-                    await DbProcessor.EraseSensorErrorFromDbAsync(s.Id, new[] { SensorErrorType.LowBattery }, now);
+                    s.BatteryLevel = battery;
+                    s.Errors.EraseError(SensorErrorType.NotAlive, now);
+                    if (battery != -1 && battery <= config.system.SensorLowBatteryLevel)
+                    {
+                        var newErr = GenerateSensorError(s.AsBaseModel(), SensorErrorType.LowBattery, now, $"Level: {battery}");
+                        s.Errors.AddError(newErr, SensorErrorType.LowBattery, config.system.MaxSensorErrorCount);
+                        await DbProcessor.WriteSensorErrorToDbAsync(newErr, now);
+                    }
+                    else
+                    {
+                        s.Errors.EraseError(SensorErrorType.LowBattery, now);
+                        await DbProcessor.EraseSensorErrorFromDbAsync(s.Id, new[] { SensorErrorType.LowBattery }, now);
+                    }
                 }
             }
             await DbProcessor.EraseSensorErrorFromDbAsync(sensorId, new[] { SensorErrorType.NotAlive }, now);
@@ -373,8 +376,14 @@ public partial class Worker
         if (!sensors.Any()) sensors = new(FindSensorsById<BinarySensorModel>(sensorId) ?? new());
         if (sensors.Any())
         {
-            sensors.ForEach(s => { s.IPAddress = ip; s.Errors.EraseError(SensorErrorType.NotAlive, now); });
-            await DbProcessor.EraseSensorErrorFromDbAsync(sensorId, new[] { SensorErrorType.NotAlive }, now);
+            foreach (var s in sensors)
+            {
+                if (s.IsEnabled)
+                {
+                    s.IPAddress = ip; s.Errors.EraseError(SensorErrorType.NotAlive, now);
+                    await DbProcessor.EraseSensorErrorFromDbAsync(sensorId, new[] { SensorErrorType.NotAlive }, now);
+                }
+            }
         }
         return sensors.Count;
     }
@@ -396,8 +405,14 @@ public partial class Worker
         if (!sensors.Any()) sensors = new(FindSensorsById<BinarySensorModel>(sensorId) ?? new());
         if (sensors.Any())
         {
-            sensors.ForEach(s => { s.KeepAliveMessageDate = now; s.Errors.EraseError(SensorErrorType.NotAlive, now); });
-            await DbProcessor.EraseSensorErrorFromDbAsync(sensorId, new[] { SensorErrorType.NotAlive }, now);
+            foreach (var s in sensors)
+            {
+                if (s.IsEnabled)
+                {
+                    s.KeepAliveMessageDate = now; s.Errors.EraseError(SensorErrorType.NotAlive, now);
+                    await DbProcessor.EraseSensorErrorFromDbAsync(s.Id, new[] { SensorErrorType.NotAlive }, now);
+                }
+            }
         }
         return sensors.Count;
     }

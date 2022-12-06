@@ -3,7 +3,6 @@
     public class SensorModel : SensorBaseModel
     {
         public string IPAddress { get; set; } = "N/A";
-        public bool IsInPeriod { get; set; }
         public int BatteryLevel { get; set; } = -1;
         public DateTime? KeepAliveMessageDate { get; set; }
         public List<SensorErrorModel> Errors { get; set; } = new();
