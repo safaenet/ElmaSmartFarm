@@ -16,7 +16,7 @@ public partial class Worker
         {
             if (config.VerboseMode) Log.Information($"MQTT Message is from a sensor. Topic: {mqtt.Topic}, Payload: {mqtt.Payload}");
             var SubTopics = Topic.Split("/");
-            if (SubTopics.Length < 3 || string.IsNullOrEmpty(SubTopics[2]) || int.TryParse(SubTopics[2], out int SensorId) == false)
+            if (SubTopics.Length < 3 || string.IsNullOrEmpty(SubTopics[2]) || int.TryParse(SubTopics[2], out var SensorId) == false)
             {
                 AddMqttToUnknownList(mqtt);
                 return -1;
@@ -43,7 +43,7 @@ public partial class Worker
             else if (SubTopics[1] == config.mqtt.BatteryLevelSubTopic) //Battery Level message from sensor.
             {
                 if (config.VerboseMode) Log.Information($"MQTT Message is Battery Level from a sensor. Topic: {mqtt.Topic}, Payload: {mqtt.Payload}");
-                if (int.TryParse(mqtt.Payload, out int level))
+                if (int.TryParse(mqtt.Payload, out var level))
                     await UpdateSensorBatteryLevelAsync(SensorId, level, Now);
                 else
                 {
