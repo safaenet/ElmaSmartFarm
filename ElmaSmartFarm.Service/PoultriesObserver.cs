@@ -15,6 +15,7 @@ public partial class Worker
             foreach (var set in Sets)
             {
                 if (set.HasSensors)
+                {
                     foreach (var sensor in set.Sensors)
                     {
                         if (sensor.HasError)
@@ -44,16 +45,21 @@ public partial class Worker
                                         //inform, save to db
                                         e.DateInformed = Now;
                                     }
-                                    if (e.DateHappened.IsElapsed(100) && sensor.IsInPeriod) sensor.IsWatched = false;
+                                    if (sensor.IsWatched && e.DateHappened.IsElapsed(100) && (sensor.IsInPeriod || config.system.ObserveAlways))
+                                    {
+                                        sensor.IsWatched = false;
+                                        //inform, save to db
+                                        Log.Warning($"Sensor with ID {sensor.Id} has been put out of watch due to persisting error. Error happened date: {e.DateHappened}");
+                                    }
                                 }
                             }
                         }
-                        else if(sensor.IsWatched == false) // sensor is healthy.
+                        else if (sensor.IsWatched == false) // sensor is healthy.
                         {
                             if (sensor.IsInPeriod)
                             {
                                 var startDate = Poultries.Where(p => p.IsInPeriod).SelectMany(p => p.Farms.Where(f => f.IsInPeriod && f.Temperatures.Sensors.Any(s => s.Id == sensor.Id))).FirstOrDefault().Period.StartDate;
-                                if (startDate.AddDays(sensor.WatchStartDay) < Now) sensor.IsWatched = true;
+                                if (startDate.IsElapsed(sensor.WatchStartDay * 86400)) sensor.IsWatched = true;
                                 //Inform the watch
                             }
                             else if (config.system.ObserveAlways)
@@ -63,7 +69,9 @@ public partial class Worker
                             }
                         }
                     }
+                }                    
             }
+        Sets = null;
         //var m = new MqttApplicationMessageBuilder().WithTopic("safa").WithPayload("dana").Build();
         //if (mqttClient.IsConnected) await mqttClient.PublishAsync(m);
         return null;

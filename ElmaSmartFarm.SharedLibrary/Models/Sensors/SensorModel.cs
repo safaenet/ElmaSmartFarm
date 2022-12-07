@@ -11,6 +11,6 @@
         public bool HasError => IsEnabled && ActiveErrors.Any();
         public bool IsInPeriod { get; set; }
         public int WatchStartDay { get; set; }
-        public bool IsWatched { get; set; } = true;
+        public bool IsWatched { get; set; }
     }
 }
