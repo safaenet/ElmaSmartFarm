@@ -7,7 +7,9 @@
         public DateTime? KeepAliveMessageDate { get; set; }
         public List<SensorErrorModel> Errors { get; set; } = new();
         public SensorErrorModel LastError => Errors?.MaxBy(x => x.DateHappened);
-        public bool HasError => IsEnabled && Errors != null && Errors.Any(e => e.DateErased == null);
+        public IEnumerable<SensorErrorModel> ActiveErrors => Errors.Where(e => e.DateErased == null);
+        public bool HasError => IsEnabled && ActiveErrors.Any();
+        public bool IsInPeriod { get; set; }
         public bool IsWatched { get; set; } = true;
     }
 }

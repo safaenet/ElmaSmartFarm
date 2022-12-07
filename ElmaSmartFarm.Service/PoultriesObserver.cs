@@ -11,6 +11,7 @@ public partial class Worker
         var IsInPeriod = Poultries != null && Poultries.Count > 0 && Poultries.Any(p => p.IsInPeriod);
         if (IsInPeriod == false && config.system.ObserveAlways == false) return null;
 
+        var Now = DateTime.Now;
         var Sets = Poultries?.SelectMany(p => p.Farms.Select(f => f.Temperatures));
         if (Sets != null)
             foreach (var set in Sets)
@@ -20,33 +21,33 @@ public partial class Worker
                     {
                         if (sensor.HasError)
                         {
-                            var errors = sensor.Errors.Where(e => e.DateErased == null);
-                            if (errors != null && errors.Any())
-                                foreach (var e in errors)
+                            if (sensor.ActiveErrors != null && sensor.ActiveErrors.Any())
+                                foreach (var e in sensor.ActiveErrors)
                                 {
                                     if (e.ErrorType == SensorErrorType.InvalidData)
                                     {
-                                        if (e.DateInformed == null)
+                                        if (e.DateInformed == null && e.DateHappened.IsElapsed(100)) //first alarm.
                                         {
                                             e.InformCount = 1;
                                             Log.Information($"Informing Alarm of {SensorErrorType.InvalidValue}. Count: {e.InformCount}");
                                             //inform, save to db
-                                            e.DateInformed = DateTime.Now;
+                                            e.DateInformed = Now;
                                         }
-                                        else if (e.InformCount < 3 && e.DateInformed < DateTime.Now.AddSeconds(10 * -1))
+                                        else if (e.InformCount < 3 && e.DateInformed.IsElapsed(10)) //alarm every.
                                         {
                                             e.InformCount++;
                                             Log.Information($"Informing Alarm of {SensorErrorType.InvalidValue}. Count: {e.InformCount}");
                                             //inform, save to db
-                                            e.DateInformed = DateTime.Now;
+                                            e.DateInformed = Now;
                                         }
-                                        else if (e.InformCount == 3 && e.DateInformed < DateTime.Now.AddSeconds(20 * -1))
+                                        else if (e.InformCount == 3 && e.DateInformed.IsElapsed(20)) //alarm sleep.
                                         {
                                             e.InformCount = 1;
                                             Log.Information($"Informing Alarm of {SensorErrorType.InvalidValue}. Count: {e.InformCount}");
                                             //inform, save to db
-                                            e.DateInformed = DateTime.Now;
+                                            e.DateInformed = Now;
                                         }
+                                        if (e.DateHappened.IsElapsed(100) && sensor.IsInPeriod) sensor.IsWatched = false;
                                     }
                                 }
                         }

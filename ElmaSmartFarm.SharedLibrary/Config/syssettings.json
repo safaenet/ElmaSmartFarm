@@ -51,6 +51,7 @@
     "not_alive_inform_every": 75,
     "not_alive_inform_max_count": 3,
     "not_alive_inform_sleep": 800,
+    "disable_sensor_after": 100,
     "low_battery_first_inform_after": 75,
     "low_battery_inform_every": 75,
     "low_battery_inform_max_count": 3,
