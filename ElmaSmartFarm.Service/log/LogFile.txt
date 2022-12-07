@@ -1,0 +1,1066 @@
+2022-11-29 12:03:14.573 +03:30 [INF] Starting up the Service...
+2022-11-29 12:03:15.398 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: e9627801-e38a-414e-8680-951b116c830c.
+2022-11-29 12:03:15.502 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: e9627801-e38a-414e-8680-951b116c830c.
+2022-11-29 12:03:15.529 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/Sensors/#.
+2022-11-29 12:03:16.291 +03:30 [INF] Poultries loaded
+2022-11-29 16:45:10.231 +03:30 [INF] Starting up the Service...
+2022-11-29 16:45:12.192 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 4415efdb-5a1f-4bb0-bdec-fae883a7f697.
+2022-11-29 16:45:12.285 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 4415efdb-5a1f-4bb0-bdec-fae883a7f697.
+2022-11-29 16:45:12.301 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2022-11-29 16:45:13.117 +03:30 [INF] Poultries loaded.
+2022-11-30 11:36:25.521 +03:30 [INF] Starting up the Service...
+2022-11-30 11:36:28.542 +03:30 [INF] Poultries loaded.
+2022-11-30 11:36:28.554 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: e94595e8-ee25-41a2-b69f-ee13bee6ddab.
+2022-11-30 11:36:28.623 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: e94595e8-ee25-41a2-b69f-ee13bee6ddab.
+2022-11-30 11:36:28.649 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2022-11-30 11:37:27.072 +03:30 [WRN] Unknown Sensor sends temp value. Topic: Elma/ToServer/Temp/2541 , Payload: 12
+2022-11-30 11:38:03.068 +03:30 [WRN] Invalid KeepAlive MQTT message. Topic: Elma/ToServer/Temp/3521454662 , Payload: 28
+2022-11-30 11:38:15.109 +03:30 [WRN] Invalid KeepAlive MQTT message. Topic: Elma/ToServer/Temp/3521454662 , Payload: 28
+2022-11-30 11:38:15.738 +03:30 [WRN] Invalid KeepAlive MQTT message. Topic: Elma/ToServer/Temp/3521454662 , Payload: 28
+2022-11-30 11:38:16.209 +03:30 [WRN] Invalid KeepAlive MQTT message. Topic: Elma/ToServer/Temp/3521454662 , Payload: 28
+2022-11-30 11:38:16.667 +03:30 [WRN] Invalid KeepAlive MQTT message. Topic: Elma/ToServer/Temp/3521454662 , Payload: 28
+2022-11-30 11:38:23.596 +03:30 [WRN] Unknown Sensor sends temp value. Topic: Elma/ToServer/Temp/35214 , Payload: 28
+2022-11-30 11:38:24.547 +03:30 [WRN] Unknown Sensor sends temp value. Topic: Elma/ToServer/Temp/35214 , Payload: 28
+2022-11-30 11:38:24.954 +03:30 [WRN] Unknown Sensor sends temp value. Topic: Elma/ToServer/Temp/35214 , Payload: 28
+2022-11-30 11:38:25.378 +03:30 [WRN] Unknown Sensor sends temp value. Topic: Elma/ToServer/Temp/35214 , Payload: 28
+2022-11-30 11:39:22.349 +03:30 [WRN] Unknown Sensor sends temp value. Topic: Elma/ToServer/Temp/2147483647 , Payload: 28
+2022-11-30 11:39:26.744 +03:30 [WRN] Invalid KeepAlive MQTT message. Topic: Elma/ToServer/Temp/2147483648 , Payload: 28
+2022-11-30 11:39:38.402 +03:30 [WRN] Unknown Sensor sends temp value. Topic: Elma/ToServer/Temp/2147483647 , Payload: 28
+2022-11-30 11:39:38.746 +03:30 [WRN] Unknown Sensor sends temp value. Topic: Elma/ToServer/Temp/2147483647 , Payload: 28
+2022-11-30 11:39:39.049 +03:30 [WRN] Unknown Sensor sends temp value. Topic: Elma/ToServer/Temp/2147483647 , Payload: 28
+2022-11-30 11:39:39.224 +03:30 [WRN] Unknown Sensor sends temp value. Topic: Elma/ToServer/Temp/2147483647 , Payload: 28
+2022-11-30 16:05:55.021 +03:30 [INF] Starting up the Service...
+2022-11-30 16:05:58.619 +03:30 [FTL] There was a problem starting up the Service.
+System.InvalidOperationException: Invalid attempt to call FieldCount when reader is closed.
+   at System.Data.SqlClient.SqlDataReader.get_FieldCount()
+   at Dapper.SqlMapper.GetColumnHash(IDataReader reader, Int32 startBound, Int32 length) in /_/Dapper/SqlMapper.cs:line 38
+   at Dapper.SqlMapper.GridReader.ReadAsyncImpl[T](Type type, Boolean buffered) in /_/Dapper/SqlMapper.GridReader.Async.cs:line 168
+   at Dapper.SqlMapper.GridReader.ReadAsync[T](Boolean buffered) in /_/Dapper/SqlMapper.GridReader.Async.cs:line 115
+   at ElmaSmartFarm.DataLibraryCore.SqlServer.MsSqlDbProcessor.LoadActivePeriods() in D:\Users\Safa\Source\Repos\safaenet\ElmaSmartFarm\ElmaSmartFarm.DataLibraryCore\SqlServer\MsSqlDbProcessor.cs:line 137
+   at ElmaSmartFarm.DataLibraryCore.SqlServer.MsSqlDbProcessor.LoadPoultries() in D:\Users\Safa\Source\Repos\safaenet\ElmaSmartFarm\ElmaSmartFarm.DataLibraryCore\SqlServer\MsSqlDbProcessor.cs:line 83
+   at ElmaSmartFarm.Service.Worker.StartAsync(CancellationToken cancellationToken) in D:\Users\Safa\Source\Repos\safaenet\ElmaSmartFarm\ElmaSmartFarm.Service\Worker.cs:line 41
+   at Microsoft.Extensions.Hosting.Internal.Host.StartAsync(CancellationToken cancellationToken)
+   at Microsoft.Extensions.Hosting.HostingAbstractionsHostExtensions.RunAsync(IHost host, CancellationToken token)
+   at Microsoft.Extensions.Hosting.HostingAbstractionsHostExtensions.RunAsync(IHost host, CancellationToken token)
+   at ElmaSmartFarm.Service.Program.Main(String[] args) in D:\Users\Safa\Source\Repos\safaenet\ElmaSmartFarm\ElmaSmartFarm.Service\Program.cs:line 37
+2022-11-30 16:14:25.725 +03:30 [INF] Starting up the Service...
+2022-11-30 16:14:27.780 +03:30 [INF] Poultries loaded.
+2022-11-30 16:14:27.789 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: bb0a97a8-855b-4fc9-b830-b7b446731ae0.
+2022-11-30 16:14:27.857 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: bb0a97a8-855b-4fc9-b830-b7b446731ae0.
+2022-11-30 16:14:27.872 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2022-11-30 16:14:42.211 +03:30 [INF] Starting up the Service...
+2022-11-30 16:14:43.893 +03:30 [INF] Poultries loaded.
+2022-11-30 16:15:44.978 +03:30 [INF] Starting up the Service...
+2022-11-30 16:31:08.492 +03:30 [INF] Starting up the Service...
+2022-11-30 16:31:27.652 +03:30 [INF] Starting up the Service...
+2022-11-30 16:32:01.393 +03:30 [INF] Starting up the Service...
+2022-11-30 16:32:10.266 +03:30 [INF] Poultries loaded.
+2022-11-30 16:32:10.275 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 7cb935ac-b6b8-4f96-a717-fed8b58ee36f.
+2022-11-30 16:32:10.333 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 7cb935ac-b6b8-4f96-a717-fed8b58ee36f.
+2022-11-30 16:32:10.347 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2022-11-30 16:32:25.660 +03:30 [INF] Starting up the Service...
+2022-11-30 16:32:28.194 +03:30 [INF] Poultries loaded.
+2022-11-30 16:41:11.338 +03:30 [INF] Starting up the Service...
+2022-11-30 16:41:13.666 +03:30 [INF] Poultries loaded.
+2022-11-30 16:43:37.461 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: a0f54b3c-d779-4136-9d68-b75a8523ba33.
+2022-11-30 16:43:37.530 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: a0f54b3c-d779-4136-9d68-b75a8523ba33.
+2022-11-30 16:43:37.545 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2022-11-30 16:46:30.468 +03:30 [INF] Starting up the Service...
+2022-11-30 16:46:32.723 +03:30 [INF] Poultries loaded.
+2022-11-30 16:46:32.732 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: de684ccd-1154-4679-876f-10e4af7f860f.
+2022-11-30 16:46:32.802 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: de684ccd-1154-4679-876f-10e4af7f860f.
+2022-11-30 16:46:32.820 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2022-11-30 16:47:41.544 +03:30 [INF] Starting up the Service...
+2022-11-30 16:47:43.483 +03:30 [INF] Poultries loaded.
+2022-11-30 16:47:43.493 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 09411887-aa67-4d11-8d1a-b5e26c32ce57.
+2022-11-30 16:47:43.552 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 09411887-aa67-4d11-8d1a-b5e26c32ce57.
+2022-11-30 16:47:43.567 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2022-11-30 16:48:24.076 +03:30 [ERR] Error connecting to MQTT Broker. retrying in 5 seconds...
+2022-11-30 16:52:10.242 +03:30 [ERR] Error connecting to MQTT Broker. retrying in 5 seconds...
+2022-11-30 16:52:41.820 +03:30 [ERR] Error connecting to MQTT Broker. retrying in 5 seconds...
+2022-11-30 16:52:52.830 +03:30 [ERR] Error connecting to MQTT Broker. retrying in 5 seconds...
+2022-11-30 16:53:05.810 +03:30 [ERR] Error connecting to MQTT Broker. retrying in 5 seconds...
+2022-11-30 16:53:05.813 +03:30 [WRN] Disconnected from MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 09411887-aa67-4d11-8d1a-b5e26c32ce57.
+2022-11-30 16:53:10.816 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 09411887-aa67-4d11-8d1a-b5e26c32ce57.
+2022-11-30 16:53:10.825 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 09411887-aa67-4d11-8d1a-b5e26c32ce57.
+2022-11-30 16:53:10.830 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2022-11-30 16:57:47.239 +03:30 [INF] Starting up the Service...
+2022-11-30 16:57:49.488 +03:30 [INF] Poultries loaded.
+2022-11-30 16:57:49.497 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 62cf2507-20c7-4655-9ed1-aef11015062a.
+2022-11-30 16:57:49.559 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 62cf2507-20c7-4655-9ed1-aef11015062a.
+2022-11-30 16:57:49.578 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2022-11-30 17:02:11.615 +03:30 [INF] Starting up the Service...
+2022-11-30 17:02:13.603 +03:30 [INF] Poultries loaded.
+2022-11-30 17:02:13.612 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 5ba098a4-8f8a-41f7-82dd-ea96b43879ce.
+2022-11-30 17:02:13.670 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 5ba098a4-8f8a-41f7-82dd-ea96b43879ce.
+2022-11-30 17:02:13.693 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2022-11-30 17:03:15.609 +03:30 [INF] Starting up the Service...
+2022-11-30 17:03:18.679 +03:30 [INF] Poultries loaded.
+2022-11-30 17:03:18.688 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 1069339a-8ae8-456e-a253-67b08789edcf.
+2022-11-30 17:03:18.750 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 1069339a-8ae8-456e-a253-67b08789edcf.
+2022-11-30 17:03:18.765 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2022-11-30 17:03:21.477 +03:30 [INF] Sensor value received: 11/30/2022 5:03:21 PM : 30
+2022-11-30 17:03:24.635 +03:30 [INF] Sensor value received: 11/30/2022 5:03:24 PM : 30
+2022-11-30 17:03:25.462 +03:30 [INF] Sensor value received: 11/30/2022 5:03:25 PM : 30
+2022-11-30 17:03:25.889 +03:30 [INF] Sensor value received: 11/30/2022 5:03:25 PM : 30
+2022-11-30 17:03:26.316 +03:30 [INF] Sensor value received: 11/30/2022 5:03:26 PM : 30
+2022-11-30 17:03:26.484 +03:30 [INF] Sensor value received: 11/30/2022 5:03:26 PM : 30
+2022-11-30 17:03:26.633 +03:30 [INF] Sensor value received: 11/30/2022 5:03:26 PM : 30
+2022-11-30 17:03:26.786 +03:30 [INF] Sensor value received: 11/30/2022 5:03:26 PM : 30
+2022-11-30 17:03:27.247 +03:30 [INF] Sensor value received: 11/30/2022 5:03:27 PM : 30
+2022-11-30 17:03:27.292 +03:30 [INF] Sensor value received: 11/30/2022 5:03:27 PM : 30
+2022-11-30 17:03:27.295 +03:30 [INF] Sensor value received: 11/30/2022 5:03:27 PM : 30
+2022-11-30 17:03:27.402 +03:30 [INF] Sensor value received: 11/30/2022 5:03:27 PM : 30
+2022-11-30 17:03:27.564 +03:30 [INF] Sensor value received: 11/30/2022 5:03:27 PM : 30
+2022-11-30 17:03:27.733 +03:30 [INF] Sensor value received: 11/30/2022 5:03:27 PM : 30
+2022-11-30 17:03:27.890 +03:30 [INF] Sensor value received: 11/30/2022 5:03:27 PM : 30
+2022-11-30 17:03:28.033 +03:30 [INF] Sensor value received: 11/30/2022 5:03:28 PM : 30
+2022-11-30 17:03:28.201 +03:30 [INF] Sensor value received: 11/30/2022 5:03:28 PM : 30
+2022-11-30 17:03:28.354 +03:30 [INF] Sensor value received: 11/30/2022 5:03:28 PM : 30
+2022-11-30 17:05:09.458 +03:30 [INF] Starting up the Service...
+2022-11-30 17:05:12.336 +03:30 [INF] Poultries loaded.
+2022-11-30 17:05:12.351 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 68cffa14-64af-4ee0-8115-d2d6679964d7.
+2022-11-30 17:05:13.445 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 68cffa14-64af-4ee0-8115-d2d6679964d7.
+2022-11-30 17:05:13.464 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2022-11-30 17:05:15.452 +03:30 [INF] Sensor value received: 11/30/2022 5:05:15 PM : 30
+2022-11-30 17:06:34.823 +03:30 [INF] Starting up the Service...
+2022-11-30 17:06:37.310 +03:30 [INF] Poultries loaded.
+2022-11-30 17:06:37.320 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 5599618c-d484-4332-83a1-f658b06552f4.
+2022-11-30 17:06:37.477 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 5599618c-d484-4332-83a1-f658b06552f4.
+2022-11-30 17:06:37.493 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2022-11-30 17:07:04.576 +03:30 [INF] Starting up the Service...
+2022-11-30 17:07:06.741 +03:30 [INF] Poultries loaded.
+2022-11-30 17:07:06.750 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: ad827ad2-9100-458d-beb8-dcc9b8c32b97.
+2022-11-30 17:07:06.808 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: ad827ad2-9100-458d-beb8-dcc9b8c32b97.
+2022-11-30 17:07:06.826 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2022-11-30 17:08:44.659 +03:30 [INF] Starting up the Service...
+2022-11-30 17:08:47.096 +03:30 [INF] Poultries loaded.
+2022-11-30 17:08:47.104 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 6876d6da-9701-416f-80f4-6e896127291f.
+2022-11-30 17:08:47.160 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 6876d6da-9701-416f-80f4-6e896127291f.
+2022-11-30 17:08:47.175 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2022-11-30 17:11:51.832 +03:30 [INF] Starting up the Service...
+2022-11-30 17:11:54.021 +03:30 [INF] Poultries loaded.
+2022-11-30 17:11:54.033 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 825dd310-9c11-4914-a13c-735b45f92ed1.
+2022-11-30 17:11:54.116 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 825dd310-9c11-4914-a13c-735b45f92ed1.
+2022-11-30 17:11:54.141 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2022-11-30 17:12:58.371 +03:30 [INF] Starting up the Service...
+2022-11-30 17:13:01.204 +03:30 [INF] Poultries loaded.
+2022-11-30 17:13:01.213 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 514b5db2-4fcc-4df0-9cc2-772c0c934d7a.
+2022-11-30 17:13:01.276 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 514b5db2-4fcc-4df0-9cc2-772c0c934d7a.
+2022-11-30 17:13:01.297 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2022-11-30 17:13:19.824 +03:30 [INF] Starting up the Service...
+2022-11-30 17:13:21.867 +03:30 [INF] Poultries loaded.
+2022-11-30 17:13:21.876 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 5f0e2800-aeb4-491d-a3a0-e5d78bef5bf1.
+2022-11-30 17:13:21.927 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 5f0e2800-aeb4-491d-a3a0-e5d78bef5bf1.
+2022-11-30 17:13:22.270 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2022-11-30 17:17:06.181 +03:30 [INF] Starting up the Service...
+2022-11-30 17:17:09.441 +03:30 [INF] Poultries loaded.
+2022-11-30 17:17:09.449 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 502484aa-d892-49f1-8bda-c8ce48839038.
+2022-11-30 17:17:09.512 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 502484aa-d892-49f1-8bda-c8ce48839038.
+2022-11-30 17:17:09.527 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2022-11-30 17:18:11.453 +03:30 [INF] Starting up the Service...
+2022-11-30 17:18:14.127 +03:30 [INF] Poultries loaded.
+2022-11-30 17:18:14.139 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 27c59914-d744-4ca8-91b3-f3e294511e43.
+2022-11-30 17:18:14.529 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 27c59914-d744-4ca8-91b3-f3e294511e43.
+2022-11-30 17:18:14.553 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2022-11-30 17:21:22.422 +03:30 [INF] Starting up the Service...
+2022-11-30 17:21:39.316 +03:30 [INF] Starting up the Service...
+2022-11-30 17:21:41.677 +03:30 [INF] Poultries loaded.
+2022-11-30 17:21:41.686 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 0a7a0114-1162-43f5-893a-1a14f175954b.
+2022-11-30 17:21:41.737 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 0a7a0114-1162-43f5-893a-1a14f175954b.
+2022-11-30 17:21:41.751 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2022-12-01 10:24:21.666 +03:30 [INF] Starting up the Service...
+2022-12-01 10:24:25.628 +03:30 [INF] Poultries loaded.
+2022-12-01 10:24:25.638 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: f7158df5-fdca-4823-a34f-eba3ff43ced5.
+2022-12-01 10:24:25.694 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: f7158df5-fdca-4823-a34f-eba3ff43ced5.
+2022-12-01 10:24:25.710 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2022-12-01 10:24:46.041 +03:30 [WRN] Unknown Sensor sends temp value. Topic: Elma/ToServer/Temp/123 , Payload: 30
+2022-12-01 10:25:37.432 +03:30 [INF] Sensor value received: 12/1/2022 10:25:37 AM : 30
+2022-12-01 10:25:45.250 +03:30 [INF] Sensor value received: 12/1/2022 10:25:45 AM : 31
+2022-12-01 10:25:53.870 +03:30 [INF] Sensor value received: 12/1/2022 10:25:53 AM : 31.1
+2022-12-01 10:26:09.845 +03:30 [INF] Sensor value received: 12/1/2022 10:26:09 AM : 31.1
+2022-12-01 10:26:21.408 +03:30 [INF] Sensor value received: 12/1/2022 10:26:21 AM : 31.9
+2022-12-01 10:26:32.663 +03:30 [INF] Sensor value received: 12/1/2022 10:26:32 AM : 32
+2022-12-01 10:26:40.715 +03:30 [INF] Sensor value received: 12/1/2022 10:26:40 AM : 33
+2022-12-01 10:26:57.032 +03:30 [INF] Sensor value received: 12/1/2022 10:26:56 AM : 34
+2022-12-01 10:27:26.606 +03:30 [INF] Sensor value received: 12/1/2022 10:27:26 AM : 34
+2022-12-01 10:27:31.334 +03:30 [INF] Sensor value received: 12/1/2022 10:27:31 AM : 34
+2022-12-01 10:27:33.823 +03:30 [INF] Sensor value received: 12/1/2022 10:27:33 AM : 34
+2022-12-01 10:27:36.239 +03:30 [INF] Sensor value received: 12/1/2022 10:27:36 AM : 34
+2022-12-01 10:27:41.407 +03:30 [INF] Sensor value received: 12/1/2022 10:27:41 AM : 34
+2022-12-01 10:29:09.828 +03:30 [INF] Sensor value received: 12/1/2022 10:29:09 AM : 34
+2022-12-01 10:52:29.154 +03:30 [INF] Starting up the Service...
+2022-12-01 10:52:33.801 +03:30 [INF] Poultries loaded.
+2022-12-01 10:52:33.811 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: e0d95078-8f06-4dda-a3ca-3efd10513408.
+2022-12-01 10:52:33.871 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: e0d95078-8f06-4dda-a3ca-3efd10513408.
+2022-12-01 10:52:33.918 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2022-12-01 10:52:37.271 +03:30 [INF] Sensor value received: 12/1/2022 10:52:37 AM : 34
+2022-12-01 10:52:42.431 +03:30 [INF] Sensor value received: 12/1/2022 10:52:42 AM : 34
+2022-12-01 10:52:43.824 +03:30 [INF] Sensor value received: 12/1/2022 10:52:43 AM : 34
+2022-12-01 10:52:45.240 +03:30 [INF] Sensor value received: 12/1/2022 10:52:45 AM : 34
+2022-12-01 10:52:46.831 +03:30 [INF] Sensor value received: 12/1/2022 10:52:46 AM : 34
+2022-12-01 10:52:48.185 +03:30 [INF] Sensor value received: 12/1/2022 10:52:48 AM : 34
+2022-12-01 10:52:49.568 +03:30 [INF] Sensor value received: 12/1/2022 10:52:49 AM : 34
+2022-12-01 10:52:52.854 +03:30 [INF] Sensor value received: 12/1/2022 10:52:52 AM : 34
+2022-12-01 10:52:54.519 +03:30 [INF] Sensor value received: 12/1/2022 10:52:54 AM : 34
+2022-12-01 10:52:55.999 +03:30 [INF] Sensor value received: 12/1/2022 10:52:55 AM : 34
+2022-12-01 10:52:57.584 +03:30 [INF] Sensor value received: 12/1/2022 10:52:57 AM : 34
+2022-12-01 10:52:59.222 +03:30 [INF] Sensor value received: 12/1/2022 10:52:59 AM : 34
+2022-12-01 10:53:00.585 +03:30 [INF] Sensor value received: 12/1/2022 10:53:00 AM : 34
+2022-12-01 10:53:03.079 +03:30 [INF] Sensor value received: 12/1/2022 10:53:03 AM : 34
+2022-12-01 10:53:04.345 +03:30 [INF] Sensor value received: 12/1/2022 10:53:04 AM : 34
+2022-12-01 10:53:05.830 +03:30 [INF] Sensor value received: 12/1/2022 10:53:05 AM : 34
+2022-12-01 10:53:07.306 +03:30 [INF] Sensor value received: 12/1/2022 10:53:07 AM : 34
+2022-12-01 10:53:11.464 +03:30 [INF] Sensor value received: 12/1/2022 10:53:11 AM : 34
+2022-12-01 10:53:16.216 +03:30 [INF] Sensor value received: 12/1/2022 10:53:16 AM : 34
+2022-12-01 10:53:19.992 +03:30 [INF] Sensor value received: 12/1/2022 10:53:19 AM : 34
+2022-12-01 10:53:21.400 +03:30 [INF] Sensor value received: 12/1/2022 10:53:21 AM : 34
+2022-12-01 10:53:25.732 +03:30 [INF] Sensor value received: 12/1/2022 10:53:25 AM : 34
+2022-12-01 10:53:26.934 +03:30 [INF] Sensor value received: 12/1/2022 10:53:26 AM : 34
+2022-12-01 10:54:58.740 +03:30 [ERR] Error connecting to MQTT Broker. retrying in 5 seconds...
+2022-12-01 10:55:04.455 +03:30 [ERR] Error connecting to MQTT Broker. retrying in 5 seconds...
+2022-12-01 10:55:05.416 +03:30 [INF] Sensor value received: 12/1/2022 10:53:49 AM : 34
+2022-12-01 10:55:11.302 +03:30 [ERR] Error connecting to MQTT Broker. retrying in 5 seconds...
+2022-12-01 10:55:11.305 +03:30 [WRN] Disconnected from MQTT Broker: 192.168.1.106, Port: 1883, Client Id: e0d95078-8f06-4dda-a3ca-3efd10513408.
+2022-12-01 10:55:16.303 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: e0d95078-8f06-4dda-a3ca-3efd10513408.
+2022-12-01 10:55:16.315 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: e0d95078-8f06-4dda-a3ca-3efd10513408.
+2022-12-01 10:55:16.324 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2022-12-01 10:55:19.304 +03:30 [INF] Sensor value received: 12/1/2022 10:55:19 AM : 34
+2022-12-01 10:55:20.968 +03:30 [INF] Sensor value received: 12/1/2022 10:55:20 AM : 34
+2022-12-01 10:55:22.352 +03:30 [INF] Sensor value received: 12/1/2022 10:55:22 AM : 34
+2022-12-01 10:55:23.783 +03:30 [INF] Sensor value received: 12/1/2022 10:55:23 AM : 34
+2022-12-01 10:55:25.307 +03:30 [INF] Sensor value received: 12/1/2022 10:55:25 AM : 34
+2022-12-01 10:55:26.525 +03:30 [INF] Sensor value received: 12/1/2022 10:55:26 AM : 34
+2022-12-01 10:55:28.266 +03:30 [INF] Sensor value received: 12/1/2022 10:55:27 AM : 34
+2022-12-01 10:55:29.438 +03:30 [INF] Sensor value received: 12/1/2022 10:55:29 AM : 34
+2022-12-01 10:55:31.024 +03:30 [INF] Sensor value received: 12/1/2022 10:55:31 AM : 34
+2022-12-01 10:55:32.559 +03:30 [INF] Sensor value received: 12/1/2022 10:55:32 AM : 34
+2022-12-01 10:55:33.703 +03:30 [INF] Sensor value received: 12/1/2022 10:55:33 AM : 34
+2022-12-01 10:55:41.665 +03:30 [INF] Sensor value received: 12/1/2022 10:55:41 AM : 34
+2022-12-01 10:55:49.335 +03:30 [INF] Sensor value received: 12/1/2022 10:55:49 AM : 34
+2022-12-01 10:55:51.020 +03:30 [INF] Sensor value received: 12/1/2022 10:55:51 AM : 34
+2022-12-01 10:55:55.943 +03:30 [INF] Sensor value received: 12/1/2022 10:55:55 AM : 34
+2022-12-01 10:55:56.837 +03:30 [INF] Sensor value received: 12/1/2022 10:55:56 AM : 34
+2022-12-01 10:55:59.079 +03:30 [INF] Sensor value received: 12/1/2022 10:55:59 AM : 34
+2022-12-01 10:56:01.905 +03:30 [INF] Sensor value received: 12/1/2022 10:56:01 AM : 34
+2022-12-01 10:56:03.459 +03:30 [INF] Sensor value received: 12/1/2022 10:56:03 AM : 34
+2022-12-01 10:56:04.449 +03:30 [INF] Sensor value received: 12/1/2022 10:56:04 AM : 34
+2022-12-01 10:56:10.439 +03:30 [INF] Sensor value received: 12/1/2022 10:56:10 AM : 34
+2022-12-01 10:56:11.343 +03:30 [INF] Sensor value received: 12/1/2022 10:56:11 AM : 34
+2022-12-01 10:56:12.919 +03:30 [INF] Sensor value received: 12/1/2022 10:56:12 AM : 34
+2022-12-01 10:56:17.360 +03:30 [INF] Sensor value received: 12/1/2022 10:56:17 AM : 34
+2022-12-01 10:56:19.771 +03:30 [INF] Sensor value received: 12/1/2022 10:56:19 AM : 34
+2022-12-01 10:56:19.829 +03:30 [INF] Sensor value received: 12/1/2022 10:56:19 AM : 34
+2022-12-01 10:56:31.151 +03:30 [INF] Sensor value received: 12/1/2022 10:56:31 AM : 34
+2022-12-01 10:56:35.541 +03:30 [INF] Sensor value received: 12/1/2022 10:56:35 AM : 34
+2022-12-01 10:56:43.434 +03:30 [INF] Sensor value received: 12/1/2022 10:56:43 AM : 34
+2022-12-01 10:56:47.620 +03:30 [INF] Sensor value received: 12/1/2022 10:56:47 AM : 34
+2022-12-01 10:56:51.192 +03:30 [INF] Sensor value received: 12/1/2022 10:56:51 AM : 34
+2022-12-01 10:56:51.852 +03:30 [INF] Sensor value received: 12/1/2022 10:56:51 AM : 34
+2022-12-01 10:56:52.740 +03:30 [INF] Sensor value received: 12/1/2022 10:56:52 AM : 34
+2022-12-01 10:57:19.886 +03:30 [INF] Sensor value received: 12/1/2022 10:57:16 AM : 34
+2022-12-01 12:58:40.871 +03:30 [INF] Starting up the Service...
+2022-12-01 12:58:44.010 +03:30 [INF] Poultries loaded.
+2022-12-01 12:58:44.018 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 81f0e1dd-907b-471c-a81e-015b1acdcdf8.
+2022-12-01 12:58:44.085 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 81f0e1dd-907b-471c-a81e-015b1acdcdf8.
+2022-12-01 12:58:44.100 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2022-12-01 12:58:49.863 +03:30 [INF] Sensor value received: 12/1/2022 12:58:49 PM : 34
+2022-12-01 12:58:55.820 +03:30 [INF] Sensor value received: 12/1/2022 12:58:55 PM : 34
+2022-12-01 12:59:34.826 +03:30 [INF] Starting up the Service...
+2022-12-01 12:59:37.227 +03:30 [INF] Poultries loaded.
+2022-12-01 12:59:37.237 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 1a3796c1-2590-4f05-9891-67ccda9ef07a.
+2022-12-01 12:59:37.296 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 1a3796c1-2590-4f05-9891-67ccda9ef07a.
+2022-12-01 12:59:37.343 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2022-12-01 12:59:42.069 +03:30 [INF] Sensor value received: 12/1/2022 12:59:41 PM : 34
+2022-12-01 12:59:46.388 +03:30 [INF] Sensor value received: 12/1/2022 12:59:46 PM : 34
+2022-12-01 12:59:49.940 +03:30 [INF] Sensor value received: 12/1/2022 12:59:49 PM : 34
+2022-12-01 12:59:53.871 +03:30 [INF] Sensor value received: 12/1/2022 12:59:53 PM : 34
+2022-12-01 12:59:57.516 +03:30 [INF] Sensor value received: 12/1/2022 12:59:57 PM : 34
+2022-12-01 13:00:01.011 +03:30 [INF] Sensor value received: 12/1/2022 1:00:01 PM : 34
+2022-12-01 13:00:04.075 +03:30 [INF] Sensor value received: 12/1/2022 1:00:04 PM : 34
+2022-12-01 13:00:08.316 +03:30 [INF] Sensor value received: 12/1/2022 1:00:08 PM : 34
+2022-12-01 13:00:12.645 +03:30 [INF] Sensor value received: 12/1/2022 1:00:12 PM : 34
+2022-12-01 13:00:16.411 +03:30 [INF] Sensor value received: 12/1/2022 1:00:16 PM : 34
+2022-12-01 13:00:20.810 +03:30 [INF] Sensor value received: 12/1/2022 1:00:20 PM : 34
+2022-12-01 13:00:20.870 +03:30 [INF] Sensor value received: 12/1/2022 1:00:20 PM : 34
+2022-12-01 13:00:24.478 +03:30 [INF] Sensor value received: 12/1/2022 1:00:24 PM : 34
+2022-12-01 13:00:28.259 +03:30 [INF] Sensor value received: 12/1/2022 1:00:28 PM : 34
+2022-12-01 13:00:32.333 +03:30 [INF] Sensor value received: 12/1/2022 1:00:32 PM : 34
+2022-12-01 13:00:35.632 +03:30 [INF] Sensor value received: 12/1/2022 1:00:35 PM : 34
+2022-12-01 13:00:38.844 +03:30 [INF] Sensor value received: 12/1/2022 1:00:38 PM : 34
+2022-12-01 13:00:42.284 +03:30 [INF] Sensor value received: 12/1/2022 1:00:42 PM : 34
+2022-12-01 13:00:45.621 +03:30 [INF] Sensor value received: 12/1/2022 1:00:45 PM : 34
+2022-12-01 13:00:48.372 +03:30 [INF] Sensor value received: 12/1/2022 1:00:48 PM : 34
+2022-12-01 13:01:15.174 +03:30 [INF] Sensor value received: 12/1/2022 1:01:15 PM : 34
+2022-12-01 13:01:19.658 +03:30 [INF] Sensor value received: 12/1/2022 1:01:19 PM : 34
+2022-12-01 13:01:26.319 +03:30 [INF] Sensor value received: 12/1/2022 1:01:26 PM : 35
+2022-12-01 13:01:47.059 +03:30 [INF] Starting up the Service...
+2022-12-01 13:01:49.042 +03:30 [INF] Poultries loaded.
+2022-12-01 13:01:49.051 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: cceab2df-3fa5-4006-acdf-a6b6540ae692.
+2022-12-01 13:01:49.107 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: cceab2df-3fa5-4006-acdf-a6b6540ae692.
+2022-12-01 13:01:49.122 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2022-12-01 13:01:59.264 +03:30 [INF] Starting up the Service...
+2022-12-01 13:02:01.569 +03:30 [INF] Poultries loaded.
+2022-12-01 13:02:01.577 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 411a966a-7f8e-446a-899d-6782be4518cc.
+2022-12-01 13:02:01.651 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 411a966a-7f8e-446a-899d-6782be4518cc.
+2022-12-01 13:02:01.665 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2022-12-01 13:02:06.400 +03:30 [INF] Sensor value received: 12/1/2022 1:02:06 PM : 35
+2022-12-01 13:02:09.788 +03:30 [INF] Sensor value received: 12/1/2022 1:02:09 PM : 35
+2022-12-01 13:02:12.452 +03:30 [INF] Sensor value received: 12/1/2022 1:02:12 PM : 35
+2022-12-01 13:02:14.710 +03:30 [INF] Sensor value received: 12/1/2022 1:02:14 PM : 35
+2022-12-01 13:02:20.230 +03:30 [INF] Sensor value received: 12/1/2022 1:02:20 PM : 35
+2022-12-01 13:02:23.298 +03:30 [INF] Sensor value received: 12/1/2022 1:02:23 PM : 35
+2022-12-01 13:02:25.758 +03:30 [INF] Sensor value received: 12/1/2022 1:02:25 PM : 35
+2022-12-01 13:03:02.980 +03:30 [INF] Sensor value received: 12/1/2022 1:02:36 PM : 35
+2022-12-01 13:03:02.985 +03:30 [ERR] Error connecting to MQTT Broker. retrying in 5 seconds...
+2022-12-01 13:03:02.996 +03:30 [WRN] Disconnected from MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 411a966a-7f8e-446a-899d-6782be4518cc.
+2022-12-01 13:03:07.994 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 411a966a-7f8e-446a-899d-6782be4518cc.
+2022-12-01 13:03:08.004 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 411a966a-7f8e-446a-899d-6782be4518cc.
+2022-12-01 13:03:08.011 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2022-12-01 13:03:19.534 +03:30 [INF] Sensor value received: 12/1/2022 1:03:19 PM : 35
+2022-12-01 13:03:24.556 +03:30 [INF] Sensor value received: 12/1/2022 1:03:24 PM : 35
+2022-12-01 13:03:27.671 +03:30 [INF] Sensor value received: 12/1/2022 1:03:27 PM : 35
+2022-12-01 13:03:30.834 +03:30 [INF] Sensor value received: 12/1/2022 1:03:30 PM : 35
+2022-12-01 13:03:34.659 +03:30 [INF] Sensor value received: 12/1/2022 1:03:34 PM : 35
+2022-12-01 13:04:17.233 +03:30 [INF] Sensor value received: 12/1/2022 1:04:17 PM : 31
+2022-12-01 13:06:18.793 +03:30 [INF] Starting up the Service...
+2022-12-01 13:06:20.896 +03:30 [INF] Poultries loaded.
+2022-12-01 13:06:20.904 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: e54cb6b1-a6ea-4ebf-98bf-668e505afe25.
+2022-12-01 13:06:21.287 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: e54cb6b1-a6ea-4ebf-98bf-668e505afe25.
+2022-12-01 13:06:21.302 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2022-12-01 13:07:08.676 +03:30 [INF] Starting up the Service...
+2022-12-01 13:07:10.976 +03:30 [INF] Poultries loaded.
+2022-12-01 13:07:10.983 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: eb616797-1327-46bc-a0d6-d97c363a1270.
+2022-12-01 13:07:11.040 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: eb616797-1327-46bc-a0d6-d97c363a1270.
+2022-12-01 13:07:11.054 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2022-12-01 13:08:25.252 +03:30 [INF] Starting up the Service...
+2022-12-01 13:08:27.824 +03:30 [INF] Poultries loaded.
+2022-12-01 13:08:27.832 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 57a7beb0-262a-409e-a9c0-dd5685ca3e7b.
+2022-12-01 13:08:27.894 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 57a7beb0-262a-409e-a9c0-dd5685ca3e7b.
+2022-12-01 13:08:27.910 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2022-12-01 13:08:50.160 +03:30 [INF] Starting up the Service...
+2022-12-01 13:08:52.155 +03:30 [INF] Poultries loaded.
+2022-12-01 13:08:52.163 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 7e192921-287c-4106-af99-e08ce1f7604c.
+2022-12-01 13:08:52.220 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 7e192921-287c-4106-af99-e08ce1f7604c.
+2022-12-01 13:08:52.235 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2022-12-01 13:09:23.335 +03:30 [ERR] Error connecting to MQTT Broker. retrying in 5 seconds...
+2022-12-01 13:09:43.130 +03:30 [INF] Starting up the Service...
+2022-12-01 13:09:46.424 +03:30 [INF] Poultries loaded.
+2022-12-01 13:09:46.432 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 23452975-5936-47a4-ba57-cfdd33d19e5e.
+2022-12-01 13:09:46.491 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 23452975-5936-47a4-ba57-cfdd33d19e5e.
+2022-12-01 13:09:46.505 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2022-12-01 13:10:42.422 +03:30 [ERR] Error connecting to MQTT Broker. retrying in 5 seconds...
+2022-12-01 13:12:40.930 +03:30 [INF] Starting up the Service...
+2022-12-01 13:12:42.944 +03:30 [INF] Poultries loaded.
+2022-12-01 13:12:42.953 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: d610935f-e9f4-467c-a24a-bf907c99c314.
+2022-12-01 13:12:43.011 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: d610935f-e9f4-467c-a24a-bf907c99c314.
+2022-12-01 13:12:43.343 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2022-12-01 13:13:52.428 +03:30 [ERR] Error connecting to MQTT Broker. retrying in 5 seconds...
+2022-12-01 13:13:52.433 +03:30 [WRN] Disconnected from MQTT Broker: 192.168.1.106, Port: 1883, Client Id: d610935f-e9f4-467c-a24a-bf907c99c314.
+2022-12-01 13:13:57.432 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: d610935f-e9f4-467c-a24a-bf907c99c314.
+2022-12-01 13:13:57.444 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: d610935f-e9f4-467c-a24a-bf907c99c314.
+2022-12-01 13:13:57.452 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2022-12-01 17:06:30.690 +03:30 [INF] Starting up the Service...
+2022-12-01 17:06:35.699 +03:30 [INF] Poultries loaded.
+2022-12-01 17:06:35.709 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 21ff9d0e-e044-4fc1-91ef-6496a4e03376.
+2022-12-01 17:06:35.937 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 21ff9d0e-e044-4fc1-91ef-6496a4e03376.
+2022-12-01 17:06:35.951 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2022-12-01 17:07:51.465 +03:30 [INF] MQTT Message received. Topic: Elma/ToServer/Temp/1, Payload: 31
+2022-12-01 17:07:51.474 +03:30 [INF] MQTT Message is from a Temp sensor. Topic: Elma/ToServer/Temp/1, Payload: 31
+2022-12-01 17:07:51.475 +03:30 [INF] MQTT Message is a Temp sensor value. Topic: Elma/ToServer/Temp/1, Payload: 31
+2022-12-01 17:07:51.477 +03:30 [INF] Sensor ID extracted from MQTT Message. Sensor ID: 1
+2022-12-01 17:07:51.482 +03:30 [INF] Sensor ID is found in Poultries/Farms. Type: FarmTemperature, LocationID: 2, Section: FarmLeftTop
+2022-12-01 17:07:51.483 +03:30 [INF] Sensor is valid; Value is valid. Type: FarmTemperature, LocationID: 2, Section: FarmLeftTop
+2022-12-01 17:07:51.485 +03:30 [INF] Writing Temp sensor value to Database. Sensor ID: 1, Value: 31
+2022-12-01 17:07:51.574 +03:30 [INF] Sensor value received: 12/1/2022 5:07:51 PM, : 31, Count: 1
+2022-12-01 17:07:57.884 +03:30 [INF] MQTT Message received. Topic: Elma/ToServer/Temp/10, Payload: 31
+2022-12-01 17:07:57.886 +03:30 [INF] MQTT Message is from a Temp sensor. Topic: Elma/ToServer/Temp/10, Payload: 31
+2022-12-01 17:07:57.886 +03:30 [INF] MQTT Message is a Temp sensor value. Topic: Elma/ToServer/Temp/10, Payload: 31
+2022-12-01 17:07:57.887 +03:30 [INF] Sensor ID extracted from MQTT Message. Sensor ID: 10
+2022-12-01 17:07:57.888 +03:30 [WRN] Unknown Temp Sensor sends value. Topic: Elma/ToServer/Temp/10 , Payload: 31
+2022-12-01 17:08:25.614 +03:30 [INF] MQTT Message received. Topic: Elma/ToServer/Temp/10, Payload: 31
+2022-12-01 17:08:25.615 +03:30 [INF] MQTT Message is from a Temp sensor. Topic: Elma/ToServer/Temp/10, Payload: 31
+2022-12-01 17:08:25.617 +03:30 [INF] MQTT Message is a Temp sensor value. Topic: Elma/ToServer/Temp/10, Payload: 31
+2022-12-01 17:08:25.618 +03:30 [INF] Sensor ID extracted from MQTT Message. Sensor ID: 10
+2022-12-01 17:08:25.620 +03:30 [WRN] Unknown Temp Sensor sends value. Topic: Elma/ToServer/Temp/10 , Payload: 31
+2022-12-01 17:08:44.406 +03:30 [INF] MQTT Message received. Topic: Elma/ToServer/Temp/10, Payload: 31
+2022-12-01 17:08:54.275 +03:30 [INF] MQTT Message is from a Temp sensor. Topic: Elma/ToServer/Temp/10, Payload: 31
+2022-12-01 17:08:54.285 +03:30 [INF] MQTT Message is a Temp sensor value. Topic: Elma/ToServer/Temp/10, Payload: 31
+2022-12-01 17:08:54.288 +03:30 [INF] Sensor ID extracted from MQTT Message. Sensor ID: 10
+2022-12-01 17:08:54.289 +03:30 [WRN] Unknown Temp Sensor sends value. Topic: Elma/ToServer/Temp/10 , Payload: 31
+2022-12-01 17:09:03.734 +03:30 [INF] MQTT Message received. Topic: Elma/ToServer/Temp/10, Payload: 31
+2022-12-01 17:09:03.736 +03:30 [INF] MQTT Message is from a Temp sensor. Topic: Elma/ToServer/Temp/10, Payload: 31
+2022-12-01 17:09:03.737 +03:30 [INF] MQTT Message is a Temp sensor value. Topic: Elma/ToServer/Temp/10, Payload: 31
+2022-12-01 17:09:03.737 +03:30 [INF] Sensor ID extracted from MQTT Message. Sensor ID: 10
+2022-12-01 17:09:03.739 +03:30 [WRN] Unknown Temp Sensor sends value. Topic: Elma/ToServer/Temp/10 , Payload: 31
+2022-12-01 17:09:04.588 +03:30 [INF] MQTT Message received. Topic: Elma/ToServer/Temp/10, Payload: 31
+2022-12-01 17:09:04.589 +03:30 [INF] MQTT Message is from a Temp sensor. Topic: Elma/ToServer/Temp/10, Payload: 31
+2022-12-01 17:09:04.590 +03:30 [INF] MQTT Message is a Temp sensor value. Topic: Elma/ToServer/Temp/10, Payload: 31
+2022-12-01 17:09:04.590 +03:30 [INF] Sensor ID extracted from MQTT Message. Sensor ID: 10
+2022-12-01 17:09:04.591 +03:30 [WRN] Unknown Temp Sensor sends value. Topic: Elma/ToServer/Temp/10 , Payload: 31
+2022-12-01 17:09:52.428 +03:30 [INF] Starting up the Service...
+2022-12-01 17:09:56.072 +03:30 [INF] Poultries loaded.
+2022-12-01 17:09:56.081 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 54cfbfba-cd73-4867-8ce6-62ccd5714c0e.
+2022-12-01 17:09:56.139 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 54cfbfba-cd73-4867-8ce6-62ccd5714c0e.
+2022-12-01 17:09:56.167 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2022-12-01 17:11:40.992 +03:30 [INF] Starting up the Service...
+2022-12-01 17:11:44.415 +03:30 [INF] Poultries loaded.
+2022-12-01 17:11:44.432 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: fa6a0de9-8674-4ea2-a722-7cebe7196c56.
+2022-12-01 17:11:44.491 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: fa6a0de9-8674-4ea2-a722-7cebe7196c56.
+2022-12-01 17:11:44.508 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2022-12-01 17:12:02.660 +03:30 [INF] MQTT Message received. Topic: Elma/ToServer/Temp/10, Payload: 31
+2022-12-01 17:12:23.556 +03:30 [INF] MQTT Message is from a Temp sensor. Topic: Elma/ToServer/Temp/10, Payload: 31
+2022-12-01 17:12:23.603 +03:30 [INF] MQTT Message is a Temp sensor value. Topic: Elma/ToServer/Temp/10, Payload: 31
+2022-12-01 17:12:23.620 +03:30 [INF] Sensor ID extracted from MQTT Message. Sensor ID: 10
+2022-12-01 17:12:23.666 +03:30 [ERR] Error connecting to MQTT Broker. retrying in 5 seconds...
+2022-12-01 17:12:23.669 +03:30 [WRN] Unknown Temp Sensor sends value. Topic: Elma/ToServer/Temp/10 , Payload: 31
+2022-12-01 17:12:23.674 +03:30 [WRN] Disconnected from MQTT Broker: 192.168.1.106, Port: 1883, Client Id: fa6a0de9-8674-4ea2-a722-7cebe7196c56.
+2022-12-01 17:12:28.673 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: fa6a0de9-8674-4ea2-a722-7cebe7196c56.
+2022-12-01 17:12:28.683 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: fa6a0de9-8674-4ea2-a722-7cebe7196c56.
+2022-12-01 17:12:28.688 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2022-12-01 17:12:29.053 +03:30 [INF] MQTT Message received. Topic: Elma/ToServer/Temp/10, Payload: 31
+2022-12-01 17:12:29.055 +03:30 [INF] MQTT Message is from a Temp sensor. Topic: Elma/ToServer/Temp/10, Payload: 31
+2022-12-01 17:12:29.056 +03:30 [INF] MQTT Message is a Temp sensor value. Topic: Elma/ToServer/Temp/10, Payload: 31
+2022-12-01 17:12:29.057 +03:30 [INF] Sensor ID extracted from MQTT Message. Sensor ID: 10
+2022-12-01 17:12:29.057 +03:30 [WRN] Unknown Temp Sensor sends value. Topic: Elma/ToServer/Temp/10 , Payload: 31
+2022-12-01 17:12:35.566 +03:30 [INF] MQTT Message received. Topic: Elma/ToServer/Temp/1, Payload: 31
+2022-12-01 17:12:35.567 +03:30 [INF] MQTT Message is from a Temp sensor. Topic: Elma/ToServer/Temp/1, Payload: 31
+2022-12-01 17:12:35.568 +03:30 [INF] MQTT Message is a Temp sensor value. Topic: Elma/ToServer/Temp/1, Payload: 31
+2022-12-01 17:12:35.568 +03:30 [INF] Sensor ID extracted from MQTT Message. Sensor ID: 1
+2022-12-01 17:12:35.570 +03:30 [INF] Sensor ID is found in Poultries/Farms. Type: FarmTemperature, LocationID: 2, Section: FarmLeftTop
+2022-12-01 17:12:35.572 +03:30 [INF] Sensor is valid; Value is valid. Type: FarmTemperature, LocationID: 2, Section: FarmLeftTop
+2022-12-01 17:12:35.573 +03:30 [INF] Writing Temp sensor value to Database. Sensor ID: 1, Value: 31
+2022-12-01 17:12:35.655 +03:30 [INF] Sensor value received: 12/1/2022 5:12:35 PM, : 31, Count: 1
+2022-12-01 17:12:42.150 +03:30 [INF] MQTT Message received. Topic: Elma/ToServer/Temp/1, Payload: 31
+2022-12-01 17:13:21.260 +03:30 [INF] MQTT Message is from a Temp sensor. Topic: Elma/ToServer/Temp/1, Payload: 31
+2022-12-01 17:13:21.309 +03:30 [INF] MQTT Message is a Temp sensor value. Topic: Elma/ToServer/Temp/1, Payload: 31
+2022-12-01 17:13:21.340 +03:30 [ERR] Error connecting to MQTT Broker. retrying in 5 seconds...
+2022-12-01 17:13:21.342 +03:30 [INF] Sensor ID extracted from MQTT Message. Sensor ID: 1
+2022-12-01 17:13:21.344 +03:30 [INF] Sensor ID is found in Poultries/Farms. Type: FarmTemperature, LocationID: 2, Section: FarmLeftTop
+2022-12-01 17:13:21.344 +03:30 [INF] Sensor is valid; Value is valid. Type: FarmTemperature, LocationID: 2, Section: FarmLeftTop
+2022-12-01 17:13:21.347 +03:30 [INF] Writing Temp sensor value to Database. Sensor ID: 1, Value: 31
+2022-12-01 17:13:21.372 +03:30 [INF] Sensor value received: 12/1/2022 5:13:21 PM, : 31, Count: 2
+2022-12-01 17:13:21.374 +03:30 [WRN] Disconnected from MQTT Broker: 192.168.1.106, Port: 1883, Client Id: fa6a0de9-8674-4ea2-a722-7cebe7196c56.
+2022-12-01 17:13:26.350 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: fa6a0de9-8674-4ea2-a722-7cebe7196c56.
+2022-12-01 17:13:26.364 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: fa6a0de9-8674-4ea2-a722-7cebe7196c56.
+2022-12-01 17:13:26.375 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2022-12-01 17:13:28.263 +03:30 [INF] MQTT Message received. Topic: Elma/ToServer/Temp/21, Payload: 25
+2022-12-01 17:13:28.265 +03:30 [INF] MQTT Message is from a Temp sensor. Topic: Elma/ToServer/Temp/21, Payload: 25
+2022-12-01 17:13:28.266 +03:30 [INF] MQTT Message is a Temp sensor value. Topic: Elma/ToServer/Temp/21, Payload: 25
+2022-12-01 17:13:28.267 +03:30 [INF] Sensor ID extracted from MQTT Message. Sensor ID: 21
+2022-12-01 17:13:28.268 +03:30 [WRN] Unknown Temp Sensor sends value. Topic: Elma/ToServer/Temp/21 , Payload: 25
+2022-12-01 17:13:29.493 +03:30 [INF] MQTT Message received. Topic: Elma/ToServer/Temp/31, Payload: 25
+2022-12-01 17:13:29.495 +03:30 [INF] MQTT Message is from a Temp sensor. Topic: Elma/ToServer/Temp/31, Payload: 25
+2022-12-01 17:13:29.496 +03:30 [INF] MQTT Message is a Temp sensor value. Topic: Elma/ToServer/Temp/31, Payload: 25
+2022-12-01 17:13:29.497 +03:30 [INF] Sensor ID extracted from MQTT Message. Sensor ID: 31
+2022-12-01 17:13:29.499 +03:30 [WRN] Unknown Temp Sensor sends value. Topic: Elma/ToServer/Temp/31 , Payload: 25
+2022-12-01 17:13:29.655 +03:30 [INF] MQTT Message received. Topic: Elma/ToServer/Temp/31, Payload: 25
+2022-12-01 17:13:29.657 +03:30 [INF] MQTT Message is from a Temp sensor. Topic: Elma/ToServer/Temp/31, Payload: 25
+2022-12-01 17:13:29.658 +03:30 [INF] MQTT Message is a Temp sensor value. Topic: Elma/ToServer/Temp/31, Payload: 25
+2022-12-01 17:13:29.660 +03:30 [INF] Sensor ID extracted from MQTT Message. Sensor ID: 31
+2022-12-01 17:13:29.661 +03:30 [WRN] Unknown Temp Sensor sends value. Topic: Elma/ToServer/Temp/31 , Payload: 25
+2022-12-01 17:13:31.142 +03:30 [INF] MQTT Message received. Topic: Elma/ToServer/Temp/3113, Payload: 25
+2022-12-01 17:13:31.143 +03:30 [INF] MQTT Message is from a Temp sensor. Topic: Elma/ToServer/Temp/3113, Payload: 25
+2022-12-01 17:13:31.144 +03:30 [INF] MQTT Message is a Temp sensor value. Topic: Elma/ToServer/Temp/3113, Payload: 25
+2022-12-01 17:13:31.146 +03:30 [INF] Sensor ID extracted from MQTT Message. Sensor ID: 3113
+2022-12-01 17:13:31.147 +03:30 [WRN] Unknown Temp Sensor sends value. Topic: Elma/ToServer/Temp/3113 , Payload: 25
+2022-12-01 17:13:33.086 +03:30 [INF] MQTT Message received. Topic: Elma/ToServer/Temp/21, Payload: 25
+2022-12-01 17:13:33.088 +03:30 [INF] MQTT Message is from a Temp sensor. Topic: Elma/ToServer/Temp/21, Payload: 25
+2022-12-01 17:13:33.089 +03:30 [INF] MQTT Message is a Temp sensor value. Topic: Elma/ToServer/Temp/21, Payload: 25
+2022-12-01 17:13:33.090 +03:30 [INF] Sensor ID extracted from MQTT Message. Sensor ID: 21
+2022-12-01 17:13:33.091 +03:30 [WRN] Unknown Temp Sensor sends value. Topic: Elma/ToServer/Temp/21 , Payload: 25
+2022-12-01 17:13:34.997 +03:30 [INF] MQTT Message received. Topic: Elma/ToServer/Temp/1212, Payload: 25
+2022-12-01 17:13:34.999 +03:30 [INF] MQTT Message is from a Temp sensor. Topic: Elma/ToServer/Temp/1212, Payload: 25
+2022-12-01 17:13:35.000 +03:30 [INF] MQTT Message is a Temp sensor value. Topic: Elma/ToServer/Temp/1212, Payload: 25
+2022-12-01 17:13:35.001 +03:30 [INF] Sensor ID extracted from MQTT Message. Sensor ID: 1212
+2022-12-01 17:13:35.002 +03:30 [WRN] Unknown Temp Sensor sends value. Topic: Elma/ToServer/Temp/1212 , Payload: 25
+2022-12-01 17:13:37.365 +03:30 [INF] MQTT Message received. Topic: Elma/ToServer/Temp/1, Payload: 25
+2022-12-01 17:13:37.367 +03:30 [INF] MQTT Message is from a Temp sensor. Topic: Elma/ToServer/Temp/1, Payload: 25
+2022-12-01 17:13:37.369 +03:30 [INF] MQTT Message is a Temp sensor value. Topic: Elma/ToServer/Temp/1, Payload: 25
+2022-12-01 17:13:37.370 +03:30 [INF] Sensor ID extracted from MQTT Message. Sensor ID: 1
+2022-12-01 17:13:37.371 +03:30 [INF] Sensor ID is found in Poultries/Farms. Type: FarmTemperature, LocationID: 2, Section: FarmLeftTop
+2022-12-01 17:13:37.372 +03:30 [INF] Sensor is valid; Value is valid. Type: FarmTemperature, LocationID: 2, Section: FarmLeftTop
+2022-12-01 17:13:37.374 +03:30 [INF] Writing Temp sensor value to Database. Sensor ID: 1, Value: 25
+2022-12-01 17:13:37.630 +03:30 [INF] Sensor value received: 12/1/2022 5:13:37 PM, : 25, Count: 3
+2022-12-01 17:13:41.309 +03:30 [INF] MQTT Message received. Topic: Elma/ToServer/Temp/1, Payload: 25
+2022-12-01 17:23:41.166 +03:30 [INF] Starting up the Service...
+2022-12-01 17:23:43.293 +03:30 [INF] Poultries loaded.
+2022-12-01 17:23:43.302 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: b81a9df0-ee0d-4e3f-b73a-0dd7a3e175a8.
+2022-12-01 17:23:43.365 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: b81a9df0-ee0d-4e3f-b73a-0dd7a3e175a8.
+2022-12-01 17:23:43.387 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2022-12-01 17:23:44.786 +03:30 [INF] MQTT Message received. Topic: Elma/ToServer/Temp/1, Payload: 32
+2022-12-01 17:23:44.800 +03:30 [INF] MQTT Message is from a Temp sensor. Topic: Elma/ToServer/Temp/1, Payload: 32
+2022-12-01 17:23:44.801 +03:30 [INF] MQTT Message is a Temp sensor value. Topic: Elma/ToServer/Temp/1, Payload: 32
+2022-12-01 17:23:44.802 +03:30 [INF] Sensor ID extracted from MQTT Message. Sensor ID: 1
+2022-12-01 17:23:44.809 +03:30 [INF] Sensor ID is found in Poultries/Farms. Type: FarmTemperature, LocationID: 2, Section: FarmLeftTop
+2022-12-01 17:23:44.811 +03:30 [INF] Sensor is valid; Value is valid. Type: FarmTemperature, LocationID: 2, Section: FarmLeftTop
+2022-12-01 17:23:44.814 +03:30 [INF] Writing Temp sensor value to Database. Sensor ID: 1, Value: 32
+2022-12-01 17:23:44.915 +03:30 [INF] Sensor value received: 12/1/2022 5:23:44 PM, : 32, Count: 1
+2022-12-01 18:49:18.380 +03:30 [INF] Starting up the Service...
+2022-12-01 18:49:20.888 +03:30 [INF] Poultries loaded.
+2022-12-01 18:49:20.897 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 778d5d1e-3914-4a85-85f8-2dbeb0470d34.
+2022-12-01 18:49:20.954 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 778d5d1e-3914-4a85-85f8-2dbeb0470d34.
+2022-12-01 18:49:20.976 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2022-12-01 18:49:50.825 +03:30 [INF] MQTT Message received. Topic: Elma/ToServer/Temp/1, Payload: 32
+2022-12-01 18:49:50.835 +03:30 [INF] MQTT Message is from a Temp sensor. Topic: Elma/ToServer/Temp/1, Payload: 32
+2022-12-01 18:49:50.837 +03:30 [INF] MQTT Message is a Temp sensor value. Topic: Elma/ToServer/Temp/1, Payload: 32
+2022-12-01 18:49:50.838 +03:30 [INF] Sensor ID extracted from MQTT Message. Sensor ID: 1
+2022-12-01 18:49:50.841 +03:30 [INF] Sensor ID is found in Poultries/Farms. Type: FarmTemperature, LocationID: 2, Section: FarmLeftTop
+2022-12-01 18:49:50.843 +03:30 [INF] Sensor is valid; Value is valid. Type: FarmTemperature, LocationID: 2, Section: FarmLeftTop
+2022-12-01 18:49:50.844 +03:30 [INF] Writing Temp sensor value to Database. Sensor ID: 1, Value: 32
+2022-12-01 18:49:50.967 +03:30 [INF] Sensor value received: 12/1/2022 6:49:50 PM, : 32, Count: 1
+2022-12-01 18:50:05.263 +03:30 [INF] MQTT Message received. Topic: Elma/ToServer/Temp/10, Payload: 32
+2022-12-01 18:50:05.264 +03:30 [INF] MQTT Message is from a Temp sensor. Topic: Elma/ToServer/Temp/10, Payload: 32
+2022-12-01 18:50:05.265 +03:30 [INF] MQTT Message is a Temp sensor value. Topic: Elma/ToServer/Temp/10, Payload: 32
+2022-12-01 18:50:05.265 +03:30 [INF] Sensor ID extracted from MQTT Message. Sensor ID: 10
+2022-12-01 18:50:05.266 +03:30 [WRN] Unknown Temp Sensor sends value. Topic: Elma/ToServer/Temp/10 , Payload: 32
+2022-12-01 18:50:15.802 +03:30 [INF] MQTT Message received. Topic: Elma/ToServer/Temp/1, Payload: sa
+2022-12-01 18:50:15.803 +03:30 [INF] MQTT Message is from a Temp sensor. Topic: Elma/ToServer/Temp/1, Payload: sa
+2022-12-01 18:50:15.804 +03:30 [INF] MQTT Message is a Temp sensor value. Topic: Elma/ToServer/Temp/1, Payload: sa
+2022-12-01 18:50:15.805 +03:30 [INF] Sensor ID extracted from MQTT Message. Sensor ID: 1
+2022-12-01 18:50:15.807 +03:30 [WRN] A Sensor sends invalid data. Topic: Elma/ToServer/Temp/1 , Payload: sa
+2022-12-01 18:50:38.375 +03:30 [INF] MQTT Message received. Topic: Elma/ToServer/Temp/1, Payload: 0
+2022-12-01 18:50:38.377 +03:30 [INF] MQTT Message is from a Temp sensor. Topic: Elma/ToServer/Temp/1, Payload: 0
+2022-12-01 18:50:38.377 +03:30 [INF] MQTT Message is a Temp sensor value. Topic: Elma/ToServer/Temp/1, Payload: 0
+2022-12-01 18:50:38.378 +03:30 [INF] Sensor ID extracted from MQTT Message. Sensor ID: 1
+2022-12-01 18:50:38.379 +03:30 [INF] Sensor ID is found in Poultries/Farms. Type: FarmTemperature, LocationID: 2, Section: FarmLeftTop
+2022-12-01 18:50:38.381 +03:30 [ERR] A Temp Sensor sends invalid value. Topic: Elma/ToServer/Temp/1 , Payload: 0
+2022-12-01 18:50:59.582 +03:30 [INF] MQTT Message received. Topic: Elma/ToServer/Temp/1, Payload: 36
+2022-12-01 18:50:59.584 +03:30 [INF] MQTT Message is from a Temp sensor. Topic: Elma/ToServer/Temp/1, Payload: 36
+2022-12-01 18:50:59.585 +03:30 [INF] MQTT Message is a Temp sensor value. Topic: Elma/ToServer/Temp/1, Payload: 36
+2022-12-01 18:50:59.586 +03:30 [INF] Sensor ID extracted from MQTT Message. Sensor ID: 1
+2022-12-01 18:50:59.588 +03:30 [INF] Sensor ID is found in Poultries/Farms. Type: FarmTemperature, LocationID: 2, Section: FarmLeftTop
+2022-12-01 18:50:59.589 +03:30 [ERR] A Temp Sensor sends invalid value. Topic: Elma/ToServer/Temp/1 , Payload: 36
+2022-12-01 18:51:07.968 +03:30 [INF] MQTT Message received. Topic: Elma/ToServer/Temp/1, Payload: 25
+2022-12-01 18:51:07.970 +03:30 [INF] MQTT Message is from a Temp sensor. Topic: Elma/ToServer/Temp/1, Payload: 25
+2022-12-01 18:51:07.971 +03:30 [INF] MQTT Message is a Temp sensor value. Topic: Elma/ToServer/Temp/1, Payload: 25
+2022-12-01 18:51:07.971 +03:30 [INF] Sensor ID extracted from MQTT Message. Sensor ID: 1
+2022-12-01 18:51:07.973 +03:30 [INF] Sensor ID is found in Poultries/Farms. Type: FarmTemperature, LocationID: 2, Section: FarmLeftTop
+2022-12-01 18:51:07.975 +03:30 [INF] Sensor is valid; Value is valid. Type: FarmTemperature, LocationID: 2, Section: FarmLeftTop
+2022-12-01 18:51:07.977 +03:30 [INF] Updating sensor KeepAlive error in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop
+2022-12-01 18:51:38.663 +03:30 [INF] MQTT Message received. Topic: Elma/ToServer/Temp/1, Payload: ed
+2022-12-01 18:51:38.665 +03:30 [INF] MQTT Message is from a Temp sensor. Topic: Elma/ToServer/Temp/1, Payload: ed
+2022-12-01 18:51:38.667 +03:30 [INF] MQTT Message is a Temp sensor value. Topic: Elma/ToServer/Temp/1, Payload: ed
+2022-12-01 18:51:38.668 +03:30 [INF] Sensor ID extracted from MQTT Message. Sensor ID: 1
+2022-12-01 18:51:38.669 +03:30 [WRN] A Sensor sends invalid data. Topic: Elma/ToServer/Temp/1 , Payload: ed
+2022-12-01 18:55:28.855 +03:30 [INF] Starting up the Service...
+2022-12-01 18:55:30.789 +03:30 [INF] Poultries loaded.
+2022-12-01 18:55:30.802 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 48822885-cd13-453b-af5b-e87085580d07.
+2022-12-01 18:55:30.905 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 48822885-cd13-453b-af5b-e87085580d07.
+2022-12-01 18:55:30.927 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2022-12-01 18:55:42.401 +03:30 [INF] MQTT Message received. Topic: Elma/ToServer/Temp/1, Payload: xx
+2022-12-01 18:55:42.407 +03:30 [INF] MQTT Message is from a Temp sensor. Topic: Elma/ToServer/Temp/1, Payload: xx
+2022-12-01 18:55:42.408 +03:30 [INF] MQTT Message is a Temp sensor value. Topic: Elma/ToServer/Temp/1, Payload: xx
+2022-12-01 18:55:42.409 +03:30 [INF] Sensor ID extracted from MQTT Message. Sensor ID: 1
+2022-12-01 18:55:42.411 +03:30 [WRN] A Sensor sends invalid data. Topic: Elma/ToServer/Temp/1 , Payload: xx
+2022-12-01 18:56:06.188 +03:30 [ERR] Error connecting to MQTT Broker. retrying in 5 seconds...
+2022-12-01 18:56:28.385 +03:30 [ERR] Error connecting to MQTT Broker. retrying in 5 seconds...
+2022-12-01 18:56:51.378 +03:30 [ERR] Error connecting to MQTT Broker. retrying in 5 seconds...
+2022-12-01 18:57:15.169 +03:30 [ERR] Error connecting to MQTT Broker. retrying in 5 seconds...
+2022-12-01 18:57:20.449 +03:30 [ERR] Error connecting to MQTT Broker. retrying in 5 seconds...
+2022-12-01 18:58:23.212 +03:30 [INF] Starting up the Service...
+2022-12-01 18:58:25.820 +03:30 [INF] Poultries loaded.
+2022-12-01 18:58:25.829 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 0ebc0477-5556-4f55-adbc-10bd4bd46ce4.
+2022-12-01 18:58:25.888 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 0ebc0477-5556-4f55-adbc-10bd4bd46ce4.
+2022-12-01 18:58:25.904 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2022-12-01 18:58:42.490 +03:30 [INF] MQTT Message received. Topic: Elma/ToServer/Temp/1, Payload: xx
+2022-12-01 18:58:42.500 +03:30 [INF] MQTT Message is from a Temp sensor. Topic: Elma/ToServer/Temp/1, Payload: xx
+2022-12-01 18:58:42.501 +03:30 [INF] MQTT Message is a Temp sensor value. Topic: Elma/ToServer/Temp/1, Payload: xx
+2022-12-01 18:58:42.503 +03:30 [INF] Sensor ID extracted from MQTT Message. Sensor ID: 1
+2022-12-01 18:58:42.505 +03:30 [WRN] A Sensor sends invalid data. Topic: Elma/ToServer/Temp/1 , Payload: xx
+2022-12-01 18:58:57.638 +03:30 [INF] MQTT Message received. Topic: Elma/ToServer/Temp/1, Payload: 32
+2022-12-01 18:58:57.640 +03:30 [INF] MQTT Message is from a Temp sensor. Topic: Elma/ToServer/Temp/1, Payload: 32
+2022-12-01 18:58:57.641 +03:30 [INF] MQTT Message is a Temp sensor value. Topic: Elma/ToServer/Temp/1, Payload: 32
+2022-12-01 18:58:57.642 +03:30 [INF] Sensor ID extracted from MQTT Message. Sensor ID: 1
+2022-12-01 18:58:57.645 +03:30 [INF] Sensor ID is found in Poultries/Farms. Type: FarmTemperature, LocationID: 2, Section: FarmLeftTop
+2022-12-01 18:58:57.646 +03:30 [INF] Sensor is valid; Value is valid. Type: FarmTemperature, LocationID: 2, Section: FarmLeftTop
+2022-12-01 18:58:57.649 +03:30 [INF] Updating sensor KeepAlive error in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop
+2022-12-01 18:59:11.791 +03:30 [INF] MQTT Message received. Topic: Elma/ToServer/Temp/1, Payload: 39
+2022-12-01 18:59:11.793 +03:30 [INF] MQTT Message is from a Temp sensor. Topic: Elma/ToServer/Temp/1, Payload: 39
+2022-12-01 18:59:11.794 +03:30 [INF] MQTT Message is a Temp sensor value. Topic: Elma/ToServer/Temp/1, Payload: 39
+2022-12-01 18:59:11.796 +03:30 [INF] Sensor ID extracted from MQTT Message. Sensor ID: 1
+2022-12-01 18:59:11.797 +03:30 [INF] Sensor ID is found in Poultries/Farms. Type: FarmTemperature, LocationID: 2, Section: FarmLeftTop
+2022-12-01 18:59:11.798 +03:30 [ERR] A Temp Sensor sends invalid value. Topic: Elma/ToServer/Temp/1 , Payload: 39
+2022-12-01 18:59:16.066 +03:30 [INF] MQTT Message received. Topic: Elma/ToServer/Temp/1, Payload: 12
+2022-12-01 18:59:16.068 +03:30 [INF] MQTT Message is from a Temp sensor. Topic: Elma/ToServer/Temp/1, Payload: 12
+2022-12-01 18:59:16.069 +03:30 [INF] MQTT Message is a Temp sensor value. Topic: Elma/ToServer/Temp/1, Payload: 12
+2022-12-01 18:59:16.070 +03:30 [INF] Sensor ID extracted from MQTT Message. Sensor ID: 1
+2022-12-01 18:59:16.071 +03:30 [INF] Sensor ID is found in Poultries/Farms. Type: FarmTemperature, LocationID: 2, Section: FarmLeftTop
+2022-12-01 18:59:16.072 +03:30 [ERR] A Temp Sensor sends invalid value. Topic: Elma/ToServer/Temp/1 , Payload: 12
+2022-12-01 18:59:36.064 +03:30 [INF] MQTT Message received. Topic: Elma/ToServer/Temp/1, Payload: 12
+2022-12-01 18:59:36.066 +03:30 [INF] MQTT Message is from a Temp sensor. Topic: Elma/ToServer/Temp/1, Payload: 12
+2022-12-01 18:59:36.067 +03:30 [INF] MQTT Message is a Temp sensor value. Topic: Elma/ToServer/Temp/1, Payload: 12
+2022-12-01 18:59:36.069 +03:30 [INF] Sensor ID extracted from MQTT Message. Sensor ID: 1
+2022-12-01 18:59:36.070 +03:30 [INF] Sensor ID is found in Poultries/Farms. Type: FarmTemperature, LocationID: 2, Section: FarmLeftTop
+2022-12-01 18:59:36.071 +03:30 [ERR] A Temp Sensor sends invalid value. Topic: Elma/ToServer/Temp/1 , Payload: 12
+2022-12-01 19:00:11.839 +03:30 [INF] MQTT Message received. Topic: Elma/ToServer/Temp/1, Payload: 12
+2022-12-01 19:00:11.840 +03:30 [INF] MQTT Message is from a Temp sensor. Topic: Elma/ToServer/Temp/1, Payload: 12
+2022-12-01 19:00:11.841 +03:30 [INF] MQTT Message is a Temp sensor value. Topic: Elma/ToServer/Temp/1, Payload: 12
+2022-12-01 19:00:11.842 +03:30 [INF] Sensor ID extracted from MQTT Message. Sensor ID: 1
+2022-12-01 19:00:11.843 +03:30 [INF] Sensor ID is found in Poultries/Farms. Type: FarmTemperature, LocationID: 2, Section: FarmLeftTop
+2022-12-01 19:00:11.845 +03:30 [ERR] A Temp Sensor sends invalid value. Topic: Elma/ToServer/Temp/1 , Payload: 12
+2022-12-01 19:07:04.080 +03:30 [INF] Starting up the Service...
+2022-12-01 19:07:06.789 +03:30 [INF] Poultries loaded.
+2022-12-01 19:07:06.797 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: bd56842e-09e3-49c7-9e07-ccfe5a4a481b.
+2022-12-01 19:07:06.858 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: bd56842e-09e3-49c7-9e07-ccfe5a4a481b.
+2022-12-01 19:07:06.873 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2022-12-01 19:07:14.734 +03:30 [INF] MQTT Message received. Topic: Elma/ToServer/Temp/1, Payload: sa
+2022-12-01 19:07:14.744 +03:30 [INF] MQTT Message is from a Temp sensor. Topic: Elma/ToServer/Temp/1, Payload: sa
+2022-12-01 19:07:14.744 +03:30 [INF] MQTT Message is a Temp sensor value. Topic: Elma/ToServer/Temp/1, Payload: sa
+2022-12-01 19:07:14.745 +03:30 [INF] Sensor ID extracted from MQTT Message. Sensor ID: 1
+2022-12-01 19:07:14.747 +03:30 [WRN] A Sensor sends invalid data. Topic: Elma/ToServer/Temp/1 , Payload: sa
+2022-12-01 19:07:21.749 +03:30 [INF] MQTT Message received. Topic: Elma/ToServer/Temp/1, Payload: sa
+2022-12-01 19:07:21.750 +03:30 [INF] MQTT Message is from a Temp sensor. Topic: Elma/ToServer/Temp/1, Payload: sa
+2022-12-01 19:07:21.751 +03:30 [INF] MQTT Message is a Temp sensor value. Topic: Elma/ToServer/Temp/1, Payload: sa
+2022-12-01 19:07:21.752 +03:30 [INF] Sensor ID extracted from MQTT Message. Sensor ID: 1
+2022-12-01 19:07:21.754 +03:30 [WRN] A Sensor sends invalid data. Topic: Elma/ToServer/Temp/1 , Payload: sa
+2022-12-01 19:07:31.066 +03:30 [INF] MQTT Message received. Topic: Elma/ToServer/Temp/1, Payload: dd
+2022-12-01 19:07:31.068 +03:30 [INF] MQTT Message is from a Temp sensor. Topic: Elma/ToServer/Temp/1, Payload: dd
+2022-12-01 19:07:31.068 +03:30 [INF] MQTT Message is a Temp sensor value. Topic: Elma/ToServer/Temp/1, Payload: dd
+2022-12-01 19:07:31.069 +03:30 [INF] Sensor ID extracted from MQTT Message. Sensor ID: 1
+2022-12-01 19:07:31.070 +03:30 [WRN] A Sensor sends invalid data. Topic: Elma/ToServer/Temp/1 , Payload: dd
+2022-12-01 19:07:42.995 +03:30 [INF] MQTT Message received. Topic: Elma/ToServer/Temp/1, Payload: khk
+2022-12-01 19:07:42.997 +03:30 [INF] MQTT Message is from a Temp sensor. Topic: Elma/ToServer/Temp/1, Payload: khk
+2022-12-01 19:07:42.998 +03:30 [INF] MQTT Message is a Temp sensor value. Topic: Elma/ToServer/Temp/1, Payload: khk
+2022-12-01 19:07:42.998 +03:30 [INF] Sensor ID extracted from MQTT Message. Sensor ID: 1
+2022-12-01 19:07:42.999 +03:30 [WRN] A Sensor sends invalid data. Topic: Elma/ToServer/Temp/1 , Payload: khk
+2022-12-01 19:08:03.572 +03:30 [INF] MQTT Message received. Topic: Elma/ToServer/Temp/1, Payload: khk
+2022-12-01 19:08:03.574 +03:30 [INF] MQTT Message is from a Temp sensor. Topic: Elma/ToServer/Temp/1, Payload: khk
+2022-12-01 19:08:03.575 +03:30 [INF] MQTT Message is a Temp sensor value. Topic: Elma/ToServer/Temp/1, Payload: khk
+2022-12-01 19:08:03.576 +03:30 [INF] Sensor ID extracted from MQTT Message. Sensor ID: 1
+2022-12-01 19:08:03.576 +03:30 [WRN] A Sensor sends invalid data. Topic: Elma/ToServer/Temp/1 , Payload: khk
+2022-12-01 19:08:12.048 +03:30 [INF] MQTT Message received. Topic: Elma/ToServer/Temp/1, Payload: 31
+2022-12-01 19:08:12.050 +03:30 [INF] MQTT Message is from a Temp sensor. Topic: Elma/ToServer/Temp/1, Payload: 31
+2022-12-01 19:08:12.051 +03:30 [INF] MQTT Message is a Temp sensor value. Topic: Elma/ToServer/Temp/1, Payload: 31
+2022-12-01 19:08:12.052 +03:30 [INF] Sensor ID extracted from MQTT Message. Sensor ID: 1
+2022-12-01 19:08:12.054 +03:30 [INF] Sensor ID is found in Poultries/Farms. Type: FarmTemperature, LocationID: 2, Section: FarmLeftTop
+2022-12-01 19:08:12.056 +03:30 [INF] Sensor is valid; Value is valid. Type: FarmTemperature, LocationID: 2, Section: FarmLeftTop
+2022-12-01 19:08:12.059 +03:30 [INF] Updating sensor KeepAlive error in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop
+2022-12-01 19:08:41.328 +03:30 [INF] MQTT Message received. Topic: Elma/ToServer/Temp/1, Payload: hghh
+2022-12-01 19:08:41.329 +03:30 [INF] MQTT Message is from a Temp sensor. Topic: Elma/ToServer/Temp/1, Payload: hghh
+2022-12-01 19:08:41.330 +03:30 [INF] MQTT Message is a Temp sensor value. Topic: Elma/ToServer/Temp/1, Payload: hghh
+2022-12-01 19:08:41.331 +03:30 [INF] Sensor ID extracted from MQTT Message. Sensor ID: 1
+2022-12-01 19:08:41.333 +03:30 [WRN] A Sensor sends invalid data. Topic: Elma/ToServer/Temp/1 , Payload: hghh
+2022-12-01 19:08:56.527 +03:30 [INF] MQTT Message received. Topic: Elma/ToServer/Temp/1, Payload: 32
+2022-12-01 19:08:56.529 +03:30 [INF] MQTT Message is from a Temp sensor. Topic: Elma/ToServer/Temp/1, Payload: 32
+2022-12-01 19:08:56.530 +03:30 [INF] MQTT Message is a Temp sensor value. Topic: Elma/ToServer/Temp/1, Payload: 32
+2022-12-01 19:08:56.531 +03:30 [INF] Sensor ID extracted from MQTT Message. Sensor ID: 1
+2022-12-01 19:08:56.532 +03:30 [INF] Sensor ID is found in Poultries/Farms. Type: FarmTemperature, LocationID: 2, Section: FarmLeftTop
+2022-12-01 19:08:56.534 +03:30 [INF] Sensor is valid; Value is valid. Type: FarmTemperature, LocationID: 2, Section: FarmLeftTop
+2022-12-01 19:09:45.358 +03:30 [ERR] Error connecting to MQTT Broker. retrying in 5 seconds...
+2022-12-01 19:09:53.025 +03:30 [ERR] Error connecting to MQTT Broker. retrying in 5 seconds...
+2022-12-01 19:09:53.941 +03:30 [INF] Updating sensor KeepAlive error in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop
+2022-12-01 19:11:14.474 +03:30 [INF] Starting up the Service...
+2022-12-01 19:11:16.716 +03:30 [INF] Poultries loaded.
+2022-12-01 19:11:16.725 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: d26f188c-ce82-43de-a88a-3f592d541c55.
+2022-12-01 19:11:16.785 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: d26f188c-ce82-43de-a88a-3f592d541c55.
+2022-12-01 19:11:16.921 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2022-12-01 19:11:24.150 +03:30 [INF] MQTT Message received. Topic: Elma/ToServer/Temp/1, Payload: vv
+2022-12-01 19:11:24.160 +03:30 [INF] MQTT Message is from a Temp sensor. Topic: Elma/ToServer/Temp/1, Payload: vv
+2022-12-01 19:11:24.161 +03:30 [INF] MQTT Message is a Temp sensor value. Topic: Elma/ToServer/Temp/1, Payload: vv
+2022-12-01 19:11:24.162 +03:30 [INF] Sensor ID extracted from MQTT Message. Sensor ID: 1
+2022-12-01 19:11:24.165 +03:30 [WRN] A Sensor sends invalid data. Topic: Elma/ToServer/Temp/1 , Payload: vv
+2022-12-01 19:11:31.398 +03:30 [INF] MQTT Message received. Topic: Elma/ToServer/Temp/1, Payload: 32
+2022-12-01 19:11:31.400 +03:30 [INF] MQTT Message is from a Temp sensor. Topic: Elma/ToServer/Temp/1, Payload: 32
+2022-12-01 19:11:31.401 +03:30 [INF] MQTT Message is a Temp sensor value. Topic: Elma/ToServer/Temp/1, Payload: 32
+2022-12-01 19:11:31.402 +03:30 [INF] Sensor ID extracted from MQTT Message. Sensor ID: 1
+2022-12-01 19:11:31.404 +03:30 [INF] Sensor ID is found in Poultries/Farms. Type: FarmTemperature, LocationID: 2, Section: FarmLeftTop
+2022-12-01 19:11:31.406 +03:30 [INF] Sensor is valid; Value is valid. Type: FarmTemperature, LocationID: 2, Section: FarmLeftTop
+2022-12-01 19:11:34.511 +03:30 [INF] Updating sensor KeepAlive error in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop
+2022-12-01 19:11:34.564 +03:30 [INF] Writing Temp sensor value to Database. Sensor ID: 1, Value: 32
+2022-12-01 19:11:34.598 +03:30 [INF] Sensor value received: 12/1/2022 7:11:31 PM, : 32, Count: 1
+2022-12-01 19:12:42.175 +03:30 [INF] MQTT Message received. Topic: Elma/ToServer/Temp/1, Payload: jj
+2022-12-01 19:12:42.177 +03:30 [INF] MQTT Message is from a Temp sensor. Topic: Elma/ToServer/Temp/1, Payload: jj
+2022-12-01 19:12:42.178 +03:30 [INF] MQTT Message is a Temp sensor value. Topic: Elma/ToServer/Temp/1, Payload: jj
+2022-12-01 19:12:42.178 +03:30 [INF] Sensor ID extracted from MQTT Message. Sensor ID: 1
+2022-12-01 19:12:42.179 +03:30 [WRN] A Sensor sends invalid data. Topic: Elma/ToServer/Temp/1 , Payload: jj
+2022-12-01 19:12:50.612 +03:30 [INF] MQTT Message received. Topic: Elma/ToServer/Temp/1, Payload: 39
+2022-12-01 19:12:50.613 +03:30 [INF] MQTT Message is from a Temp sensor. Topic: Elma/ToServer/Temp/1, Payload: 39
+2022-12-01 19:12:50.614 +03:30 [INF] MQTT Message is a Temp sensor value. Topic: Elma/ToServer/Temp/1, Payload: 39
+2022-12-01 19:12:50.615 +03:30 [INF] Sensor ID extracted from MQTT Message. Sensor ID: 1
+2022-12-01 19:12:50.616 +03:30 [INF] Sensor ID is found in Poultries/Farms. Type: FarmTemperature, LocationID: 2, Section: FarmLeftTop
+2022-12-01 19:12:50.617 +03:30 [ERR] A Temp Sensor sends invalid value. Topic: Elma/ToServer/Temp/1 , Payload: 39
+2022-12-01 19:12:57.511 +03:30 [INF] MQTT Message received. Topic: Elma/ToServer/Temp/1, Payload: 33
+2022-12-01 19:12:57.513 +03:30 [INF] MQTT Message is from a Temp sensor. Topic: Elma/ToServer/Temp/1, Payload: 33
+2022-12-01 19:12:57.514 +03:30 [INF] MQTT Message is a Temp sensor value. Topic: Elma/ToServer/Temp/1, Payload: 33
+2022-12-01 19:12:57.516 +03:30 [INF] Sensor ID extracted from MQTT Message. Sensor ID: 1
+2022-12-01 19:12:57.517 +03:30 [INF] Sensor ID is found in Poultries/Farms. Type: FarmTemperature, LocationID: 2, Section: FarmLeftTop
+2022-12-01 19:12:57.517 +03:30 [INF] Sensor is valid; Value is valid. Type: FarmTemperature, LocationID: 2, Section: FarmLeftTop
+2022-12-01 19:12:57.518 +03:30 [INF] Updating sensor KeepAlive error in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop
+2022-12-01 19:12:57.557 +03:30 [INF] Writing Temp sensor value to Database. Sensor ID: 1, Value: 33
+2022-12-01 19:12:57.586 +03:30 [INF] Sensor value received: 12/1/2022 7:12:57 PM, : 33, Count: 2
+2022-12-03 10:27:50.463 +03:30 [INF] Starting up the Service...
+2022-12-03 10:27:52.544 +03:30 [INF] Loading poultries...
+2022-12-03 10:27:54.055 +03:30 [INF] Poultries loaded.
+2022-12-03 10:27:54.064 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 23d42d63-51b0-4230-b474-9270f4119e0a.
+2022-12-03 10:27:54.131 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 23d42d63-51b0-4230-b474-9270f4119e0a.
+2022-12-03 10:27:54.145 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2022-12-03 10:28:41.664 +03:30 [INF] ===============  Begin mqtt process  ===============
+2022-12-03 10:28:41.665 +03:30 [INF] MQTT Message received. Topic: Elma/ToServer/FromSensor/Temp/1, Payload: 36
+2022-12-03 10:28:41.674 +03:30 [INF] MQTT Message is from a sensor. Topic: Elma/ToServer/FromSensor/Temp/1, Payload: 36
+2022-12-03 10:28:41.676 +03:30 [INF] MQTT Message is value from a temp sensor. Topic: Elma/ToServer/FromSensor/Temp/1, Payload: 36
+2022-12-03 10:28:41.683 +03:30 [INF] Sensor ID is found in Poultries/Farms. Type: FarmTemperature, LocationID: 2, Section: FarmLeftTop
+2022-12-03 10:28:41.687 +03:30 [INF] Updating sensor error in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop, Error Type: NotAlive
+2022-12-03 10:28:41.804 +03:30 [ERR] A sensor sends invalid value. Topic: Elma/ToServer/FromSensor/Temp/1 , Payload: 36
+2022-12-03 10:28:41.808 +03:30 [INF] Writing sensor error in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop, Error Type: InvalidValue
+2022-12-03 10:28:41.986 +03:30 [INF] ===============  End of mqtt process  ===============
+2022-12-03 10:30:48.378 +03:30 [INF] ===============  Begin mqtt process  ===============
+2022-12-03 10:30:48.379 +03:30 [INF] MQTT Message received. Topic: Elma/ToServer/FromSensor/Temp/1, Payload: 32
+2022-12-03 10:30:48.380 +03:30 [INF] MQTT Message is from a sensor. Topic: Elma/ToServer/FromSensor/Temp/1, Payload: 32
+2022-12-03 10:30:48.381 +03:30 [INF] MQTT Message is value from a temp sensor. Topic: Elma/ToServer/FromSensor/Temp/1, Payload: 32
+2022-12-03 10:30:48.383 +03:30 [INF] Sensor ID is found in Poultries/Farms. Type: FarmTemperature, LocationID: 2, Section: FarmLeftTop
+2022-12-03 10:30:48.384 +03:30 [INF] Updating sensor error in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop, Error Type: NotAlive
+2022-12-03 10:30:48.456 +03:30 [INF] Sensor is valid; Value is valid. Type: FarmTemperature, LocationID: 2, Section: FarmLeftTop
+2022-12-03 10:30:48.457 +03:30 [INF] Updating sensor error in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop, Error Type: InvalidData
+2022-12-03 10:30:48.486 +03:30 [INF] Updating sensor error in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop, Error Type: InvalidValue
+2022-12-03 10:30:48.824 +03:30 [INF] Writing sensor value in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop, Value: 32
+2022-12-03 10:30:48.903 +03:30 [INF] Temp sensor value done processing: 12/3/2022 10:30:48 AM, : 32, Count: 1
+2022-12-03 10:30:48.904 +03:30 [INF] ===============  End of mqtt process  ===============
+2022-12-03 10:31:59.346 +03:30 [INF] ===============  Begin mqtt process  ===============
+2022-12-03 10:31:59.347 +03:30 [INF] MQTT Message received. Topic: Elma/ToServer/FromSensor/Temp/1, Payload: 32
+2022-12-03 10:31:59.348 +03:30 [INF] MQTT Message is from a sensor. Topic: Elma/ToServer/FromSensor/Temp/1, Payload: 32
+2022-12-03 10:31:59.349 +03:30 [INF] MQTT Message is value from a temp sensor. Topic: Elma/ToServer/FromSensor/Temp/1, Payload: 32
+2022-12-03 10:32:32.500 +03:30 [INF] Sensor ID is found in Poultries/Farms. Type: FarmTemperature, LocationID: 2, Section: FarmLeftTop
+2022-12-03 10:32:32.518 +03:30 [INF] Updating sensor error in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop, Error Type: NotAlive
+2022-12-03 10:32:32.575 +03:30 [ERR] Error connecting to MQTT Broker. retrying in 5 seconds...
+2022-12-03 10:32:32.596 +03:30 [INF] Sensor is valid; Value is valid. Type: FarmTemperature, LocationID: 2, Section: FarmLeftTop
+2022-12-03 10:32:32.597 +03:30 [INF] Updating sensor error in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop, Error Type: InvalidData
+2022-12-03 10:32:32.620 +03:30 [INF] Updating sensor error in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop, Error Type: InvalidValue
+2022-12-03 10:32:32.641 +03:30 [INF] Writing sensor value in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop, Value: 32
+2022-12-03 10:32:32.666 +03:30 [INF] Temp sensor value done processing: 12/3/2022 10:31:59 AM, : 32, Count: 2
+2022-12-03 10:32:32.667 +03:30 [INF] ===============  End of mqtt process  ===============
+2022-12-03 10:32:32.670 +03:30 [WRN] Disconnected from MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 23d42d63-51b0-4230-b474-9270f4119e0a.
+2022-12-03 10:32:37.595 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 23d42d63-51b0-4230-b474-9270f4119e0a.
+2022-12-03 10:32:37.605 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 23d42d63-51b0-4230-b474-9270f4119e0a.
+2022-12-03 10:32:37.610 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2022-12-03 10:49:54.162 +03:30 [INF] Starting up the Service...
+2022-12-03 10:49:56.322 +03:30 [INF] Loading poultries...
+2022-12-03 10:49:57.614 +03:30 [INF] Poultries loaded.
+2022-12-03 10:49:57.622 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: ac8048a8-3ade-4254-a3dc-7a4d1fe9964d.
+2022-12-03 10:49:57.677 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: ac8048a8-3ade-4254-a3dc-7a4d1fe9964d.
+2022-12-03 10:49:57.691 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2022-12-03 10:50:15.927 +03:30 [INF] ===============  Begin mqtt process  ===============
+2022-12-03 10:50:15.929 +03:30 [INF] MQTT Message received. Topic: Elma/ToServer/FromSensor/PushButton/1, Payload: 1
+2022-12-03 10:50:15.940 +03:30 [INF] MQTT Message is from a sensor. Topic: Elma/ToServer/FromSensor/PushButton/1, Payload: 1
+2022-12-03 10:50:15.942 +03:30 [INF] MQTT Message is value from a push button sensor. Topic: Elma/ToServer/FromSensor/PushButton/1, Payload: 1
+2022-12-03 10:50:15.947 +03:30 [WRN] A sensor sends invalid data/value or sensor is unknown. adding to unknown mqtt list. Topic: Elma/ToServer/FromSensor/PushButton/1 , Payload: 1
+2022-12-03 10:50:15.948 +03:30 [INF] ===============  End of mqtt process  ===============
+2022-12-03 10:52:25.226 +03:30 [INF] ===============  Begin mqtt process  ===============
+2022-12-03 10:52:25.229 +03:30 [INF] MQTT Message received. Topic: Elma/ToServer/FromSensor/PushButton/4, Payload: 1
+2022-12-03 10:52:25.230 +03:30 [INF] MQTT Message is from a sensor. Topic: Elma/ToServer/FromSensor/PushButton/4, Payload: 1
+2022-12-03 10:52:25.231 +03:30 [INF] MQTT Message is value from a push button sensor. Topic: Elma/ToServer/FromSensor/PushButton/4, Payload: 1
+2022-12-03 10:52:25.232 +03:30 [WRN] A sensor sends invalid data/value or sensor is unknown. adding to unknown mqtt list. Topic: Elma/ToServer/FromSensor/PushButton/4 , Payload: 1
+2022-12-03 10:52:25.233 +03:30 [INF] ===============  End of mqtt process  ===============
+2022-12-03 10:52:51.033 +03:30 [INF] Starting up the Service...
+2022-12-03 10:52:51.857 +03:30 [INF] Loading poultries...
+2022-12-03 10:52:53.631 +03:30 [INF] Poultries loaded.
+2022-12-03 10:52:53.641 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 49da414f-8602-4860-a7d1-1c7e270b65e7.
+2022-12-03 10:52:53.701 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 49da414f-8602-4860-a7d1-1c7e270b65e7.
+2022-12-03 10:52:53.723 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2022-12-03 10:52:55.875 +03:30 [INF] ===============  Begin mqtt process  ===============
+2022-12-03 10:52:55.877 +03:30 [INF] MQTT Message received. Topic: Elma/ToServer/FromSensor/PushButton/4, Payload: 1
+2022-12-03 10:52:55.886 +03:30 [INF] MQTT Message is from a sensor. Topic: Elma/ToServer/FromSensor/PushButton/4, Payload: 1
+2022-12-03 10:52:55.889 +03:30 [INF] MQTT Message is value from a push button sensor. Topic: Elma/ToServer/FromSensor/PushButton/4, Payload: 1
+2022-12-03 10:52:55.896 +03:30 [INF] Sensor ID is found in Poultries/Farms. Type: FarmCheckup, LocationID: 2, Section: FarmLeftTop
+2022-12-03 10:52:55.899 +03:30 [INF] Updating sensor error in database. Sensor ID: 4, LocationID: 2, Section: FarmLeftTop, Error Type: NotAlive
+2022-12-03 10:52:55.979 +03:30 [INF] Writing sensor value in database. Sensor ID: 4, LocationID: 2, Section: FarmLeftTop, Value: 0
+2022-12-03 10:52:56.410 +03:30 [INF] ===============  End of mqtt process  ===============
+2022-12-03 10:53:20.865 +03:30 [INF] ===============  Begin mqtt process  ===============
+2022-12-03 10:53:20.867 +03:30 [INF] MQTT Message received. Topic: Elma/ToServer/FromSensor/PushButton/4, Payload: 1
+2022-12-03 10:53:20.867 +03:30 [INF] MQTT Message is from a sensor. Topic: Elma/ToServer/FromSensor/PushButton/4, Payload: 1
+2022-12-03 10:53:20.869 +03:30 [INF] MQTT Message is value from a push button sensor. Topic: Elma/ToServer/FromSensor/PushButton/4, Payload: 1
+2022-12-03 10:53:20.870 +03:30 [INF] Sensor ID is found in Poultries/Farms. Type: FarmCheckup, LocationID: 2, Section: FarmLeftTop
+2022-12-03 10:53:20.870 +03:30 [INF] Updating sensor error in database. Sensor ID: 4, LocationID: 2, Section: FarmLeftTop, Error Type: NotAlive
+2022-12-03 10:53:20.887 +03:30 [INF] Writing sensor value in database. Sensor ID: 4, LocationID: 2, Section: FarmLeftTop, Value: 0
+2022-12-03 10:53:21.867 +03:30 [INF] ===============  End of mqtt process  ===============
+2022-12-03 12:03:03.044 +03:30 [INF] Starting up the Service...
+2022-12-03 12:03:04.269 +03:30 [INF] Loading poultries...
+2022-12-03 12:03:05.704 +03:30 [INF] Poultries loaded.
+2022-12-03 12:03:05.717 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 05ad21b9-303e-49d1-804f-8ab8cfb8b04e.
+2022-12-03 12:03:05.770 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 05ad21b9-303e-49d1-804f-8ab8cfb8b04e.
+2022-12-03 12:03:05.783 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2022-12-03 12:03:09.951 +03:30 [INF] ===============  Begin mqtt process  ===============
+2022-12-03 12:03:09.954 +03:30 [INF] MQTT Message received. Topic: Elma/ToServer/FromSensor/PushButton/43, Payload: 1
+2022-12-03 12:03:09.964 +03:30 [INF] MQTT Message is from a sensor. Topic: Elma/ToServer/FromSensor/PushButton/43, Payload: 1
+2022-12-03 12:03:09.966 +03:30 [INF] MQTT Message is value from a push button sensor. Topic: Elma/ToServer/FromSensor/PushButton/43, Payload: 1
+2022-12-03 12:03:09.971 +03:30 [WRN] A sensor sends invalid data/value or sensor is unknown. adding to unknown mqtt list. Topic: Elma/ToServer/FromSensor/PushButton/43 , Payload: 1
+2022-12-03 12:03:09.972 +03:30 [INF] ===============  End of mqtt process  ===============
+2022-12-03 17:46:07.345 +03:30 [INF] Starting up the Service...
+2022-12-03 17:46:08.219 +03:30 [INF] Loading poultries...
+2022-12-03 17:46:09.128 +03:30 [INF] Poultries loaded.
+2022-12-03 17:46:09.138 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 7dbe5f09-bfed-416a-9a68-0e4e37539275.
+2022-12-03 17:46:09.204 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 7dbe5f09-bfed-416a-9a68-0e4e37539275.
+2022-12-03 17:46:09.236 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2022-12-03 17:46:36.526 +03:30 [INF] Starting up the Service...
+2022-12-03 17:46:37.408 +03:30 [INF] Loading poultries...
+2022-12-03 17:46:39.349 +03:30 [INF] Poultries loaded.
+2022-12-03 17:46:39.358 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 60ec0314-b9ad-4e75-bfd3-a61fea5f35a6.
+2022-12-03 17:46:39.418 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 60ec0314-b9ad-4e75-bfd3-a61fea5f35a6.
+2022-12-03 17:46:39.434 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2022-12-03 17:46:44.436 +03:30 [INF] Timer Called.
+2022-12-03 17:46:50.455 +03:30 [INF] Timer Called.
+2022-12-03 17:46:56.475 +03:30 [INF] Timer Called.
+2022-12-03 17:47:02.500 +03:30 [INF] Timer Called.
+2022-12-03 17:47:08.510 +03:30 [INF] Timer Called.
+2022-12-03 17:47:14.549 +03:30 [INF] Timer Called.
+2022-12-03 17:47:18.985 +03:30 [INF] Starting up the Service...
+2022-12-03 17:47:19.794 +03:30 [INF] Loading poultries...
+2022-12-03 17:47:21.533 +03:30 [INF] Poultries loaded.
+2022-12-03 17:47:21.541 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: f9574689-98be-41e7-a619-4e3223f6ee92.
+2022-12-03 17:47:21.903 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: f9574689-98be-41e7-a619-4e3223f6ee92.
+2022-12-03 17:47:21.915 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2022-12-03 17:47:26.927 +03:30 [INF] Timer Called.
+2022-12-03 17:47:34.943 +03:30 [INF] Timer Called.
+2022-12-03 17:47:42.958 +03:30 [INF] Timer Called.
+2022-12-03 17:47:48.058 +03:30 [INF] Starting up the Service...
+2022-12-03 17:47:48.970 +03:30 [INF] Loading poultries...
+2022-12-03 17:47:52.078 +03:30 [INF] Poultries loaded.
+2022-12-03 17:47:52.097 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 0db69f3b-0416-45c5-aa63-f1c3e1ecca28.
+2022-12-03 17:47:52.424 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 0db69f3b-0416-45c5-aa63-f1c3e1ecca28.
+2022-12-03 17:47:52.440 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2022-12-03 17:47:57.451 +03:30 [INF] Timer Called.
+2022-12-03 17:48:02.453 +03:30 [INF] Timer Called.
+2022-12-03 17:48:07.455 +03:30 [INF] Timer Called.
+2022-12-03 17:48:12.449 +03:30 [INF] Timer Called.
+2022-12-03 17:48:17.452 +03:30 [INF] Timer Called.
+2022-12-03 17:48:22.455 +03:30 [INF] Timer Called.
+2022-12-03 17:48:27.452 +03:30 [INF] Timer Called.
+2022-12-03 17:48:31.605 +03:30 [INF] Starting up the Service...
+2022-12-03 17:48:32.361 +03:30 [INF] Loading poultries...
+2022-12-03 17:48:37.243 +03:30 [INF] Poultries loaded.
+2022-12-03 17:48:37.251 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: d47e0c04-b4c4-4ff6-84ca-889e49d882a2.
+2022-12-03 17:48:37.310 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: d47e0c04-b4c4-4ff6-84ca-889e49d882a2.
+2022-12-03 17:48:37.326 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2022-12-03 17:48:42.329 +03:30 [INF] Timer Called.
+2022-12-03 17:48:50.345 +03:30 [INF] Timer Called.
+2022-12-03 17:48:58.365 +03:30 [INF] Timer Called.
+2022-12-03 17:54:21.376 +03:30 [INF] Starting up the Service...
+2022-12-03 17:54:22.422 +03:30 [INF] Loading poultries...
+2022-12-03 17:55:24.788 +03:30 [INF] Starting up the Service...
+2022-12-03 17:56:58.858 +03:30 [INF] Starting up the Service...
+2022-12-03 17:56:59.831 +03:30 [INF] Loading poultries...
+2022-12-03 17:57:02.297 +03:30 [INF] Poultries loaded.
+2022-12-03 17:57:02.310 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 157a5cf7-d821-476b-b089-5fbac893be40.
+2022-12-03 17:57:02.595 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 157a5cf7-d821-476b-b089-5fbac893be40.
+2022-12-03 17:57:02.609 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2022-12-03 17:57:04.635 +03:30 [INF] Timer Called on RunObserver.
+2022-12-03 17:57:09.653 +03:30 [INF] Timer Called on RunObserver.
+2022-12-03 17:57:14.666 +03:30 [INF] Timer Called on RunObserver.
+2022-12-03 17:57:19.669 +03:30 [INF] Timer Called on RunObserver.
+2022-12-03 17:57:24.687 +03:30 [INF] Timer Called on RunObserver.
+2022-12-03 17:57:30.450 +03:30 [INF] Starting up the Service...
+2022-12-03 17:57:31.303 +03:30 [INF] Loading poultries...
+2022-12-03 17:57:32.689 +03:30 [INF] Poultries loaded.
+2022-12-03 17:57:32.696 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 2ac20cf5-1bf0-4993-9afb-6fdddc05a732.
+2022-12-03 17:57:32.747 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 2ac20cf5-1bf0-4993-9afb-6fdddc05a732.
+2022-12-03 17:57:32.765 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2022-12-03 17:57:36.165 +03:30 [INF] Timer Called on RunObserver.
+2022-12-03 17:57:44.196 +03:30 [INF] Timer Called on RunObserver.
+2022-12-03 17:57:52.229 +03:30 [INF] Timer Called on RunObserver.
+2022-12-03 18:01:58.081 +03:30 [INF] Starting up the Service...
+2022-12-03 18:01:58.874 +03:30 [INF] Loading poultries...
+2022-12-03 18:02:00.349 +03:30 [INF] Poultries loaded.
+2022-12-03 18:02:00.357 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 60a2be48-eec6-461d-a90e-bfeb1f6e551b.
+2022-12-03 18:02:00.414 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 60a2be48-eec6-461d-a90e-bfeb1f6e551b.
+2022-12-03 18:02:00.430 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2022-12-03 18:02:03.776 +03:30 [ERR] Error occured in Observer.
+System.NotImplementedException: The method or operation is not implemented.
+   at ElmaSmartFarm.Service.Worker.ObservePoultries() in D:\Users\Safa\Source\Repos\safaenet\ElmaSmartFarm\ElmaSmartFarm.Service\PoultriesObserver.cs:line 30
+   at ElmaSmartFarm.Service.Worker.RunObserverTimer() in D:\Users\Safa\Source\Repos\safaenet\ElmaSmartFarm\ElmaSmartFarm.Service\PoultriesObserver.cs:line 15
+2022-12-03 18:02:08.910 +03:30 [ERR] Error occured in Observer.
+System.NotImplementedException: The method or operation is not implemented.
+   at ElmaSmartFarm.Service.Worker.ObservePoultries() in D:\Users\Safa\Source\Repos\safaenet\ElmaSmartFarm\ElmaSmartFarm.Service\PoultriesObserver.cs:line 30
+   at ElmaSmartFarm.Service.Worker.RunObserverTimer() in D:\Users\Safa\Source\Repos\safaenet\ElmaSmartFarm\ElmaSmartFarm.Service\PoultriesObserver.cs:line 15
+2022-12-03 18:02:13.978 +03:30 [ERR] Error occured in Observer.
+System.NotImplementedException: The method or operation is not implemented.
+   at ElmaSmartFarm.Service.Worker.ObservePoultries() in D:\Users\Safa\Source\Repos\safaenet\ElmaSmartFarm\ElmaSmartFarm.Service\PoultriesObserver.cs:line 30
+   at ElmaSmartFarm.Service.Worker.RunObserverTimer() in D:\Users\Safa\Source\Repos\safaenet\ElmaSmartFarm\ElmaSmartFarm.Service\PoultriesObserver.cs:line 15
+2022-12-03 18:02:19.035 +03:30 [ERR] Error occured in Observer.
+System.NotImplementedException: The method or operation is not implemented.
+   at ElmaSmartFarm.Service.Worker.ObservePoultries() in D:\Users\Safa\Source\Repos\safaenet\ElmaSmartFarm\ElmaSmartFarm.Service\PoultriesObserver.cs:line 30
+   at ElmaSmartFarm.Service.Worker.RunObserverTimer() in D:\Users\Safa\Source\Repos\safaenet\ElmaSmartFarm\ElmaSmartFarm.Service\PoultriesObserver.cs:line 15
+2022-12-03 18:02:24.085 +03:30 [ERR] Error occured in Observer.
+System.NotImplementedException: The method or operation is not implemented.
+   at ElmaSmartFarm.Service.Worker.ObservePoultries() in D:\Users\Safa\Source\Repos\safaenet\ElmaSmartFarm\ElmaSmartFarm.Service\PoultriesObserver.cs:line 30
+   at ElmaSmartFarm.Service.Worker.RunObserverTimer() in D:\Users\Safa\Source\Repos\safaenet\ElmaSmartFarm\ElmaSmartFarm.Service\PoultriesObserver.cs:line 15
+2022-12-03 18:02:29.141 +03:30 [ERR] Error occured in Observer.
+System.NotImplementedException: The method or operation is not implemented.
+   at ElmaSmartFarm.Service.Worker.ObservePoultries() in D:\Users\Safa\Source\Repos\safaenet\ElmaSmartFarm\ElmaSmartFarm.Service\PoultriesObserver.cs:line 30
+   at ElmaSmartFarm.Service.Worker.RunObserverTimer() in D:\Users\Safa\Source\Repos\safaenet\ElmaSmartFarm\ElmaSmartFarm.Service\PoultriesObserver.cs:line 15
+2022-12-03 18:02:34.194 +03:30 [ERR] Error occured in Observer.
+System.NotImplementedException: The method or operation is not implemented.
+   at ElmaSmartFarm.Service.Worker.ObservePoultries() in D:\Users\Safa\Source\Repos\safaenet\ElmaSmartFarm\ElmaSmartFarm.Service\PoultriesObserver.cs:line 30
+   at ElmaSmartFarm.Service.Worker.RunObserverTimer() in D:\Users\Safa\Source\Repos\safaenet\ElmaSmartFarm\ElmaSmartFarm.Service\PoultriesObserver.cs:line 15
+2022-12-03 18:02:39.240 +03:30 [ERR] Error occured in Observer.
+System.NotImplementedException: The method or operation is not implemented.
+   at ElmaSmartFarm.Service.Worker.ObservePoultries() in D:\Users\Safa\Source\Repos\safaenet\ElmaSmartFarm\ElmaSmartFarm.Service\PoultriesObserver.cs:line 30
+   at ElmaSmartFarm.Service.Worker.RunObserverTimer() in D:\Users\Safa\Source\Repos\safaenet\ElmaSmartFarm\ElmaSmartFarm.Service\PoultriesObserver.cs:line 15
+2022-12-03 18:02:44.310 +03:30 [ERR] Error occured in Observer.
+System.NotImplementedException: The method or operation is not implemented.
+   at ElmaSmartFarm.Service.Worker.ObservePoultries() in D:\Users\Safa\Source\Repos\safaenet\ElmaSmartFarm\ElmaSmartFarm.Service\PoultriesObserver.cs:line 30
+   at ElmaSmartFarm.Service.Worker.RunObserverTimer() in D:\Users\Safa\Source\Repos\safaenet\ElmaSmartFarm\ElmaSmartFarm.Service\PoultriesObserver.cs:line 15
+2022-12-03 18:02:49.359 +03:30 [ERR] Error occured in Observer.
+System.NotImplementedException: The method or operation is not implemented.
+   at ElmaSmartFarm.Service.Worker.ObservePoultries() in D:\Users\Safa\Source\Repos\safaenet\ElmaSmartFarm\ElmaSmartFarm.Service\PoultriesObserver.cs:line 30
+   at ElmaSmartFarm.Service.Worker.RunObserverTimer() in D:\Users\Safa\Source\Repos\safaenet\ElmaSmartFarm\ElmaSmartFarm.Service\PoultriesObserver.cs:line 15
+2022-12-03 18:02:54.504 +03:30 [ERR] Error occured in Observer.
+System.NotImplementedException: The method or operation is not implemented.
+   at ElmaSmartFarm.Service.Worker.ObservePoultries() in D:\Users\Safa\Source\Repos\safaenet\ElmaSmartFarm\ElmaSmartFarm.Service\PoultriesObserver.cs:line 30
+   at ElmaSmartFarm.Service.Worker.RunObserverTimer() in D:\Users\Safa\Source\Repos\safaenet\ElmaSmartFarm\ElmaSmartFarm.Service\PoultriesObserver.cs:line 15
+2022-12-03 18:11:43.218 +03:30 [INF] Starting up the Service...
+2022-12-03 18:11:43.811 +03:30 [INF] Loading poultries...
+2022-12-03 18:11:46.494 +03:30 [INF] Poultries loaded.
+2022-12-03 18:11:46.502 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: c4ccd50b-89fb-424d-b90b-295669d58a2f.
+2022-12-03 18:11:46.558 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: c4ccd50b-89fb-424d-b90b-295669d58a2f.
+2022-12-03 18:11:46.883 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2022-12-03 18:12:17.657 +03:30 [INF] ===============  Begin mqtt process  ===============
+2022-12-03 18:12:17.659 +03:30 [INF] MQTT Message received. Topic: Elma/ToServer/FromSensor/Temp/1, Payload: 31
+2022-12-03 18:12:17.669 +03:30 [INF] MQTT Message is from a sensor. Topic: Elma/ToServer/FromSensor/Temp/1, Payload: 31
+2022-12-03 18:12:17.671 +03:30 [INF] MQTT Message is value from a temp sensor. Topic: Elma/ToServer/FromSensor/Temp/1, Payload: 31
+2022-12-03 18:12:17.677 +03:30 [INF] Sensor ID is found in Poultries/Farms. Type: FarmTemperature, LocationID: 2, Section: FarmLeftTop
+2022-12-03 18:12:17.681 +03:30 [INF] Updating sensor error in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop, Error Type: NotAlive
+2022-12-03 18:12:17.764 +03:30 [INF] Sensor is valid; Value is valid. Type: FarmTemperature, LocationID: 2, Section: FarmLeftTop
+2022-12-03 18:12:17.765 +03:30 [INF] Updating sensor error in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop, Error Type: InvalidData
+2022-12-03 18:12:17.798 +03:30 [INF] Updating sensor error in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop, Error Type: InvalidValue
+2022-12-03 18:12:18.141 +03:30 [INF] Writing sensor value in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop, Value: 31
+2022-12-03 18:12:18.186 +03:30 [INF] Temp sensor value done processing: 12/3/2022 6:12:17 PM, : 31, Count: 1
+2022-12-03 18:12:18.188 +03:30 [INF] ===============  End of mqtt process  ===============
+2022-12-03 18:12:27.670 +03:30 [INF] ===============  Begin mqtt process  ===============
+2022-12-03 18:12:27.671 +03:30 [INF] MQTT Message received. Topic: Elma/ToServer/FromSensor/Temp/1, Payload: 31
+2022-12-03 18:12:27.672 +03:30 [INF] MQTT Message is from a sensor. Topic: Elma/ToServer/FromSensor/Temp/1, Payload: 31
+2022-12-03 18:12:27.673 +03:30 [INF] MQTT Message is value from a temp sensor. Topic: Elma/ToServer/FromSensor/Temp/1, Payload: 31
+2022-12-03 18:12:27.674 +03:30 [INF] Sensor ID is found in Poultries/Farms. Type: FarmTemperature, LocationID: 2, Section: FarmLeftTop
+2022-12-03 18:12:27.674 +03:30 [INF] Updating sensor error in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop, Error Type: NotAlive
+2022-12-03 18:12:28.001 +03:30 [INF] Sensor is valid; Value is valid. Type: FarmTemperature, LocationID: 2, Section: FarmLeftTop
+2022-12-03 18:12:28.002 +03:30 [INF] Updating sensor error in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop, Error Type: InvalidData
+2022-12-03 18:12:28.026 +03:30 [INF] Updating sensor error in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop, Error Type: InvalidValue
+2022-12-03 18:12:28.418 +03:30 [INF] Writing sensor value in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop, Value: 31
+2022-12-03 18:12:28.500 +03:30 [INF] Temp sensor value done processing: 12/3/2022 6:12:27 PM, : 31, Count: 2
+2022-12-03 18:12:28.502 +03:30 [INF] ===============  End of mqtt process  ===============
+2022-12-03 18:15:00.954 +03:30 [INF] Starting up the Service...
+2022-12-03 18:15:01.769 +03:30 [INF] Loading poultries...
+2022-12-03 18:15:03.898 +03:30 [INF] Poultries loaded.
+2022-12-03 18:15:03.911 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 4ed7b39c-f038-497a-be59-95f3542ad02f.
+2022-12-03 18:15:03.971 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 4ed7b39c-f038-497a-be59-95f3542ad02f.
+2022-12-03 18:15:03.988 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2022-12-05 16:33:18.131 +03:30 [INF] Starting up the Service...
+2022-12-05 16:33:20.418 +03:30 [INF] Loading poultries...
+2022-12-05 16:33:26.917 +03:30 [INF] Poultries loaded.
+2022-12-05 16:33:26.926 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 82f5225d-4043-400f-9e91-186e6b2e3c4c.
+2022-12-05 16:33:27.096 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 82f5225d-4043-400f-9e91-186e6b2e3c4c.
+2022-12-05 16:33:27.113 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2022-12-05 16:37:25.356 +03:30 [INF] Starting up the Service...
+2022-12-05 16:37:26.291 +03:30 [INF] Loading poultries...
+2022-12-05 16:37:30.555 +03:30 [INF] Poultries loaded. (4.2635475 ms)
+2022-12-05 16:37:30.562 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 4de32105-ecfe-4fe8-91ad-cd1f34989e9b.
+2022-12-05 16:37:31.733 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 4de32105-ecfe-4fe8-91ad-cd1f34989e9b.
+2022-12-05 16:37:31.748 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2022-12-05 16:38:13.463 +03:30 [INF] Starting up the Service...
+2022-12-05 16:38:14.297 +03:30 [INF] Loading poultries...
+2022-12-05 16:38:17.112 +03:30 [INF] Poultries loaded. (2815.8303 ms)
+2022-12-05 16:38:17.122 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 98535686-692e-4586-a4b5-dfecfaf36ca7.
+2022-12-05 16:38:17.190 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 98535686-692e-4586-a4b5-dfecfaf36ca7.
+2022-12-05 16:38:17.212 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2022-12-05 16:38:30.880 +03:30 [INF] Starting up the Service...
+2022-12-05 16:38:31.514 +03:30 [INF] Loading poultries...
+2022-12-05 16:38:36.891 +03:30 [INF] Poultries loaded. (5377.2411 ms)
+2022-12-05 16:38:36.911 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: f7958fb3-3a2c-4aca-9085-d1ecfa95cd66.
+2022-12-05 16:38:38.019 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: f7958fb3-3a2c-4aca-9085-d1ecfa95cd66.
+2022-12-05 16:38:38.052 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2022-12-05 16:44:44.902 +03:30 [INF] Starting up the Service...
+2022-12-05 16:44:45.591 +03:30 [INF] ===============  Start observation process ===============
+2022-12-05 16:44:45.592 +03:30 [INF] ===============  End of observation process 1.4583 ms) ===============
+2022-12-05 16:44:45.738 +03:30 [INF] Loading poultries...
+2022-12-05 16:44:50.617 +03:30 [INF] ===============  Start observation process ===============
+2022-12-05 16:44:50.618 +03:30 [INF] ===============  End of observation process 0.9346 ms) ===============
+2022-12-05 16:44:51.745 +03:30 [INF] Poultries loaded. (6007.0835 ms)
+2022-12-05 16:44:51.754 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 1aaf9aa9-6da8-40ea-8acc-27a8bb416a64.
+2022-12-05 16:44:51.812 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 1aaf9aa9-6da8-40ea-8acc-27a8bb416a64.
+2022-12-05 16:44:51.863 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2022-12-05 16:44:55.624 +03:30 [INF] ===============  Start observation process ===============
+2022-12-05 16:44:55.626 +03:30 [INF] ===============  End of observation process 1.6231 ms) ===============
+2022-12-05 16:45:00.636 +03:30 [INF] ===============  Start observation process ===============
+2022-12-05 16:45:00.637 +03:30 [INF] ===============  End of observation process 0.9796 ms) ===============
+2022-12-05 16:45:05.647 +03:30 [INF] ===============  Start observation process ===============
+2022-12-05 16:45:05.649 +03:30 [INF] ===============  End of observation process 1.2917 ms) ===============
+2022-12-05 16:45:10.662 +03:30 [INF] ===============  Start observation process ===============
+2022-12-05 16:45:10.663 +03:30 [INF] ===============  End of observation process 0.8484 ms) ===============
+2022-12-05 16:45:15.667 +03:30 [INF] ===============  Start observation process ===============
+2022-12-05 16:45:15.669 +03:30 [INF] ===============  End of observation process 1.6541 ms) ===============
+2022-12-05 16:45:20.678 +03:30 [INF] ===============  Start observation process ===============
+2022-12-05 16:45:20.680 +03:30 [INF] ===============  End of observation process 1.4418 ms) ===============
+2022-12-05 16:45:25.706 +03:30 [INF] ===============  Start observation process ===============
+2022-12-05 16:45:25.708 +03:30 [INF] ===============  End of observation process 1.3899 ms) ===============
+2022-12-05 16:46:34.302 +03:30 [INF] Starting up the Service...
+2022-12-05 16:46:34.925 +03:30 [INF] ===============  Start observation process ===============
+2022-12-05 16:46:34.927 +03:30 [INF] ===============  End of observation process 4.3791 ms) ===============
+2022-12-05 16:46:35.003 +03:30 [INF] Loading poultries...
+2022-12-05 16:46:37.821 +03:30 [INF] Poultries loaded. (2818.6279 ms)
+2022-12-05 16:46:37.830 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 43aa454f-d2bd-404a-824e-e7c555fd8a10.
+2022-12-05 16:46:37.901 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 43aa454f-d2bd-404a-824e-e7c555fd8a10.
+2022-12-05 16:46:37.922 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2022-12-05 16:46:39.936 +03:30 [INF] ===============  Start observation process ===============
+2022-12-05 16:46:39.939 +03:30 [INF] ===============  End of observation process 2.3048 ms) ===============
+2022-12-05 16:46:44.948 +03:30 [INF] ===============  Start observation process ===============
+2022-12-05 16:46:44.950 +03:30 [INF] ===============  End of observation process 1.723 ms) ===============
+2022-12-05 16:51:15.069 +03:30 [INF] Starting up the Service...
+2022-12-05 16:51:15.721 +03:30 [INF] Loading poultries...
+2022-12-05 16:51:18.427 +03:30 [INF] Poultries loaded. (2705.7717 ms)
+2022-12-05 16:51:18.435 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 026f8be6-44e2-4f16-87c1-53f5b5470459.
+2022-12-05 16:51:18.490 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 026f8be6-44e2-4f16-87c1-53f5b5470459.
+2022-12-05 16:51:18.506 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2022-12-05 16:51:18.507 +03:30 [INF] ===============  Start observation process ===============
+2022-12-05 16:51:18.509 +03:30 [INF] ===============  End of observation process 2.0846 ms) ===============
+2022-12-05 16:51:23.521 +03:30 [INF] ===============  Start observation process ===============
+2022-12-05 16:51:23.523 +03:30 [INF] ===============  End of observation process 1.7731 ms) ===============
+2022-12-05 16:51:28.542 +03:30 [INF] ===============  Start observation process ===============
+2022-12-05 16:51:28.543 +03:30 [INF] ===============  End of observation process 1.1591 ms) ===============
+2022-12-05 16:51:33.560 +03:30 [INF] ===============  Start observation process ===============
+2022-12-05 16:51:33.562 +03:30 [INF] ===============  End of observation process 1.3492 ms) ===============
+2022-12-05 16:51:38.568 +03:30 [INF] ===============  Start observation process ===============
+2022-12-05 16:51:38.569 +03:30 [INF] ===============  End of observation process 1.5417 ms) ===============
+2022-12-07 10:16:36.642 +03:30 [INF] Starting up the Service...
+2022-12-07 10:16:38.966 +03:30 [INF] Loading poultries...
+2022-12-07 10:16:39.951 +03:30 [INF] Poultries loaded. (985.0546 ms)
+2022-12-07 10:16:39.959 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 23e7657b-3783-4299-9e9b-c062ea6b0151.
+2022-12-07 10:16:41.027 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 23e7657b-3783-4299-9e9b-c062ea6b0151.
+2022-12-07 10:16:41.053 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2022-12-07 10:16:41.055 +03:30 [INF] ===============  Start observation process ===============
+2022-12-07 10:16:41.061 +03:30 [INF] ===============  End of observation process (6.0113 ms) ===============
+2022-12-07 10:16:46.085 +03:30 [INF] ===============  Start observation process ===============
+2022-12-07 10:16:46.086 +03:30 [INF] ===============  End of observation process (1.0678 ms) ===============
+2022-12-07 10:16:51.095 +03:30 [INF] ===============  Start observation process ===============
+2022-12-07 10:16:51.097 +03:30 [INF] ===============  End of observation process (1.6679 ms) ===============
+2022-12-07 10:16:56.113 +03:30 [INF] ===============  Start observation process ===============
+2022-12-07 10:16:56.114 +03:30 [INF] ===============  End of observation process (1.7226 ms) ===============
+2022-12-07 10:17:01.134 +03:30 [INF] ===============  Start observation process ===============
+2022-12-07 10:17:11.311 +03:30 [INF] ===============  End of observation process (10177.2887 ms) ===============
+2022-12-07 10:18:06.245 +03:30 [INF] Starting up the Service...
+2022-12-07 10:18:07.341 +03:30 [INF] Loading poultries...
+2022-12-07 10:18:08.856 +03:30 [INF] Poultries loaded. (1514.2665 ms)
+2022-12-07 10:18:08.866 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 77d35c17-221c-4ef8-9a72-07ff0e4cb56b.
+2022-12-07 10:18:08.927 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 77d35c17-221c-4ef8-9a72-07ff0e4cb56b.
+2022-12-07 10:18:08.947 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2022-12-07 10:18:08.948 +03:30 [INF] ===============  Start observation process ===============
+2022-12-07 10:18:08.953 +03:30 [INF] ===============  End of observation process (4.6781 ms) ===============
+2022-12-07 10:18:30.212 +03:30 [INF] Starting up the Service...
+2022-12-07 10:18:31.334 +03:30 [INF] Loading poultries...
+2022-12-07 10:18:32.513 +03:30 [INF] Poultries loaded. (1181.6049 ms)
+2022-12-07 10:18:32.521 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 6e960645-6a8f-4a74-9024-4f49a55c3b85.
+2022-12-07 10:18:32.577 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 6e960645-6a8f-4a74-9024-4f49a55c3b85.
+2022-12-07 10:18:32.592 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2022-12-07 10:18:32.593 +03:30 [INF] ===============  Start observation process ===============
+2022-12-07 10:18:32.597 +03:30 [INF] ===============  End of observation process (4.2619 ms) ===============
+2022-12-07 10:18:37.608 +03:30 [INF] ===============  Start observation process ===============
+2022-12-07 10:18:37.610 +03:30 [INF] ===============  End of observation process (1.6745 ms) ===============
+2022-12-07 10:18:42.614 +03:30 [INF] ===============  Start observation process ===============
+2022-12-07 10:18:42.615 +03:30 [INF] ===============  End of observation process (0.9052 ms) ===============
+2022-12-07 10:18:47.631 +03:30 [INF] ===============  Start observation process ===============
+2022-12-07 10:18:47.632 +03:30 [INF] ===============  End of observation process (1.0213 ms) ===============
+2022-12-07 10:18:52.645 +03:30 [INF] ===============  Start observation process ===============
+2022-12-07 10:18:52.647 +03:30 [INF] ===============  End of observation process (1.7029 ms) ===============
+2022-12-07 10:18:57.657 +03:30 [INF] ===============  Start observation process ===============
+2022-12-07 10:18:57.658 +03:30 [INF] ===============  End of observation process (0.7878 ms) ===============
+2022-12-07 10:19:02.669 +03:30 [INF] ===============  Start observation process ===============
+2022-12-07 10:19:02.671 +03:30 [INF] ===============  End of observation process (1.8275 ms) ===============
+2022-12-07 10:19:07.685 +03:30 [INF] ===============  Start observation process ===============
