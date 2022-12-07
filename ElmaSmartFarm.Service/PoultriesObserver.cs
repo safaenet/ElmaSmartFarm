@@ -60,12 +60,12 @@ public partial class Worker
                             {
                                 var startDate = Poultries.Where(p => p.IsInPeriod).SelectMany(p => p.Farms.Where(f => f.IsInPeriod && f.Temperatures.Sensors.Any(s => s.Id == sensor.Id))).FirstOrDefault().Period.StartDate;
                                 if (startDate.IsElapsed(sensor.WatchStartDay * 86400)) sensor.IsWatched = true;
-                                //Inform the watch
+                                //Inform the watch, save to db
                             }
                             else if (config.system.ObserveAlways)
                             {
                                 sensor.IsWatched = true;
-                                //Inform the watch
+                                //Inform the watch, save to db
                             }
                         }
                     }
