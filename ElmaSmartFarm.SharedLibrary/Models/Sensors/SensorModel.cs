@@ -10,6 +10,7 @@
         public IEnumerable<SensorErrorModel> ActiveErrors => Errors.Where(e => e.DateErased == null);
         public bool HasError => IsEnabled && ActiveErrors.Any();
         public bool IsInPeriod { get; set; }
+        public int WatchStartDay { get; set; }
         public bool IsWatched { get; set; } = true;
     }
 }

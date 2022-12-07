@@ -96,3 +96,6 @@ csharp_preferred_modifier_order = private,public,protected,async,override,readon
 dotnet_style_qualification_for_field = false:suggestion
 #prefer methods not to be prefaced with this. or Me. in Visual Basic
 dotnet_style_qualification_for_method = false:suggestion
+
+# CS8602: Dereference of a possibly null reference.
+dotnet_diagnostic.CS8602.severity = silent

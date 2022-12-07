@@ -8,11 +8,9 @@ public partial class Worker
 {
     private async Task<string?> ObservePoultriesAsync()
     {
-        var IsInPeriod = Poultries != null && Poultries.Count > 0 && Poultries.Any(p => p.IsInPeriod);
-        if (IsInPeriod == false && config.system.ObserveAlways == false) return null;
-
+        var IsInPeriod = Poultries.Any(p => p.IsInPeriod);
         var Now = DateTime.Now;
-        var Sets = Poultries?.SelectMany(p => p.Farms.Select(f => f.Temperatures));
+        var Sets = Poultries.SelectMany(p => p.Farms.Select(f => f.Temperatures));
         if (Sets != null)
             foreach (var set in Sets)
             {
@@ -21,35 +19,48 @@ public partial class Worker
                     {
                         if (sensor.HasError)
                         {
-                            if (sensor.ActiveErrors != null && sensor.ActiveErrors.Any())
-                                foreach (var e in sensor.ActiveErrors)
+                            foreach (var e in sensor.ActiveErrors)
+                            {
+                                if (e.ErrorType == SensorErrorType.InvalidData)
                                 {
-                                    if (e.ErrorType == SensorErrorType.InvalidData)
+                                    if (e.DateInformed == null && e.DateHappened.IsElapsed(100)) //first alarm.
                                     {
-                                        if (e.DateInformed == null && e.DateHappened.IsElapsed(100)) //first alarm.
-                                        {
-                                            e.InformCount = 1;
-                                            Log.Information($"Informing Alarm of {SensorErrorType.InvalidValue}. Count: {e.InformCount}");
-                                            //inform, save to db
-                                            e.DateInformed = Now;
-                                        }
-                                        else if (e.InformCount < 3 && e.DateInformed.IsElapsed(10)) //alarm every.
-                                        {
-                                            e.InformCount++;
-                                            Log.Information($"Informing Alarm of {SensorErrorType.InvalidValue}. Count: {e.InformCount}");
-                                            //inform, save to db
-                                            e.DateInformed = Now;
-                                        }
-                                        else if (e.InformCount == 3 && e.DateInformed.IsElapsed(20)) //alarm sleep.
-                                        {
-                                            e.InformCount = 1;
-                                            Log.Information($"Informing Alarm of {SensorErrorType.InvalidValue}. Count: {e.InformCount}");
-                                            //inform, save to db
-                                            e.DateInformed = Now;
-                                        }
-                                        if (e.DateHappened.IsElapsed(100) && sensor.IsInPeriod) sensor.IsWatched = false;
+                                        e.InformCount = 1;
+                                        Log.Information($"Informing Alarm of {SensorErrorType.InvalidValue}. Count: {e.InformCount}");
+                                        //inform, save to db
+                                        e.DateInformed = Now;
                                     }
+                                    else if (e.InformCount < 3 && e.DateInformed.IsElapsed(10)) //alarm every.
+                                    {
+                                        e.InformCount++;
+                                        Log.Information($"Informing Alarm of {SensorErrorType.InvalidValue}. Count: {e.InformCount}");
+                                        //inform, save to db
+                                        e.DateInformed = Now;
+                                    }
+                                    else if (e.InformCount == 3 && e.DateInformed.IsElapsed(20)) //alarm sleep.
+                                    {
+                                        e.InformCount = 1;
+                                        Log.Information($"Informing Alarm of {SensorErrorType.InvalidValue}. Count: {e.InformCount}");
+                                        //inform, save to db
+                                        e.DateInformed = Now;
+                                    }
+                                    if (e.DateHappened.IsElapsed(100) && sensor.IsInPeriod) sensor.IsWatched = false;
                                 }
+                            }
+                        }
+                        else if(sensor.IsWatched == false) // sensor is healthy.
+                        {
+                            if (sensor.IsInPeriod)
+                            {
+                                var startDate = Poultries.Where(p => p.IsInPeriod).SelectMany(p => p.Farms.Where(f => f.IsInPeriod && f.Temperatures.Sensors.Any(s => s.Id == sensor.Id))).FirstOrDefault().Period.StartDate;
+                                if (startDate.AddDays(sensor.WatchStartDay) < Now) sensor.IsWatched = true;
+                                //Inform the watch
+                            }
+                            else if (config.system.ObserveAlways)
+                            {
+                                sensor.IsWatched = true;
+                                //Inform the watch
+                            }
                         }
                     }
             }
@@ -69,7 +80,7 @@ public partial class Worker
                 if (config.VerboseMode) Log.Information($"===============  Start observation process ===============");
                 try
                 {
-                    if (Poultries.Any(p => p.IsInPeriod) || config.system.ObserveAlways)
+                    if (Poultries != null && Poultries.Count > 0 && (Poultries.Any(p => p.IsInPeriod) || config.system.ObserveAlways))
                     {
                         var result = await ObservePoultriesAsync();
                         if (!string.IsNullOrEmpty(result))
