@@ -1,4 +1,4 @@
-﻿CREATE TABLE [dbo].[TemperatureValues]
+﻿CREATE TABLE [dbo].[ScalarSensorValues]
 (
 	[Id] INT NOT NULL PRIMARY KEY, 
     [LocationId] INT NOT NULL,

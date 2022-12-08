@@ -62,6 +62,7 @@ public partial class Worker
                     AddMqttToUnknownList(mqtt);
                     return -1;
                 }
+                await EraseSensorNotAliveErrorIfExists(sensor, Now);
                 var payloads = mqtt.Payload.Split("/");
                 if (payloads == null || payloads.Length == 0) //Invalid data.
                 {
@@ -74,65 +75,88 @@ public partial class Worker
                     if (p.StartsWith("T:"))
                     {
                         var v = p.Replace("T:", "");
-                        if (double.TryParse(v, out var temp)) newRead.Temperature = temp;
+                        if (double.TryParse(v, out var temp)) newRead.Temperature = temp + sensor.TemperatureOffset;
                         continue;
                     }
                     else if (p.StartsWith("H:"))
                     {
                         var v = p.Replace("H:", "");
-                        if (int.TryParse(v, out var humid)) newRead.Humidity = humid;
+                        if (int.TryParse(v, out var humid)) newRead.Humidity = humid + sensor.HumidityOffset;
                         continue;
                     }
                     else if (p.StartsWith("L:"))
                     {
                         var v = p.Replace("L:", "");
-                        if (int.TryParse(v, out var light)) newRead.Light = light;
+                        if (int.TryParse(v, out var light)) newRead.Light = light + sensor.LightOffset;
                         continue;
                     }
                     else if (p.StartsWith("A:"))
                     {
                         var v = p.Replace("A:", "");
-                        if (double.TryParse(v, out var ammonia)) newRead.Ammonia = ammonia;
+                        if (double.TryParse(v, out var ammonia)) newRead.Ammonia = ammonia + sensor.AmmoniaOffset;
                         continue;
                     }
                     else if (p.StartsWith("C:"))
                     {
                         var v = p.Replace("C:", "");
-                        if (double.TryParse(v, out var co2)) newRead.Co2 = co2;
+                        if (double.TryParse(v, out var co2)) newRead.Co2 = co2 + sensor.Co2Offset;
                         continue;
                     }
                     //else await InvalidMqttPayloadHandler(mqtt, sensor, Now);
                 }
                 //Sensor found. Check values.
                 await EraseSensorNotAliveErrorIfExists(sensor, Now);
-                if (newRead.HasValidTemp(sensor.Type) == false)
+                if (newRead.HasValidTemp(sensor.Type))
+                {
+                    await EraseSensorErrors(sensor, new[] { SensorErrorType.InvalidTemperature }, Now);
+                }
+                else
                 {
                     await InvalidSensorValueHandler(sensor, mqtt, SensorErrorType.InvalidTemperature, Now); //Invalid sensor temp value.
                     newRead.Temperature = null;
                 }
-                if (newRead.HasValidHumid() == false)
+                if (newRead.HasValidHumid())
+                {
+                    await EraseSensorErrors(sensor, new[] { SensorErrorType.InvalidHumidity }, Now);
+                }
+                else
                 {
                     await InvalidSensorValueHandler(sensor, mqtt, SensorErrorType.InvalidHumidity, Now); //Invalid sensor humid value.
                     newRead.Humidity = null;
                 }
-                if (newRead.HasValidLight() == false)
+                if (newRead.HasValidLight())
+                {
+                    await EraseSensorErrors(sensor, new[] { SensorErrorType.InvalidLight }, Now);
+                }
+                else
                 {
                     await InvalidSensorValueHandler(sensor, mqtt, SensorErrorType.InvalidLight, Now); //Invalid sensor light value.
                     newRead.Light = null;
                 }
-                if (newRead.HasValidAmmonia() == false)
+                if (newRead.HasValidAmmonia())
+                {
+                    await EraseSensorErrors(sensor, new[] { SensorErrorType.InvalidAmmonia }, Now);
+                }
+                else
                 {
                     await InvalidSensorValueHandler(sensor, mqtt, SensorErrorType.InvalidAmmonia, Now); //Invalid sensor ammonia value.
                     newRead.Ammonia = null;
                 }
-                if (newRead.HasValidCo2() == false)
+                if (newRead.HasValidCo2())
+                {
+                    await EraseSensorErrors(sensor, new[] { SensorErrorType.InvalidCo2 }, Now);
+                }
+                else
                 {
                     await InvalidSensorValueHandler(sensor, mqtt, SensorErrorType.InvalidCo2, Now); //Invalid sensor co2 value.
                     newRead.Co2 = null;
                 }
                 //Sensor Valid, Value Valid.
-
-                await EraseInvalidDataAndValueErrors(sensor, Now);
+                if (newRead.HasValue == false)
+                {
+                    await InvalidMqttPayloadHandler(mqtt, sensor, Now);
+                    return -1;
+                }
                 if (sensor.Values == null) sensor.Values = new();
                 if ((sensor.IsWatched || config.system.WriteScalarToDbAlways) && (sensor.Values.Count == 0 || sensor.LastSavedRead == null || sensor.LastSavedRead.ReadDate.IsElapsed(config.system.WriteScalarToDbInterval))) //Writable to db.
                 {
@@ -145,88 +169,7 @@ public partial class Worker
                 }
                 if (sensor.Values.Count >= config.system.MaxSensorReadCount) sensor.Values.RemoveOldestNotSaved(config.VerboseMode);
                 sensor.Values.Add(newRead);
-                if (config.VerboseMode) Log.Information($"Temp sensor value done processing: {sensor.LastRead.ReadDate}, : {sensor.LastRead.Value}, Count: {sensor.Values.Count}");
-
-            }
-            #endregion
-            #region Humidity Value Handler.
-            else if (SubTopics[1] == config.mqtt.HumiditySubTopic) //Value from temp sensor.
-            {
-                if (config.VerboseMode) Log.Information($"MQTT Message is value from a humid sensor. Topic: {mqtt.Topic}, Payload: {mqtt.Payload}");
-                var sensors = FindSensorsById<HumiditySensorModel>(SensorId);
-                if (sensors == null || sensors.All(s => s.IsEnabled == false))
-                {
-                    AddMqttToUnknownList(mqtt);
-                    return -1;
-                }
-                if (!int.TryParse(mqtt.Payload, out var Payload)) //Invalid data.
-                {
-                    await InvalidMqttPayloadHandler(mqtt, sensors, Now);
-                    return -1;
-                }
-                foreach (var s in sensors) //Sensor(s) found. Check value.
-                {
-                    await EraseSensorNotAliveErrorIfExists(s, Now);
-                    if ((Payload < config.system.HumidMinValue || Payload > config.system.HumidMaxValue)) await InvalidSensorValueHandler(s, mqtt, Now); //Invalid sensor value.
-                    else //Sensor Valid, Value Valid.
-                    {
-                        await EraseInvalidDataAndValueErrors(s, Now);
-                        if (s.Values == null) s.Values = new();
-                        SensorReadModel<int> newRead = new() { Value = Payload, ReadDate = Now };
-                        if ((s.IsWatched || config.system.WriteHumidToDbAlways) && (s.Values.Count == 0 || s.LastSavedRead == null || (config.system.WriteHumidOnValueChangeByDiffer && Math.Abs(s.LastSavedRead.Value - Payload) >= config.system.WriteHumidDifferValue) || (Now - s.LastSavedRead.ReadDate).TotalSeconds >= config.system.WriteHumidToDbInterval)) //Writable to db.
-                        {
-                            var newId = await DbProcessor.WriteSensorValueToDbAsync(s, Payload, Now, s.Offset);
-                            if (newId > 0)
-                            {
-                                newRead.IsSavedToDb = true;
-                                newRead.Id = newId;
-                            }
-                        }
-                        if (s.Values.Count >= config.system.MaxSensorReadCount) s.Values.RemoveOldestNotSaved(config.VerboseMode);
-                        s.Values.Add(newRead);
-                        if (config.VerboseMode) Log.Information($"Temp sensor value done processing: {s.LastRead.ReadDate}, : {s.LastRead.Value}, Count: {s.Values.Count}");
-                    }
-                }
-            }
-            #endregion
-            #region Ambient Light Value Handler.
-            else if (SubTopics[1] == config.mqtt.AmbientLightSubTopic) //Value from ambient light sensor.
-            {
-                if (config.VerboseMode) Log.Information($"MQTT Message is value from a ambient light sensor. Topic: {mqtt.Topic}, Payload: {mqtt.Payload}");
-                var sensors = FindSensorsById<AmbientLightSensorModel>(SensorId);
-                if (sensors == null || sensors.All(s => s.IsEnabled == false))
-                {
-                    AddMqttToUnknownList(mqtt);
-                    return -1;
-                }
-                if (!int.TryParse(mqtt.Payload, out var Payload)) //Invalid data.
-                {
-                    await InvalidMqttPayloadHandler(mqtt, sensors, Now);
-                    return -1;
-                }
-                foreach (var s in sensors) //Sensor(s) found. Check value.
-                {
-                    await EraseSensorNotAliveErrorIfExists(s, Now);
-                    if ((Payload < config.system.AmbientLightMinValue || Payload > config.system.AmbientLightMaxValue)) await InvalidSensorValueHandler(s, mqtt, Now); //Invalid sensor value.
-                    else //Sensor Valid, Value Valid.
-                    {
-                        await EraseInvalidDataAndValueErrors(s, Now);
-                        if (s.Values == null) s.Values = new();
-                        SensorReadModel<int> newRead = new() { Value = Payload, ReadDate = Now };
-                        if ((s.IsWatched || config.system.WriteAmbientLightToDbAlways) && (s.Values.Count == 0 || s.LastSavedRead == null || (config.system.WriteAmbientLightOnValueChangeByDiffer && Math.Abs(s.LastSavedRead.Value - Payload) >= config.system.WriteAmbientLightDifferValue) || (Now - s.LastSavedRead.ReadDate).TotalSeconds >= config.system.WriteAmbientLightToDbInterval)) //Writable to db.
-                        {
-                            var newId = await DbProcessor.WriteSensorValueToDbAsync(s, Payload, Now, s.Offset);
-                            if (newId > 0)
-                            {
-                                newRead.IsSavedToDb = true;
-                                newRead.Id = newId;
-                            }
-                        }
-                        if (s.Values.Count >= config.system.MaxSensorReadCount) s.Values.RemoveOldestNotSaved(config.VerboseMode);
-                        s.Values.Add(newRead);
-                        if (config.VerboseMode) Log.Information($"Ambient light sensor value done processing: {s.LastRead.ReadDate}, : {s.LastRead.Value}, Count: {s.Values.Count}");
-                    }
-                }
+                if (config.VerboseMode) Log.Information($"Scalar sensor value done processing: {sensor.LastRead.ReadDate}, Count: {sensor.Values.Count}");
             }
             #endregion
             #region Commute Value Handler.
@@ -239,6 +182,7 @@ public partial class Worker
                     AddMqttToUnknownList(mqtt);
                     return -1;
                 }
+                await EraseSensorNotAliveErrorIfExists(sensor, Now);
                 if (!Enum.TryParse(mqtt.Payload, out CommuteSensorValueType Payload)) //Invalid data.
                 {
                     await InvalidMqttPayloadHandler(mqtt, sensor, Now);
@@ -246,7 +190,7 @@ public partial class Worker
                 }
                 //Sensor found. Sensor valid, Value valid.
                 await EraseSensorNotAliveErrorIfExists(sensor, Now);
-                await EraseInvalidDataAndValueErrors(sensor, Now);
+                await EraseSensorErrors(sensor, Now);
                 if (sensor.Values == null) sensor.Values = new();
                 CommuteSensorReadModel newRead = new() { Value = Payload, ReadDate = Now };
                 if ((sensor.IsWatched || config.system.WriteCommuteToDbAlways) && (sensor.Values.Count == 0 || (Payload == CommuteSensorValueType.StepIn && sensor.LastStepInSavedRead == null) || (Payload == CommuteSensorValueType.StepOut && sensor.LastStepOutSavedRead == null) || sensor.LastRead.Value != Payload)) //Writable to db.
@@ -301,6 +245,7 @@ public partial class Worker
                     AddMqttToUnknownList(mqtt);
                     return -1;
                 }
+                await EraseSensorNotAliveErrorIfExists(sensor, Now);
                 if (!Enum.TryParse(mqtt.Payload, out BinarySensorValueType Payload)) //Invalid data.
                 {
                     await InvalidMqttPayloadHandler(mqtt, sensor, Now);
@@ -308,7 +253,7 @@ public partial class Worker
                 }
                 //Sensor found. Check value. Sensor Valid, Value Valid.
                 await EraseSensorNotAliveErrorIfExists(sensor, Now);
-                await EraseInvalidDataAndValueErrors(sensor, Now);
+                await EraseSensorErrors(sensor, Now);
                 if (sensor.Values == null) sensor.Values = new();
                 BinarySensorReadModel newRead = new() { Value = Payload, ReadDate = Now };
                 if ((sensor.IsWatched || config.system.WriteBinaryToDbAlways) && (sensor.Values.Count == 0 || sensor.LastSavedRead == null || (config.system.WriteBinaryOnValueChange && sensor.LastSavedRead.Value != Payload) || (Now - sensor.LastSavedRead.ReadDate).TotalSeconds >= config.system.WriteBinaryToDbInterval)) //Writable to db.
@@ -335,12 +280,12 @@ public partial class Worker
         return 0;
     }
 
-    private async Task EraseInvalidDataAndValueErrors<T>(T s, DateTime Now) where T : SensorModel
+    private async Task EraseSensorErrors<T>(T s, SensorErrorType[] types, DateTime Now) where T : SensorModel
     {
+        if (types == null || types.Length == 0) return;
         if (config.VerboseMode) Log.Information($"Sensor is valid; Value is valid. Type: {s.Type}, LocationID: {s.LocationId}, Section: {s.Section}");
-        s.Errors.EraseError(SensorErrorType.InvalidData, Now);
-        s.Errors.EraseError(SensorErrorType.InvalidValue, Now);
-        await DbProcessor.EraseSensorErrorFromDbAsync(s.Id, new[] { SensorErrorType.InvalidData, SensorErrorType.InvalidValue }, Now);
+        foreach (var e in types) s.Errors.EraseError(e, Now);
+        await DbProcessor.EraseSensorErrorFromDbAsync(s.Id, types, Now);
     }
 
     private async Task InvalidSensorValueHandler<T>(T s, MqttMessageModel mqtt, SensorErrorType e, DateTime Now) where T : SensorModel
@@ -373,8 +318,8 @@ public partial class Worker
                 var newId = await DbProcessor.WriteSensorErrorToDbAsync(newErr, Now);
                 if (newId > 0) sensor.LastError.Id = newId;
             }
-            sensor.Errors.EraseError(SensorErrorType.NotAlive, Now);
-            await DbProcessor.EraseSensorErrorFromDbAsync(sensor.Id, new[] { SensorErrorType.NotAlive }, Now);
+            //sensor.Errors.EraseError(SensorErrorType.NotAlive, Now);
+            //await DbProcessor.EraseSensorErrorFromDbAsync(sensor.Id, new[] { SensorErrorType.NotAlive }, Now);
         }
     }
 
