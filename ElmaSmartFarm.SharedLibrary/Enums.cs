@@ -2,9 +2,7 @@
 
 public enum SensorBaseType
 {
-    Temperature = 1,
-    Humidity,
-    AmbientLight,
+    Scalar = 1,
     PushButton,
     Commute,
     Binary
@@ -12,17 +10,14 @@ public enum SensorBaseType
 
 public enum SensorType
 {
-    FarmTemperature = 1,
-    FarmHumidity,
-    FarmAmbientLight,
+    FarmScalar = 1,
     FarmFeed,
     FarmCheckup,
     FarmCommute,
     FarmElectricPower,
     PoultryMainElectricPower,
     PoultryBackupElectricPower,
-    OutdoorTemperature,
-    OutdoorHumidity
+    OutdoorScalar
 }
 
 public enum LocationType
@@ -57,7 +52,12 @@ public enum SensorErrorType
     LowBattery = 1,
     NotAlive,
     InvalidData,
-    InvalidValue
+    InvalidValue,
+    InvalidTemperature,
+    InvalidHumidity,
+    InvalidLight,
+    InvalidAmmonia,
+    InvalidCo2
 }
 
 public enum AlarmDeviceType

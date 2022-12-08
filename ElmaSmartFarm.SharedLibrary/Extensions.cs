@@ -12,35 +12,7 @@ namespace ElmaSmartFarm.SharedLibrary
             return string.Format("{0:0000}/{1:00}/{2:00}", pCal.GetYear(date), pCal.GetMonth(date), pCal.GetDayOfMonth(date));
         }
 
-        public static SensorBaseModel AsBaseModel(this TemperatureSensorModel s)
-        {
-            return new SensorBaseModel()
-            {
-                Id = s.Id,
-                Name = s.Name,
-                LocationId = s.LocationId,
-                Section=s.Section,
-                IsEnabled = s.IsEnabled,
-                Type = s.Type,
-                Descriptions = s.Descriptions
-            };
-        }
-
-        public static SensorBaseModel AsBaseModel(this HumiditySensorModel s)
-        {
-            return new SensorBaseModel()
-            {
-                Id = s.Id,
-                Name = s.Name,
-                LocationId = s.LocationId,
-                Section=s.Section,
-                IsEnabled = s.IsEnabled,
-                Type = s.Type,
-                Descriptions = s.Descriptions
-            };
-        }
-
-        public static SensorBaseModel AsBaseModel(this AmbientLightSensorModel s)
+        public static SensorBaseModel AsBaseModel(this ScalarSensorModel s)
         {
             return new SensorBaseModel()
             {
@@ -110,7 +82,7 @@ namespace ElmaSmartFarm.SharedLibrary
             };
         }
 
-        public static bool RemoveOldestNotSaved<T>(this List<SensorReadModel<T>> list, bool log)
+        public static bool RemoveOldestNotSaved<T>(this List<T> list, bool log) where T : SensorReadModel
         {
             if (log) Log.Information($"Count of commute value list exceeded it's limit. Removing the oldest one. Count: {list.Count}");
             if (list == null || list.Count == 0) return false;
@@ -147,14 +119,9 @@ namespace ElmaSmartFarm.SharedLibrary
             return true;
         }
 
-        public static bool IsTemperatureSensor(this SensorType sensorType)
+        public static bool IsScalarSensor(this SensorType sensorType)
         {
-            return new[] { SensorType.FarmTemperature, SensorType.OutdoorTemperature }.Contains(sensorType);
-        }
-
-        public static bool IsHumiditySensor(this SensorType sensorType)
-        {
-            return new[] { SensorType.FarmHumidity, SensorType.OutdoorHumidity }.Contains(sensorType);
+            return new[] { SensorType.FarmScalar, SensorType.OutdoorScalar }.Contains(sensorType);
         }
 
         public static bool IsPushButtonSensor(this SensorType sensorType)
@@ -167,11 +134,6 @@ namespace ElmaSmartFarm.SharedLibrary
             return new[] { SensorType.FarmElectricPower, SensorType.PoultryMainElectricPower, SensorType.PoultryBackupElectricPower }.Contains(sensorType);
         }
 
-        public static bool IsScalarSensor(this SensorType sensorType)
-        {
-            return new[] { SensorType.FarmTemperature, SensorType.FarmHumidity, SensorType.FarmAmbientLight, SensorType.OutdoorTemperature, SensorType.OutdoorHumidity, }.Contains(sensorType);
-        }
-
         public static bool IsElapsed(this DateTime t, int Seconds)
         {
             return t.AddSeconds(Seconds) < DateTime.Now;
@@ -180,6 +142,43 @@ namespace ElmaSmartFarm.SharedLibrary
         public static bool IsElapsed(this DateTime? t, int Seconds)
         {
             return t != null && t.Value.AddSeconds(Seconds) < DateTime.Now;
+        }
+
+        public static bool HasValidTemp(this ScalarSensorReadModel r, SensorType sensorType)
+        {
+            Config.Config config = new();
+            if (r.Temperature.HasValue == false) return false;
+            if (sensorType == SensorType.FarmScalar && (r.Temperature.Value < config.system.FarmTempMinValue || r.Temperature.Value > config.system.FarmTempMaxValue)) return false;
+            if (sensorType == SensorType.OutdoorScalar && (r.Temperature.Value < config.system.OutdoorTempMinValue || r.Temperature.Value > config.system.OutdoorTempMaxValue)) return false;
+            return true;
+        }
+
+        public static bool HasValidHumid(this ScalarSensorReadModel r)
+        {
+            Config.Config config = new();
+            if (r.Humidity.HasValue == false || r.Humidity.Value < config.system.HumidMinValue || r.Humidity.Value > config.system.FarmTempMaxValue) return false;
+            return true;
+        }
+
+        public static bool HasValidLight(this ScalarSensorReadModel r)
+        {
+            Config.Config config = new();
+            if (r.Light.HasValue == false || r.Light.Value < config.system.AmbientLightMinValue || r.Temperature.Value > config.system.AmbientLightMaxValue) return false;
+            return true;
+        }
+
+        public static bool HasValidAmmonia(this ScalarSensorReadModel r)
+        {
+            Config.Config config = new();
+            if (r.Ammonia.HasValue == false || r.Ammonia.Value < config.system.AmmoniaMinValue || r.Temperature.Value > config.system.AmmoniaMaxValue) return false;
+            return true;
+        }
+
+        public static bool HasValidCo2(this ScalarSensorReadModel r)
+        {
+            Config.Config config = new();
+            if (r.Co2.HasValue == false || r.Co2.Value < config.system.Co2MinValue || r.Co2.Value > config.system.Co2MaxValue) return false;
+            return true;
         }
     }
 }

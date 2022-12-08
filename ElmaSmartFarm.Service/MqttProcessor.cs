@@ -52,45 +52,101 @@ public partial class Worker
                 }
             }
             #endregion
-            #region Temp Value Handler.
-            else if (SubTopics[1] == config.mqtt.TemperatureSubTopic) //Value from temp sensor.
+            #region Scalar Value Handler.
+            else if (SubTopics[1] == config.mqtt.ScalarSubTopic) //Value from scalar sensor.
             {
-                if (config.VerboseMode) Log.Information($"MQTT Message is value from a temp sensor. Topic: {mqtt.Topic}, Payload: {mqtt.Payload}");
-                var sensors = FindSensorsById<TemperatureSensorModel>(SensorId);
-                if (sensors == null || sensors.All(s => s.IsEnabled == false))
+                if (config.VerboseMode) Log.Information($"MQTT Message is value from a scalar sensor. Topic: {mqtt.Topic}, Payload: {mqtt.Payload}");
+                var sensor = FindSensorsById<ScalarSensorModel>(SensorId);
+                if (sensor == null || sensor.IsEnabled == false)
                 {
                     AddMqttToUnknownList(mqtt);
                     return -1;
                 }
-                if (!double.TryParse(mqtt.Payload, out var Payload)) //Invalid data.
+                var payloads = mqtt.Payload.Split("/");
+                if (payloads == null || payloads.Length == 0) //Invalid data.
                 {
-                    await InvalidMqttPayloadHandler(mqtt, sensors, Now);
+                    await InvalidMqttPayloadHandler(mqtt, sensor, Now);
                     return -1;
                 }
-                foreach (var s in sensors) //Sensor(s) found. Check value.
+                ScalarSensorReadModel newRead = new();
+                foreach (var p in payloads)
                 {
-                    await EraseSensorNotAliveErrorIfExists(s, Now);
-                    if ((s.Type == SensorType.FarmTemperature && (Payload < config.system.FarmTempMinValue || Payload > config.system.FarmTempMaxValue)) || (s.Type == SensorType.OutdoorTemperature && (Payload < config.system.OutdoorTempMinValue || Payload > config.system.OutdoorTempMaxValue))) //Invalid value.
-                        await InvalidSensorValueHandler(s, mqtt, Now); //Invalid sensor value.
-                    else //Sensor Valid, Value Valid.
+                    if (p.StartsWith("T:"))
                     {
-                        await EraseInvalidDataAndValueErrors(s, Now);
-                        if (s.Values == null) s.Values = new();
-                        SensorReadModel<double> newRead = new() { Value = Payload, ReadDate = Now };
-                        if ((s.IsWatched || config.system.WriteTempToDbAlways) && (s.Values.Count == 0 || s.LastSavedRead == null || (config.system.WriteTempOnValueChangeByDiffer && Math.Abs(s.LastSavedRead.Value - Payload) >= config.system.WriteTempDifferValue) || (Now - s.LastSavedRead.ReadDate).TotalSeconds >= config.system.WriteTempToDbInterval)) //Writable to db.
-                        {
-                            var newId = await DbProcessor.WriteSensorValueToDbAsync(s, Payload, Now, s.Offset);
-                            if (newId > 0)
-                            {
-                                newRead.IsSavedToDb = true;
-                                newRead.Id = newId;
-                            }
-                        }
-                        if (s.Values.Count >= config.system.MaxSensorReadCount) s.Values.RemoveOldestNotSaved(config.VerboseMode);
-                        s.Values.Add(newRead);
-                        if (config.VerboseMode) Log.Information($"Temp sensor value done processing: {s.LastRead.ReadDate}, : {s.LastRead.Value}, Count: {s.Values.Count}");
+                        var v = p.Replace("T:", "");
+                        if (double.TryParse(v, out var temp)) newRead.Temperature = temp;
+                        continue;
+                    }
+                    else if (p.StartsWith("H:"))
+                    {
+                        var v = p.Replace("H:", "");
+                        if (int.TryParse(v, out var humid)) newRead.Humidity = humid;
+                        continue;
+                    }
+                    else if (p.StartsWith("L:"))
+                    {
+                        var v = p.Replace("L:", "");
+                        if (int.TryParse(v, out var light)) newRead.Light = light;
+                        continue;
+                    }
+                    else if (p.StartsWith("A:"))
+                    {
+                        var v = p.Replace("A:", "");
+                        if (double.TryParse(v, out var ammonia)) newRead.Ammonia = ammonia;
+                        continue;
+                    }
+                    else if (p.StartsWith("C:"))
+                    {
+                        var v = p.Replace("C:", "");
+                        if (double.TryParse(v, out var co2)) newRead.Co2 = co2;
+                        continue;
+                    }
+                    //else await InvalidMqttPayloadHandler(mqtt, sensor, Now);
+                }
+                //Sensor found. Check values.
+                await EraseSensorNotAliveErrorIfExists(sensor, Now);
+                if (newRead.HasValidTemp(sensor.Type) == false)
+                {
+                    await InvalidSensorValueHandler(sensor, mqtt, SensorErrorType.InvalidTemperature, Now); //Invalid sensor temp value.
+                    newRead.Temperature = null;
+                }
+                if (newRead.HasValidHumid() == false)
+                {
+                    await InvalidSensorValueHandler(sensor, mqtt, SensorErrorType.InvalidHumidity, Now); //Invalid sensor humid value.
+                    newRead.Humidity = null;
+                }
+                if (newRead.HasValidLight() == false)
+                {
+                    await InvalidSensorValueHandler(sensor, mqtt, SensorErrorType.InvalidLight, Now); //Invalid sensor light value.
+                    newRead.Light = null;
+                }
+                if (newRead.HasValidAmmonia() == false)
+                {
+                    await InvalidSensorValueHandler(sensor, mqtt, SensorErrorType.InvalidAmmonia, Now); //Invalid sensor ammonia value.
+                    newRead.Ammonia = null;
+                }
+                if (newRead.HasValidCo2() == false)
+                {
+                    await InvalidSensorValueHandler(sensor, mqtt, SensorErrorType.InvalidCo2, Now); //Invalid sensor co2 value.
+                    newRead.Co2 = null;
+                }
+                //Sensor Valid, Value Valid.
+
+                await EraseInvalidDataAndValueErrors(sensor, Now);
+                if (sensor.Values == null) sensor.Values = new();
+                if ((sensor.IsWatched || config.system.WriteScalarToDbAlways) && (sensor.Values.Count == 0 || sensor.LastSavedRead == null || sensor.LastSavedRead.ReadDate.IsElapsed(config.system.WriteScalarToDbInterval))) //Writable to db.
+                {
+                    var newId = await DbProcessor.WriteSensorValueToDbAsync(sensor, Payload, Now, sensor.Offset);
+                    if (newId > 0)
+                    {
+                        newRead.IsSavedToDb = true;
+                        newRead.Id = newId;
                     }
                 }
+                if (sensor.Values.Count >= config.system.MaxSensorReadCount) sensor.Values.RemoveOldestNotSaved(config.VerboseMode);
+                sensor.Values.Add(newRead);
+                if (config.VerboseMode) Log.Information($"Temp sensor value done processing: {sensor.LastRead.ReadDate}, : {sensor.LastRead.Value}, Count: {sensor.Values.Count}");
+
             }
             #endregion
             #region Humidity Value Handler.
@@ -177,101 +233,96 @@ public partial class Worker
             else if (SubTopics[1] == config.mqtt.CommuteSubTopic) //Value from commute sensor.
             {
                 if (config.VerboseMode) Log.Information($"MQTT Message is value from a commute sensor. Topic: {mqtt.Topic}, Payload: {mqtt.Payload}");
-                var sensors = FindSensorsById<CommuteSensorModel>(SensorId);
-                if (sensors == null || sensors.All(s => s.IsEnabled == false))
+                var sensor = FindSensorsById<CommuteSensorModel>(SensorId);
+                if (sensor == null || sensor.IsEnabled == false)
                 {
                     AddMqttToUnknownList(mqtt);
                     return -1;
                 }
                 if (!Enum.TryParse(mqtt.Payload, out CommuteSensorValueType Payload)) //Invalid data.
                 {
-                    await InvalidMqttPayloadHandler(mqtt, sensors, Now);
+                    await InvalidMqttPayloadHandler(mqtt, sensor, Now);
                     return -1;
                 }
-                foreach (var s in sensors) //Sensor(s) found. Sensor valid, Value valid.
+                //Sensor found. Sensor valid, Value valid.
+                await EraseSensorNotAliveErrorIfExists(sensor, Now);
+                await EraseInvalidDataAndValueErrors(sensor, Now);
+                if (sensor.Values == null) sensor.Values = new();
+                CommuteSensorReadModel newRead = new() { Value = Payload, ReadDate = Now };
+                if ((sensor.IsWatched || config.system.WriteCommuteToDbAlways) && (sensor.Values.Count == 0 || (Payload == CommuteSensorValueType.StepIn && sensor.LastStepInSavedRead == null) || (Payload == CommuteSensorValueType.StepOut && sensor.LastStepOutSavedRead == null) || sensor.LastRead.Value != Payload)) //Writable to db.
                 {
-                    await EraseSensorNotAliveErrorIfExists(s, Now);
-                    await EraseInvalidDataAndValueErrors(s, Now);
-                    if (s.Values == null) s.Values = new();
-                    SensorReadModel<CommuteSensorValueType> newRead = new() { Value = Payload, ReadDate = Now };
-                    if ((s.IsWatched || config.system.WriteCommuteToDbAlways) && (s.Values.Count == 0 || (Payload == CommuteSensorValueType.StepIn && s.LastStepInSavedRead == null) || (Payload == CommuteSensorValueType.StepOut && s.LastStepOutSavedRead == null) || s.LastRead.Value != Payload)) //Writable to db.
+                    var newId = await DbProcessor.WriteSensorValueToDbAsync(sensor, (double)Payload, Now);
+                    if (newId > 0)
                     {
-                        var newId = await DbProcessor.WriteSensorValueToDbAsync(s, (double)Payload, Now);
-                        if (newId > 0)
-                        {
-                            newRead.IsSavedToDb = true;
-                            newRead.Id = newId;
-                        }
+                        newRead.IsSavedToDb = true;
+                        newRead.Id = newId;
                     }
-                    if (s.Values.Count >= config.system.MaxSensorReadCount) s.Values.RemoveOldestNotSaved(config.VerboseMode);
-                    s.Values.Add(newRead);
-                    if (config.VerboseMode) Log.Information($"Commute sensor value done processing: {s.LastRead.ReadDate}, : {s.LastRead.Value}, Count: {s.Values.Count}");
                 }
+                if (sensor.Values.Count >= config.system.MaxSensorReadCount) sensor.Values.RemoveOldestNotSaved(config.VerboseMode);
+                sensor.Values.Add(newRead);
+                if (config.VerboseMode) Log.Information($"Commute sensor value done processing: {sensor.LastRead.ReadDate}, : {sensor.LastRead.Value}, Count: {sensor.Values.Count}");
             }
             #endregion
             #region PushButton Value Handler.
             else if (SubTopics[1] == config.mqtt.PushButtonSubTopic) //Value from push button sensor.
             {
                 if (config.VerboseMode) Log.Information($"MQTT Message is value from a push button sensor. Topic: {mqtt.Topic}, Payload: {mqtt.Payload}");
-                var sensors = FindSensorsById<PushButtonSensorModel>(SensorId);
-                if (sensors == null || sensors.All(s => s.IsEnabled == false))
+                var sensor = FindSensorsById<PushButtonSensorModel>(SensorId);
+                if (sensor == null || sensor.IsEnabled == false)
                 {
                     AddMqttToUnknownList(mqtt);
                     return -1;
                 }
-                foreach (var s in sensors) //Sensor(s) found. Check value. Sensor Valid, Value Valid.
+                //Sensor found. Check value. Sensor Valid, Value Valid.
+                await EraseSensorNotAliveErrorIfExists(sensor, Now);
+                if (sensor.Values == null) sensor.Values = new();
+                PushButtonSensorReadModel newRead = new() { Value = Now, ReadDate = Now };
+                if (sensor.IsWatched || config.system.WritePushButtonToDbAlways) //Writable to db.
                 {
-                    await EraseSensorNotAliveErrorIfExists(s, Now);
-                    if (s.Values == null) s.Values = new();
-                    SensorReadModel<DateTime> newRead = new() { Value = Now, ReadDate = Now };
-                    if ((s.IsWatched || config.system.WritePushButtonToDbAlways)) //Writable to db.
+                    var newId = await DbProcessor.WriteSensorValueToDbAsync(sensor, 0, Now);
+                    if (newId > 0)
                     {
-                        var newId = await DbProcessor.WriteSensorValueToDbAsync(s, 0, Now);
-                        if (newId > 0)
-                        {
-                            newRead.IsSavedToDb = true;
-                            newRead.Id = newId;
-                        }
+                        newRead.IsSavedToDb = true;
+                        newRead.Id = newId;
                     }
-                    if (s.Values.Count >= config.system.MaxSensorReadCount) s.Values.RemoveOldestNotSaved(config.VerboseMode);
-                    s.Values.Add(newRead);
                 }
+                if (sensor.Values.Count >= config.system.MaxSensorReadCount) sensor.Values.RemoveOldestNotSaved(config.VerboseMode);
+                sensor.Values.Add(newRead);
+                if (config.VerboseMode) Log.Information($"PushButton sensor value done processing: {sensor.LastRead.ReadDate}, : {sensor.LastRead.Value}, Count: {sensor.Values.Count}");
             }
             #endregion
             #region Binary Value Handler.
             else if (SubTopics[1] == config.mqtt.BinarySubTopic) //Value from binary sensor.
             {
-                if (config.VerboseMode) Log.Information($"MQTT Message is value from a ambient light sensor. Topic: {mqtt.Topic}, Payload: {mqtt.Payload}");
-                var sensors = FindSensorsById<BinarySensorModel>(SensorId);
-                if (sensors == null || sensors.All(s => s.IsEnabled == false))
+                if (config.VerboseMode) Log.Information($"MQTT Message is value from a binary sensor. Topic: {mqtt.Topic}, Payload: {mqtt.Payload}");
+                var sensor = FindSensorsById<BinarySensorModel>(SensorId);
+                if (sensor == null || sensor.IsEnabled == false)
                 {
                     AddMqttToUnknownList(mqtt);
                     return -1;
                 }
                 if (!Enum.TryParse(mqtt.Payload, out BinarySensorValueType Payload)) //Invalid data.
                 {
-                    await InvalidMqttPayloadHandler(mqtt, sensors, Now);
+                    await InvalidMqttPayloadHandler(mqtt, sensor, Now);
                     return -1;
                 }
-                foreach (var s in sensors) //Sensor(s) found. Check value. Sensor Valid, Value Valid.
+                //Sensor found. Check value. Sensor Valid, Value Valid.
+                await EraseSensorNotAliveErrorIfExists(sensor, Now);
+                await EraseInvalidDataAndValueErrors(sensor, Now);
+                if (sensor.Values == null) sensor.Values = new();
+                BinarySensorReadModel newRead = new() { Value = Payload, ReadDate = Now };
+                if ((sensor.IsWatched || config.system.WriteBinaryToDbAlways) && (sensor.Values.Count == 0 || sensor.LastSavedRead == null || (config.system.WriteBinaryOnValueChange && sensor.LastSavedRead.Value != Payload) || (Now - sensor.LastSavedRead.ReadDate).TotalSeconds >= config.system.WriteBinaryToDbInterval)) //Writable to db.
                 {
-                    await EraseSensorNotAliveErrorIfExists(s, Now);
-                    await EraseInvalidDataAndValueErrors(s, Now);
-                    if (s.Values == null) s.Values = new();
-                    SensorReadModel<BinarySensorValueType> newRead = new() { Value = Payload, ReadDate = Now };
-                    if ((s.IsWatched || config.system.WriteBinaryToDbAlways) && (s.Values.Count == 0 || s.LastSavedRead == null || (config.system.WriteBinaryOnValueChange && s.LastSavedRead.Value != Payload) || (Now - s.LastSavedRead.ReadDate).TotalSeconds >= config.system.WriteBinaryToDbInterval)) //Writable to db.
+                    var newId = await DbProcessor.WriteSensorValueToDbAsync(sensor, (double)Payload, Now);
+                    if (newId > 0)
                     {
-                        var newId = await DbProcessor.WriteSensorValueToDbAsync(s, (double)Payload, Now);
-                        if (newId > 0)
-                        {
-                            newRead.IsSavedToDb = true;
-                            newRead.Id = newId;
-                        }
+                        newRead.IsSavedToDb = true;
+                        newRead.Id = newId;
                     }
-                    if (s.Values.Count >= config.system.MaxSensorReadCount) s.Values.RemoveOldestNotSaved(config.VerboseMode);
-                    s.Values.Add(newRead);
-                    if (config.VerboseMode) Log.Information($"Binary sensor value done processing: {s.LastRead.ReadDate}, : {s.LastRead.Value}, Count: {s.Values.Count}");
                 }
+                if (sensor.Values.Count >= config.system.MaxSensorReadCount) sensor.Values.RemoveOldestNotSaved(config.VerboseMode);
+                sensor.Values.Add(newRead);
+                if (config.VerboseMode) Log.Information($"Binary sensor value done processing: {sensor.LastRead.ReadDate}, : {sensor.LastRead.Value}, Count: {sensor.Values.Count}");
             }
             #endregion
         }
@@ -292,11 +343,11 @@ public partial class Worker
         await DbProcessor.EraseSensorErrorFromDbAsync(s.Id, new[] { SensorErrorType.InvalidData, SensorErrorType.InvalidValue }, Now);
     }
 
-    private async Task InvalidSensorValueHandler<T>(T s, MqttMessageModel mqtt, DateTime Now) where T : SensorModel
+    private async Task InvalidSensorValueHandler<T>(T s, MqttMessageModel mqtt, SensorErrorType e, DateTime Now) where T : SensorModel
     {
         Log.Error($"A sensor sends invalid value. Topic: {mqtt.Topic} , Payload: {mqtt.Payload}");
-        var newErr = GenerateSensorError(s.AsBaseModel(), SensorErrorType.InvalidValue, Now, $"Data: {mqtt.Payload}");
-        if (s.Errors.AddError(newErr, SensorErrorType.InvalidValue, config.system.MaxSensorErrorCount))
+        var newErr = GenerateSensorError(s.AsBaseModel(), e, Now, $"Data: {mqtt.Payload}");
+        if (s.Errors.AddError(newErr, e, config.system.MaxSensorErrorCount))
         {
             var newId = await DbProcessor.WriteSensorErrorToDbAsync(newErr, Now);
             if (newId > 0) s.LastError.Id = newId;
@@ -311,84 +362,58 @@ public partial class Worker
         await DbProcessor.EraseSensorErrorFromDbAsync(s.Id, new[] { SensorErrorType.NotAlive }, Now);
     }
 
-    private async Task InvalidMqttPayloadHandler<T>(MqttMessageModel mqtt, List<T>? sensors, DateTime Now) where T : SensorModel
+    private async Task InvalidMqttPayloadHandler(MqttMessageModel mqtt, SensorModel sensor, DateTime Now)
     {
         AddMqttToUnknownList(mqtt);
-        if (sensors != null)
-            foreach (var s in sensors)
+        if (sensor != null && sensor.IsEnabled)
+        {
+            var newErr = GenerateSensorError(sensor.AsBaseModel(), SensorErrorType.InvalidData, Now, $"Data: {mqtt.Payload}");
+            if (sensor.Errors.AddError(newErr, SensorErrorType.InvalidData, config.system.MaxSensorErrorCount))
             {
-                if (s.IsEnabled)
-                {
-                    var newErr = GenerateSensorError(s.AsBaseModel(), SensorErrorType.InvalidData, Now, $"Data: {mqtt.Payload}");
-                    if (s.Errors.AddError(newErr, SensorErrorType.InvalidData, config.system.MaxSensorErrorCount))
-                    {
-                        var newId = await DbProcessor.WriteSensorErrorToDbAsync(newErr, Now);
-                        if (newId > 0) s.LastError.Id = newId;
-                    }
-                    s.Errors.EraseError(SensorErrorType.NotAlive, Now);
-                    await DbProcessor.EraseSensorErrorFromDbAsync(s.Id, new[] { SensorErrorType.NotAlive }, Now);
-                }                
+                var newId = await DbProcessor.WriteSensorErrorToDbAsync(newErr, Now);
+                if (newId > 0) sensor.LastError.Id = newId;
             }
+            sensor.Errors.EraseError(SensorErrorType.NotAlive, Now);
+            await DbProcessor.EraseSensorErrorFromDbAsync(sensor.Id, new[] { SensorErrorType.NotAlive }, Now);
+        }
     }
 
     private async Task<int> UpdateSensorBatteryLevelAsync(int sensorId, int battery, DateTime now)
     {
         if (Poultries == null) return 0;
-        List<SensorModel>? sensors;
-        sensors = new(FindSensorsById<TemperatureSensorModel>(sensorId) ?? new());
-        if (!sensors.Any()) sensors = new(FindSensorsById<HumiditySensorModel>(sensorId) ?? new());
-        if (!sensors.Any()) sensors = new(FindSensorsById<AmbientLightSensorModel>(sensorId) ?? new());
-        if (!sensors.Any()) sensors = new(FindSensorsById<CommuteSensorModel>(sensorId) ?? new());
-        if (!sensors.Any()) sensors = new(FindSensorsById<PushButtonSensorModel>(sensorId) ?? new());
-        if (!sensors.Any()) sensors = new(FindSensorsById<BinarySensorModel>(sensorId) ?? new());
-        if (sensors.Any())
+        var sensor = FindSensorsById(sensorId);
+        if (sensor != null && sensor.IsEnabled)
         {
-            foreach (var s in sensors)
+            sensor.BatteryLevel = battery;
+            sensor.Errors.EraseError(SensorErrorType.NotAlive, now);
+            if (battery != -1 && battery <= config.system.SensorLowBatteryLevel)
             {
-                if (s.IsEnabled)
-                {
-                    s.BatteryLevel = battery;
-                    s.Errors.EraseError(SensorErrorType.NotAlive, now);
-                    if (battery != -1 && battery <= config.system.SensorLowBatteryLevel)
-                    {
-                        var newErr = GenerateSensorError(s.AsBaseModel(), SensorErrorType.LowBattery, now, $"Level: {battery}");
-                        s.Errors.AddError(newErr, SensorErrorType.LowBattery, config.system.MaxSensorErrorCount);
-                        await DbProcessor.WriteSensorErrorToDbAsync(newErr, now);
-                    }
-                    else
-                    {
-                        s.Errors.EraseError(SensorErrorType.LowBattery, now);
-                        await DbProcessor.EraseSensorErrorFromDbAsync(s.Id, new[] { SensorErrorType.LowBattery }, now);
-                    }
-                }
+                var newErr = GenerateSensorError(sensor.AsBaseModel(), SensorErrorType.LowBattery, now, $"Level: {battery}");
+                sensor.Errors.AddError(newErr, SensorErrorType.LowBattery, config.system.MaxSensorErrorCount);
+                await DbProcessor.WriteSensorErrorToDbAsync(newErr, now);
+            }
+            else
+            {
+                sensor.Errors.EraseError(SensorErrorType.LowBattery, now);
+                await DbProcessor.EraseSensorErrorFromDbAsync(sensor.Id, new[] { SensorErrorType.LowBattery }, now);
             }
             await DbProcessor.EraseSensorErrorFromDbAsync(sensorId, new[] { SensorErrorType.NotAlive }, now);
+            return 1;
         }
-        return sensors.Count;
+        return 0;
     }
 
     private async Task<int> UpdateSensorIPAddressAsync(int sensorId, string ip, DateTime now)
     {
         if (Poultries == null) return 0;
-        List<SensorModel>? sensors;
-        sensors = new(FindSensorsById<TemperatureSensorModel>(sensorId) ?? new());
-        if (!sensors.Any()) sensors = new(FindSensorsById<HumiditySensorModel>(sensorId) ?? new());
-        if (!sensors.Any()) sensors = new(FindSensorsById<AmbientLightSensorModel>(sensorId) ?? new());
-        if (!sensors.Any()) sensors = new(FindSensorsById<CommuteSensorModel>(sensorId) ?? new());
-        if (!sensors.Any()) sensors = new(FindSensorsById<PushButtonSensorModel>(sensorId) ?? new());
-        if (!sensors.Any()) sensors = new(FindSensorsById<BinarySensorModel>(sensorId) ?? new());
-        if (sensors.Any())
+        var sensor = FindSensorsById(sensorId);
+        if (sensor != null && sensor.IsEnabled)
         {
-            foreach (var s in sensors)
-            {
-                if (s.IsEnabled)
-                {
-                    s.IPAddress = ip; s.Errors.EraseError(SensorErrorType.NotAlive, now);
-                    await DbProcessor.EraseSensorErrorFromDbAsync(sensorId, new[] { SensorErrorType.NotAlive }, now);
-                }
-            }
+            sensor.IPAddress = ip; sensor.Errors.EraseError(SensorErrorType.NotAlive, now);
+            await DbProcessor.EraseSensorErrorFromDbAsync(sensorId, new[] { SensorErrorType.NotAlive }, now);
+            return 1;
         }
-        return sensors.Count;
+        return 0;
     }
 
     private async Task<int> UpdateSensorKeepAliveAsync(int sensorId, DateTime now)
@@ -399,25 +424,14 @@ public partial class Worker
             Log.Warning($"KeepAlive is disabled but sensor a is sending KeepAlive message. Sensor ID: {sensorId}");
             return -1;
         }
-        List<SensorModel>? sensors;
-        sensors = new(FindSensorsById<TemperatureSensorModel>(sensorId) ?? new());
-        if (!sensors.Any()) sensors = new(FindSensorsById<HumiditySensorModel>(sensorId) ?? new());
-        if (!sensors.Any()) sensors = new(FindSensorsById<AmbientLightSensorModel>(sensorId) ?? new());
-        if (!sensors.Any()) sensors = new(FindSensorsById<CommuteSensorModel>(sensorId) ?? new());
-        if (!sensors.Any()) sensors = new(FindSensorsById<PushButtonSensorModel>(sensorId) ?? new());
-        if (!sensors.Any()) sensors = new(FindSensorsById<BinarySensorModel>(sensorId) ?? new());
-        if (sensors.Any())
+        var sensor = FindSensorsById(sensorId);
+        if (sensor != null && sensor.IsEnabled)
         {
-            foreach (var s in sensors)
-            {
-                if (s.IsEnabled)
-                {
-                    s.KeepAliveMessageDate = now; s.Errors.EraseError(SensorErrorType.NotAlive, now);
-                    await DbProcessor.EraseSensorErrorFromDbAsync(s.Id, new[] { SensorErrorType.NotAlive }, now);
-                }
-            }
+            sensor.KeepAliveMessageDate = now; sensor.Errors.EraseError(SensorErrorType.NotAlive, now);
+            await DbProcessor.EraseSensorErrorFromDbAsync(sensor.Id, new[] { SensorErrorType.NotAlive }, now);
+            return 1;
         }
-        return sensors.Count;
+        return 0;
     }
 
     private void AddMqttToUnknownList(MqttMessageModel mqtt)
@@ -444,35 +458,49 @@ public partial class Worker
     /// <summary>
     /// Looks for the sensors in all sensors of the Poultries.
     /// </summary>
-    private List<T>? FindSensorsById<T>(int id) where T : new()
+    private T? FindSensorsById<T>(int id) where T : SensorModel
     {
         if (Poultries == null) return null;
-        List<T>? sensors = new();
-        if (typeof(T) == typeof(TemperatureSensorModel))
+        T? sensor = null;
+        if (typeof(T) == typeof(ScalarSensorModel))
         {
-            sensors.AddRange((IEnumerable<T>)(from s in Poultries.SelectMany(p => p.Farms.SelectMany(f => f.Scalars.Sensors)) where s != null && s.Id == id select s));
-            sensors.AddRange((IEnumerable<T>)(from p in Poultries where p != null && p.Scalar != null && p.Scalar.Id == id select p.Scalar));
+            var x = (from s in Poultries.SelectMany(p => p.Farms.SelectMany(f => f.Scalars.Sensors)) where s != null && s.Id == id select s).FirstOrDefault();
+            if (x == null) x = (from p in Poultries where p != null && p.Scalar != null && p.Scalar.Id == id select p.Scalar).FirstOrDefault();
+            if (x != null) sensor = (T?)Convert.ChangeType(x, typeof(T));
         }
-        else if (typeof(T) == typeof(HumiditySensorModel))
-        {
-            sensors.AddRange((IEnumerable<T>)(from s in Poultries.SelectMany(p => p.Farms.SelectMany(f => f.Humidities.Sensors)) where s != null && s.Id == id select s));
-            sensors.AddRange((IEnumerable<T>)(from p in Poultries where p != null && p.OutdoorHumidity != null && p.OutdoorHumidity.Id == id select p.OutdoorHumidity));
-        }
-        else if (typeof(T) == typeof(AmbientLightSensorModel))
-            sensors.AddRange((IEnumerable<T>)(from s in Poultries.SelectMany(p => p.Farms.SelectMany(f => f.AmbientLights.Sensors)) where s != null && s.Id == id select s));
         else if (typeof(T) == typeof(CommuteSensorModel))
-            sensors.AddRange((IEnumerable<T>)(from s in Poultries.SelectMany(p => p.Farms.SelectMany(f => f.Commutes.Sensors)) where s != null && s.Id == id select s));
+            sensor = (T?)Convert.ChangeType((from s in Poultries.SelectMany(p => p.Farms.SelectMany(f => f.Commutes.Sensors)) where s != null && s.Id == id select s).FirstOrDefault(), typeof(T));
         else if (typeof(T) == typeof(PushButtonSensorModel))
         {
-            sensors.AddRange((IEnumerable<T>)(from s in Poultries.SelectMany(p => p.Farms.SelectMany(f => f.Checkups.Sensors)) where s != null && s.Id == id select s));
-            sensors.AddRange((IEnumerable<T>)(from s in Poultries.SelectMany(p => p.Farms.SelectMany(f => f.Feeds.Sensors)) where s != null && s.Id == id select s));
+            var x = (from s in Poultries.SelectMany(p => p.Farms.SelectMany(f => f.Checkups.Sensors)) where s != null && s.Id == id select s).FirstOrDefault();
+            if (x == null) x = (from s in Poultries.SelectMany(p => p.Farms.SelectMany(f => f.Feeds.Sensors)) where s != null && s.Id == id select s).FirstOrDefault();
+            if (sensor != null) sensor = (T?)Convert.ChangeType(x, typeof(T));
         }
         else if (typeof(T) == typeof(BinarySensorModel))
         {
-            sensors.AddRange((IEnumerable<T>)(from s in Poultries.SelectMany(p => p.Farms.SelectMany(f => f.ElectricPowers.Sensors)) where s != null && s.Id == id select s));
-            sensors.AddRange((IEnumerable<T>)(from p in Poultries where p != null && p.MainElectricPower != null && p.MainElectricPower.Id == id select p.MainElectricPower));
-            sensors.AddRange((IEnumerable<T>)(from p in Poultries where p != null && p.BackupElectricPower != null && p.BackupElectricPower.Id == id select p.BackupElectricPower));
+            var x = (from s in Poultries.SelectMany(p => p.Farms.SelectMany(f => f.ElectricPowers.Sensors)) where s != null && s.Id == id select s).FirstOrDefault();
+            if (x == null) x = (from p in Poultries where p != null && p.MainElectricPower != null && p.MainElectricPower.Id == id select p.MainElectricPower).FirstOrDefault();
+            if (x == null) x = (from p in Poultries where p != null && p.BackupElectricPower != null && p.BackupElectricPower.Id == id select p.BackupElectricPower).FirstOrDefault();
+            if(x!=null) sensor = (T?)Convert.ChangeType(x, typeof(T));
         }
-        if (sensors.Count > 0) return (List<T>)Convert.ChangeType(sensors, typeof(List<T>)); else return null;
+        if (sensor != null) return sensor; else return null;
+    }
+
+    /// <summary>
+    /// Looks for the sensors in all sensors of the Poultries.
+    /// </summary>
+    private SensorModel? FindSensorsById(int id)
+    {
+        if (Poultries == null) return null;
+        SensorModel? sensor = null;
+        sensor = (from s in Poultries.SelectMany(p => p.Farms.SelectMany(f => f.Scalars.Sensors)) where s != null && s.Id == id select s).FirstOrDefault();
+        if (sensor == null) sensor = (from p in Poultries where p != null && p.Scalar != null && p.Scalar.Id == id select p.Scalar).FirstOrDefault();
+        if (sensor == null) sensor = (from s in Poultries.SelectMany(p => p.Farms.SelectMany(f => f.Commutes.Sensors)) where s != null && s.Id == id select s).FirstOrDefault();
+        if (sensor == null) sensor = (from s in Poultries.SelectMany(p => p.Farms.SelectMany(f => f.Checkups.Sensors)) where s != null && s.Id == id select s).FirstOrDefault();
+        if (sensor == null) sensor = (from s in Poultries.SelectMany(p => p.Farms.SelectMany(f => f.Feeds.Sensors)) where s != null && s.Id == id select s).FirstOrDefault();
+        if (sensor == null) sensor = (from s in Poultries.SelectMany(p => p.Farms.SelectMany(f => f.ElectricPowers.Sensors)) where s != null && s.Id == id select s).FirstOrDefault();
+        if (sensor == null) sensor = (from p in Poultries where p != null && p.MainElectricPower != null && p.MainElectricPower.Id == id select p.MainElectricPower).FirstOrDefault();
+        if (sensor == null) sensor = (from p in Poultries where p != null && p.BackupElectricPower != null && p.BackupElectricPower.Id == id select p.BackupElectricPower).FirstOrDefault();
+        return sensor;
     }
 }
