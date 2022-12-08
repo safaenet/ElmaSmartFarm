@@ -48,7 +48,7 @@
         NotAlive,
         InvalidData,
         InvalidValue
-    }
+    } 
 
     public enum AlarmDeviceType
     {
