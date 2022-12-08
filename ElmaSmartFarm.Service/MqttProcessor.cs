@@ -450,8 +450,8 @@ public partial class Worker
         List<T>? sensors = new();
         if (typeof(T) == typeof(TemperatureSensorModel))
         {
-            sensors.AddRange((IEnumerable<T>)(from s in Poultries.SelectMany(p => p.Farms.SelectMany(f => f.Temperatures.Sensors)) where s != null && s.Id == id select s));
-            sensors.AddRange((IEnumerable<T>)(from p in Poultries where p != null && p.OutdoorTemperature != null && p.OutdoorTemperature.Id == id select p.OutdoorTemperature));
+            sensors.AddRange((IEnumerable<T>)(from s in Poultries.SelectMany(p => p.Farms.SelectMany(f => f.Scalars.Sensors)) where s != null && s.Id == id select s));
+            sensors.AddRange((IEnumerable<T>)(from p in Poultries where p != null && p.Scalar != null && p.Scalar.Id == id select p.Scalar));
         }
         else if (typeof(T) == typeof(HumiditySensorModel))
         {

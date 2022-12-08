@@ -177,7 +177,7 @@ namespace ElmaSmartFarm.DataLibraryCore.SqlServer
                         }
                         foreach (var f in farms)
                         {
-                            f.Temperatures.Sensors = farmTempSensors?.Where(s => s.LocationId == f.Id).ToList();
+                            f.Scalars.Sensors = farmTempSensors?.Where(s => s.LocationId == f.Id).ToList();
                             f.Humidities.Sensors = farmHumidSensors?.Where(s => s.LocationId == f.Id).ToList();
                             f.AmbientLights.Sensors = farmAmbientSensors?.Where(s => s.LocationId == f.Id).ToList();
                             f.Feeds.Sensors = farmFeedSensors?.Where(s => s.LocationId == f.Id).ToList();
@@ -191,7 +191,7 @@ namespace ElmaSmartFarm.DataLibraryCore.SqlServer
                     foreach (var p in poultries)
                     {
                         p.Farms = farms?.Where(f => f.PoultryId == p.Id).ToList();
-                        p.OutdoorTemperature = outdoorTempSensors?.Where(s => s.LocationId == p.Id)?.FirstOrDefault();
+                        p.Scalar = outdoorTempSensors?.Where(s => s.LocationId == p.Id)?.FirstOrDefault();
                         p.OutdoorHumidity = outdoorHumidSensors?.Where(s => s.LocationId == p.Id)?.FirstOrDefault();
                         if (periods != null && periods.Any()) p.InPeriodErrors = poultryInPeriodErrors?.Where(e => e.PoultryId == p.Id).ToList();
                     }

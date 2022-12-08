@@ -7,8 +7,7 @@ namespace ElmaSmartFarm.SharedLibrary.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public List<FarmModel> Farms { get; set; }
-        public TemperatureSensorModel OutdoorTemperature { get; set; }
-        public HumiditySensorModel OutdoorHumidity { get; set; }
+        public ScalarSensorModel Scalar { get; set; }
         public BinarySensorModel MainElectricPower { get; set; }
         public BinarySensorModel BackupElectricPower { get; set; }
         public int TotalPrimaryChickenCount => Farms != null ? Farms.Sum(c => c.Period != null && c.Period.ChickenStatistics != null ? c.Period.ChickenStatistics.ChickenPrimaryCount : 0) : 0;

@@ -10,7 +10,7 @@ public partial class Worker
     {
         var IsInPeriod = Poultries.Any(p => p.IsInPeriod);
         var Now = DateTime.Now;
-        var Sets = Poultries.SelectMany(p => p.Farms.Select(f => f.Temperatures));
+        var Sets = Poultries.SelectMany(p => p.Farms.Select(f => f.Scalars));
         if (Sets != null)
             foreach (var set in Sets)
             {
@@ -58,7 +58,7 @@ public partial class Worker
                         {
                             if (sensor.IsInPeriod)
                             {
-                                var startDate = Poultries.Where(p => p.IsInPeriod).SelectMany(p => p.Farms.Where(f => f.IsInPeriod && f.Temperatures.Sensors.Any(s => s.Id == sensor.Id))).FirstOrDefault().Period.StartDate;
+                                var startDate = Poultries.Where(p => p.IsInPeriod).SelectMany(p => p.Farms.Where(f => f.IsInPeriod && f.Scalars.Sensors.Any(s => s.Id == sensor.Id))).FirstOrDefault().Period.StartDate;
                                 if (startDate.IsElapsed(sensor.WatchStartDay * 86400)) sensor.IsWatched = true;
                                 //Inform the watch, save to db
                             }
