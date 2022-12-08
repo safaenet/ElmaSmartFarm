@@ -1,5 +1,15 @@
 ﻿namespace ElmaSmartFarm.SharedLibrary
 {
+    public enum SensorBaseType
+    {
+        Temperature = 1,
+        Humidity,
+        AmbientLight,
+        PushButton,
+        Commute,
+        Binary
+    }
+
     public enum SensorType
     {
         FarmTemperature = 1,
@@ -48,7 +58,7 @@
         NotAlive,
         InvalidData,
         InvalidValue
-    } 
+    }
 
     public enum AlarmDeviceType
     {
@@ -78,15 +88,18 @@
 
     public enum SensorSection
     {
-        FarmLeftTop = 11,
-        FarmLeftMiddle = 12,
-        FarmLeftBottom = 13,
-        FarmMiddleTop = 21,
-        FarmMiddleMiddle = 22,
-        FarmMiddleBottom = 23,
-        FarmRightTop = 31,
-        FarmRightMiddle = 32,
-        FarmRightBottom = 33,        
-        Outdoor = 34
+        FarmLeftTop = 1,
+        FarmLeftMiddle = 2,
+        FarmLeftBottom = 3,
+
+        FarmMiddleTop = 4,
+        FarmMiddleMiddle = 5,
+        FarmMiddleBottom = 6,
+
+        FarmRightTop = 7,
+        FarmRightMiddle = 8,
+        FarmRightBottom = 9,
+
+        Outdoor = 10
     }
 }
