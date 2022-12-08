@@ -2,8 +2,8 @@
 {
     public class PushButtonSensorModel : SensorModel
     {
-        public List<SensorReadModel<DateTime>> Values { get; set; }
-        public SensorReadModel<DateTime> LastRead => Values?.MaxBy(t => t.ReadDate);
-        public SensorReadModel<DateTime> LastSavedRead => Values?.Where(t => t.IsSavedToDb).MaxBy(t => t.ReadDate);
+        public List<PushButtonSensorReadModel> Values { get; set; }
+        public PushButtonSensorReadModel LastRead => Values?.MaxBy(t => t.ReadDate);
+        public PushButtonSensorReadModel LastSavedRead => Values?.Where(t => t.IsSavedToDb).MaxBy(t => t.ReadDate);
     }
 }

@@ -1,10 +1,8 @@
-﻿namespace ElmaSmartFarm.SharedLibrary.Models.Sensors
+﻿namespace ElmaSmartFarm.SharedLibrary.Models.Sensors;
+
+public class SensorReadModel
 {
-    public class SensorReadModel<T>
-    {
-        public int Id { get; set; }
-        public DateTime ReadDate { get; set; }
-        public T Value { get; set; }
-        public bool IsSavedToDb { get; set; }
-    }
+    public int Id { get; set; }
+    public DateTime ReadDate { get; set; }
+    public bool IsSavedToDb { get; set; }
 }
