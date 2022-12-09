@@ -43,7 +43,7 @@ public partial class Worker : BackgroundService
 
         Poultries = await DbProcessor.LoadPoultriesAsync();
         await TryReconnectAsync();
-        CanRunObserver = false;
+        CanRunObserver = true;
         return base.StartAsync(cancellationToken);
     }
 

@@ -11,5 +11,5 @@ public class SensorModel : SensorBaseModel
     public bool HasError => IsEnabled && ActiveErrors.Any();
     public bool IsInPeriod { get; set; }
     public int WatchStartDay { get; set; }
-    public bool IsWatched { get; set; }
+    public bool IsWatched { get; set; } = true;
 }

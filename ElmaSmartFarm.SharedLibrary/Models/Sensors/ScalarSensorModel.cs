@@ -10,9 +10,16 @@ public class ScalarSensorModel : SensorModel
     public bool HasLight { get; set; }
     public bool HasAmmonia { get; set; }
     public bool HasCo2 { get; set; }
+
     public double TemperatureOffset { get; set; }
     public int HumidityOffset { get; set; }
     public int LightOffset { get; set; }
     public double AmmoniaOffset { get; set; }
     public double Co2Offset { get; set; }
+
+    public bool WatchTemperature { get; set; } = true;
+    public bool WatchHumidity { get; set; } = true;
+    public bool WatchLight { get; set; } = true;
+    public bool WatchAmmonia { get; set; } = true;
+    public bool WatchCo2 { get; set; } = true;
 }

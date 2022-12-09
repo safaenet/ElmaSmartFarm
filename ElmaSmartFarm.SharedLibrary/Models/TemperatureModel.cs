@@ -1,11 +1,10 @@
-﻿namespace ElmaSmartFarm.SharedLibrary.Models
+﻿namespace ElmaSmartFarm.SharedLibrary.Models;
+
+public class TemperatureModel
 {
-    public class TemperatureModel
-    {
-        public int SensorId { get; set; }
-        public DateTime ReadDate { get; set; }
-        public double Celsius { get; set; }
-        public double Kelvin => Celsius + 273.15;
-        public double Fahrenheit => Celsius * 9 / 5 + 32;
-    }
+    public int SensorId { get; set; }
+    public DateTime ReadDate { get; set; }
+    public double Celsius { get; set; }
+    public double Kelvin => Celsius + 273.15;
+    public double Fahrenheit => Celsius * 9 / 5 + 32;
 }
