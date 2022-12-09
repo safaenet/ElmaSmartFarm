@@ -19,7 +19,7 @@ namespace ElmaSmartFarm.SharedLibrary
                 Id = s.Id,
                 Name = s.Name,
                 LocationId = s.LocationId,
-                Section=s.Section,
+                Section = s.Section,
                 IsEnabled = s.IsEnabled,
                 Type = s.Type,
                 Descriptions = s.Descriptions
@@ -33,7 +33,7 @@ namespace ElmaSmartFarm.SharedLibrary
                 Id = s.Id,
                 Name = s.Name,
                 LocationId = s.LocationId,
-                Section=s.Section,
+                Section = s.Section,
                 IsEnabled = s.IsEnabled,
                 Type = s.Type,
                 Descriptions = s.Descriptions
@@ -47,7 +47,7 @@ namespace ElmaSmartFarm.SharedLibrary
                 Id = s.Id,
                 Name = s.Name,
                 LocationId = s.LocationId,
-                Section=s.Section,
+                Section = s.Section,
                 IsEnabled = s.IsEnabled,
                 Type = s.Type,
                 Descriptions = s.Descriptions
@@ -61,7 +61,7 @@ namespace ElmaSmartFarm.SharedLibrary
                 Id = s.Id,
                 Name = s.Name,
                 LocationId = s.LocationId,
-                Section=s.Section,
+                Section = s.Section,
                 IsEnabled = s.IsEnabled,
                 Type = s.Type,
                 Descriptions = s.Descriptions
@@ -75,7 +75,7 @@ namespace ElmaSmartFarm.SharedLibrary
                 Id = s.Id,
                 Name = s.Name,
                 LocationId = s.LocationId,
-                Section=s.Section,
+                Section = s.Section,
                 IsEnabled = s.IsEnabled,
                 Type = s.Type,
                 Descriptions = s.Descriptions

@@ -430,7 +430,7 @@ public partial class Worker
             var x = (from s in Poultries.SelectMany(p => p.Farms.SelectMany(f => f.ElectricPowers.Sensors)) where s != null && s.Id == id select s).FirstOrDefault();
             if (x == null) x = (from p in Poultries where p != null && p.MainElectricPower != null && p.MainElectricPower.Id == id select p.MainElectricPower).FirstOrDefault();
             if (x == null) x = (from p in Poultries where p != null && p.BackupElectricPower != null && p.BackupElectricPower.Id == id select p.BackupElectricPower).FirstOrDefault();
-            if(x!=null) sensor = (T?)Convert.ChangeType(x, typeof(T));
+            if (x != null) sensor = (T?)Convert.ChangeType(x, typeof(T));
         }
         if (sensor != null) return sensor; else return null;
     }

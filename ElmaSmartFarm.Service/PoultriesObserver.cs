@@ -1,5 +1,4 @@
 ﻿using ElmaSmartFarm.SharedLibrary;
-using MQTTnet;
 using Serilog;
 
 namespace ElmaSmartFarm.Service;
@@ -69,7 +68,7 @@ public partial class Worker
                             }
                         }
                     }
-                }                    
+                }
             }
         Sets = null;
         //var m = new MqttApplicationMessageBuilder().WithTopic("safa").WithPayload("dana").Build();

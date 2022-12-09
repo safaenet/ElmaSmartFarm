@@ -23,7 +23,8 @@ public class Program
             Log.Information("Starting up the Service...");
             var host = Host.CreateDefaultBuilder(args)
             .UseWindowsService()
-            .ConfigureServices(services => {
+            .ConfigureServices(services =>
+            {
                 services.AddHostedService<Worker>()
                 .AddSingleton<Config, Config>()
                 .AddSingleton<IDataAccess, SqlDataAccess>()
