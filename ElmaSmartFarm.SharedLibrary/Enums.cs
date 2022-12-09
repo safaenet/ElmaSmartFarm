@@ -53,11 +53,16 @@ public enum SensorErrorType
     NotAlive,
     InvalidData,
     InvalidValue,
-    InvalidTemperature,
-    InvalidHumidity,
-    InvalidLight,
-    InvalidAmmonia,
-    InvalidCo2
+    InvalidTemperatureData,
+    InvalidTemperatureValue,
+    InvalidHumidityData,
+    InvalidHumidityValue,
+    InvalidLightData,
+    InvalidLightValue,
+    InvalidAmmoniaData,
+    InvalidAmmoniaValue,
+    InvalidCo2Data,
+    InvalidCo2Value
 }
 
 public enum AlarmDeviceType

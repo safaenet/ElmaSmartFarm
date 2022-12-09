@@ -147,4 +147,39 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="SensorValue" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="771a08a3-5ef3-464d-9914-1b279b3963c6" ChangeDateTime="12/09/2022 05:44:12">
+    <Property Name="ElementName" Value="[dbo].[TemperatureValues].[Temperature]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[TemperatureValues]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="ReadValue" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="0275b578-9cd8-416b-9027-f31db8184567" ChangeDateTime="12/09/2022 05:44:15">
+    <Property Name="ElementName" Value="[dbo].[HumidityValues].[Humidity]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[HumidityValues]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="ReadValue" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="636d8352-63da-4a40-8a89-54b68dd8c8ca" ChangeDateTime="12/09/2022 05:44:17">
+    <Property Name="ElementName" Value="[dbo].[LightValues].[Light]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[LightValues]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="ReadValue" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="9b450bee-4f8e-424a-b6e7-028d8c6275bb" ChangeDateTime="12/09/2022 05:44:19">
+    <Property Name="ElementName" Value="[dbo].[AmmoniaValues].[Ammonia]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[AmmoniaValues]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="ReadValue" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="5ba8cf6b-a7df-4c46-a900-be7cc3a71e66" ChangeDateTime="12/09/2022 05:44:20">
+    <Property Name="ElementName" Value="[dbo].[Co2Values].[Co2]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Co2Values]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="ReadValue" />
+  </Operation>
 </Operations>

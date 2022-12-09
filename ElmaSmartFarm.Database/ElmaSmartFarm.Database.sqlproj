@@ -67,7 +67,7 @@
     <Build Include="Tables\Locations.sql" />
     <Build Include="Tables\Sensors\Values\BinarySensorValues.sql" />
     <Build Include="Tables\Sensors\Values\CommuteValues.sql" />
-    <Build Include="Tables\Sensors\Values\ScalarSensorValues.sql" />
+    <Build Include="Tables\Sensors\Values\TemperatureValues.sql" />
     <Build Include="Tables\Sensors\Values\PushButtonSensorValues.sql" />
     <Build Include="Tables\Sensors\Sensors.sql" />
     <Build Include="Tables\Periods\ChickenLosses.sql" />
@@ -80,6 +80,10 @@
     <Build Include="Tables\Logs\FarmInPeriodErrorLogs.sql" />
     <Build Include="Tables\Logs\PoultryInPeriodErrorLogs.sql" />
     <Build Include="Tables\Sensors\ScalarSensorDetails.sql" />
+    <Build Include="Tables\Sensors\Values\Co2Values.sql" />
+    <Build Include="Tables\Sensors\Values\HumidityValues.sql" />
+    <Build Include="Tables\Sensors\Values\LightValues.sql" />
+    <Build Include="Tables\Sensors\Values\AmmoniaValues.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="ElmaSmartFarm.Database.refactorlog" />

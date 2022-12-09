@@ -1,4 +1,4 @@
-﻿CREATE TABLE [dbo].[FarmScalarSensors]
+﻿CREATE TABLE [dbo].[ScalarSensorDetails]
 (
 	[Id] INT NOT NULL PRIMARY KEY, 
     [HasTemperature] BIT NOT NULL,

@@ -156,21 +156,21 @@ namespace ElmaSmartFarm.SharedLibrary
         public static bool HasValidHumid(this ScalarSensorReadModel r)
         {
             Config.Config config = new();
-            if (r.Humidity.HasValue == false || r.Humidity.Value < config.system.HumidMinValue || r.Humidity.Value > config.system.FarmTempMaxValue) return false;
+            if (r.Humidity.HasValue == false || r.Humidity.Value < config.system.HumidMinValue || r.Humidity.Value > config.system.HumidMaxValue) return false;
             return true;
         }
 
         public static bool HasValidLight(this ScalarSensorReadModel r)
         {
             Config.Config config = new();
-            if (r.Light.HasValue == false || r.Light.Value < config.system.AmbientLightMinValue || r.Temperature.Value > config.system.AmbientLightMaxValue) return false;
+            if (r.Light.HasValue == false || r.Light.Value < config.system.AmbientLightMinValue || r.Light.Value > config.system.AmbientLightMaxValue) return false;
             return true;
         }
 
         public static bool HasValidAmmonia(this ScalarSensorReadModel r)
         {
             Config.Config config = new();
-            if (r.Ammonia.HasValue == false || r.Ammonia.Value < config.system.AmmoniaMinValue || r.Temperature.Value > config.system.AmmoniaMaxValue) return false;
+            if (r.Ammonia.HasValue == false || r.Ammonia.Value < config.system.AmmoniaMinValue || r.Ammonia.Value > config.system.AmmoniaMaxValue) return false;
             return true;
         }
 

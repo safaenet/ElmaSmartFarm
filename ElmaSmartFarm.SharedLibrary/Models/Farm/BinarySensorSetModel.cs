@@ -1,8 +1,7 @@
 ﻿using ElmaSmartFarm.SharedLibrary.Models.Sensors;
 
-namespace ElmaSmartFarm.SharedLibrary.Models
+namespace ElmaSmartFarm.SharedLibrary.Models;
+
+public class BinarySensorSetModel : SensorSetModel<BinarySensorModel>
 {
-    public class BinarySensorSetModel : SensorSetModel<BinarySensorModel>
-    {
-    }
 }
