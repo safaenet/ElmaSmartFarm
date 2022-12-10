@@ -20,7 +20,7 @@ public partial class Worker
                 {
                     foreach (var sensor in set.EnabledSensors)
                     {
-                        await CheckKeepAliveMessageDate(sensor, Now);
+                        await CheckKeepAliveMessageDate(sensor, config.system.KeepAliveWaitingTimeout, Now);
                         if (sensor.HasError)
                         {
                             foreach (var e in sensor.ActiveErrors)
@@ -96,7 +96,7 @@ public partial class Worker
                 {
                     foreach (var sensor in set.EnabledSensors)
                     {
-                        await CheckKeepAliveMessageDate(sensor, Now);
+                        await CheckKeepAliveMessageDate(sensor, config.system.KeepAliveWaitingTimeout, Now);
                         if (sensor.HasError)
                         {
                             foreach (var e in sensor.ActiveErrors)
@@ -139,7 +139,7 @@ public partial class Worker
                 {
                     foreach (var sensor in set.EnabledSensors)
                     {
-                        await CheckKeepAliveMessageDate(sensor, Now);
+                        await CheckKeepAliveMessageDate(sensor, config.system.KeepAliveWaitingTimeout, Now);
                         if (sensor.HasError)
                         {
                             foreach (var e in sensor.ActiveErrors)
@@ -178,7 +178,7 @@ public partial class Worker
                 {
                     foreach (var sensor in set.EnabledSensors)
                     {
-                        await CheckKeepAliveMessageDate(sensor, Now);
+                        await CheckKeepAliveMessageDate(sensor, config.system.KeepAliveWaitingTimeout, Now);
                         if (sensor.HasError)
                         {
                             foreach (var e in sensor.ActiveErrors)
@@ -249,30 +249,30 @@ public partial class Worker
         return false;
     }
 
-    private void CheckForInform(SensorModel sensor, bool WatchUnit, SensorErrorModel e, int firstInformTime, int everyInformTime, int sleepTime, int informCycleCount, DateTime Now)
+    private void CheckForInform(SensorModel sensor, bool WatchUnit, SensorErrorModel e, int firstInformTime, int everyInformTime, int snoozeTime, int informCycleCount, DateTime Now)
     {
-        if (WatchUnit || e.InformCount < informCycleCount)
+        if (WatchUnit || e.AlarmInformCount < informCycleCount)
         {
-            if (e.DateInformed == null && e.DateHappened.IsElapsed(firstInformTime)) //first alarm.
+            if (e.DateAlarmInformed == null && e.DateHappened.IsElapsed(firstInformTime)) //first alarm.
             {
-                e.InformCount = 1;
-                Log.Information($"Informing Alarm of {e.ErrorType}, Sensor ID: {sensor.Id}, Location: {sensor.LocationId}, Section: {sensor.Section}. Count: {e.InformCount}");
+                e.AlarmInformCount = 1;
+                Log.Information($"Informing Alarm of {e.ErrorType}, Sensor ID: {sensor.Id}, Location: {sensor.LocationId}, Section: {sensor.Section}. Count: {e.AlarmInformCount}");
                 //inform, save to db
-                e.DateInformed = Now;
+                e.DateAlarmInformed = Now;
             }
-            else if (e.InformCount % informCycleCount != 0 && e.DateInformed.IsElapsed(everyInformTime)) //alarm every.
+            else if (e.AlarmInformCount % informCycleCount != 0 && e.DateAlarmInformed.IsElapsed(everyInformTime)) //alarm every.
             {
-                e.InformCount++;
-                Log.Information($"Informing Alarm of {e.ErrorType}, Sensor ID: {sensor.Id}, Location: {sensor.LocationId}, Section: {sensor.Section}. Count: {e.InformCount}");
+                e.AlarmInformCount++;
+                Log.Information($"Informing Alarm of {e.ErrorType}, Sensor ID: {sensor.Id}, Location: {sensor.LocationId}, Section: {sensor.Section}. Count: {e.AlarmInformCount}");
                 //inform, save to db
-                e.DateInformed = Now;
+                e.DateAlarmInformed = Now;
             }
-            else if (e.InformCount % informCycleCount == 0 && e.DateInformed.IsElapsed(sleepTime)) //alarm sleep.
+            else if (e.AlarmInformCount % informCycleCount == 0 && e.DateAlarmInformed.IsElapsed(snoozeTime)) //alarm sleep.
             {
-                e.InformCount++;
-                Log.Information($"Informing Alarm of {e.ErrorType}, Sensor ID: {sensor.Id}, Location: {sensor.LocationId}, Section: {sensor.Section}. Count: {e.InformCount}");
+                e.AlarmInformCount++;
+                Log.Information($"Informing Alarm of {e.ErrorType}, Sensor ID: {sensor.Id}, Location: {sensor.LocationId}, Section: {sensor.Section}. Count: {e.AlarmInformCount}");
                 //inform, save to db
-                e.DateInformed = Now;
+                e.DateAlarmInformed = Now;
             }
         }
     }

@@ -1,56 +1,82 @@
 {
   "keep_alive_interval": 15,
+  "keep_alive_waiting_timeout": 45,
   "max_sensor_error_count": 10,
   "max_sensor_read_count": 10,
   "sensor_low_battery_level": 10,
+
+  "scalar_general": {
+    "read_interval": 15,
+    "write_to_db_interval": 10, //(Seconds)
+    "write_to_db_always": true
+  },
   "temperature": {
-    "read_interval": 30, //(Seconds)
     "farm_min_value": 20, //Wont accept the incoming data if lower than this value. (Celsius)
     "farm_max_value": 35, //Wont accept the incoming data if higher than this value. (Celsius)
     "outdoor_min_value": -10,
     "outdoor_max_value": 60,
-    "write_to_db_differ_value": 4, //Wont accept the incoming data if new value according to previous value increased/decreased more than this value. (Celsius)
-    "write_on_value_change_by_differ": true,
-    "write_to_db_interval": 10, //(Seconds)
-    "write_to_db_always": true
+    "alarm_first_time": 5,
+    "alarm_every": 5,
+    "alarm_snooze": 5,
+    "alarm_count_in_cycle": 3
   },
   "humidity": {
-    "read_interval": 30, //(Seconds)
     "min_value": 0, //Wont accept the incoming data if lower than this value. (Percent)
     "max_value": 100, //Wont accept the incoming data if higher than this value. (Percent)
     "write_to_db_differ_value": 3, //Wont accept the incoming data if new value according to previous value increased/decreased more than this value. (Percent)
     "write_on_value_change_by_differ": true,
-    "write_to_db_interval": 30, //(Seconds)
-    "write_to_db_always": true
+    "alarm_first_time": 5,
+    "alarm_every": 5,
+    "alarm_snooze": 5,
+    "alarm_count_in_cycle": 3
   },
   "ambient_light": {
-    "read_interval": 30, //(Seconds)
     "min_value": 0, //Wont accept the incoming data if lower than this value. (Percent)
     "max_value": 100, //Wont accept the incoming data if higher than this value. (Percent)
-    "write_to_db_differ_value": 10,
-    "write_on_value_change_by_differ": true,
-    "write_to_db_interval": 30, //(Seconds)
-    "write_to_db_always": true
+    "alarm_first_time": 5,
+    "alarm_every": 5,
+    "alarm_snooze": 5,
+    "alarm_count_in_cycle": 3
   },
   "ammonia": {
     "min_value": 0, //Wont accept the incoming data if lower than this value. (Percent)
-    "max_value": 100 //Wont accept the incoming data if higher than this value. (Percent)
+    "max_value": 100, //Wont accept the incoming data if higher than this value. (Percent)
+    "alarm_first_time": 5,
+    "alarm_every": 5,
+    "alarm_snooze": 5,
+    "alarm_count_in_cycle": 3
   },
   "co2": {
     "min_value": 0, //Wont accept the incoming data if lower than this value. (Percent)
-    "max_value": 100 //Wont accept the incoming data if higher than this value. (Percent)
+    "max_value": 100, //Wont accept the incoming data if higher than this value. (Percent)
+    "alarm_first_time": 5,
+    "alarm_every": 5,
+    "alarm_snooze": 5,
+    "alarm_count_in_cycle": 3
   },
   "commute": {
-    "write_to_db_always": true
+    "write_to_db_always": true,
+    "alarm_first_time": 5,
+    "alarm_every": 5,
+    "alarm_snooze": 5,
+    "alarm_count_in_cycle": 3
   },
   "push_button": {
-    "write_to_db_always": true
+    "write_to_db_always": true,
+    "alarm_first_time": 5,
+    "alarm_every": 5,
+    "alarm_snooze": 5,
+    "alarm_count_in_cycle": 3
   },
   "binary": {
     "read_interval": 30,
     "write_on_value_change": true,
     "write_to_db_interval": 30, //(Seconds)
-    "write_to_db_always": true
+    "write_to_db_always": true,
+    "alarm_first_time": 5,
+    "alarm_every": 5,
+    "alarm_snooze": 5,
+    "alarm_count_in_cycle": 3
   },
   "observer": {
     "observer_check_interval": 5,
@@ -72,5 +98,20 @@
     "invalid_value_inform_every": 75,
     "invalid_value_inform_max_count": 3,
     "invalid_value_inform_sleep": 1000
+  },
+
+  "alarm": {
+    "alarm_low_battery_error": true,
+    "alarm_not_alive_error": true,
+    "alarm_invalid_data_error": true,
+    "alarm_invalid_value_error": true,
+    "alarm_temperature_sensor_error": true,
+    "alarm_humidity_sensor_error": true,
+    "alarm_light_sensor_error": true,
+    "alarm_ammonia_sensor_error": true,
+    "alarm_co2_sensor_error": true,
+    "alarm_commute_sensor_error": true,
+    "alarm_push_button_sensor_error": true,
+    "alarm_binary_sensor_error": true,
   }
 }
