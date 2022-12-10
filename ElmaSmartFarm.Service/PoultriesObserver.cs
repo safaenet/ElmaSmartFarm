@@ -10,14 +10,17 @@ public partial class Worker
     {
         var IsInPeriod = Poultries.Any(p => p.IsInPeriod);
         var Now = DateTime.Now;
-        var ScalarSets = Poultries.SelectMany(p => p.Farms.Select(f => f.Scalars));
-        if (ScalarSets != null)
-            foreach (var set in ScalarSets)
+
+        #region Observe Farm Scalar Sensors.
+        var FarmScalarSets = Poultries.SelectMany(p => p.Farms.Select(f => f.Scalars));
+        if (FarmScalarSets != null)
+            foreach (var set in FarmScalarSets)
             {
                 if (set.HasSensors)
                 {
                     foreach (var sensor in set.EnabledSensors)
                     {
+                        await CheckKeepAliveMessageDate(sensor, Now);
                         if (sensor.HasError)
                         {
                             foreach (var e in sensor.ActiveErrors)
@@ -47,6 +50,15 @@ public partial class Worker
                                     CheckForInform(sensor, sensor.WatchCo2, e, Now);
                                     sensor.WatchCo2 = !CheckToPutOutOfWatch(e, sensor.IsWatched, sensor.WatchCo2, sensor.IsInPeriod, 5);
                                 }
+                                else if (sensor.IsWatched && (e.ErrorType == SensorErrorType.NotAlive))
+                                {
+                                    CheckForInform(sensor, sensor.IsWatched, e, Now);
+                                    sensor.IsWatched = !CheckToPutOutOfWatch(e, sensor.IsWatched, sensor.IsWatched, sensor.IsInPeriod, 5);
+                                }
+                                else if (sensor.IsWatched && (e.ErrorType == SensorErrorType.LowBattery))
+                                {
+                                    CheckForInform(sensor, sensor.IsWatched, e, Now);
+                                }
                             }
                             if (sensor.IsWatched && !sensor.WatchTemperature && !sensor.WatchHumidity && !sensor.WatchLight && !sensor.WatchAmmonia && !sensor.WatchCo2) //Sensor is fully damaged.
                             {
@@ -67,19 +79,155 @@ public partial class Worker
                             sensor.WatchAmmonia = CheckToReWatchSensor(sensor, startDate);
                         if (sensor.WatchCo2 == false && sensor.ActiveErrors.Any(e => e.ErrorType == SensorErrorType.InvalidCo2Data || e.ErrorType == SensorErrorType.InvalidCo2Value) == false) //Co2 sensor is healthy.
                             sensor.WatchCo2 = CheckToReWatchSensor(sensor, startDate);
-                        if (!sensor.IsWatched && (sensor.WatchTemperature || sensor.WatchHumidity || sensor.WatchLight || sensor.WatchAmmonia || sensor.WatchCo2)) sensor.IsWatched = CheckToReWatchSensor(sensor, startDate);
+                        if (sensor.IsWatched == false && sensor.ActiveErrors.Any(e => e.ErrorType == SensorErrorType.NotAlive) == false && (sensor.WatchTemperature || sensor.WatchHumidity || sensor.WatchLight || sensor.WatchAmmonia || sensor.WatchCo2)) sensor.IsWatched = CheckToReWatchSensor(sensor, startDate); //Sensor is alive and healthy (again).
 
                         //Remove expired reads
                     }
                 }
             }
-        ScalarSets = null;
+        FarmScalarSets = null;
+        #endregion
+        #region Observe Commute Sensors.
+        var CommuteSets = Poultries.SelectMany(p => p.Farms.Select(f => f.Commutes));
+        if (CommuteSets != null)
+            foreach (var set in CommuteSets)
+            {
+                if (set.HasSensors)
+                {
+                    foreach (var sensor in set.EnabledSensors)
+                    {
+                        await CheckKeepAliveMessageDate(sensor, Now);
+                        if (sensor.HasError)
+                        {
+                            foreach (var e in sensor.ActiveErrors)
+                            {
+                                if (sensor.IsWatched && (e.ErrorType == SensorErrorType.InvalidData || e.ErrorType == SensorErrorType.InvalidValue))
+                                {
+                                    CheckForInform(sensor, sensor.IsWatched, e, Now);
+                                    sensor.IsWatched = !CheckToPutOutOfWatch(e, sensor.IsWatched, sensor.IsWatched, sensor.IsInPeriod, 5);
+                                }
+                                else if (sensor.IsWatched && (e.ErrorType == SensorErrorType.NotAlive))
+                                {
+                                    CheckForInform(sensor, sensor.IsWatched, e, Now);
+                                    sensor.IsWatched = !CheckToPutOutOfWatch(e, sensor.IsWatched, sensor.IsWatched, sensor.IsInPeriod, 5);
+                                }
+                                else if (sensor.IsWatched && (e.ErrorType == SensorErrorType.LowBattery))
+                                {
+                                    CheckForInform(sensor, sensor.IsWatched, e, Now);
+                                }
+                            }
+                        }
+
+                        var startDate = Poultries.Where(p => p.IsInPeriod).SelectMany(p => p.Farms.Where(f => f.IsInPeriod && f.Commutes.Sensors.Any(s => s.Id == sensor.Id))).FirstOrDefault()?.Period.StartDate;
+                        if (!sensor.IsWatched && sensor.ActiveErrors.Any(e => e.ErrorType == SensorErrorType.InvalidData || e.ErrorType == SensorErrorType.InvalidValue || e.ErrorType == SensorErrorType.NotAlive) == false) //Sensor is healthy.
+                            sensor.IsWatched = CheckToReWatchSensor(sensor, startDate);
+
+                        //Remove expired reads
+                    }
+                }
+            }
+        CommuteSets = null;
+        #endregion
+        #region Observe PushButton Sensors.
+        var CheckupSets = Poultries.SelectMany(p => p.Farms.Select(f => f.Checkups));
+        var FeedSets = Poultries.SelectMany(p => p.Farms.Select(f => f.Feeds));
+        var PushButtonSets = CheckupSets.Concat(FeedSets);
+        if (PushButtonSets != null)
+            foreach (var set in PushButtonSets)
+            {
+                if (set.HasSensors)
+                {
+                    foreach (var sensor in set.EnabledSensors)
+                    {
+                        await CheckKeepAliveMessageDate(sensor, Now);
+                        if (sensor.HasError)
+                        {
+                            foreach (var e in sensor.ActiveErrors)
+                            {
+                                if (sensor.IsWatched && (e.ErrorType == SensorErrorType.NotAlive))
+                                {
+                                    CheckForInform(sensor, sensor.IsWatched, e, Now);
+                                    sensor.IsWatched = !CheckToPutOutOfWatch(e, sensor.IsWatched, sensor.IsWatched, sensor.IsInPeriod, 5);
+                                }
+                                else if (sensor.IsWatched && (e.ErrorType == SensorErrorType.LowBattery))
+                                {
+                                    CheckForInform(sensor, sensor.IsWatched, e, Now);
+                                }
+                            }
+                        }
+
+                        var startDate = Poultries.Where(p => p.IsInPeriod).SelectMany(p => p.Farms.Where(f => f.IsInPeriod && f.Checkups.Sensors.Any(s => s.Id == sensor.Id))).FirstOrDefault()?.Period.StartDate;
+                        if (startDate == null) startDate = Poultries.Where(p => p.IsInPeriod).SelectMany(p => p.Farms.Where(f => f.IsInPeriod && f.Feeds.Sensors.Any(s => s.Id == sensor.Id))).FirstOrDefault()?.Period.StartDate;
+                        if (!sensor.IsWatched && sensor.ActiveErrors.Any(e => e.ErrorType == SensorErrorType.NotAlive) == false) //Sensor is healthy.
+                            sensor.IsWatched = CheckToReWatchSensor(sensor, startDate);
+
+                        //Remove expired reads
+                    }
+                }
+            }
+        CheckupSets = null;
+        FeedSets = null;
+        PushButtonSets = null;
+        #endregion
+        #region Observe Binary Sensors.
+        var BinarySets = Poultries.SelectMany(p => p.Farms.Select(f => f.ElectricPowers));
+        if (BinarySets != null)
+            foreach (var set in BinarySets)
+            {
+                if (set.HasSensors)
+                {
+                    foreach (var sensor in set.EnabledSensors)
+                    {
+                        await CheckKeepAliveMessageDate(sensor, Now);
+                        if (sensor.HasError)
+                        {
+                            foreach (var e in sensor.ActiveErrors)
+                            {
+                                if (sensor.IsWatched && (e.ErrorType == SensorErrorType.InvalidData || e.ErrorType == SensorErrorType.InvalidValue))
+                                {
+                                    CheckForInform(sensor, sensor.IsWatched, e, Now);
+                                    sensor.IsWatched = !CheckToPutOutOfWatch(e, sensor.IsWatched, sensor.IsWatched, sensor.IsInPeriod, 5);
+                                }
+                                else if (sensor.IsWatched && (e.ErrorType == SensorErrorType.NotAlive))
+                                {
+                                    CheckForInform(sensor, sensor.IsWatched, e, Now);
+                                    sensor.IsWatched = !CheckToPutOutOfWatch(e, sensor.IsWatched, sensor.IsWatched, sensor.IsInPeriod, 5);
+                                }
+                                else if (sensor.IsWatched && (e.ErrorType == SensorErrorType.LowBattery))
+                                {
+                                    CheckForInform(sensor, sensor.IsWatched, e, Now);
+                                }
+                            }
+                        }
+
+                        var startDate = Poultries.Where(p => p.IsInPeriod).SelectMany(p => p.Farms.Where(f => f.IsInPeriod && f.Checkups.Sensors.Any(s => s.Id == sensor.Id))).FirstOrDefault()?.Period.StartDate;
+                        if (startDate == null) startDate = Poultries.Where(p => p.IsInPeriod).SelectMany(p => p.Farms.Where(f => f.IsInPeriod && f.Feeds.Sensors.Any(s => s.Id == sensor.Id))).FirstOrDefault()?.Period.StartDate;
+                        if (!sensor.IsWatched && sensor.ActiveErrors.Any(e => e.ErrorType == SensorErrorType.NotAlive) == false) //Sensor is healthy.
+                            sensor.IsWatched = CheckToReWatchSensor(sensor, startDate);
+
+                        //Remove expired reads
+                    }
+                }
+            }
+        BinarySets = null;
+        #endregion
         //var m = new MqttApplicationMessageBuilder().WithTopic("safa").WithPayload("dana").Build();
         //if (mqttClient.IsConnected) await mqttClient.PublishAsync(m);
         return null;
     }
 
-    private bool CheckToReWatchSensor<T>(T sensor, DateTime? PeriodStartDate) where T : SensorModel
+    private async Task CheckKeepAliveMessageDate(SensorModel sensor, int keepAliveTimeout, DateTime Now)
+    {
+
+        if (sensor.IsWatched && config.system.KeepAliveInterval > 0 && sensor.KeepAliveMessageDate.IsElapsed(keepAliveTimeout))
+        {
+            var newErr = GenerateSensorError(sensor.AsBaseModel(), SensorErrorType.NotAlive, Now, $"Not Alive since: {sensor.KeepAliveMessageDate}");
+            sensor.Errors.AddError(newErr, SensorErrorType.NotAlive, config.system.MaxSensorErrorCount);
+            await DbProcessor.WriteSensorErrorToDbAsync(newErr, Now);
+        }
+    }
+
+    private bool CheckToReWatchSensor(SensorModel sensor, DateTime? PeriodStartDate)
     {
         if (config.system.ObserveAlways || (sensor.IsInPeriod && PeriodStartDate.IsElapsed(sensor.WatchStartDay * 86400)))
         {
@@ -101,28 +249,31 @@ public partial class Worker
         return false;
     }
 
-    private void CheckForInform<T>(T sensor, bool WatchUnit, SensorErrorModel e, DateTime Now) where T : SensorModel
+    private void CheckForInform(SensorModel sensor, bool WatchUnit, SensorErrorModel e, int firstInformTime, int everyInformTime, int sleepTime, int informCycleCount, DateTime Now)
     {
-        if (WatchUnit && e.DateInformed == null && e.DateHappened.IsElapsed(5)) //first alarm.
+        if (WatchUnit || e.InformCount < informCycleCount)
         {
-            e.InformCount = 1;
-            Log.Information($"Informing Alarm of {e.ErrorType}, Sensor ID: {sensor.Id}, Location: {sensor.LocationId}, Section: {sensor.Section}. Count: {e.InformCount}");
-            //inform, save to db
-            e.DateInformed = Now;
-        }
-        else if (WatchUnit && e.InformCount % 3 != 0 && e.DateInformed.IsElapsed(10)) //alarm every.
-        {
-            e.InformCount++;
-            Log.Information($"Informing Alarm of {e.ErrorType}, Sensor ID: {sensor.Id}, Location: {sensor.LocationId}, Section: {sensor.Section}. Count: {e.InformCount}");
-            //inform, save to db
-            e.DateInformed = Now;
-        }
-        else if (WatchUnit && e.InformCount % 3 == 0 && e.DateInformed.IsElapsed(200)) //alarm sleep.
-        {
-            e.InformCount++;
-            Log.Information($"Informing Alarm of {e.ErrorType}, Sensor ID: {sensor.Id}, Location: {sensor.LocationId}, Section: {sensor.Section}. Count: {e.InformCount}");
-            //inform, save to db
-            e.DateInformed = Now;
+            if (e.DateInformed == null && e.DateHappened.IsElapsed(firstInformTime)) //first alarm.
+            {
+                e.InformCount = 1;
+                Log.Information($"Informing Alarm of {e.ErrorType}, Sensor ID: {sensor.Id}, Location: {sensor.LocationId}, Section: {sensor.Section}. Count: {e.InformCount}");
+                //inform, save to db
+                e.DateInformed = Now;
+            }
+            else if (e.InformCount % informCycleCount != 0 && e.DateInformed.IsElapsed(everyInformTime)) //alarm every.
+            {
+                e.InformCount++;
+                Log.Information($"Informing Alarm of {e.ErrorType}, Sensor ID: {sensor.Id}, Location: {sensor.LocationId}, Section: {sensor.Section}. Count: {e.InformCount}");
+                //inform, save to db
+                e.DateInformed = Now;
+            }
+            else if (e.InformCount % informCycleCount == 0 && e.DateInformed.IsElapsed(sleepTime)) //alarm sleep.
+            {
+                e.InformCount++;
+                Log.Information($"Informing Alarm of {e.ErrorType}, Sensor ID: {sensor.Id}, Location: {sensor.LocationId}, Section: {sensor.Section}. Count: {e.InformCount}");
+                //inform, save to db
+                e.DateInformed = Now;
+            }
         }
     }
 

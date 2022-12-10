@@ -4,7 +4,7 @@ public class SensorModel : SensorBaseModel
 {
     public string IPAddress { get; set; } = "N/A";
     public int BatteryLevel { get; set; } = -1;
-    public DateTime? KeepAliveMessageDate { get; set; }
+    public DateTime KeepAliveMessageDate { get; set; } = DateTime.Now;
     public List<SensorErrorModel> Errors { get; set; } = new();
     public SensorErrorModel LastError => Errors?.MaxBy(x => x.DateHappened);
     public IEnumerable<SensorErrorModel> ActiveErrors => Errors.Where(e => e.DateErased == null);

@@ -53,6 +53,7 @@ public enum SensorErrorType
     NotAlive,
     InvalidData,
     InvalidValue,
+
     InvalidTemperatureData,
     InvalidTemperatureValue,
     InvalidHumidityData,
