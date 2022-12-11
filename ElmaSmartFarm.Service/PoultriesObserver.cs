@@ -216,6 +216,11 @@ public partial class Worker
         return null;
     }
 
+    private void AddSensorErrorToAlarmable(SensorErrorModel e)
+    {
+        if (!AlarmableSensorErrors.Contains(e)) AlarmableSensorErrors.Add(e);
+    }
+
     private async Task CheckKeepAliveMessageDate(SensorModel sensor, int keepAliveTimeout, DateTime Now)
     {
 

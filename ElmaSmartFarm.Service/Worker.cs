@@ -1,6 +1,7 @@
 using ElmaSmartFarm.DataLibraryCore.Interfaces;
 using ElmaSmartFarm.SharedLibrary.Config;
 using ElmaSmartFarm.SharedLibrary.Models;
+using ElmaSmartFarm.SharedLibrary.Models.Sensors;
 using MQTTnet;
 using MQTTnet.Client;
 using Serilog;
@@ -24,6 +25,7 @@ public partial class Worker : BackgroundService
     private MqttClientOptions options;
     private List<PoultryModel> Poultries;
     private readonly List<MqttMessageModel> UnknownMqttMessages = new();
+    private readonly List<SensorErrorModel> AlarmableSensorErrors = new();
     private bool CanRunObserver;
 
     public override async Task<Task> StartAsync(CancellationToken cancellationToken)

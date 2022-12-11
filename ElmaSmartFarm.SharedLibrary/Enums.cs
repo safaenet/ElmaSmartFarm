@@ -46,8 +46,7 @@ public enum SensorErrorType
 
 public enum FarmInPeriodErrorType
 {
-    LongTimeNoFeed = 1,
-    HighTemperature,
+    HighTemperature = 1,
     LowTemperature,
     HighHumidity,
     LowHumidity,
@@ -57,13 +56,14 @@ public enum FarmInPeriodErrorType
     LowBrightness,
     HighAmmonia,
     HighCo2,
-    LongTimeLeave,
-    NoElectricPower
+    LongNoFeed,
+    LongLeave,
+    NoPower
 }
 
 public enum PoultryInPeriodErrorType
 {
-    NoMainElectricPower = 1,
+    NoMainPower = 1,
     NoBackupPower
 }
 
