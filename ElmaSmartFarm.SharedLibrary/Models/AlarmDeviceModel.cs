@@ -8,3 +8,11 @@ public class AlarmDeviceModel
     public bool IsEnabled { get; set; }
     public string Descriptions { get; set; }
 }
+
+public class AlarmModel
+{
+
+    public string Name { get; set; }
+    public bool IsEnabled { get; set; }
+    public string Descriptions { get; set; }
+}

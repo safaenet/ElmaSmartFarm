@@ -32,7 +32,6 @@ public enum SensorErrorType
     NotAlive,
     InvalidData,
     InvalidValue,
-
     InvalidTemperatureData,
     InvalidTemperatureValue,
     InvalidHumidityData,
@@ -56,6 +55,8 @@ public enum FarmInPeriodErrorType
     LongTimeDark,
     HighBrightness,
     LowBrightness,
+    HighAmmonia,
+    HighCo2,
     LongTimeLeave,
     NoElectricPower
 }
