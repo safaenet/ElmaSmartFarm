@@ -368,7 +368,7 @@ public partial class Worker
     private async Task<int> UpdateSensorKeepAliveAsync(int sensorId, DateTime now)
     {
         if (Poultries == null) return 0;
-        if (config.system.KeepAliveInterval == 0)
+        if (config.system.IsKeepAliveEnabled == false)
         {
             Log.Warning($"KeepAlive is disabled but sensor a is sending KeepAlive message. Sensor ID: {sensorId}");
             return -1;
@@ -376,7 +376,8 @@ public partial class Worker
         var sensor = FindSensorsById(sensorId);
         if (sensor != null && sensor.IsEnabled)
         {
-            sensor.KeepAliveMessageDate = now; sensor.Errors.EraseError(SensorErrorType.NotAlive, now);
+            sensor.KeepAliveMessageDate = now;
+            sensor.Errors.EraseError(SensorErrorType.NotAlive, now);
             await DbProcessor.EraseSensorErrorFromDbAsync(sensor.Id, now, SensorErrorType.NotAlive);
             return 1;
         }

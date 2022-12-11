@@ -219,7 +219,7 @@ public partial class Worker
     private async Task CheckKeepAliveMessageDate(SensorModel sensor, int keepAliveTimeout, DateTime Now)
     {
 
-        if (sensor.IsWatched && config.system.KeepAliveInterval > 0 && sensor.KeepAliveMessageDate.IsElapsed(keepAliveTimeout))
+        if (sensor.IsWatched && config.system.IsKeepAliveEnabled && sensor.KeepAliveMessageDate.IsElapsed(keepAliveTimeout))
         {
             var newErr = GenerateSensorError(sensor.AsBaseModel(), SensorErrorType.NotAlive, Now, $"Not Alive since: {sensor.KeepAliveMessageDate}");
             sensor.Errors.AddError(newErr, SensorErrorType.NotAlive, config.system.MaxSensorErrorCount);

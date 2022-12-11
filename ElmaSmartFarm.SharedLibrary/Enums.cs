@@ -26,6 +26,25 @@ public enum LocationType
     Farm
 }
 
+public enum SensorErrorType
+{
+    LowBattery = 1,
+    NotAlive,
+    InvalidData,
+    InvalidValue,
+
+    InvalidTemperatureData,
+    InvalidTemperatureValue,
+    InvalidHumidityData,
+    InvalidHumidityValue,
+    InvalidLightData,
+    InvalidLightValue,
+    InvalidAmmoniaData,
+    InvalidAmmoniaValue,
+    InvalidCo2Data,
+    InvalidCo2Value
+}
+
 public enum FarmInPeriodErrorType
 {
     LongTimeNoFeed = 1,
@@ -47,28 +66,10 @@ public enum PoultryInPeriodErrorType
     NoBackupPower
 }
 
-public enum SensorErrorType
-{
-    LowBattery = 1,
-    NotAlive,
-    InvalidData,
-    InvalidValue,
-
-    InvalidTemperatureData,
-    InvalidTemperatureValue,
-    InvalidHumidityData,
-    InvalidHumidityValue,
-    InvalidLightData,
-    InvalidLightValue,
-    InvalidAmmoniaData,
-    InvalidAmmoniaValue,
-    InvalidCo2Data,
-    InvalidCo2Value
-}
-
 public enum AlarmDeviceType
 {
     Light = 1,
+    Siren,
     SMS,
     Email
 }

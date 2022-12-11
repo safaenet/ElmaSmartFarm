@@ -74,7 +74,7 @@
     <Build Include="Tables\Periods\Feeds.sql" />
     <Build Include="Tables\Periods\Periods.sql" />
     <Build Include="Tables\Periods\SensorsInPeriods.sql" />
-    <Build Include="Tables\Alarms.sql" />
+    <Build Include="Tables\AlarmDevices.sql" />
     <Build Include="Tables\Logs\SensorErrorLogs.sql" />
     <Build Include="Tables\Contacts.sql" />
     <Build Include="Tables\Logs\FarmInPeriodErrorLogs.sql" />

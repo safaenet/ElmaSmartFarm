@@ -150,6 +150,7 @@ public class System
     }
 
     public int KeepAliveInterval { get; set; }
+    public bool IsKeepAliveEnabled => KeepAliveInterval > 0;
     public int KeepAliveWaitingTimeout { get; set; }
     public int MaxSensorErrorCount { get; set; }
     public int MaxSensorReadCount { get; set; }
