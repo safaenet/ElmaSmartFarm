@@ -264,9 +264,29 @@ public partial class Worker
                 await EraseSensorErrors(sensor, Now, SensorErrorType.InvalidData);
                 if (sensor.Values == null) sensor.Values = new();
                 BinarySensorReadModel newRead = new() { Value = Payload, ReadDate = Now };
-                if ((sensor.IsWatched || (sensor.Type == SensorType.FarmElectricPower && config.system.WriteFarmPowerToDbAlways) || (sensor.Type == SensorType.PoultryMainElectricPower && config.system.WriteMainPowerToDbAlways) || (sensor.Type == SensorType.PoultryBackupElectricPower && config.system.WriteBackupPowerToDbAlways))
-                    && (sensor.Values.Count == 0 || sensor.LastSavedRead == null || (((sensor.Type == SensorType.FarmElectricPower && config.system.WriteFarmPowerOnValueChange) || (sensor.Type == SensorType.PoultryMainElectricPower && config.system.WriteMainPowerOnValueChange) || (sensor.Type == SensorType.PoultryBackupElectricPower && config.system.WriteBackupPowerOnValueChange)) && sensor.LastSavedRead.Value != Payload)
-                    || (sensor.Type == SensorType.FarmElectricPower && sensor.LastSavedRead.ReadDate.IsElapsed(config.system.WriteFarmPowerToDbInterval)) || (sensor.Type == SensorType.PoultryMainElectricPower && sensor.LastSavedRead.ReadDate.IsElapsed(config.system.WriteMainPowerToDbInterval)) || (sensor.Type == SensorType.PoultryBackupElectricPower && sensor.LastSavedRead.ReadDate.IsElapsed(config.system.WriteBackupPowerToDbInterval)))) //Writable to db.
+                bool WriteToDbAways = false;
+                bool WritePowerOnValueChange = false;
+                int WriteToDbInterval = 0;
+                if (sensor.Type == SensorType.FarmElectricPower)
+                {
+                    WriteToDbAways = config.system.WriteFarmPowerToDbAlways;
+                    WriteToDbInterval = config.system.WriteFarmPowerToDbInterval;
+                    WritePowerOnValueChange = config.system.WriteFarmPowerOnValueChange;
+                }
+                if (sensor.Type == SensorType.PoultryMainElectricPower)
+                {
+                    WriteToDbAways = config.system.WriteMainPowerToDbAlways;
+                    WriteToDbInterval = config.system.WriteMainPowerToDbInterval;
+                    WritePowerOnValueChange = config.system.WriteMainPowerOnValueChange;
+
+                }
+                if (sensor.Type == SensorType.PoultryBackupElectricPower)
+                {
+                    WriteToDbAways = config.system.WriteBackupPowerToDbAlways;
+                    WriteToDbInterval = config.system.WriteBackupPowerToDbInterval;
+                    WritePowerOnValueChange = config.system.WriteBackupPowerOnValueChange;
+                }
+                if ((sensor.IsWatched || WriteToDbAways) && (sensor.Values.Count == 0 || sensor.LastSavedRead == null || (WritePowerOnValueChange && sensor.LastSavedRead.Value != Payload) || sensor.LastSavedRead.ReadDate.IsElapsed(WriteToDbInterval))) //Writable to db.
                 {
                     var newId = await DbProcessor.WriteSensorValueToDbAsync(sensor, (double)Payload, Now);
                     if (newId > 0)
