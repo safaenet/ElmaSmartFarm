@@ -277,6 +277,12 @@
     "not_alive_watch_timeout": 100,
     "invalid_data_watch_timeout": 100,
     "alarm": {
+      "invalid_data_alarm_enable": true,
+      "invalid_data_alarm_first_time": 5,
+      "invalid_data_alarm_every": 5,
+      "invalid_data_alarm_snooze": 5,
+      "invalid_data_alarm_count_in_cycle": 3,
+
       "low_battery_alarm_enable": true,
       "low_battery_alarm_first_time": 5,
       "low_battery_alarm_every": 5,
@@ -304,6 +310,12 @@
     "not_alive_watch_timeout": 100,
     "invalid_data_watch_timeout": 100,
     "alarm": {
+      "invalid_data_alarm_enable": true,
+      "invalid_data_alarm_first_time": 5,
+      "invalid_data_alarm_every": 5,
+      "invalid_data_alarm_snooze": 5,
+      "invalid_data_alarm_count_in_cycle": 3,
+
       "low_battery_alarm_enable": true,
       "low_battery_alarm_first_time": 5,
       "low_battery_alarm_every": 5,
@@ -331,6 +343,12 @@
     "not_alive_watch_timeout": 100,
     "invalid_data_watch_timeout": 100,
     "alarm": {
+      "invalid_data_alarm_enable": true,
+      "invalid_data_alarm_first_time": 5,
+      "invalid_data_alarm_every": 5,
+      "invalid_data_alarm_snooze": 5,
+      "invalid_data_alarm_count_in_cycle": 3,
+
       "low_battery_alarm_enable": true,
       "low_battery_alarm_first_time": 5,
       "low_battery_alarm_every": 5,

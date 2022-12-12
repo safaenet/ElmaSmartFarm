@@ -288,6 +288,11 @@ public class System
         WriteFarmPowerToDbAlways = bool.Parse(SettingsDataAccess.AppConfiguration().GetSection("farm_power:write_to_db_always").Value ?? "false");
         FarmPowerNotAliveWatchTimeout = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("farm_power:not_alive_watch_timeout").Value ?? "300");
         FarmPowerInvalidDataWatchTimeout = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("farm_power:invalid_data_watch_timeout").Value ?? "300");
+        AlarmFarmPowerInvalidDataEnable = bool.Parse(SettingsDataAccess.AppConfiguration().GetSection("farm_power:alarm:invalid_data_alarm_enable").Value ?? "300");
+        AlarmFarmPowerInvalidDataFirstTime = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("farm_power:alarm:invalid_data_alarm_first_time").Value ?? "300");
+        AlarmFarmPowerInvalidDataEvery = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("farm_power:alarm:invalid_data_alarm_every").Value ?? "300");
+        AlarmFarmPowerInvalidDataSnooze = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("farm_power:alarm:invalid_data_alarm_snooze").Value ?? "300");
+        AlarmFarmPowerInvalidDataCountInCycle = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("farm_power:alarm:invalid_data_alarm_count_in_cycle").Value ?? "300");
         AlarmFarmPowerLowBatteryEnable = bool.Parse(SettingsDataAccess.AppConfiguration().GetSection("farm_power:alarm:low_battery_alarm_enable").Value ?? "true");
         AlarmFarmPowerLowBatteryFirstTime = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("farm_power:alarm:low_battery_alarm_first_time").Value ?? "120");
         AlarmFarmPowerLowBatteryEvery = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("farm_power:alarm:low_battery_alarm_every").Value ?? "300");
@@ -310,6 +315,11 @@ public class System
         WriteMainPowerToDbAlways = bool.Parse(SettingsDataAccess.AppConfiguration().GetSection("main_power:write_to_db_always").Value ?? "false");
         MainPowerNotAliveWatchTimeout = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("main_power:not_alive_watch_timeout").Value ?? "300");
         MainPowerInvalidDataWatchTimeout = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("main_power:invalid_data_watch_timeout").Value ?? "300");
+        AlarmMainPowerInvalidDataEnable = bool.Parse(SettingsDataAccess.AppConfiguration().GetSection("main_power:alarm:invalid_data_alarm_enable").Value ?? "300");
+        AlarmMainPowerInvalidDataFirstTime = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("main_power:alarm:invalid_data_alarm_first_time").Value ?? "300");
+        AlarmMainPowerInvalidDataEvery = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("main_power:alarm:invalid_data_alarm_every").Value ?? "300");
+        AlarmMainPowerInvalidDataSnooze = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("main_power:alarm:invalid_data_alarm_snooze").Value ?? "300");
+        AlarmMainPowerInvalidDataCountInCycle = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("main_power:alarm:invalid_data_alarm_count_in_cycle").Value ?? "300");
         AlarmMainPowerLowBatteryEnable = bool.Parse(SettingsDataAccess.AppConfiguration().GetSection("main_power:alarm:low_battery_alarm_enable").Value ?? "true");
         AlarmMainPowerLowBatteryFirstTime = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("main_power:alarm:low_battery_alarm_first_time").Value ?? "120");
         AlarmMainPowerLowBatteryEvery = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("main_power:alarm:low_battery_alarm_every").Value ?? "300");
@@ -332,6 +342,11 @@ public class System
         WriteBackupPowerToDbAlways = bool.Parse(SettingsDataAccess.AppConfiguration().GetSection("backup_power:write_to_db_always").Value ?? "false");
         BackupPowerNotAliveWatchTimeout = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("backup_power:not_alive_watch_timeout").Value ?? "300");
         BackupPowerInvalidDataWatchTimeout = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("backup_power:invalid_data_watch_timeout").Value ?? "300");
+        AlarmBackupPowerInvalidDataEnable = bool.Parse(SettingsDataAccess.AppConfiguration().GetSection("backup_power:alarm:invalid_data_alarm_enable").Value ?? "300");
+        AlarmBackupPowerInvalidDataFirstTime = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("backup_power:alarm:invalid_data_alarm_first_time").Value ?? "300");
+        AlarmBackupPowerInvalidDataEvery = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("backup_power:alarm:invalid_data_alarm_every").Value ?? "300");
+        AlarmBackupPowerInvalidDataSnooze = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("backup_power:alarm:invalid_data_alarm_snooze").Value ?? "300");
+        AlarmBackupPowerInvalidDataCountInCycle = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("backup_power:alarm:invalid_data_alarm_count_in_cycle").Value ?? "300");
         AlarmBackupPowerLowBatteryEnable = bool.Parse(SettingsDataAccess.AppConfiguration().GetSection("backup_power:alarm:low_battery_alarm_enable").Value ?? "true");
         AlarmBackupPowerLowBatteryFirstTime = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("backup_power:alarm:low_battery_alarm_first_time").Value ?? "120");
         AlarmBackupPowerLowBatteryEvery = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("backup_power:alarm:low_battery_alarm_every").Value ?? "300");
@@ -597,16 +612,25 @@ public class System
     public bool WriteFarmPowerToDbAlways { get; set; }
     public int FarmPowerNotAliveWatchTimeout { get; set; }
     public int FarmPowerInvalidDataWatchTimeout { get; set; }
+
+    public bool AlarmFarmPowerInvalidDataEnable { get; set; }
+    public int AlarmFarmPowerInvalidDataFirstTime { get; set; }
+    public int AlarmFarmPowerInvalidDataEvery { get; set; }
+    public int AlarmFarmPowerInvalidDataSnooze { get; set; }
+    public int AlarmFarmPowerInvalidDataCountInCycle { get; set; }
+
     public bool AlarmFarmPowerLowBatteryEnable { get; set; }
     public int AlarmFarmPowerLowBatteryFirstTime { get; set; }
     public int AlarmFarmPowerLowBatteryEvery { get; set; }
     public int AlarmFarmPowerLowBatterySnooze { get; set; }
     public int AlarmFarmPowerLowBatteryCountInCycle { get; set; }
+
     public bool AlarmFarmPowerNotAliveEnable { get; set; }
     public int AlarmFarmPowerNotAliveFirstTime { get; set; }
     public int AlarmFarmPowerNotAliveEvery { get; set; }
     public int AlarmFarmPowerNotAliveSnooze { get; set; }
     public int AlarmFarmPowerNotAliveCountInCycle { get; set; }
+
     public bool AlarmFarmPowerNoPowerEnable { get; set; }
     public int AlarmFarmPowerNoPowerFirstTime { get; set; }
     public int AlarmFarmPowerNoPowerEvery { get; set; }
@@ -621,6 +645,11 @@ public class System
     public bool WriteMainPowerToDbAlways { get; set; }
     public int MainPowerNotAliveWatchTimeout { get; set; }
     public int MainPowerInvalidDataWatchTimeout { get; set; }
+    public bool AlarmMainPowerInvalidDataEnable { get; set; }
+    public int AlarmMainPowerInvalidDataFirstTime { get; set; }
+    public int AlarmMainPowerInvalidDataEvery { get; set; }
+    public int AlarmMainPowerInvalidDataSnooze { get; set; }
+    public int AlarmMainPowerInvalidDataCountInCycle { get; set; }
     public bool AlarmMainPowerLowBatteryEnable { get; set; }
     public int AlarmMainPowerLowBatteryFirstTime { get; set; }
     public int AlarmMainPowerLowBatteryEvery { get; set; }
@@ -645,6 +674,11 @@ public class System
     public bool WriteBackupPowerToDbAlways { get; set; }
     public int BackupPowerNotAliveWatchTimeout { get; set; }
     public int BackupPowerInvalidDataWatchTimeout { get; set; }
+    public bool AlarmBackupPowerInvalidDataEnable { get; set; }
+    public int AlarmBackupPowerInvalidDataFirstTime { get; set; }
+    public int AlarmBackupPowerInvalidDataEvery { get; set; }
+    public int AlarmBackupPowerInvalidDataSnooze { get; set; }
+    public int AlarmBackupPowerInvalidDataCountInCycle { get; set; }
     public bool AlarmBackupPowerLowBatteryEnable { get; set; }
     public int AlarmBackupPowerLowBatteryFirstTime { get; set; }
     public int AlarmBackupPowerLowBatteryEvery { get; set; }

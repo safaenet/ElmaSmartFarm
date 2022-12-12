@@ -3200,3 +3200,23 @@ System.InvalidOperationException: Nullable object must have a value.
 2022-12-10 00:53:26.804 +03:30 [INF] ===============  End of observation process (1.8507 ms) ===============
 2022-12-10 00:53:31.810 +03:30 [INF] ===============  Start observation process ===============
 2022-12-10 00:53:31.812 +03:30 [INF] ===============  End of observation process (1.1901 ms) ===============
+2022-12-12 16:25:29.366 +03:30 [INF] Starting up the Service...
+2022-12-12 16:25:32.235 +03:30 [INF] Loading poultries...
+2022-12-12 16:25:34.243 +03:30 [INF] Poultries loaded. (2007.4628 ms)
+2022-12-12 16:25:34.251 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 5bf56e9b-8ed3-4e12-be0e-6f0c28eac6c4.
+2022-12-12 16:25:34.311 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 5bf56e9b-8ed3-4e12-be0e-6f0c28eac6c4.
+2022-12-12 16:25:34.329 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2022-12-12 16:25:34.330 +03:30 [INF] ===============  Start observation process ===============
+2022-12-12 16:25:34.344 +03:30 [INF] ===============  End of observation process (13.9908 ms) ===============
+2022-12-12 16:25:39.352 +03:30 [INF] ===============  Start observation process ===============
+2022-12-12 16:25:39.353 +03:30 [INF] ===============  End of observation process (0.8146 ms) ===============
+2022-12-12 16:25:44.366 +03:30 [INF] ===============  Start observation process ===============
+2022-12-12 16:25:44.368 +03:30 [INF] ===============  End of observation process (1.4713 ms) ===============
+2022-12-12 16:25:49.376 +03:30 [INF] ===============  Start observation process ===============
+2022-12-12 16:25:49.378 +03:30 [INF] ===============  End of observation process (1.3804 ms) ===============
+2022-12-12 16:25:54.389 +03:30 [INF] ===============  Start observation process ===============
+2022-12-12 16:25:54.391 +03:30 [INF] ===============  End of observation process (1.8431 ms) ===============
+2022-12-12 16:25:59.404 +03:30 [INF] ===============  Start observation process ===============
+2022-12-12 16:25:59.406 +03:30 [INF] ===============  End of observation process (1.502 ms) ===============
+2022-12-12 16:26:04.419 +03:30 [INF] ===============  Start observation process ===============
+2022-12-12 16:26:04.421 +03:30 [INF] ===============  End of observation process (1.4041 ms) ===============
