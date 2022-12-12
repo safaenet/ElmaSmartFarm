@@ -9,6 +9,7 @@
     "read_interval": 15,
     "write_to_db_interval": 10, //(Seconds)
     "write_to_db_always": true,
+    "not_alive_watch_timeout": 100,
     "alarm": {
       "low_battery_alarm_enable": true,
       "low_battery_alarm_first_time": 5,
@@ -27,6 +28,8 @@
     "farm_max_value": 35, //Wont accept the incoming data if higher than this value. (Celsius)
     "outdoor_min_value": -10,
     "outdoor_max_value": 60,
+    "invalid_data_watch_timeout": 100,
+    "invalid_value_watch_timeout": 100,
     "alarm": {
       "invalid_data_alarm_enable": true,
       "invalid_data_alarm_first_time": 5,
@@ -56,6 +59,8 @@
   "humidity": {
     "min_value": 0, //Wont accept the incoming data if lower than this value. (Percent)
     "max_value": 100, //Wont accept the incoming data if higher than this value. (Percent)
+    "invalid_data_watch_timeout": 100,
+    "invalid_value_watch_timeout": 100,
     "alarm": {
       "invalid_data_alarm_enable": true,
       "invalid_data_alarm_first_time": 5,
@@ -85,6 +90,8 @@
   "ambient_light": {
     "min_value": 0, //Wont accept the incoming data if lower than this value. (Percent)
     "max_value": 100, //Wont accept the incoming data if higher than this value. (Percent)
+    "invalid_data_watch_timeout": 100,
+    "invalid_value_watch_timeout": 100,
     "alarm": {
       "invalid_data_alarm_enable": true,
       "invalid_data_alarm_first_time": 5,
@@ -126,6 +133,8 @@
   "ammonia": {
     "min_value": 0, //Wont accept the incoming data if lower than this value. (Percent)
     "max_value": 100, //Wont accept the incoming data if higher than this value. (Percent)
+    "invalid_data_watch_timeout": 100,
+    "invalid_value_watch_timeout": 100,
     "alarm": {
       "invalid_data_alarm_enable": true,
       "invalid_data_alarm_first_time": 5,
@@ -155,6 +164,8 @@
   "co2": {
     "min_value": 0, //Wont accept the incoming data if lower than this value. (Percent)
     "max_value": 100, //Wont accept the incoming data if higher than this value. (Percent)
+    "invalid_data_watch_timeout": 100,
+    "invalid_value_watch_timeout": 100,
     "alarm": {
       "invalid_data_alarm_enable": true,
       "invalid_data_alarm_first_time": 5,
@@ -183,6 +194,9 @@
   },
   "commute": {
     "write_to_db_always": true,
+    "not_alive_watch_timeout": 100,
+    "invalid_data_watch_timeout": 100,
+    "invalid_value_watch_timeout": 100,
     "alarm": {
       "low_battery_alarm_enable": true,
       "low_battery_alarm_first_time": 5,
@@ -211,6 +225,7 @@
   },
   "feed": {
     "write_to_db_always": true,
+    "not_alive_watch_timeout": 100,
     "alarm": {
       "low_battery_alarm_enable": true,
       "low_battery_alarm_first_time": 5,
@@ -233,6 +248,7 @@
   },
   "checkup": {
     "write_to_db_always": true,
+    "not_alive_watch_timeout": 100,
     "alarm": {
       "low_battery_alarm_enable": true,
       "low_battery_alarm_first_time": 5,
@@ -258,6 +274,8 @@
     "write_on_value_change": true,
     "write_to_db_interval": 30, //(Seconds)
     "write_to_db_always": true,
+    "not_alive_watch_timeout": 100,
+    "invalid_data_watch_timeout": 100,
     "alarm": {
       "low_battery_alarm_enable": true,
       "low_battery_alarm_first_time": 5,
@@ -283,6 +301,8 @@
     "write_on_value_change": true,
     "write_to_db_interval": 30, //(Seconds)
     "write_to_db_always": true,
+    "not_alive_watch_timeout": 100,
+    "invalid_data_watch_timeout": 100,
     "alarm": {
       "low_battery_alarm_enable": true,
       "low_battery_alarm_first_time": 5,
@@ -308,6 +328,8 @@
     "write_on_value_change": true,
     "write_to_db_interval": 30, //(Seconds)
     "write_to_db_always": true,
+    "not_alive_watch_timeout": 100,
+    "invalid_data_watch_timeout": 100,
     "alarm": {
       "low_battery_alarm_enable": true,
       "low_battery_alarm_first_time": 5,

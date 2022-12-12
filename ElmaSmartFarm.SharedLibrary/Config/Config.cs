@@ -68,24 +68,27 @@ public class System
         MaxSensorReadCount = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("max_sensor_read_count").Value ?? "10");
         SensorLowBatteryLevel = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("sensor_low_battery_level").Value ?? "10");
 
-        ScalarReadInterval = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("temperature:read_interval").Value ?? "30");
-        WriteScalarToDbInterval = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("temperature:write_to_db_interval").Value ?? "30");
-        WriteScalarToDbAlways = bool.Parse(SettingsDataAccess.AppConfiguration().GetSection("temperature:write_to_db_always").Value ?? "false");
-        AlarmScalarLowBatteryEnable = bool.Parse(SettingsDataAccess.AppConfiguration().GetSection("temperature:alarm:low_battery_alarm_enable").Value ?? "true");
-        AlarmScalarLowBatteryFirstTime = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("temperature:alarm:low_battery_alarm_first_time").Value ?? "120");
-        AlarmScalarLowBatteryEvery = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("temperature:alarm:low_battery_alarm_every").Value ?? "300");
-        AlarmScalarLowBatterySnooze = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("temperature:alarm:low_battery_alarm_snooze").Value ?? "3000");
-        AlarmScalarLowBatteryCountInCycle = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("temperature:alarm:low_battery_alarm_count_in_cycle").Value ?? "3");
-        AlarmScalarNotAliveEnable = bool.Parse(SettingsDataAccess.AppConfiguration().GetSection("temperature:alarm:not_alive_alarm_enable").Value ?? "true");
-        AlarmScalarNotAliveFirstTime = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("temperature:alarm:not_alive_alarm_first_time").Value ?? "120");
-        AlarmScalarNotAliveEvery = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("temperature:alarm:not_alive_alarm_every").Value ?? "300");
-        AlarmScalarNotAliveSnooze = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("temperature:alarm:not_alive_alarm_snooze").Value ?? "3000");
-        AlarmScalarNotAliveCountInCycle = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("temperature:alarm:not_alive_alarm_count_in_cycle").Value ?? "3");
+        ScalarReadInterval = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("scalar_general:read_interval").Value ?? "30");
+        WriteScalarToDbInterval = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("scalar_general:write_to_db_interval").Value ?? "30");
+        WriteScalarToDbAlways = bool.Parse(SettingsDataAccess.AppConfiguration().GetSection("scalar_general:write_to_db_always").Value ?? "false");
+        ScalarNotAliveWatchTimeout= int.Parse(SettingsDataAccess.AppConfiguration().GetSection("scalar_general:not_alive_watch_timeout").Value ?? "300");
+        AlarmScalarLowBatteryEnable = bool.Parse(SettingsDataAccess.AppConfiguration().GetSection("scalar_general:alarm:low_battery_alarm_enable").Value ?? "true");
+        AlarmScalarLowBatteryFirstTime = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("scalar_general:alarm:low_battery_alarm_first_time").Value ?? "120");
+        AlarmScalarLowBatteryEvery = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("scalar_general:alarm:low_battery_alarm_every").Value ?? "300");
+        AlarmScalarLowBatterySnooze = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("scalar_general:alarm:low_battery_alarm_snooze").Value ?? "3000");
+        AlarmScalarLowBatteryCountInCycle = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("scalar_general:alarm:low_battery_alarm_count_in_cycle").Value ?? "3");
+        AlarmScalarNotAliveEnable = bool.Parse(SettingsDataAccess.AppConfiguration().GetSection("scalar_general:alarm:not_alive_alarm_enable").Value ?? "true");
+        AlarmScalarNotAliveFirstTime = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("scalar_general:alarm:not_alive_alarm_first_time").Value ?? "120");
+        AlarmScalarNotAliveEvery = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("scalar_general:alarm:not_alive_alarm_every").Value ?? "300");
+        AlarmScalarNotAliveSnooze = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("scalar_general:alarm:not_alive_alarm_snooze").Value ?? "3000");
+        AlarmScalarNotAliveCountInCycle = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("scalar_general:alarm:not_alive_alarm_count_in_cycle").Value ?? "3");
 
         FarmTempMinValue = double.Parse(SettingsDataAccess.AppConfiguration().GetSection("temperature:farm_min_value").Value ?? "20");
         FarmTempMaxValue = double.Parse(SettingsDataAccess.AppConfiguration().GetSection("temperature:farm_max_value").Value ?? "35");
         OutdoorTempMinValue = double.Parse(SettingsDataAccess.AppConfiguration().GetSection("temperature:outdoor_min_value").Value ?? "-10");
         OutdoorTempMaxValue = double.Parse(SettingsDataAccess.AppConfiguration().GetSection("temperature:outdoor_max_value").Value ?? "60");
+        TempInvalidDataWatchTimeout = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("temperature:invalid_data_watch_timeout").Value ?? "300");
+        TempInvalidValueWatchTimeout = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("temperature:invalid_value_watch_timeout").Value ?? "300");
         AlarmTempInvalidDataEnable = bool.Parse(SettingsDataAccess.AppConfiguration().GetSection("temperature:alarm:invalid_data_alarm_enable").Value ?? "true");
         AlarmTempInvalidDataFirstTime = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("temperature:alarm:invalid_data_alarm_first_time").Value ?? "120");
         AlarmTempInvalidDataEvery = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("temperature:alarm:invalid_data_alarm_every").Value ?? "300");
@@ -110,6 +113,8 @@ public class System
 
         HumidMinValue = double.Parse(SettingsDataAccess.AppConfiguration().GetSection("humidity:min_value").Value ?? "20");
         HumidMaxValue = double.Parse(SettingsDataAccess.AppConfiguration().GetSection("humidity:max_value").Value ?? "35");
+        HumidInvalidDataWatchTimeout = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("humidity:invalid_data_watch_timeout").Value ?? "300");
+        HumidInvalidValueWatchTimeout = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("humidity:invalid_value_watch_timeout").Value ?? "300");
         AlarmHumidInvalidDataEnable = bool.Parse(SettingsDataAccess.AppConfiguration().GetSection("humidity:alarm:invalid_data_alarm_enable").Value ?? "true");
         AlarmHumidInvalidDataFirstTime = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("humidity:alarm:invalid_data_alarm_first_time").Value ?? "120");
         AlarmHumidInvalidDataEvery = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("humidity:alarm:invalid_data_alarm_every").Value ?? "300");
@@ -133,6 +138,8 @@ public class System
 
         AmbientLightMinValue = double.Parse(SettingsDataAccess.AppConfiguration().GetSection("ambient_light:min_value").Value ?? "20");
         AmbientLightMaxValue = double.Parse(SettingsDataAccess.AppConfiguration().GetSection("ambient_light:max_value").Value ?? "35");
+        AmbientLightInvalidDataWatchTimeout = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("ambient_light:invalid_data_watch_timeout").Value ?? "300");
+        AmbientLightInvalidValueWatchTimeout = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("ambient_light:invalid_value_watch_timeout").Value ?? "300");
         AlarmAmbientLightInvalidDataEnable = bool.Parse(SettingsDataAccess.AppConfiguration().GetSection("ambient_light:alarm:invalid_data_alarm_enable").Value ?? "true");
         AlarmAmbientLightInvalidDataFirstTime = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("ambient_light:alarm:invalid_data_alarm_first_time").Value ?? "120");
         AlarmAmbientLightInvalidDataEvery = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("ambient_light:alarm:invalid_data_alarm_every").Value ?? "300");
@@ -166,6 +173,8 @@ public class System
 
         AmmoniaMinValue = double.Parse(SettingsDataAccess.AppConfiguration().GetSection("ammonia:min_value").Value ?? "0");
         AmmoniaMaxValue = double.Parse(SettingsDataAccess.AppConfiguration().GetSection("ammonia:max_value").Value ?? "100");
+        AmmoniaInvalidDataWatchTimeout = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("ammonia:invalid_data_watch_timeout").Value ?? "300");
+        AmmoniaInvalidValueWatchTimeout = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("ammonia:invalid_value_watch_timeout").Value ?? "300");
         AlarmAmmoniaInvalidDataEnable = bool.Parse(SettingsDataAccess.AppConfiguration().GetSection("ammonia:alarm:invalid_data_alarm_enable").Value ?? "true");
         AlarmAmmoniaInvalidDataFirstTime = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("ammonia:alarm:invalid_data_alarm_first_time").Value ?? "120");
         AlarmAmmoniaInvalidDataEvery = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("ammonia:alarm:invalid_data_alarm_every").Value ?? "300");
@@ -189,6 +198,8 @@ public class System
 
         Co2MinValue = double.Parse(SettingsDataAccess.AppConfiguration().GetSection("co2:min_value").Value ?? "0");
         Co2MaxValue = double.Parse(SettingsDataAccess.AppConfiguration().GetSection("co2:max_value").Value ?? "100");
+        Co2InvalidDataWatchTimeout = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("co2:invalid_data_watch_timeout").Value ?? "300");
+        Co2InvalidValueWatchTimeout = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("co2:invalid_value_watch_timeout").Value ?? "300");
         AlarmCo2InvalidDataEnable = bool.Parse(SettingsDataAccess.AppConfiguration().GetSection("co2:alarm:invalid_data_alarm_enable").Value ?? "true");
         AlarmCo2InvalidDataFirstTime = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("co2:alarm:invalid_data_alarm_first_time").Value ?? "120");
         AlarmCo2InvalidDataEvery = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("co2:alarm:invalid_data_alarm_every").Value ?? "300");
@@ -211,6 +222,9 @@ public class System
         AlarmCo2LowValueCountInCycle = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("co2:alarm:low_value_alarm_count_in_cycle").Value ?? "3");
 
         WriteCommuteToDbAlways = bool.Parse(SettingsDataAccess.AppConfiguration().GetSection("commute:write_to_db_always").Value ?? "false");
+        CommuteNotAliveWatchTimeout = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("commute:not_alive_watch_timeout").Value ?? "300");
+        CommuteInvalidDataWatchTimeout = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("commute:invalid_data_watch_timeout").Value ?? "300");
+        CommuteInvalidValueWatchTimeout = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("commute:invalid_value_watch_timeout").Value ?? "300");
         AlarmCommuteLowBatteryEnable = bool.Parse(SettingsDataAccess.AppConfiguration().GetSection("commute:alarm:low_battery_alarm_enable").Value ?? "true");
         AlarmCommuteLowBatteryFirstTime = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("commute:alarm:low_battery_alarm_first_time").Value ?? "120");
         AlarmCommuteLowBatteryEvery = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("commute:alarm:low_battery_alarm_every").Value ?? "300");
@@ -233,6 +247,7 @@ public class System
         AlarmCommuteInvalidValueCountInCycle = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("commute:alarm:invalid_value_alarm_count_in_cycle").Value ?? "3");
 
         WriteFeedToDbAlways = bool.Parse(SettingsDataAccess.AppConfiguration().GetSection("feed:write_to_db_always").Value ?? "false");
+        FeedNotAliveWatchTimeout = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("feed:not_alive_watch_timeout").Value ?? "300");
         AlarmFeedLowBatteryEnable = bool.Parse(SettingsDataAccess.AppConfiguration().GetSection("feed:alarm:low_battery_alarm_enable").Value ?? "true");
         AlarmFeedLowBatteryFirstTime = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("feed:alarm:low_battery_alarm_first_time").Value ?? "120");
         AlarmFeedLowBatteryEvery = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("feed:alarm:low_battery_alarm_every").Value ?? "300");
@@ -250,6 +265,7 @@ public class System
         AlarmFeedLongNoFeedCountInCycle = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("feed:alarm:long_nofeed_alarm_count_in_cycle").Value ?? "3");
 
         WriteCheckupToDbAlways = bool.Parse(SettingsDataAccess.AppConfiguration().GetSection("checkup:write_to_db_always").Value ?? "false");
+        CheckupNotAliveWatchTimeout = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("checkup:not_alive_watch_timeout").Value ?? "300");
         AlarmCheckupLowBatteryEnable = bool.Parse(SettingsDataAccess.AppConfiguration().GetSection("checkup:alarm:low_battery_alarm_enable").Value ?? "true");
         AlarmCheckupLowBatteryFirstTime = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("checkup:alarm:low_battery_alarm_first_time").Value ?? "120");
         AlarmCheckupLowBatteryEvery = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("checkup:alarm:low_battery_alarm_every").Value ?? "300");
@@ -270,6 +286,8 @@ public class System
         WriteFarmPowerOnValueChange= bool.Parse(SettingsDataAccess.AppConfiguration().GetSection("farm_power:write_on_value_change").Value ?? "true");
         WriteFarmPowerToDbInterval=int.Parse(SettingsDataAccess.AppConfiguration().GetSection("farm_power:write_to_db_interval").Value ?? "60");
         WriteFarmPowerToDbAlways = bool.Parse(SettingsDataAccess.AppConfiguration().GetSection("farm_power:write_to_db_always").Value ?? "false");
+        FarmPowerNotAliveWatchTimeout = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("farm_power:not_alive_watch_timeout").Value ?? "300");
+        FarmPowerInvalidDataWatchTimeout = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("farm_power:invalid_data_watch_timeout").Value ?? "300");
         AlarmFarmPowerLowBatteryEnable = bool.Parse(SettingsDataAccess.AppConfiguration().GetSection("farm_power:alarm:low_battery_alarm_enable").Value ?? "true");
         AlarmFarmPowerLowBatteryFirstTime = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("farm_power:alarm:low_battery_alarm_first_time").Value ?? "120");
         AlarmFarmPowerLowBatteryEvery = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("farm_power:alarm:low_battery_alarm_every").Value ?? "300");
@@ -290,6 +308,8 @@ public class System
         WriteMainPowerOnValueChange= bool.Parse(SettingsDataAccess.AppConfiguration().GetSection("main_power:write_on_value_change").Value ?? "true");
         WriteMainPowerToDbInterval=int.Parse(SettingsDataAccess.AppConfiguration().GetSection("main_power:write_to_db_interval").Value ?? "60");
         WriteMainPowerToDbAlways = bool.Parse(SettingsDataAccess.AppConfiguration().GetSection("main_power:write_to_db_always").Value ?? "false");
+        MainPowerNotAliveWatchTimeout = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("main_power:not_alive_watch_timeout").Value ?? "300");
+        MainPowerInvalidDataWatchTimeout = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("main_power:invalid_data_watch_timeout").Value ?? "300");
         AlarmMainPowerLowBatteryEnable = bool.Parse(SettingsDataAccess.AppConfiguration().GetSection("main_power:alarm:low_battery_alarm_enable").Value ?? "true");
         AlarmMainPowerLowBatteryFirstTime = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("main_power:alarm:low_battery_alarm_first_time").Value ?? "120");
         AlarmMainPowerLowBatteryEvery = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("main_power:alarm:low_battery_alarm_every").Value ?? "300");
@@ -310,6 +330,8 @@ public class System
         WriteBackupPowerOnValueChange= bool.Parse(SettingsDataAccess.AppConfiguration().GetSection("backup_power:write_on_value_change").Value ?? "true");
         WriteBackupPowerToDbInterval=int.Parse(SettingsDataAccess.AppConfiguration().GetSection("backup_power:write_to_db_interval").Value ?? "60");
         WriteBackupPowerToDbAlways = bool.Parse(SettingsDataAccess.AppConfiguration().GetSection("backup_power:write_to_db_always").Value ?? "false");
+        BackupPowerNotAliveWatchTimeout = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("backup_power:not_alive_watch_timeout").Value ?? "300");
+        BackupPowerInvalidDataWatchTimeout = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("backup_power:invalid_data_watch_timeout").Value ?? "300");
         AlarmBackupPowerLowBatteryEnable = bool.Parse(SettingsDataAccess.AppConfiguration().GetSection("backup_power:alarm:low_battery_alarm_enable").Value ?? "true");
         AlarmBackupPowerLowBatteryFirstTime = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("backup_power:alarm:low_battery_alarm_first_time").Value ?? "120");
         AlarmBackupPowerLowBatteryEvery = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("backup_power:alarm:low_battery_alarm_every").Value ?? "300");
@@ -341,6 +363,7 @@ public class System
     public double ScalarReadInterval { get; set; }
     public int WriteScalarToDbInterval { get; set; }
     public bool WriteScalarToDbAlways { get; set; }
+    public int ScalarNotAliveWatchTimeout { get; set; }
     public bool AlarmScalarLowBatteryEnable { get; set; }
     public int AlarmScalarLowBatteryFirstTime { get; set; }
     public int AlarmScalarLowBatteryEvery { get; set; }
@@ -358,6 +381,8 @@ public class System
     public double FarmTempMaxValue { get; set; }
     public double OutdoorTempMinValue { get; set; }
     public double OutdoorTempMaxValue { get; set; }
+    public int TempInvalidDataWatchTimeout { get; set; }
+    public int TempInvalidValueWatchTimeout { get; set; }
     public bool AlarmTempInvalidDataEnable { get; set; }
     public int AlarmTempInvalidDataFirstTime { get; set; }
     public int AlarmTempInvalidDataEvery { get; set; }
@@ -383,6 +408,8 @@ public class System
     #region Humidity Settings
     public double HumidMinValue { get; set; }
     public double HumidMaxValue { get; set; }
+    public int HumidInvalidDataWatchTimeout { get; set; }
+    public int HumidInvalidValueWatchTimeout { get; set; }
     public bool AlarmHumidInvalidDataEnable { get; set; }
     public int AlarmHumidInvalidDataFirstTime { get; set; }
     public int AlarmHumidInvalidDataEvery { get; set; }
@@ -408,6 +435,8 @@ public class System
     #region Ambient Light Settings
     public double AmbientLightMinValue { get; set; }
     public double AmbientLightMaxValue { get; set; }
+    public int AmbientLightInvalidDataWatchTimeout { get; set; }
+    public int AmbientLightInvalidValueWatchTimeout { get; set; }
     public bool AlarmAmbientLightInvalidDataEnable { get; set; }
     public int AlarmAmbientLightInvalidDataFirstTime { get; set; }
     public int AlarmAmbientLightInvalidDataEvery { get; set; }
@@ -443,6 +472,8 @@ public class System
     #region Ammonia Settings
     public double AmmoniaMinValue { get; set; }
     public double AmmoniaMaxValue { get; set; }
+    public int AmmoniaInvalidDataWatchTimeout { get; set; }
+    public int AmmoniaInvalidValueWatchTimeout { get; set; }
     public bool AlarmAmmoniaInvalidDataEnable { get; set; }
     public int AlarmAmmoniaInvalidDataFirstTime { get; set; }
     public int AlarmAmmoniaInvalidDataEvery { get; set; }
@@ -468,6 +499,8 @@ public class System
     #region Co2 Settings
     public double Co2MinValue { get; set; }
     public double Co2MaxValue { get; set; }
+    public int Co2InvalidDataWatchTimeout { get; set; }
+    public int Co2InvalidValueWatchTimeout { get; set; }
     public bool AlarmCo2InvalidDataEnable { get; set; }
     public int AlarmCo2InvalidDataFirstTime { get; set; }
     public int AlarmCo2InvalidDataEvery { get; set; }
@@ -492,6 +525,9 @@ public class System
 
     #region Commute Settings
     public bool WriteCommuteToDbAlways { get; set; }
+    public int CommuteNotAliveWatchTimeout { get; set; }
+    public int CommuteInvalidDataWatchTimeout { get; set; }
+    public int CommuteInvalidValueWatchTimeout { get; set; }
     public bool AlarmCommuteLowBatteryEnable { get; set; }
     public int AlarmCommuteLowBatteryFirstTime { get; set; }
     public int AlarmCommuteLowBatteryEvery { get; set; }
@@ -516,6 +552,7 @@ public class System
 
     #region Feed Settings
     public bool WriteFeedToDbAlways { get; set; }
+    public int FeedNotAliveWatchTimeout { get; set; }
     public bool AlarmFeedLowBatteryEnable { get; set; }
     public int AlarmFeedLowBatteryFirstTime { get; set; }
     public int AlarmFeedLowBatteryEvery { get; set; }
@@ -535,6 +572,7 @@ public class System
 
     #region Checkup Settings
     public bool WriteCheckupToDbAlways { get; set; }
+    public int CheckupNotAliveWatchTimeout { get; set; }
     public bool AlarmCheckupLowBatteryEnable { get; set; }
     public int AlarmCheckupLowBatteryFirstTime { get; set; }
     public int AlarmCheckupLowBatteryEvery { get; set; }
@@ -557,6 +595,8 @@ public class System
     public bool WriteFarmPowerOnValueChange { get; set; }
     public int WriteFarmPowerToDbInterval { get; set; }
     public bool WriteFarmPowerToDbAlways { get; set; }
+    public int FarmPowerNotAliveWatchTimeout { get; set; }
+    public int FarmPowerInvalidDataWatchTimeout { get; set; }
     public bool AlarmFarmPowerLowBatteryEnable { get; set; }
     public int AlarmFarmPowerLowBatteryFirstTime { get; set; }
     public int AlarmFarmPowerLowBatteryEvery { get; set; }
@@ -579,6 +619,8 @@ public class System
     public bool WriteMainPowerOnValueChange { get; set; }
     public int WriteMainPowerToDbInterval { get; set; }
     public bool WriteMainPowerToDbAlways { get; set; }
+    public int MainPowerNotAliveWatchTimeout { get; set; }
+    public int MainPowerInvalidDataWatchTimeout { get; set; }
     public bool AlarmMainPowerLowBatteryEnable { get; set; }
     public int AlarmMainPowerLowBatteryFirstTime { get; set; }
     public int AlarmMainPowerLowBatteryEvery { get; set; }
@@ -601,6 +643,8 @@ public class System
     public bool WriteBackupPowerOnValueChange { get; set; }
     public int WriteBackupPowerToDbInterval { get; set; }
     public bool WriteBackupPowerToDbAlways { get; set; }
+    public int BackupPowerNotAliveWatchTimeout { get; set; }
+    public int BackupPowerInvalidDataWatchTimeout { get; set; }
     public bool AlarmBackupPowerLowBatteryEnable { get; set; }
     public int AlarmBackupPowerLowBatteryFirstTime { get; set; }
     public int AlarmBackupPowerLowBatteryEvery { get; set; }

@@ -25,39 +25,64 @@ public partial class Worker
                         {
                             foreach (var e in sensor.ActiveErrors)
                             {
-                                if (sensor.WatchTemperature && (e.ErrorType == SensorErrorType.InvalidTemperatureData || e.ErrorType == SensorErrorType.InvalidTemperatureValue))
+                                if (e.ErrorType == SensorErrorType.InvalidTemperatureData)
                                 {
-                                    CheckForInform(sensor, sensor.WatchTemperature, e, Now);
-                                    sensor.WatchTemperature = !CheckToPutOutOfWatch(e, sensor.IsWatched, sensor.WatchTemperature, sensor.IsInPeriod, 5);
+                                    if (config.system.AlarmTempInvalidDataEnable && (sensor.WatchTemperature || e.AlarmInformCount < config.system.AlarmTempInvalidDataCountInCycle) && e.DateHappened.IsElapsed(config.system.AlarmTempInvalidDataFirstTime)) AlarmableSensorErrors.Add(e);
+                                    sensor.WatchTemperature = !CheckToUnWatch(e, sensor.IsWatched, sensor.WatchTemperature, sensor.IsInPeriod, config.system.TempInvalidDataWatchTimeout);
                                 }
-                                else if (sensor.WatchHumidity && (e.ErrorType == SensorErrorType.InvalidHumidityData || e.ErrorType == SensorErrorType.InvalidHumidityValue))
+                                else if (e.ErrorType == SensorErrorType.InvalidTemperatureValue)
                                 {
-                                    CheckForInform(sensor, sensor.WatchHumidity, e, Now);
-                                    sensor.WatchHumidity = !CheckToPutOutOfWatch(e, sensor.IsWatched, sensor.WatchHumidity, sensor.IsInPeriod, 5);
+                                    if (config.system.AlarmTempInvalidValueEnable && (sensor.WatchTemperature || e.AlarmInformCount < config.system.AlarmTempInvalidValueCountInCycle) && e.DateHappened.IsElapsed(config.system.AlarmTempInvalidValueFirstTime)) AlarmableSensorErrors.Add(e);
+                                    sensor.WatchTemperature = !CheckToUnWatch(e, sensor.IsWatched, sensor.WatchTemperature, sensor.IsInPeriod, config.system.TempInvalidValueWatchTimeout);
                                 }
-                                else if (sensor.WatchLight && (e.ErrorType == SensorErrorType.InvalidLightData || e.ErrorType == SensorErrorType.InvalidLightValue))
+                                else if (e.ErrorType == SensorErrorType.InvalidHumidityData)
                                 {
-                                    CheckForInform(sensor, sensor.WatchLight, e, Now);
-                                    sensor.WatchLight = !CheckToPutOutOfWatch(e, sensor.IsWatched, sensor.WatchLight, sensor.IsInPeriod, 5);
+                                    if (config.system.AlarmHumidInvalidDataEnable && (sensor.WatchHumidity || e.AlarmInformCount < config.system.AlarmHumidInvalidDataCountInCycle) && e.DateHappened.IsElapsed(config.system.AlarmHumidInvalidDataFirstTime)) AlarmableSensorErrors.Add(e);
+                                    sensor.WatchHumidity = !CheckToUnWatch(e, sensor.IsWatched, sensor.WatchHumidity, sensor.IsInPeriod, config.system.HumidInvalidDataWatchTimeout);
                                 }
-                                else if (sensor.WatchAmmonia && (e.ErrorType == SensorErrorType.InvalidAmmoniaData || e.ErrorType == SensorErrorType.InvalidAmmoniaValue))
+                                else if (e.ErrorType == SensorErrorType.InvalidHumidityValue)
                                 {
-                                    CheckForInform(sensor, sensor.WatchAmmonia, e, Now);
-                                    sensor.WatchAmmonia = !CheckToPutOutOfWatch(e, sensor.IsWatched, sensor.WatchAmmonia, sensor.IsInPeriod, 5);
+                                    if (config.system.AlarmHumidInvalidValueEnable && (sensor.WatchHumidity || e.AlarmInformCount < config.system.AlarmHumidInvalidValueCountInCycle) && e.DateHappened.IsElapsed(config.system.AlarmHumidInvalidValueFirstTime)) AlarmableSensorErrors.Add(e);
+                                    sensor.WatchHumidity = !CheckToUnWatch(e, sensor.IsWatched, sensor.WatchHumidity, sensor.IsInPeriod, config.system.HumidInvalidValueWatchTimeout);
                                 }
-                                else if (sensor.WatchCo2 && (e.ErrorType == SensorErrorType.InvalidCo2Data || e.ErrorType == SensorErrorType.InvalidCo2Value))
+                                else if (e.ErrorType == SensorErrorType.InvalidLightData)
                                 {
-                                    CheckForInform(sensor, sensor.WatchCo2, e, Now);
-                                    sensor.WatchCo2 = !CheckToPutOutOfWatch(e, sensor.IsWatched, sensor.WatchCo2, sensor.IsInPeriod, 5);
+                                    if (config.system.AlarmAmbientLightInvalidDataEnable && (sensor.WatchLight || e.AlarmInformCount < config.system.AlarmAmbientLightInvalidDataCountInCycle) && e.DateHappened.IsElapsed(config.system.AlarmAmbientLightInvalidDataFirstTime)) AlarmableSensorErrors.Add(e);
+                                    sensor.WatchLight = !CheckToUnWatch(e, sensor.IsWatched, sensor.WatchLight, sensor.IsInPeriod, config.system.AmbientLightInvalidDataWatchTimeout);
                                 }
-                                else if (sensor.IsWatched && (e.ErrorType == SensorErrorType.NotAlive))
+                                else if (e.ErrorType == SensorErrorType.InvalidLightValue)
                                 {
-                                    CheckForInform(sensor, sensor.IsWatched, e, Now);
-                                    sensor.IsWatched = !CheckToPutOutOfWatch(e, sensor.IsWatched, sensor.IsWatched, sensor.IsInPeriod, 5);
+                                    if (config.system.AlarmAmbientLightInvalidValueEnable && (sensor.WatchLight || e.AlarmInformCount < config.system.AlarmAmbientLightInvalidValueCountInCycle) && e.DateHappened.IsElapsed(config.system.AlarmAmbientLightInvalidValueFirstTime)) AlarmableSensorErrors.Add(e);
+                                    sensor.WatchLight = !CheckToUnWatch(e, sensor.IsWatched, sensor.WatchLight, sensor.IsInPeriod, config.system.AmbientLightInvalidValueWatchTimeout);
                                 }
-                                else if (sensor.IsWatched && (e.ErrorType == SensorErrorType.LowBattery))
+                                else if (e.ErrorType == SensorErrorType.InvalidAmmoniaData)
                                 {
-                                    CheckForInform(sensor, sensor.IsWatched, e, Now);
+                                    if (config.system.AlarmAmmoniaInvalidDataEnable && (sensor.WatchAmmonia || e.AlarmInformCount < config.system.AlarmAmmoniaInvalidDataCountInCycle) && e.DateHappened.IsElapsed(config.system.AlarmAmmoniaInvalidDataFirstTime)) AlarmableSensorErrors.Add(e);
+                                    sensor.WatchAmmonia = !CheckToUnWatch(e, sensor.IsWatched, sensor.WatchAmmonia, sensor.IsInPeriod, config.system.AmmoniaInvalidDataWatchTimeout);
+                                }
+                                else if (e.ErrorType == SensorErrorType.InvalidAmmoniaValue)
+                                {
+                                    if (config.system.AlarmAmmoniaInvalidValueEnable && (sensor.WatchAmmonia || e.AlarmInformCount < config.system.AlarmAmmoniaInvalidValueCountInCycle) && e.DateHappened.IsElapsed(config.system.AlarmAmmoniaInvalidValueFirstTime)) AlarmableSensorErrors.Add(e);
+                                    sensor.WatchAmmonia = !CheckToUnWatch(e, sensor.IsWatched, sensor.WatchAmmonia, sensor.IsInPeriod, config.system.AmmoniaInvalidValueWatchTimeout);
+                                }
+                                else if (e.ErrorType == SensorErrorType.InvalidCo2Data)
+                                {
+                                    if (config.system.AlarmCo2InvalidDataEnable && (sensor.WatchCo2 || e.AlarmInformCount < config.system.AlarmCo2InvalidDataCountInCycle) && e.DateHappened.IsElapsed(config.system.AlarmCo2InvalidDataFirstTime)) AlarmableSensorErrors.Add(e);
+                                    sensor.WatchCo2 = !CheckToUnWatch(e, sensor.IsWatched, sensor.WatchCo2, sensor.IsInPeriod, config.system.Co2InvalidDataWatchTimeout);
+                                }
+                                else if (e.ErrorType == SensorErrorType.InvalidCo2Value)
+                                {
+                                    if (config.system.AlarmCo2InvalidValueEnable && (sensor.WatchCo2 || e.AlarmInformCount < config.system.AlarmCo2InvalidValueCountInCycle) && e.DateHappened.IsElapsed(config.system.AlarmCo2InvalidValueFirstTime)) AlarmableSensorErrors.Add(e);
+                                    sensor.WatchCo2 = !CheckToUnWatch(e, sensor.IsWatched, sensor.WatchCo2, sensor.IsInPeriod, config.system.Co2InvalidValueWatchTimeout);
+                                }
+                                else if (e.ErrorType == SensorErrorType.NotAlive)
+                                {
+                                    if (config.system.AlarmScalarNotAliveEnable && (sensor.IsWatched || e.AlarmInformCount < config.system.AlarmScalarNotAliveCountInCycle) && e.DateHappened.IsElapsed(config.system.AlarmScalarNotAliveFirstTime)) AlarmableSensorErrors.Add(e);
+                                    sensor.IsWatched = !CheckToUnWatch(e, sensor.IsWatched, sensor.IsWatched, sensor.IsInPeriod, config.system.ScalarNotAliveWatchTimeout);
+                                }
+                                else if (e.ErrorType == SensorErrorType.LowBattery)
+                                {
+                                    if (config.system.AlarmScalarLowBatteryEnable && (sensor.IsWatched || e.AlarmInformCount < config.system.AlarmScalarLowBatteryCountInCycle) && e.DateHappened.IsElapsed(config.system.AlarmScalarLowBatteryFirstTime)) AlarmableSensorErrors.Add(e);
                                 }
                             }
                             if (sensor.IsWatched && !sensor.WatchTemperature && !sensor.WatchHumidity && !sensor.WatchLight && !sensor.WatchAmmonia && !sensor.WatchCo2) //Sensor is fully damaged.
@@ -69,17 +94,17 @@ public partial class Worker
                         }
 
                         var startDate = Poultries.Where(p => p.IsInPeriod).SelectMany(p => p.Farms.Where(f => f.IsInPeriod && f.Scalars.Sensors.Any(s => s.Id == sensor.Id))).FirstOrDefault()?.Period.StartDate;
-                        if (sensor.WatchTemperature == false && sensor.ActiveErrors.Any(e => e.ErrorType == SensorErrorType.InvalidTemperatureData || e.ErrorType == SensorErrorType.InvalidTemperatureValue) == false) //Temp sensor is healthy.
+                        if (!sensor.WatchTemperature && sensor.ActiveErrors.Any(e => e.ErrorType == SensorErrorType.InvalidTemperatureData || e.ErrorType == SensorErrorType.InvalidTemperatureValue) == false) //Temp sensor is healthy.
                             sensor.WatchTemperature = CheckToReWatchSensor(sensor, startDate);
-                        if (sensor.WatchHumidity == false && sensor.ActiveErrors.Any(e => e.ErrorType == SensorErrorType.InvalidHumidityData || e.ErrorType == SensorErrorType.InvalidHumidityValue) == false) //Humidity sensor is healthy.
+                        if (!sensor.WatchHumidity && sensor.ActiveErrors.Any(e => e.ErrorType == SensorErrorType.InvalidHumidityData || e.ErrorType == SensorErrorType.InvalidHumidityValue) == false) //Humidity sensor is healthy.
                             sensor.WatchHumidity = CheckToReWatchSensor(sensor, startDate);
-                        if (sensor.WatchLight == false && sensor.ActiveErrors.Any(e => e.ErrorType == SensorErrorType.InvalidLightData || e.ErrorType == SensorErrorType.InvalidLightValue) == false) //Light sensor is healthy.
+                        if (!sensor.WatchLight && sensor.ActiveErrors.Any(e => e.ErrorType == SensorErrorType.InvalidLightData || e.ErrorType == SensorErrorType.InvalidLightValue) == false) //Light sensor is healthy.
                             sensor.WatchLight = CheckToReWatchSensor(sensor, startDate);
-                        if (sensor.WatchAmmonia == false && sensor.ActiveErrors.Any(e => e.ErrorType == SensorErrorType.InvalidAmmoniaData || e.ErrorType == SensorErrorType.InvalidAmmoniaValue) == false) //Ammonia sensor is healthy.
+                        if (!sensor.WatchAmmonia && sensor.ActiveErrors.Any(e => e.ErrorType == SensorErrorType.InvalidAmmoniaData || e.ErrorType == SensorErrorType.InvalidAmmoniaValue) == false) //Ammonia sensor is healthy.
                             sensor.WatchAmmonia = CheckToReWatchSensor(sensor, startDate);
-                        if (sensor.WatchCo2 == false && sensor.ActiveErrors.Any(e => e.ErrorType == SensorErrorType.InvalidCo2Data || e.ErrorType == SensorErrorType.InvalidCo2Value) == false) //Co2 sensor is healthy.
+                        if (!sensor.WatchCo2 && sensor.ActiveErrors.Any(e => e.ErrorType == SensorErrorType.InvalidCo2Data || e.ErrorType == SensorErrorType.InvalidCo2Value) == false) //Co2 sensor is healthy.
                             sensor.WatchCo2 = CheckToReWatchSensor(sensor, startDate);
-                        if (sensor.IsWatched == false && sensor.ActiveErrors.Any(e => e.ErrorType == SensorErrorType.NotAlive) == false && (sensor.WatchTemperature || sensor.WatchHumidity || sensor.WatchLight || sensor.WatchAmmonia || sensor.WatchCo2)) sensor.IsWatched = CheckToReWatchSensor(sensor, startDate); //Sensor is alive and healthy (again).
+                        if (!sensor.IsWatched && sensor.ActiveErrors.Any(e => e.ErrorType == SensorErrorType.NotAlive) == false && (sensor.WatchTemperature || sensor.WatchHumidity || sensor.WatchLight || sensor.WatchAmmonia || sensor.WatchCo2)) sensor.IsWatched = CheckToReWatchSensor(sensor, startDate); //Sensor is alive and healthy (again).
 
                         //Remove expired reads
                     }
@@ -101,19 +126,24 @@ public partial class Worker
                         {
                             foreach (var e in sensor.ActiveErrors)
                             {
-                                if (sensor.IsWatched && (e.ErrorType == SensorErrorType.InvalidData || e.ErrorType == SensorErrorType.InvalidValue))
+                                if (e.ErrorType == SensorErrorType.InvalidData)
                                 {
-                                    CheckForInform(sensor, sensor.IsWatched, e, Now);
-                                    sensor.IsWatched = !CheckToPutOutOfWatch(e, sensor.IsWatched, sensor.IsWatched, sensor.IsInPeriod, 5);
+                                    if (config.system.AlarmCommuteInvalidDataEnable && (sensor.IsWatched || e.AlarmInformCount < config.system.AlarmCommuteInvalidDataCountInCycle) && e.DateHappened.IsElapsed(config.system.AlarmCommuteInvalidDataFirstTime)) AlarmableSensorErrors.Add(e);
+                                    sensor.IsWatched = !CheckToUnWatch(e, sensor.IsWatched, sensor.IsWatched, sensor.IsInPeriod, config.system.CommuteInvalidDataWatchTimeout);
                                 }
-                                else if (sensor.IsWatched && (e.ErrorType == SensorErrorType.NotAlive))
+                                else if (e.ErrorType == SensorErrorType.InvalidValue)
                                 {
-                                    CheckForInform(sensor, sensor.IsWatched, e, Now);
-                                    sensor.IsWatched = !CheckToPutOutOfWatch(e, sensor.IsWatched, sensor.IsWatched, sensor.IsInPeriod, 5);
+                                    if (config.system.AlarmCommuteInvalidValueEnable && (sensor.IsWatched || e.AlarmInformCount < config.system.AlarmCommuteInvalidValueCountInCycle) && e.DateHappened.IsElapsed(config.system.AlarmCommuteInvalidValueFirstTime)) AlarmableSensorErrors.Add(e);
+                                    sensor.IsWatched = !CheckToUnWatch(e, sensor.IsWatched, sensor.IsWatched, sensor.IsInPeriod, config.system.CommuteInvalidValueWatchTimeout);
                                 }
-                                else if (sensor.IsWatched && (e.ErrorType == SensorErrorType.LowBattery))
+                                else if (e.ErrorType == SensorErrorType.NotAlive)
                                 {
-                                    CheckForInform(sensor, sensor.IsWatched, e, Now);
+                                    if (config.system.AlarmCommuteNotAliveEnable && (sensor.IsWatched || e.AlarmInformCount < config.system.AlarmCommuteNotAliveCountInCycle) && e.DateHappened.IsElapsed(config.system.AlarmCommuteNotAliveFirstTime)) AlarmableSensorErrors.Add(e);
+                                    sensor.IsWatched = !CheckToUnWatch(e, sensor.IsWatched, sensor.IsWatched, sensor.IsInPeriod, config.system.CommuteNotAliveWatchTimeout);
+                                }
+                                else if (e.ErrorType == SensorErrorType.LowBattery)
+                                {
+                                    if (config.system.AlarmCommuteLowBatteryEnable && (sensor.IsWatched || e.AlarmInformCount < config.system.AlarmCommuteLowBatteryCountInCycle) && e.DateHappened.IsElapsed(config.system.AlarmCommuteLowBatteryFirstTime)) AlarmableSensorErrors.Add(e);
                                 }
                             }
                         }
@@ -146,12 +176,45 @@ public partial class Worker
                             {
                                 if (sensor.IsWatched && (e.ErrorType == SensorErrorType.NotAlive))
                                 {
-                                    CheckForInform(sensor, sensor.IsWatched, e, Now);
-                                    sensor.IsWatched = !CheckToPutOutOfWatch(e, sensor.IsWatched, sensor.IsWatched, sensor.IsInPeriod, 5);
+                                    bool AlarmPushButtonNotAliveEnable = false;
+                                    int AlarmPushButtonNotAliveFirstTime = 0;
+                                    int AlarmPushButtonNotAliveCountInCycle = 0;
+                                    int PushButtonNotAliveWatchTimeout = 0;
+                                    if (sensor.Type == SensorType.FarmFeed)
+                                    {
+                                        AlarmPushButtonNotAliveEnable = config.system.AlarmFeedNotAliveEnable;
+                                        AlarmPushButtonNotAliveFirstTime = config.system.AlarmFeedNotAliveFirstTime;
+                                        AlarmPushButtonNotAliveCountInCycle = config.system.AlarmFeedNotAliveCountInCycle;
+                                        PushButtonNotAliveWatchTimeout = config.system.FeedNotAliveWatchTimeout;
+                                    }
+                                    else if (sensor.Type == SensorType.FarmCheckup)
+                                    {
+                                        AlarmPushButtonNotAliveEnable = config.system.AlarmCheckupNotAliveEnable;
+                                        AlarmPushButtonNotAliveFirstTime = config.system.AlarmCheckupNotAliveFirstTime;
+                                        AlarmPushButtonNotAliveCountInCycle = config.system.AlarmCheckupNotAliveCountInCycle;
+                                        PushButtonNotAliveWatchTimeout = config.system.CheckupNotAliveWatchTimeout;
+                                    }
+                                    if (AlarmPushButtonNotAliveEnable && (sensor.IsWatched || e.AlarmInformCount < AlarmPushButtonNotAliveCountInCycle) && e.DateHappened.IsElapsed(AlarmPushButtonNotAliveFirstTime)) AlarmableSensorErrors.Add(e);
+                                    sensor.IsWatched = !CheckToUnWatch(e, sensor.IsWatched, sensor.IsWatched, sensor.IsInPeriod, PushButtonNotAliveWatchTimeout);
                                 }
                                 else if (sensor.IsWatched && (e.ErrorType == SensorErrorType.LowBattery))
                                 {
-                                    CheckForInform(sensor, sensor.IsWatched, e, Now);
+                                    bool AlarmPushButtonLowBatteryEnable = false;
+                                    int AlarmPushButtonLowBatteryFirstTime = 0;
+                                    int AlarmPushButtonLowBatteryCountInCycle = 0;
+                                    if (sensor.Type == SensorType.FarmFeed)
+                                    {
+                                        AlarmPushButtonLowBatteryEnable = config.system.AlarmFeedLowBatteryEnable;
+                                        AlarmPushButtonLowBatteryFirstTime = config.system.AlarmFeedLowBatteryFirstTime;
+                                        AlarmPushButtonLowBatteryCountInCycle = config.system.AlarmFeedLowBatteryCountInCycle;
+                                    }
+                                    else if (sensor.Type == SensorType.FarmCheckup)
+                                    {
+                                        AlarmPushButtonLowBatteryEnable = config.system.AlarmCheckupLowBatteryEnable;
+                                        AlarmPushButtonLowBatteryFirstTime = config.system.AlarmCheckupLowBatteryFirstTime;
+                                        AlarmPushButtonLowBatteryCountInCycle = config.system.AlarmCheckupLowBatteryCountInCycle;
+                                    }
+                                    if (AlarmPushButtonLowBatteryEnable && (sensor.IsWatched || e.AlarmInformCount < AlarmPushButtonLowBatteryCountInCycle) && e.DateHappened.IsElapsed(AlarmPushButtonLowBatteryFirstTime)) AlarmableSensorErrors.Add(e);
                                 }
                             }
                         }
@@ -183,17 +246,22 @@ public partial class Worker
                         {
                             foreach (var e in sensor.ActiveErrors)
                             {
-                                if (sensor.IsWatched && (e.ErrorType == SensorErrorType.InvalidData || e.ErrorType == SensorErrorType.InvalidValue))
+                                if (e.ErrorType == SensorErrorType.InvalidData)
                                 {
                                     CheckForInform(sensor, sensor.IsWatched, e, Now);
-                                    sensor.IsWatched = !CheckToPutOutOfWatch(e, sensor.IsWatched, sensor.IsWatched, sensor.IsInPeriod, 5);
+                                    sensor.IsWatched = !CheckToUnWatch(e, sensor.IsWatched, sensor.IsWatched, sensor.IsInPeriod, 5);
                                 }
-                                else if (sensor.IsWatched && (e.ErrorType == SensorErrorType.NotAlive))
+                                else if (e.ErrorType == SensorErrorType.InvalidValue)
                                 {
                                     CheckForInform(sensor, sensor.IsWatched, e, Now);
-                                    sensor.IsWatched = !CheckToPutOutOfWatch(e, sensor.IsWatched, sensor.IsWatched, sensor.IsInPeriod, 5);
+                                    sensor.IsWatched = !CheckToUnWatch(e, sensor.IsWatched, sensor.IsWatched, sensor.IsInPeriod, 5);
                                 }
-                                else if (sensor.IsWatched && (e.ErrorType == SensorErrorType.LowBattery))
+                                else if (e.ErrorType == SensorErrorType.NotAlive)
+                                {
+                                    CheckForInform(sensor, sensor.IsWatched, e, Now);
+                                    sensor.IsWatched = !CheckToUnWatch(e, sensor.IsWatched, sensor.IsWatched, sensor.IsInPeriod, 5);
+                                }
+                                else if (e.ErrorType == SensorErrorType.LowBattery)
                                 {
                                     CheckForInform(sensor, sensor.IsWatched, e, Now);
                                 }
@@ -243,12 +311,12 @@ public partial class Worker
         return false;
     }
 
-    private bool CheckToPutOutOfWatch(SensorErrorModel e, bool SensorWatch, bool UnitWatch, bool SensorIsInPeriod, int Elapse)
+    private bool CheckToUnWatch(SensorErrorModel e, bool SensorWatch, bool UnitWatch, bool SensorIsInPeriod, int Elapse)
     {
         if (SensorWatch && UnitWatch && e.DateHappened.IsElapsed(Elapse) && (SensorIsInPeriod || config.system.ObserveAlways))
         {
             //inform, save to db
-            Log.Warning($"Sensor with ID {e.SensorId} has been put out of watch due to persisting error. Error Type: {e.ErrorType}, Error happened date: {e.DateHappened}");
+            Log.Warning($"Sensor with ID {e.SensorId} has been unwatched due to persisting error. Error Type: {e.ErrorType}, Error happened date: {e.DateHappened}");
             return true;
         }
         return false;
