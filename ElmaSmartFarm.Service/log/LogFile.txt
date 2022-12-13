@@ -3220,3 +3220,1662 @@ System.InvalidOperationException: Nullable object must have a value.
 2022-12-12 16:25:59.406 +03:30 [INF] ===============  End of observation process (1.502 ms) ===============
 2022-12-12 16:26:04.419 +03:30 [INF] ===============  Start observation process ===============
 2022-12-12 16:26:04.421 +03:30 [INF] ===============  End of observation process (1.4041 ms) ===============
+2022-12-13 11:02:48.551 +03:30 [INF] Starting up the Service...
+2022-12-13 11:02:51.313 +03:30 [INF] Loading poultries...
+2022-12-13 11:02:52.546 +03:30 [INF] Poultries loaded. (1232.7482 ms)
+2022-12-13 11:02:52.554 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 393f5c72-e62a-43e1-a5e8-884dd3824ff0.
+2022-12-13 11:02:52.614 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 393f5c72-e62a-43e1-a5e8-884dd3824ff0.
+2022-12-13 11:02:52.630 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2022-12-13 11:02:52.631 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:02:52.647 +03:30 [INF] ===============  End of observation process (16.0701 ms) ===============
+2022-12-13 11:02:57.659 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:02:57.660 +03:30 [INF] ===============  End of observation process (1.3182 ms) ===============
+2022-12-13 11:03:02.665 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:03:02.666 +03:30 [INF] ===============  End of observation process (1.3506 ms) ===============
+2022-12-13 11:03:07.672 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:03:07.674 +03:30 [INF] ===============  End of observation process (1.5962 ms) ===============
+2022-12-13 11:03:12.689 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:03:12.691 +03:30 [INF] ===============  End of observation process (1.6949 ms) ===============
+2022-12-13 11:03:17.696 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:03:17.697 +03:30 [INF] ===============  End of observation process (1.4188 ms) ===============
+2022-12-13 11:03:22.700 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:03:22.702 +03:30 [INF] ===============  End of observation process (1.5503 ms) ===============
+2022-12-13 11:03:27.708 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:03:27.710 +03:30 [INF] ===============  End of observation process (1.8195 ms) ===============
+2022-12-13 11:03:32.710 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:03:32.711 +03:30 [INF] ===============  End of observation process (1.3034 ms) ===============
+2022-12-13 11:03:37.729 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:03:37.738 +03:30 [INF] Writing sensor error in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop, Error Type: NotAlive
+2022-12-13 11:03:37.834 +03:30 [INF] ===============  End of observation process (105.2209 ms) ===============
+2022-12-13 11:03:42.071 +03:30 [INF] ===============  Begin mqtt process  ===============
+2022-12-13 11:03:42.073 +03:30 [INF] MQTT Message received. Topic: Elma/ToServer/FromSensor/Scalar/1, Payload: T:33
+2022-12-13 11:03:42.082 +03:30 [INF] MQTT Message is from a sensor. Topic: Elma/ToServer/FromSensor/Scalar/1, Payload: T:33
+2022-12-13 11:03:42.083 +03:30 [INF] MQTT Message is value from a scalar sensor. Topic: Elma/ToServer/FromSensor/Scalar/1, Payload: T:33
+2022-12-13 11:03:42.087 +03:30 [INF] Sensor is valid; Value is valid. Type: FarmScalar, LocationID: 2, Section: FarmLeftTop
+2022-12-13 11:03:42.090 +03:30 [INF] Updating sensor error in database, if existed. Sensor ID: 1, Error Types: InvalidTemperatureData...
+2022-12-13 11:03:42.425 +03:30 [INF] Sensor is valid; Value is valid. Type: FarmScalar, LocationID: 2, Section: FarmLeftTop
+2022-12-13 11:03:42.427 +03:30 [INF] Updating sensor error in database, if existed. Sensor ID: 1, Error Types: InvalidTemperatureValue...
+2022-12-13 11:03:42.454 +03:30 [INF] Sensor is valid; Value is valid. Type: FarmScalar, LocationID: 2, Section: FarmLeftTop
+2022-12-13 11:03:42.455 +03:30 [INF] Updating sensor error in database, if existed. Sensor ID: 1, Error Types: NotAlive...
+2022-12-13 11:03:42.478 +03:30 [INF] Sensor is valid; Value is valid. Type: FarmScalar, LocationID: 2, Section: FarmLeftTop
+2022-12-13 11:03:42.480 +03:30 [INF] Updating sensor error in database, if existed. Sensor ID: 1, Error Types: InvalidData...
+2022-12-13 11:03:42.507 +03:30 [INF] Writing sensor value in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop
+2022-12-13 11:03:42.540 +03:30 [INF] Scalar sensor value done processing. Count: 1
+2022-12-13 11:03:42.541 +03:30 [INF] ===============  End of mqtt process 470.5079 ms) ===============
+2022-12-13 11:03:42.840 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:03:42.842 +03:30 [INF] ===============  End of observation process (1.5833 ms) ===============
+2022-12-13 11:03:47.849 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:03:47.851 +03:30 [INF] ===============  End of observation process (1.5668 ms) ===============
+2022-12-13 11:03:52.870 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:03:52.872 +03:30 [INF] ===============  End of observation process (1.8372 ms) ===============
+2022-12-13 11:03:57.007 +03:30 [INF] ===============  Begin mqtt process  ===============
+2022-12-13 11:03:57.008 +03:30 [INF] MQTT Message received. Topic: Elma/ToServer/FromSensor/Scalar/1, Payload: T:33x
+2022-12-13 11:03:57.009 +03:30 [INF] MQTT Message is from a sensor. Topic: Elma/ToServer/FromSensor/Scalar/1, Payload: T:33x
+2022-12-13 11:03:57.010 +03:30 [INF] MQTT Message is value from a scalar sensor. Topic: Elma/ToServer/FromSensor/Scalar/1, Payload: T:33x
+2022-12-13 11:03:57.013 +03:30 [ERR] A sensor sends invalid value. Topic: Elma/ToServer/FromSensor/Scalar/1 , Payload: T:33x
+2022-12-13 11:03:57.014 +03:30 [INF] Writing sensor error in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop, Error Type: InvalidTemperatureData
+2022-12-13 11:03:57.042 +03:30 [INF] Sensor is valid; Value is valid. Type: FarmScalar, LocationID: 2, Section: FarmLeftTop
+2022-12-13 11:03:57.043 +03:30 [INF] Updating sensor error in database, if existed. Sensor ID: 1, Error Types: NotAlive...
+2022-12-13 11:03:57.067 +03:30 [WRN] A sensor sends invalid data/value or sensor is unknown. adding to unknown mqtt list. Topic: Elma/ToServer/FromSensor/Scalar/1 , Payload: T:33x
+2022-12-13 11:03:57.069 +03:30 [INF] Writing sensor error in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop, Error Type: InvalidData
+2022-12-13 11:03:57.102 +03:30 [INF] ===============  End of mqtt process 95.3824 ms) ===============
+2022-12-13 11:03:57.876 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:03:57.877 +03:30 [INF] ===============  End of observation process (1.2938 ms) ===============
+2022-12-13 11:04:02.897 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:04:02.898 +03:30 [INF] ===============  End of observation process (1.2725 ms) ===============
+2022-12-13 11:04:07.906 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:04:07.908 +03:30 [INF] ===============  End of observation process (1.9742 ms) ===============
+2022-12-13 11:04:12.924 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:04:12.926 +03:30 [INF] ===============  End of observation process (1.5914 ms) ===============
+2022-12-13 11:04:17.948 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:04:17.949 +03:30 [INF] ===============  End of observation process (1.1435 ms) ===============
+2022-12-13 11:04:22.965 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:04:22.967 +03:30 [INF] ===============  End of observation process (1.6996 ms) ===============
+2022-12-13 11:04:27.976 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:04:27.977 +03:30 [INF] ===============  End of observation process (1.2612 ms) ===============
+2022-12-13 11:04:32.986 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:04:32.988 +03:30 [INF] ===============  End of observation process (1.9838 ms) ===============
+2022-12-13 11:04:37.999 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:04:38.000 +03:30 [INF] ===============  End of observation process (1.3207 ms) ===============
+2022-12-13 11:04:43.007 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:04:43.009 +03:30 [INF] Writing sensor error in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop, Error Type: NotAlive
+2022-12-13 11:04:43.025 +03:30 [INF] ===============  End of observation process (17.6662 ms) ===============
+2022-12-13 11:04:48.037 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:04:48.039 +03:30 [INF] Writing sensor error in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop, Error Type: NotAlive
+2022-12-13 11:04:48.062 +03:30 [INF] ===============  End of observation process (24.1901 ms) ===============
+2022-12-13 11:04:53.064 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:04:53.066 +03:30 [INF] Writing sensor error in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop, Error Type: NotAlive
+2022-12-13 11:04:53.088 +03:30 [INF] ===============  End of observation process (23.453 ms) ===============
+2022-12-13 11:04:58.101 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:04:58.103 +03:30 [INF] Writing sensor error in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop, Error Type: NotAlive
+2022-12-13 11:04:58.430 +03:30 [INF] ===============  End of observation process (329.0859 ms) ===============
+2022-12-13 11:05:03.433 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:05:03.435 +03:30 [INF] Writing sensor error in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop, Error Type: NotAlive
+2022-12-13 11:05:03.455 +03:30 [INF] ===============  End of observation process (21.694 ms) ===============
+2022-12-13 11:05:08.469 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:05:08.471 +03:30 [INF] Writing sensor error in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop, Error Type: NotAlive
+2022-12-13 11:05:08.518 +03:30 [INF] ===============  End of observation process (48.2143 ms) ===============
+2022-12-13 11:05:13.542 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:05:13.543 +03:30 [INF] Writing sensor error in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop, Error Type: NotAlive
+2022-12-13 11:05:13.567 +03:30 [INF] ===============  End of observation process (24.9593 ms) ===============
+2022-12-13 11:05:18.574 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:05:18.576 +03:30 [INF] Writing sensor error in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop, Error Type: NotAlive
+2022-12-13 11:05:18.598 +03:30 [INF] ===============  End of observation process (23.1865 ms) ===============
+2022-12-13 11:05:23.615 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:05:23.616 +03:30 [INF] Writing sensor error in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop, Error Type: NotAlive
+2022-12-13 11:05:23.635 +03:30 [INF] ===============  End of observation process (19.419 ms) ===============
+2022-12-13 11:05:28.640 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:05:28.642 +03:30 [INF] Writing sensor error in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop, Error Type: NotAlive
+2022-12-13 11:05:28.676 +03:30 [INF] ===============  End of observation process (35.707 ms) ===============
+2022-12-13 11:05:33.687 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:05:33.689 +03:30 [INF] Writing sensor error in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop, Error Type: NotAlive
+2022-12-13 11:05:34.020 +03:30 [INF] ===============  End of observation process (332.5321 ms) ===============
+2022-12-13 11:05:39.034 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:05:39.036 +03:30 [INF] Writing sensor error in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop, Error Type: NotAlive
+2022-12-13 11:05:39.967 +03:30 [WRN] Sensor with ID 1 has been unwatched due to persisting error. Error Type: InvalidTemperatureData, Error happened date: 12/13/2022 11:03:57 AM
+2022-12-13 11:05:39.968 +03:30 [INF] ===============  End of observation process (933.9708 ms) ===============
+2022-12-13 11:05:44.975 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:05:44.977 +03:30 [INF] Writing sensor error in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop, Error Type: NotAlive
+2022-12-13 11:05:44.996 +03:30 [INF] ===============  End of observation process (20.8579 ms) ===============
+2022-12-13 11:05:50.012 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:05:50.014 +03:30 [INF] Writing sensor error in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop, Error Type: NotAlive
+2022-12-13 11:05:50.031 +03:30 [WRN] Sensor with ID 1 has been unwatched due to persisting error. Error Type: InvalidTemperatureData, Error happened date: 12/13/2022 11:03:57 AM
+2022-12-13 11:05:50.032 +03:30 [INF] ===============  End of observation process (19.54 ms) ===============
+2022-12-13 11:05:55.040 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:05:55.042 +03:30 [INF] Writing sensor error in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop, Error Type: NotAlive
+2022-12-13 11:05:55.063 +03:30 [INF] ===============  End of observation process (23.0649 ms) ===============
+2022-12-13 11:06:00.075 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:06:00.077 +03:30 [INF] Writing sensor error in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop, Error Type: NotAlive
+2022-12-13 11:06:00.094 +03:30 [WRN] Sensor with ID 1 has been unwatched due to persisting error. Error Type: InvalidTemperatureData, Error happened date: 12/13/2022 11:03:57 AM
+2022-12-13 11:06:00.095 +03:30 [INF] ===============  End of observation process (19.7149 ms) ===============
+2022-12-13 11:06:05.110 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:06:05.112 +03:30 [INF] Writing sensor error in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop, Error Type: NotAlive
+2022-12-13 11:06:05.128 +03:30 [INF] ===============  End of observation process (17.3579 ms) ===============
+2022-12-13 11:06:10.147 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:06:10.148 +03:30 [INF] Writing sensor error in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop, Error Type: NotAlive
+2022-12-13 11:06:10.477 +03:30 [WRN] Sensor with ID 1 has been unwatched due to persisting error. Error Type: InvalidTemperatureData, Error happened date: 12/13/2022 11:03:57 AM
+2022-12-13 11:06:10.479 +03:30 [INF] ===============  End of observation process (331.8535 ms) ===============
+2022-12-13 11:06:15.490 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:06:15.491 +03:30 [INF] Writing sensor error in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop, Error Type: NotAlive
+2022-12-13 11:06:15.516 +03:30 [INF] ===============  End of observation process (25.9481 ms) ===============
+2022-12-13 11:06:20.517 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:06:20.518 +03:30 [INF] Writing sensor error in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop, Error Type: NotAlive
+2022-12-13 11:06:20.844 +03:30 [WRN] Sensor with ID 1 has been unwatched due to persisting error. Error Type: InvalidTemperatureData, Error happened date: 12/13/2022 11:03:57 AM
+2022-12-13 11:06:20.845 +03:30 [INF] ===============  End of observation process (328.762 ms) ===============
+2022-12-13 11:06:25.851 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:06:25.852 +03:30 [INF] Writing sensor error in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop, Error Type: NotAlive
+2022-12-13 11:06:25.873 +03:30 [WRN] Sensor with ID 1 has been unwatched due to persisting error. Error Type: NotAlive, Error happened date: 12/13/2022 11:04:43 AM
+2022-12-13 11:06:25.874 +03:30 [INF] ===============  End of observation process (23.6209 ms) ===============
+2022-12-13 11:06:30.883 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:06:30.884 +03:30 [INF] ===============  End of observation process (1.2321 ms) ===============
+2022-12-13 11:06:35.898 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:06:35.898 +03:30 [INF] Writing sensor error in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop, Error Type: NotAlive
+2022-12-13 11:06:35.920 +03:30 [WRN] Sensor with ID 1 has been unwatched due to persisting error. Error Type: InvalidTemperatureData, Error happened date: 12/13/2022 11:03:57 AM
+2022-12-13 11:06:35.921 +03:30 [WRN] Sensor with ID 1 has been unwatched due to persisting error. Error Type: NotAlive, Error happened date: 12/13/2022 11:04:43 AM
+2022-12-13 11:06:35.922 +03:30 [INF] ===============  End of observation process (24.6241 ms) ===============
+2022-12-13 11:06:40.933 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:06:40.934 +03:30 [INF] ===============  End of observation process (1.1832 ms) ===============
+2022-12-13 11:06:45.938 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:06:45.939 +03:30 [INF] Writing sensor error in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop, Error Type: NotAlive
+2022-12-13 11:06:50.481 +03:30 [WRN] Sensor with ID 1 has been unwatched due to persisting error. Error Type: InvalidTemperatureData, Error happened date: 12/13/2022 11:03:57 AM
+2022-12-13 11:06:50.483 +03:30 [WRN] Sensor with ID 1 has been unwatched due to persisting error. Error Type: NotAlive, Error happened date: 12/13/2022 11:04:43 AM
+2022-12-13 11:06:50.485 +03:30 [INF] ===============  End of observation process (4547.161 ms) ===============
+2022-12-13 11:06:55.485 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:06:55.487 +03:30 [INF] ===============  End of observation process (1.6816 ms) ===============
+2022-12-13 11:07:00.504 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:07:00.505 +03:30 [INF] Writing sensor error in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop, Error Type: NotAlive
+2022-12-13 11:07:00.552 +03:30 [WRN] Sensor with ID 1 has been unwatched due to persisting error. Error Type: InvalidTemperatureData, Error happened date: 12/13/2022 11:03:57 AM
+2022-12-13 11:07:00.553 +03:30 [WRN] Sensor with ID 1 has been unwatched due to persisting error. Error Type: NotAlive, Error happened date: 12/13/2022 11:04:43 AM
+2022-12-13 11:07:00.557 +03:30 [INF] ===============  End of observation process (52.5906 ms) ===============
+2022-12-13 11:07:05.558 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:07:05.559 +03:30 [INF] ===============  End of observation process (1.1005 ms) ===============
+2022-12-13 11:07:10.563 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:07:10.564 +03:30 [INF] Writing sensor error in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop, Error Type: NotAlive
+2022-12-13 11:07:10.886 +03:30 [WRN] Sensor with ID 1 has been unwatched due to persisting error. Error Type: InvalidTemperatureData, Error happened date: 12/13/2022 11:03:57 AM
+2022-12-13 11:07:10.888 +03:30 [WRN] Sensor with ID 1 has been unwatched due to persisting error. Error Type: NotAlive, Error happened date: 12/13/2022 11:04:43 AM
+2022-12-13 11:07:10.889 +03:30 [INF] ===============  End of observation process (326.2015 ms) ===============
+2022-12-13 11:07:15.902 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:07:15.904 +03:30 [INF] ===============  End of observation process (1.6482 ms) ===============
+2022-12-13 11:07:20.918 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:07:20.933 +03:30 [INF] Writing sensor error in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop, Error Type: NotAlive
+2022-12-13 11:07:20.959 +03:30 [WRN] Sensor with ID 1 has been unwatched due to persisting error. Error Type: InvalidTemperatureData, Error happened date: 12/13/2022 11:03:57 AM
+2022-12-13 11:07:21.012 +03:30 [WRN] Sensor with ID 1 has been unwatched due to persisting error. Error Type: NotAlive, Error happened date: 12/13/2022 11:04:43 AM
+2022-12-13 11:07:21.046 +03:30 [INF] ===============  End of observation process (127.4719 ms) ===============
+2022-12-13 11:07:26.069 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:07:26.071 +03:30 [INF] ===============  End of observation process (1.6796 ms) ===============
+2022-12-13 11:07:31.087 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:07:31.088 +03:30 [INF] Writing sensor error in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop, Error Type: NotAlive
+2022-12-13 11:07:31.113 +03:30 [WRN] Sensor with ID 1 has been unwatched due to persisting error. Error Type: InvalidTemperatureData, Error happened date: 12/13/2022 11:03:57 AM
+2022-12-13 11:07:31.114 +03:30 [WRN] Sensor with ID 1 has been unwatched due to persisting error. Error Type: NotAlive, Error happened date: 12/13/2022 11:04:43 AM
+2022-12-13 11:07:31.126 +03:30 [INF] ===============  End of observation process (39.1088 ms) ===============
+2022-12-13 11:07:36.144 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:07:36.146 +03:30 [INF] ===============  End of observation process (2.0431 ms) ===============
+2022-12-13 11:07:41.158 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:07:41.160 +03:30 [INF] Writing sensor error in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop, Error Type: NotAlive
+2022-12-13 11:07:41.183 +03:30 [WRN] Sensor with ID 1 has been unwatched due to persisting error. Error Type: InvalidTemperatureData, Error happened date: 12/13/2022 11:03:57 AM
+2022-12-13 11:07:41.190 +03:30 [WRN] Sensor with ID 1 has been unwatched due to persisting error. Error Type: NotAlive, Error happened date: 12/13/2022 11:04:43 AM
+2022-12-13 11:07:41.198 +03:30 [INF] ===============  End of observation process (39.5942 ms) ===============
+2022-12-13 11:07:46.205 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:07:46.207 +03:30 [INF] ===============  End of observation process (1.8068 ms) ===============
+2022-12-13 11:07:51.212 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:07:51.214 +03:30 [INF] Writing sensor error in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop, Error Type: NotAlive
+2022-12-13 11:07:51.239 +03:30 [WRN] Sensor with ID 1 has been unwatched due to persisting error. Error Type: InvalidTemperatureData, Error happened date: 12/13/2022 11:03:57 AM
+2022-12-13 11:07:51.241 +03:30 [WRN] Sensor with ID 1 has been unwatched due to persisting error. Error Type: NotAlive, Error happened date: 12/13/2022 11:04:43 AM
+2022-12-13 11:07:51.242 +03:30 [INF] ===============  End of observation process (30.0166 ms) ===============
+2022-12-13 11:07:56.261 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:07:56.262 +03:30 [INF] ===============  End of observation process (1.1409 ms) ===============
+2022-12-13 11:08:01.272 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:08:01.273 +03:30 [INF] Writing sensor error in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop, Error Type: NotAlive
+2022-12-13 11:08:01.609 +03:30 [WRN] Sensor with ID 1 has been unwatched due to persisting error. Error Type: InvalidTemperatureData, Error happened date: 12/13/2022 11:03:57 AM
+2022-12-13 11:08:01.610 +03:30 [WRN] Sensor with ID 1 has been unwatched due to persisting error. Error Type: NotAlive, Error happened date: 12/13/2022 11:04:43 AM
+2022-12-13 11:08:01.612 +03:30 [INF] ===============  End of observation process (340.443 ms) ===============
+2022-12-13 11:08:06.625 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:08:06.626 +03:30 [INF] ===============  End of observation process (1.6054 ms) ===============
+2022-12-13 11:08:11.649 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:08:11.650 +03:30 [INF] Writing sensor error in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop, Error Type: NotAlive
+2022-12-13 11:08:11.678 +03:30 [WRN] Sensor with ID 1 has been unwatched due to persisting error. Error Type: InvalidTemperatureData, Error happened date: 12/13/2022 11:03:57 AM
+2022-12-13 11:08:11.679 +03:30 [WRN] Sensor with ID 1 has been unwatched due to persisting error. Error Type: NotAlive, Error happened date: 12/13/2022 11:04:43 AM
+2022-12-13 11:08:11.680 +03:30 [INF] ===============  End of observation process (31.8201 ms) ===============
+2022-12-13 11:08:16.695 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:08:16.696 +03:30 [INF] ===============  End of observation process (1.4503 ms) ===============
+2022-12-13 11:08:21.713 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:08:21.714 +03:30 [INF] Writing sensor error in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop, Error Type: NotAlive
+2022-12-13 11:08:21.739 +03:30 [WRN] Sensor with ID 1 has been unwatched due to persisting error. Error Type: InvalidTemperatureData, Error happened date: 12/13/2022 11:03:57 AM
+2022-12-13 11:08:21.742 +03:30 [WRN] Sensor with ID 1 has been unwatched due to persisting error. Error Type: NotAlive, Error happened date: 12/13/2022 11:04:43 AM
+2022-12-13 11:08:21.743 +03:30 [INF] ===============  End of observation process (30.8619 ms) ===============
+2022-12-13 11:08:26.754 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:08:26.755 +03:30 [INF] ===============  End of observation process (1.3904 ms) ===============
+2022-12-13 11:08:31.778 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:08:31.779 +03:30 [INF] Writing sensor error in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop, Error Type: NotAlive
+2022-12-13 11:08:32.724 +03:30 [WRN] Sensor with ID 1 has been unwatched due to persisting error. Error Type: InvalidTemperatureData, Error happened date: 12/13/2022 11:03:57 AM
+2022-12-13 11:08:32.725 +03:30 [WRN] Sensor with ID 1 has been unwatched due to persisting error. Error Type: NotAlive, Error happened date: 12/13/2022 11:04:43 AM
+2022-12-13 11:08:32.727 +03:30 [INF] ===============  End of observation process (949.584 ms) ===============
+2022-12-13 11:08:37.730 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:08:37.731 +03:30 [INF] ===============  End of observation process (1.6902 ms) ===============
+2022-12-13 11:08:42.735 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:08:42.736 +03:30 [INF] Writing sensor error in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop, Error Type: NotAlive
+2022-12-13 11:08:42.764 +03:30 [WRN] Sensor with ID 1 has been unwatched due to persisting error. Error Type: InvalidTemperatureData, Error happened date: 12/13/2022 11:03:57 AM
+2022-12-13 11:08:42.766 +03:30 [WRN] Sensor with ID 1 has been unwatched due to persisting error. Error Type: NotAlive, Error happened date: 12/13/2022 11:04:43 AM
+2022-12-13 11:08:42.769 +03:30 [INF] ===============  End of observation process (34.0094 ms) ===============
+2022-12-13 11:08:47.781 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:08:47.782 +03:30 [INF] ===============  End of observation process (1.6289 ms) ===============
+2022-12-13 11:08:52.796 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:08:52.797 +03:30 [INF] Writing sensor error in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop, Error Type: NotAlive
+2022-12-13 11:08:52.815 +03:30 [WRN] Sensor with ID 1 has been unwatched due to persisting error. Error Type: InvalidTemperatureData, Error happened date: 12/13/2022 11:03:57 AM
+2022-12-13 11:08:52.816 +03:30 [WRN] Sensor with ID 1 has been unwatched due to persisting error. Error Type: NotAlive, Error happened date: 12/13/2022 11:04:43 AM
+2022-12-13 11:08:52.822 +03:30 [INF] ===============  End of observation process (26.6842 ms) ===============
+2022-12-13 11:08:57.840 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:08:57.841 +03:30 [INF] ===============  End of observation process (1.6435 ms) ===============
+2022-12-13 11:09:02.842 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:09:02.843 +03:30 [INF] Writing sensor error in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop, Error Type: NotAlive
+2022-12-13 11:09:02.872 +03:30 [WRN] Sensor with ID 1 has been unwatched due to persisting error. Error Type: InvalidTemperatureData, Error happened date: 12/13/2022 11:03:57 AM
+2022-12-13 11:09:02.878 +03:30 [WRN] Sensor with ID 1 has been unwatched due to persisting error. Error Type: NotAlive, Error happened date: 12/13/2022 11:04:43 AM
+2022-12-13 11:09:02.884 +03:30 [INF] ===============  End of observation process (42.7812 ms) ===============
+2022-12-13 11:32:35.559 +03:30 [INF] Starting up the Service...
+2022-12-13 11:32:37.287 +03:30 [INF] Loading poultries...
+2022-12-13 11:32:38.389 +03:30 [INF] Poultries loaded. (1102.0488 ms)
+2022-12-13 11:32:38.397 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: b4f86277-ea57-4171-845c-40bf7b2d1be7.
+2022-12-13 11:32:38.754 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: b4f86277-ea57-4171-845c-40bf7b2d1be7.
+2022-12-13 11:32:38.767 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2022-12-13 11:32:38.769 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:32:38.787 +03:30 [WRN] Sensor with ID 1 has been unwatched due to persisting error. Error Type: InvalidTemperatureData, Error happened date: 12/13/2022 11:03:57 AM
+2022-12-13 11:32:38.789 +03:30 [INF] ===============  End of observation process (20.9111 ms) ===============
+2022-12-13 11:32:43.802 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:32:43.804 +03:30 [INF] ===============  End of observation process (1.8726 ms) ===============
+2022-12-13 11:32:45.792 +03:30 [INF] ===============  Begin mqtt process  ===============
+2022-12-13 11:32:45.794 +03:30 [INF] MQTT Message received. Topic: Elma/ToServer/FromSensor/Scalar/1, Payload: T:33
+2022-12-13 11:32:45.804 +03:30 [INF] MQTT Message is from a sensor. Topic: Elma/ToServer/FromSensor/Scalar/1, Payload: T:33
+2022-12-13 11:32:45.806 +03:30 [INF] MQTT Message is value from a scalar sensor. Topic: Elma/ToServer/FromSensor/Scalar/1, Payload: T:33
+2022-12-13 11:32:45.810 +03:30 [INF] Sensor is valid; Value is valid. Type: FarmScalar, LocationID: 2, Section: FarmLeftTop
+2022-12-13 11:32:45.813 +03:30 [INF] Updating sensor error in database, if existed. Sensor ID: 1, Error Types: InvalidTemperatureData...
+2022-12-13 11:32:46.153 +03:30 [INF] Sensor is valid; Value is valid. Type: FarmScalar, LocationID: 2, Section: FarmLeftTop
+2022-12-13 11:32:46.154 +03:30 [INF] Updating sensor error in database, if existed. Sensor ID: 1, Error Types: InvalidTemperatureValue...
+2022-12-13 11:32:46.185 +03:30 [INF] Sensor is valid; Value is valid. Type: FarmScalar, LocationID: 2, Section: FarmLeftTop
+2022-12-13 11:32:46.186 +03:30 [INF] Updating sensor error in database, if existed. Sensor ID: 1, Error Types: NotAlive...
+2022-12-13 11:32:46.213 +03:30 [INF] Sensor is valid; Value is valid. Type: FarmScalar, LocationID: 2, Section: FarmLeftTop
+2022-12-13 11:32:46.214 +03:30 [INF] Updating sensor error in database, if existed. Sensor ID: 1, Error Types: InvalidData...
+2022-12-13 11:32:46.241 +03:30 [INF] Writing sensor value in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop
+2022-12-13 11:32:46.611 +03:30 [INF] Scalar sensor value done processing. Count: 1
+2022-12-13 11:32:46.612 +03:30 [INF] ===============  End of mqtt process 820.2808 ms) ===============
+2022-12-13 11:32:48.816 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:32:48.818 +03:30 [INF] Sensor unit is back online. ID: 1, Location: 2, Section: FarmLeftTop
+2022-12-13 11:32:48.819 +03:30 [INF] ===============  End of observation process (2.526 ms) ===============
+2022-12-13 11:32:53.833 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:32:53.835 +03:30 [WRN] Sensor with ID 1 has been unwatched due to persisting error. Error Type: NotAlive, Error happened date: 12/13/2022 11:04:48 AM
+2022-12-13 11:32:53.836 +03:30 [INF] ===============  End of observation process (3.1137 ms) ===============
+2022-12-13 11:32:58.842 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:32:58.843 +03:30 [INF] ===============  End of observation process (1.3198 ms) ===============
+2022-12-13 11:33:03.845 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:33:03.846 +03:30 [INF] ===============  End of observation process (1.2838 ms) ===============
+2022-12-13 11:33:08.857 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:33:08.859 +03:30 [INF] ===============  End of observation process (1.6333 ms) ===============
+2022-12-13 11:33:13.868 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:33:13.869 +03:30 [INF] ===============  End of observation process (1.1917 ms) ===============
+2022-12-13 11:33:18.880 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:33:18.881 +03:30 [INF] ===============  End of observation process (0.8323 ms) ===============
+2022-12-13 11:33:23.893 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:33:23.894 +03:30 [INF] ===============  End of observation process (1.1149 ms) ===============
+2022-12-13 11:33:28.899 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:33:28.901 +03:30 [INF] ===============  End of observation process (1.7026 ms) ===============
+2022-12-13 11:33:33.912 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:33:33.913 +03:30 [INF] ===============  End of observation process (1.1184 ms) ===============
+2022-12-13 11:33:34.695 +03:30 [INF] ===============  Begin mqtt process  ===============
+2022-12-13 11:33:34.696 +03:30 [INF] MQTT Message received. Topic: Elma/ToServer/FromSensor/Scalar/1, Payload: T:33
+2022-12-13 11:33:34.697 +03:30 [INF] MQTT Message is from a sensor. Topic: Elma/ToServer/FromSensor/Scalar/1, Payload: T:33
+2022-12-13 11:33:34.697 +03:30 [INF] MQTT Message is value from a scalar sensor. Topic: Elma/ToServer/FromSensor/Scalar/1, Payload: T:33
+2022-12-13 11:33:34.698 +03:30 [INF] Sensor is valid; Value is valid. Type: FarmScalar, LocationID: 2, Section: FarmLeftTop
+2022-12-13 11:33:34.700 +03:30 [INF] Updating sensor error in database, if existed. Sensor ID: 1, Error Types: InvalidTemperatureData...
+2022-12-13 11:33:35.010 +03:30 [INF] Sensor is valid; Value is valid. Type: FarmScalar, LocationID: 2, Section: FarmLeftTop
+2022-12-13 11:33:35.011 +03:30 [INF] Updating sensor error in database, if existed. Sensor ID: 1, Error Types: InvalidTemperatureValue...
+2022-12-13 11:33:35.048 +03:30 [INF] Sensor is valid; Value is valid. Type: FarmScalar, LocationID: 2, Section: FarmLeftTop
+2022-12-13 11:33:35.049 +03:30 [INF] Updating sensor error in database, if existed. Sensor ID: 1, Error Types: NotAlive...
+2022-12-13 11:33:35.080 +03:30 [INF] Sensor is valid; Value is valid. Type: FarmScalar, LocationID: 2, Section: FarmLeftTop
+2022-12-13 11:33:35.081 +03:30 [INF] Updating sensor error in database, if existed. Sensor ID: 1, Error Types: InvalidData...
+2022-12-13 11:33:35.115 +03:30 [INF] Writing sensor value in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop
+2022-12-13 11:33:35.153 +03:30 [INF] Scalar sensor value done processing. Count: 2
+2022-12-13 11:33:35.154 +03:30 [INF] ===============  End of mqtt process 459.3575 ms) ===============
+2022-12-13 11:33:38.927 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:33:38.928 +03:30 [INF] ===============  End of observation process (1.3661 ms) ===============
+2022-12-13 11:33:43.940 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:33:43.941 +03:30 [INF] ===============  End of observation process (1.4651 ms) ===============
+2022-12-13 11:33:48.964 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:33:48.965 +03:30 [INF] ===============  End of observation process (1.5063 ms) ===============
+2022-12-13 11:33:53.979 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:33:53.980 +03:30 [INF] ===============  End of observation process (1.7293 ms) ===============
+2022-12-13 11:33:59.008 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:33:59.009 +03:30 [INF] ===============  End of observation process (1.6595 ms) ===============
+2022-12-13 11:34:04.022 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:34:04.023 +03:30 [INF] ===============  End of observation process (1.0506 ms) ===============
+2022-12-13 11:34:09.030 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:34:09.031 +03:30 [INF] ===============  End of observation process (1.4303 ms) ===============
+2022-12-13 11:34:14.035 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:34:14.036 +03:30 [INF] ===============  End of observation process (1.551 ms) ===============
+2022-12-13 11:34:19.054 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:34:19.055 +03:30 [INF] ===============  End of observation process (1.2859 ms) ===============
+2022-12-13 11:34:24.069 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:34:24.070 +03:30 [INF] ===============  End of observation process (1.5568 ms) ===============
+2022-12-13 11:34:29.079 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:34:29.081 +03:30 [INF] ===============  End of observation process (2.0855 ms) ===============
+2022-12-13 11:34:34.085 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:34:34.086 +03:30 [INF] ===============  End of observation process (1.764 ms) ===============
+2022-12-13 11:34:39.102 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:34:39.103 +03:30 [INF] ===============  End of observation process (1.4776 ms) ===============
+2022-12-13 11:34:44.115 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:34:44.116 +03:30 [INF] ===============  End of observation process (1.3543 ms) ===============
+2022-12-13 11:34:49.122 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:34:49.123 +03:30 [INF] ===============  End of observation process (1.5688 ms) ===============
+2022-12-13 11:34:51.432 +03:30 [INF] ===============  Begin mqtt process  ===============
+2022-12-13 11:34:51.434 +03:30 [INF] MQTT Message received. Topic: Elma/ToServer/FromSensor/Scalar/1, Payload: T:33
+2022-12-13 11:34:51.435 +03:30 [INF] MQTT Message is from a sensor. Topic: Elma/ToServer/FromSensor/Scalar/1, Payload: T:33
+2022-12-13 11:34:51.436 +03:30 [INF] MQTT Message is value from a scalar sensor. Topic: Elma/ToServer/FromSensor/Scalar/1, Payload: T:33
+2022-12-13 11:34:51.436 +03:30 [INF] Sensor is valid; Value is valid. Type: FarmScalar, LocationID: 2, Section: FarmLeftTop
+2022-12-13 11:34:51.437 +03:30 [INF] Updating sensor error in database, if existed. Sensor ID: 1, Error Types: InvalidTemperatureData...
+2022-12-13 11:34:51.727 +03:30 [INF] Sensor is valid; Value is valid. Type: FarmScalar, LocationID: 2, Section: FarmLeftTop
+2022-12-13 11:34:51.728 +03:30 [INF] Updating sensor error in database, if existed. Sensor ID: 1, Error Types: InvalidTemperatureValue...
+2022-12-13 11:34:52.061 +03:30 [INF] Sensor is valid; Value is valid. Type: FarmScalar, LocationID: 2, Section: FarmLeftTop
+2022-12-13 11:34:52.062 +03:30 [INF] Updating sensor error in database, if existed. Sensor ID: 1, Error Types: NotAlive...
+2022-12-13 11:34:52.083 +03:30 [INF] Sensor is valid; Value is valid. Type: FarmScalar, LocationID: 2, Section: FarmLeftTop
+2022-12-13 11:34:52.084 +03:30 [INF] Updating sensor error in database, if existed. Sensor ID: 1, Error Types: InvalidData...
+2022-12-13 11:34:52.104 +03:30 [INF] Writing sensor value in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop
+2022-12-13 11:34:52.818 +03:30 [INF] Scalar sensor value done processing. Count: 3
+2022-12-13 11:34:52.819 +03:30 [INF] ===============  End of mqtt process 1386.2584 ms) ===============
+2022-12-13 11:34:54.135 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:34:54.136 +03:30 [INF] ===============  End of observation process (1.4658 ms) ===============
+2022-12-13 11:34:59.153 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:34:59.154 +03:30 [INF] ===============  End of observation process (1.5542 ms) ===============
+2022-12-13 11:35:01.764 +03:30 [INF] Starting up the Service...
+2022-12-13 11:35:03.267 +03:30 [INF] Loading poultries...
+2022-12-13 11:35:04.146 +03:30 [INF] Poultries loaded. (878.907 ms)
+2022-12-13 11:35:04.154 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: f573e679-c350-4633-93c3-68cd30a03eb7.
+2022-12-13 11:35:04.219 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: f573e679-c350-4633-93c3-68cd30a03eb7.
+2022-12-13 11:35:04.241 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2022-12-13 11:35:04.242 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:35:04.265 +03:30 [INF] ===============  End of observation process (22.9185 ms) ===============
+2022-12-13 11:35:09.271 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:35:09.273 +03:30 [INF] ===============  End of observation process (1.7474 ms) ===============
+2022-12-13 11:35:14.287 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:35:14.288 +03:30 [INF] ===============  End of observation process (1.3517 ms) ===============
+2022-12-13 11:35:19.301 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:35:19.303 +03:30 [INF] ===============  End of observation process (1.7854 ms) ===============
+2022-12-13 11:35:24.310 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:35:24.312 +03:30 [INF] ===============  End of observation process (2.0616 ms) ===============
+2022-12-13 11:35:29.312 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:35:29.314 +03:30 [INF] ===============  End of observation process (1.669 ms) ===============
+2022-12-13 11:35:34.331 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:35:34.333 +03:30 [INF] ===============  End of observation process (1.4917 ms) ===============
+2022-12-13 11:35:39.352 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:35:39.354 +03:30 [INF] ===============  End of observation process (1.4765 ms) ===============
+2022-12-13 11:35:44.367 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:35:44.369 +03:30 [INF] ===============  End of observation process (1.9356 ms) ===============
+2022-12-13 11:35:49.379 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:35:49.388 +03:30 [INF] Writing sensor error in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop, Error Type: NotAlive
+2022-12-13 11:35:49.794 +03:30 [INF] ===============  End of observation process (415.1157 ms) ===============
+2022-12-13 11:35:54.800 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:35:54.802 +03:30 [INF] Writing sensor error in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop, Error Type: NotAlive
+2022-12-13 11:35:54.824 +03:30 [INF] ===============  End of observation process (24.0547 ms) ===============
+2022-12-13 11:35:59.838 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:35:59.840 +03:30 [INF] Writing sensor error in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop, Error Type: NotAlive
+2022-12-13 11:36:00.174 +03:30 [INF] ===============  End of observation process (335.686 ms) ===============
+2022-12-13 11:36:05.194 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:36:05.195 +03:30 [INF] Writing sensor error in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop, Error Type: NotAlive
+2022-12-13 11:36:05.225 +03:30 [INF] ===============  End of observation process (30.4626 ms) ===============
+2022-12-13 11:36:10.232 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:36:10.233 +03:30 [INF] Writing sensor error in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop, Error Type: NotAlive
+2022-12-13 11:36:10.264 +03:30 [INF] ===============  End of observation process (32.2439 ms) ===============
+2022-12-13 11:36:15.278 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:36:15.280 +03:30 [INF] Writing sensor error in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop, Error Type: NotAlive
+2022-12-13 11:36:15.612 +03:30 [INF] ===============  End of observation process (333.4333 ms) ===============
+2022-12-13 11:36:20.627 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:36:20.628 +03:30 [INF] Writing sensor error in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop, Error Type: NotAlive
+2022-12-13 11:36:23.373 +03:30 [INF] ===============  End of observation process (2746.1972 ms) ===============
+2022-12-13 11:36:28.386 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:36:28.389 +03:30 [INF] Writing sensor error in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop, Error Type: NotAlive
+2022-12-13 11:36:34.725 +03:30 [INF] ===============  End of observation process (6338.5176 ms) ===============
+2022-12-13 11:36:39.736 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:36:39.738 +03:30 [INF] Writing sensor error in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop, Error Type: NotAlive
+2022-12-13 11:36:39.754 +03:30 [INF] ===============  End of observation process (18.354 ms) ===============
+2022-12-13 11:36:44.776 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:36:44.778 +03:30 [INF] Writing sensor error in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop, Error Type: NotAlive
+2022-12-13 11:36:44.802 +03:30 [INF] ===============  End of observation process (25.9031 ms) ===============
+2022-12-13 11:36:49.814 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:36:49.816 +03:30 [INF] Writing sensor error in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop, Error Type: NotAlive
+2022-12-13 11:36:49.840 +03:30 [INF] ===============  End of observation process (26.1615 ms) ===============
+2022-12-13 11:36:54.853 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:36:54.854 +03:30 [INF] Writing sensor error in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop, Error Type: NotAlive
+2022-12-13 11:36:54.873 +03:30 [INF] ===============  End of observation process (20.1861 ms) ===============
+2022-12-13 11:36:59.887 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:36:59.889 +03:30 [INF] Writing sensor error in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop, Error Type: NotAlive
+2022-12-13 11:36:59.907 +03:30 [INF] ===============  End of observation process (19.9936 ms) ===============
+2022-12-13 11:37:04.926 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:37:04.928 +03:30 [INF] Writing sensor error in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop, Error Type: NotAlive
+2022-12-13 11:37:07.077 +03:30 [INF] ===============  End of observation process (2150.7515 ms) ===============
+2022-12-13 11:37:12.094 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:37:12.095 +03:30 [INF] Writing sensor error in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop, Error Type: NotAlive
+2022-12-13 11:37:12.140 +03:30 [INF] ===============  End of observation process (45.4863 ms) ===============
+2022-12-13 11:37:17.163 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:37:17.165 +03:30 [INF] Writing sensor error in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop, Error Type: NotAlive
+2022-12-13 11:37:17.516 +03:30 [INF] ===============  End of observation process (352.673 ms) ===============
+2022-12-13 11:37:22.529 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:37:22.530 +03:30 [INF] Writing sensor error in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop, Error Type: NotAlive
+2022-12-13 11:37:22.562 +03:30 [INF] ===============  End of observation process (32.6116 ms) ===============
+2022-12-13 11:37:27.567 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:37:27.569 +03:30 [INF] Writing sensor error in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop, Error Type: NotAlive
+2022-12-13 11:37:27.590 +03:30 [INF] ===============  End of observation process (23.2073 ms) ===============
+2022-12-13 11:37:32.596 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:37:32.598 +03:30 [INF] Writing sensor error in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop, Error Type: NotAlive
+2022-12-13 11:37:32.618 +03:30 [WRN] Sensor with ID 1 has been unwatched due to persisting error. Error Type: NotAlive, Error happened date: 12/13/2022 11:35:49 AM
+2022-12-13 11:37:32.620 +03:30 [INF] ===============  End of observation process (23.4893 ms) ===============
+2022-12-13 11:37:37.632 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:37:37.633 +03:30 [INF] ===============  End of observation process (1.0124 ms) ===============
+2022-12-13 11:37:42.641 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:37:42.643 +03:30 [INF] ===============  End of observation process (1.8342 ms) ===============
+2022-12-13 11:37:47.660 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:37:47.662 +03:30 [INF] ===============  End of observation process (1.5487 ms) ===============
+2022-12-13 11:37:52.664 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:37:52.665 +03:30 [INF] ===============  End of observation process (1.2055 ms) ===============
+2022-12-13 11:37:57.671 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:37:57.672 +03:30 [INF] ===============  End of observation process (1.2134 ms) ===============
+2022-12-13 11:38:02.686 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:38:02.687 +03:30 [INF] ===============  End of observation process (1.3289 ms) ===============
+2022-12-13 11:38:07.701 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:38:07.703 +03:30 [INF] ===============  End of observation process (1.3241 ms) ===============
+2022-12-13 11:38:12.715 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:38:12.717 +03:30 [INF] ===============  End of observation process (1.6643 ms) ===============
+2022-12-13 11:38:17.719 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:38:17.721 +03:30 [INF] ===============  End of observation process (1.4446 ms) ===============
+2022-12-13 11:38:22.731 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:38:22.733 +03:30 [INF] ===============  End of observation process (1.5564 ms) ===============
+2022-12-13 11:38:27.734 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:38:27.735 +03:30 [INF] ===============  End of observation process (0.837 ms) ===============
+2022-12-13 11:38:32.741 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:38:32.743 +03:30 [INF] ===============  End of observation process (1.2221 ms) ===============
+2022-12-13 11:38:37.759 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:38:37.761 +03:30 [INF] ===============  End of observation process (1.3581 ms) ===============
+2022-12-13 11:38:42.782 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:38:42.784 +03:30 [INF] ===============  End of observation process (1.342 ms) ===============
+2022-12-13 11:38:47.803 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:38:47.805 +03:30 [INF] ===============  End of observation process (1.1703 ms) ===============
+2022-12-13 11:38:52.824 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:38:52.826 +03:30 [INF] ===============  End of observation process (1.5693 ms) ===============
+2022-12-13 11:38:57.833 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:38:57.835 +03:30 [INF] ===============  End of observation process (1.4761 ms) ===============
+2022-12-13 11:39:02.851 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:39:02.853 +03:30 [INF] ===============  End of observation process (1.7968 ms) ===============
+2022-12-13 11:39:07.866 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:39:07.868 +03:30 [INF] ===============  End of observation process (1.7908 ms) ===============
+2022-12-13 11:39:12.883 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:39:12.885 +03:30 [INF] ===============  End of observation process (1.3134 ms) ===============
+2022-12-13 11:39:17.893 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:39:17.895 +03:30 [INF] ===============  End of observation process (1.7622 ms) ===============
+2022-12-13 11:39:22.904 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:39:22.906 +03:30 [INF] ===============  End of observation process (1.5504 ms) ===============
+2022-12-13 11:39:27.910 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:39:27.912 +03:30 [INF] ===============  End of observation process (1.7088 ms) ===============
+2022-12-13 11:39:32.929 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:39:32.931 +03:30 [INF] ===============  End of observation process (1.4822 ms) ===============
+2022-12-13 11:39:37.932 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:39:37.934 +03:30 [INF] ===============  End of observation process (1.4275 ms) ===============
+2022-12-13 11:39:42.951 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:39:42.952 +03:30 [INF] ===============  End of observation process (1.7597 ms) ===============
+2022-12-13 11:39:47.961 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:39:47.972 +03:30 [INF] ===============  End of observation process (11.5172 ms) ===============
+2022-12-13 11:39:52.988 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:39:52.989 +03:30 [INF] ===============  End of observation process (1.6017 ms) ===============
+2022-12-13 11:39:57.997 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:39:57.998 +03:30 [INF] ===============  End of observation process (1.6588 ms) ===============
+2022-12-13 11:40:02.999 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:40:03.000 +03:30 [INF] ===============  End of observation process (1.6092 ms) ===============
+2022-12-13 11:40:08.017 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:40:08.018 +03:30 [INF] ===============  End of observation process (0.965 ms) ===============
+2022-12-13 11:40:13.027 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:40:13.028 +03:30 [INF] ===============  End of observation process (1.5705 ms) ===============
+2022-12-13 11:40:18.035 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:40:18.036 +03:30 [INF] ===============  End of observation process (1.3565 ms) ===============
+2022-12-13 11:40:23.044 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:40:23.045 +03:30 [INF] ===============  End of observation process (1.6748 ms) ===============
+2022-12-13 11:40:28.046 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:40:28.047 +03:30 [INF] ===============  End of observation process (1.7189 ms) ===============
+2022-12-13 11:40:33.070 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:40:33.071 +03:30 [INF] ===============  End of observation process (1.3745 ms) ===============
+2022-12-13 11:40:38.081 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:40:38.082 +03:30 [INF] ===============  End of observation process (1.4227 ms) ===============
+2022-12-13 11:40:43.097 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:40:43.098 +03:30 [INF] ===============  End of observation process (1.5542 ms) ===============
+2022-12-13 11:40:48.099 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:40:48.101 +03:30 [INF] ===============  End of observation process (1.6527 ms) ===============
+2022-12-13 11:40:53.117 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:40:53.119 +03:30 [INF] ===============  End of observation process (1.1108 ms) ===============
+2022-12-13 11:40:58.133 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:40:58.133 +03:30 [INF] ===============  End of observation process (0.9146 ms) ===============
+2022-12-13 11:41:03.138 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:41:03.141 +03:30 [INF] ===============  End of observation process (2.0545 ms) ===============
+2022-12-13 11:41:08.156 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:41:08.158 +03:30 [INF] ===============  End of observation process (2.0241 ms) ===============
+2022-12-13 11:41:13.161 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:41:13.162 +03:30 [INF] ===============  End of observation process (0.9595 ms) ===============
+2022-12-13 11:41:18.173 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:41:18.174 +03:30 [INF] ===============  End of observation process (1.1919 ms) ===============
+2022-12-13 11:41:23.190 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:41:23.191 +03:30 [INF] ===============  End of observation process (1.9475 ms) ===============
+2022-12-13 11:41:28.204 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:41:28.206 +03:30 [INF] ===============  End of observation process (1.4561 ms) ===============
+2022-12-13 11:41:33.211 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:41:33.212 +03:30 [INF] ===============  End of observation process (1.1866 ms) ===============
+2022-12-13 11:41:38.218 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:41:38.219 +03:30 [INF] ===============  End of observation process (1.1712 ms) ===============
+2022-12-13 11:41:43.229 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:41:43.230 +03:30 [INF] ===============  End of observation process (0.9148 ms) ===============
+2022-12-13 11:41:48.256 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:41:48.257 +03:30 [INF] ===============  End of observation process (1.548 ms) ===============
+2022-12-13 11:41:53.268 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:41:53.270 +03:30 [INF] ===============  End of observation process (1.0178 ms) ===============
+2022-12-13 11:41:58.279 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:41:58.281 +03:30 [INF] ===============  End of observation process (1.6721 ms) ===============
+2022-12-13 11:42:03.289 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:42:03.291 +03:30 [INF] ===============  End of observation process (1.6113 ms) ===============
+2022-12-13 11:42:08.294 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:42:08.296 +03:30 [INF] ===============  End of observation process (1.4861 ms) ===============
+2022-12-13 11:42:13.305 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:42:13.305 +03:30 [INF] ===============  End of observation process (0.9397 ms) ===============
+2022-12-13 11:42:18.317 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:42:18.318 +03:30 [INF] ===============  End of observation process (1.2303 ms) ===============
+2022-12-13 11:42:23.329 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:42:23.330 +03:30 [INF] ===============  End of observation process (1.5143 ms) ===============
+2022-12-13 11:42:28.340 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:42:28.341 +03:30 [INF] ===============  End of observation process (0.9681 ms) ===============
+2022-12-13 11:42:33.347 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:42:33.348 +03:30 [INF] ===============  End of observation process (1.2978 ms) ===============
+2022-12-13 11:42:38.363 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:42:38.365 +03:30 [INF] ===============  End of observation process (1.4368 ms) ===============
+2022-12-13 11:42:43.368 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:42:43.369 +03:30 [INF] ===============  End of observation process (1.0102 ms) ===============
+2022-12-13 11:42:48.373 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:42:48.407 +03:30 [INF] ===============  End of observation process (33.1662 ms) ===============
+2022-12-13 11:42:53.416 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:42:53.417 +03:30 [INF] ===============  End of observation process (0.6996 ms) ===============
+2022-12-13 11:42:58.203 +03:30 [INF] Starting up the Service...
+2022-12-13 11:42:59.896 +03:30 [INF] Loading poultries...
+2022-12-13 11:43:00.996 +03:30 [INF] Poultries loaded. (1099.5218 ms)
+2022-12-13 11:43:01.006 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: a009fbad-f077-4c96-aba3-b7dfbbb133f8.
+2022-12-13 11:43:01.061 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: a009fbad-f077-4c96-aba3-b7dfbbb133f8.
+2022-12-13 11:43:01.097 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2022-12-13 11:43:01.098 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:43:01.118 +03:30 [WRN] Sensor with ID 1 has been unwatched due to persisting error. Error Type: NotAlive, Error happened date: 12/13/2022 11:35:49 AM
+2022-12-13 11:43:01.121 +03:30 [INF] ===============  End of observation process (23.0239 ms) ===============
+2022-12-13 11:43:06.135 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:43:06.136 +03:30 [INF] ===============  End of observation process (1.6907 ms) ===============
+2022-12-13 11:43:07.880 +03:30 [INF] ===============  Begin mqtt process  ===============
+2022-12-13 11:43:07.882 +03:30 [INF] MQTT Message received. Topic: Elma/ToServer/FromSensor/Scalar/1, Payload: T:33
+2022-12-13 11:43:07.895 +03:30 [INF] MQTT Message is from a sensor. Topic: Elma/ToServer/FromSensor/Scalar/1, Payload: T:33
+2022-12-13 11:43:07.897 +03:30 [INF] MQTT Message is value from a scalar sensor. Topic: Elma/ToServer/FromSensor/Scalar/1, Payload: T:33
+2022-12-13 11:43:07.905 +03:30 [INF] Sensor is valid; Value is valid. Type: FarmScalar, LocationID: 2, Section: FarmLeftTop
+2022-12-13 11:43:07.907 +03:30 [INF] Updating sensor error in database, if existed. Sensor ID: 1, Error Types: InvalidTemperatureData...
+2022-12-13 11:43:08.222 +03:30 [INF] Sensor is valid; Value is valid. Type: FarmScalar, LocationID: 2, Section: FarmLeftTop
+2022-12-13 11:43:08.223 +03:30 [INF] Updating sensor error in database, if existed. Sensor ID: 1, Error Types: InvalidTemperatureValue...
+2022-12-13 11:43:08.560 +03:30 [INF] Sensor is valid; Value is valid. Type: FarmScalar, LocationID: 2, Section: FarmLeftTop
+2022-12-13 11:43:08.561 +03:30 [INF] Updating sensor error in database, if existed. Sensor ID: 1, Error Types: NotAlive...
+2022-12-13 11:43:08.588 +03:30 [INF] Sensor is valid; Value is valid. Type: FarmScalar, LocationID: 2, Section: FarmLeftTop
+2022-12-13 11:43:08.589 +03:30 [INF] Updating sensor error in database, if existed. Sensor ID: 1, Error Types: InvalidData...
+2022-12-13 11:43:08.614 +03:30 [INF] Writing sensor value in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop
+2022-12-13 11:43:09.361 +03:30 [INF] Scalar sensor value done processing. Count: 1
+2022-12-13 11:43:09.363 +03:30 [INF] ===============  End of mqtt process 1482.4807 ms) ===============
+2022-12-13 11:43:11.141 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:43:11.142 +03:30 [INF] ===============  End of observation process (1.3927 ms) ===============
+2022-12-13 11:43:16.148 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:43:16.149 +03:30 [INF] ===============  End of observation process (1.5232 ms) ===============
+2022-12-13 11:43:21.154 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:43:21.155 +03:30 [INF] ===============  End of observation process (1.6145 ms) ===============
+2022-12-13 11:43:26.164 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:43:26.165 +03:30 [INF] ===============  End of observation process (1.1481 ms) ===============
+2022-12-13 11:43:31.178 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:43:31.179 +03:30 [INF] ===============  End of observation process (1.3654 ms) ===============
+2022-12-13 11:43:36.188 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:43:36.190 +03:30 [INF] ===============  End of observation process (1.8173 ms) ===============
+2022-12-13 11:43:41.212 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:43:41.213 +03:30 [INF] ===============  End of observation process (1.4175 ms) ===============
+2022-12-13 11:43:46.218 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:43:46.220 +03:30 [INF] ===============  End of observation process (1.1522 ms) ===============
+2022-12-13 11:43:51.234 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:43:51.235 +03:30 [INF] ===============  End of observation process (1.3339 ms) ===============
+2022-12-13 11:43:56.262 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:43:56.264 +03:30 [INF] ===============  End of observation process (1.6618 ms) ===============
+2022-12-13 11:44:01.275 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:44:07.169 +03:30 [INF] ===============  End of observation process (5894.3578 ms) ===============
+2022-12-13 11:44:12.206 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:44:12.208 +03:30 [INF] ===============  End of observation process (1.337 ms) ===============
+2022-12-13 11:44:17.216 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:44:27.627 +03:30 [INF] ===============  End of observation process (10410.4176 ms) ===============
+2022-12-13 11:44:32.653 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:44:34.262 +03:30 [INF] ===============  End of observation process (1608.8995 ms) ===============
+2022-12-13 11:44:39.289 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:44:39.290 +03:30 [INF] ===============  End of observation process (1.3572 ms) ===============
+2022-12-13 11:44:44.310 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:44:44.311 +03:30 [INF] ===============  End of observation process (1.5922 ms) ===============
+2022-12-13 11:44:49.321 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:44:49.322 +03:30 [INF] ===============  End of observation process (1.433 ms) ===============
+2022-12-13 11:44:55.837 +03:30 [INF] Starting up the Service...
+2022-12-13 11:44:57.263 +03:30 [INF] Loading poultries...
+2022-12-13 11:44:58.224 +03:30 [INF] Poultries loaded. (960.3152 ms)
+2022-12-13 11:44:58.231 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 2281bbde-0a71-4d7d-8054-972f7dbe6171.
+2022-12-13 11:44:58.287 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 2281bbde-0a71-4d7d-8054-972f7dbe6171.
+2022-12-13 11:44:58.307 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2022-12-13 11:44:58.308 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:44:58.327 +03:30 [INF] ===============  End of observation process (19.0742 ms) ===============
+2022-12-13 11:45:03.341 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:45:03.342 +03:30 [INF] ===============  End of observation process (1.3385 ms) ===============
+2022-12-13 11:45:08.365 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:45:08.366 +03:30 [INF] ===============  End of observation process (1.097 ms) ===============
+2022-12-13 11:45:13.375 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:45:13.376 +03:30 [INF] ===============  End of observation process (1.7035 ms) ===============
+2022-12-13 11:45:18.392 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:45:18.393 +03:30 [INF] ===============  End of observation process (1.4532 ms) ===============
+2022-12-13 11:45:23.413 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:45:23.414 +03:30 [INF] ===============  End of observation process (1.7472 ms) ===============
+2022-12-13 11:45:28.434 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:45:28.437 +03:30 [INF] ===============  End of observation process (3.144 ms) ===============
+2022-12-13 11:45:33.452 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:45:33.453 +03:30 [INF] ===============  End of observation process (0.9982 ms) ===============
+2022-12-13 11:45:38.467 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:45:38.469 +03:30 [INF] ===============  End of observation process (1.8894 ms) ===============
+2022-12-13 11:45:43.496 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:45:43.508 +03:30 [INF] Writing sensor error in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop, Error Type: NotAlive
+2022-12-13 11:45:43.614 +03:30 [INF] ===============  End of observation process (118.7704 ms) ===============
+2022-12-13 11:45:48.622 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:45:48.624 +03:30 [INF] ===============  End of observation process (1.9177 ms) ===============
+2022-12-13 11:45:53.628 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:45:53.630 +03:30 [INF] ===============  End of observation process (1.885 ms) ===============
+2022-12-13 11:45:58.641 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:45:58.642 +03:30 [INF] ===============  End of observation process (1.5602 ms) ===============
+2022-12-13 11:46:03.656 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:46:03.657 +03:30 [INF] ===============  End of observation process (1.2171 ms) ===============
+2022-12-13 11:46:08.663 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:46:08.664 +03:30 [INF] ===============  End of observation process (0.9859 ms) ===============
+2022-12-13 11:46:13.671 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:46:13.673 +03:30 [INF] ===============  End of observation process (1.8744 ms) ===============
+2022-12-13 11:46:18.673 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:46:18.674 +03:30 [INF] ===============  End of observation process (1.6608 ms) ===============
+2022-12-13 11:46:23.682 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:46:23.683 +03:30 [INF] ===============  End of observation process (1.622 ms) ===============
+2022-12-13 11:46:28.693 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:46:28.694 +03:30 [INF] ===============  End of observation process (1.6296 ms) ===============
+2022-12-13 11:46:33.698 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:46:33.699 +03:30 [INF] ===============  End of observation process (1.7997 ms) ===============
+2022-12-13 11:46:38.709 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:46:38.710 +03:30 [INF] ===============  End of observation process (1.0465 ms) ===============
+2022-12-13 11:46:43.723 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:46:43.724 +03:30 [INF] ===============  End of observation process (1.0197 ms) ===============
+2022-12-13 11:46:48.726 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:46:48.727 +03:30 [INF] ===============  End of observation process (1.5382 ms) ===============
+2022-12-13 11:46:53.738 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:46:53.739 +03:30 [INF] ===============  End of observation process (0.8574 ms) ===============
+2022-12-13 11:46:58.753 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:46:58.754 +03:30 [INF] ===============  End of observation process (1.0654 ms) ===============
+2022-12-13 11:47:03.769 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:47:03.771 +03:30 [INF] ===============  End of observation process (1.5203 ms) ===============
+2022-12-13 11:47:08.793 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:47:08.794 +03:30 [INF] ===============  End of observation process (0.9219 ms) ===============
+2022-12-13 11:47:13.801 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:47:13.802 +03:30 [INF] ===============  End of observation process (0.9878 ms) ===============
+2022-12-13 11:47:18.810 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:47:18.812 +03:30 [INF] ===============  End of observation process (1.7611 ms) ===============
+2022-12-13 11:47:23.821 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:47:23.823 +03:30 [WRN] Sensor with ID 1 has been unwatched due to persisting error. Error Type: NotAlive, Error happened date: 12/13/2022 11:45:43 AM
+2022-12-13 11:47:23.824 +03:30 [INF] ===============  End of observation process (2.695 ms) ===============
+2022-12-13 11:47:28.833 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:47:28.835 +03:30 [INF] ===============  End of observation process (1.426 ms) ===============
+2022-12-13 11:47:33.844 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:47:33.846 +03:30 [INF] ===============  End of observation process (1.6245 ms) ===============
+2022-12-13 11:47:38.858 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:47:38.859 +03:30 [INF] ===============  End of observation process (0.8584 ms) ===============
+2022-12-13 11:47:43.883 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:47:43.884 +03:30 [INF] ===============  End of observation process (1.0302 ms) ===============
+2022-12-13 11:47:48.895 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:47:48.896 +03:30 [INF] ===============  End of observation process (0.8248 ms) ===============
+2022-12-13 11:47:53.903 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:47:53.909 +03:30 [INF] ===============  End of observation process (5.8509 ms) ===============
+2022-12-13 11:47:58.924 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:47:58.933 +03:30 [INF] ===============  End of observation process (8.9318 ms) ===============
+2022-12-13 11:48:03.938 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:48:03.940 +03:30 [INF] ===============  End of observation process (1.7203 ms) ===============
+2022-12-13 11:48:08.955 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:48:08.957 +03:30 [INF] ===============  End of observation process (1.3434 ms) ===============
+2022-12-13 11:48:13.967 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:48:13.969 +03:30 [INF] ===============  End of observation process (1.6474 ms) ===============
+2022-12-13 11:48:18.995 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:48:18.996 +03:30 [INF] ===============  End of observation process (0.8714 ms) ===============
+2022-12-13 11:48:24.003 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:48:24.004 +03:30 [INF] ===============  End of observation process (1.0568 ms) ===============
+2022-12-13 11:48:29.017 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:48:29.018 +03:30 [INF] ===============  End of observation process (0.9902 ms) ===============
+2022-12-13 11:48:34.032 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:48:34.033 +03:30 [INF] ===============  End of observation process (0.9804 ms) ===============
+2022-12-13 11:48:39.047 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:48:39.048 +03:30 [INF] ===============  End of observation process (0.6969 ms) ===============
+2022-12-13 11:48:44.068 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:48:44.069 +03:30 [INF] ===============  End of observation process (1.1276 ms) ===============
+2022-12-13 11:48:49.076 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:48:49.077 +03:30 [INF] ===============  End of observation process (1.0039 ms) ===============
+2022-12-13 11:48:54.087 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:48:54.088 +03:30 [INF] ===============  End of observation process (0.8429 ms) ===============
+2022-12-13 11:48:59.095 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:48:59.095 +03:30 [INF] ===============  End of observation process (0.9137 ms) ===============
+2022-12-13 11:49:04.117 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:49:04.118 +03:30 [INF] ===============  End of observation process (1.6432 ms) ===============
+2022-12-13 11:49:09.132 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:49:09.132 +03:30 [INF] ===============  End of observation process (0.9172 ms) ===============
+2022-12-13 11:49:14.143 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:49:14.144 +03:30 [INF] ===============  End of observation process (1.6782 ms) ===============
+2022-12-13 11:49:19.148 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:49:19.149 +03:30 [INF] ===============  End of observation process (1.1325 ms) ===============
+2022-12-13 11:49:24.166 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:49:24.167 +03:30 [INF] ===============  End of observation process (1.0241 ms) ===============
+2022-12-13 11:49:29.176 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:49:29.177 +03:30 [INF] ===============  End of observation process (1.1393 ms) ===============
+2022-12-13 11:49:34.186 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:49:34.187 +03:30 [INF] ===============  End of observation process (0.8586 ms) ===============
+2022-12-13 11:49:39.203 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:49:39.204 +03:30 [INF] ===============  End of observation process (0.9054 ms) ===============
+2022-12-13 11:49:44.229 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:49:44.229 +03:30 [INF] ===============  End of observation process (0.8795 ms) ===============
+2022-12-13 11:49:49.246 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:49:49.247 +03:30 [INF] ===============  End of observation process (1.3668 ms) ===============
+2022-12-13 11:49:54.252 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:49:54.291 +03:30 [INF] ===============  End of observation process (39.3397 ms) ===============
+2022-12-13 11:49:59.308 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:49:59.309 +03:30 [INF] ===============  End of observation process (1.0574 ms) ===============
+2022-12-13 11:50:04.320 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:50:04.321 +03:30 [INF] ===============  End of observation process (1.3704 ms) ===============
+2022-12-13 11:50:09.337 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:50:09.338 +03:30 [INF] ===============  End of observation process (0.9602 ms) ===============
+2022-12-13 11:50:14.353 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:50:14.354 +03:30 [INF] ===============  End of observation process (0.9234 ms) ===============
+2022-12-13 11:50:19.370 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:50:19.371 +03:30 [INF] ===============  End of observation process (1.5993 ms) ===============
+2022-12-13 11:50:24.375 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:50:24.376 +03:30 [INF] ===============  End of observation process (1.2531 ms) ===============
+2022-12-13 11:50:29.380 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:50:29.380 +03:30 [INF] ===============  End of observation process (0.8689 ms) ===============
+2022-12-13 11:50:34.394 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:50:34.395 +03:30 [INF] ===============  End of observation process (1.4183 ms) ===============
+2022-12-13 11:50:39.402 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:50:39.403 +03:30 [INF] ===============  End of observation process (1.7332 ms) ===============
+2022-12-13 11:50:44.421 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:50:44.422 +03:30 [INF] ===============  End of observation process (1.5739 ms) ===============
+2022-12-13 11:50:49.434 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:50:49.435 +03:30 [INF] ===============  End of observation process (1.1553 ms) ===============
+2022-12-13 11:50:54.439 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:50:54.440 +03:30 [INF] ===============  End of observation process (1.7715 ms) ===============
+2022-12-13 11:50:59.443 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:50:59.444 +03:30 [INF] ===============  End of observation process (0.9736 ms) ===============
+2022-12-13 11:51:04.452 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:51:04.452 +03:30 [INF] ===============  End of observation process (0.9516 ms) ===============
+2022-12-13 11:51:09.465 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:51:09.467 +03:30 [INF] ===============  End of observation process (2.0516 ms) ===============
+2022-12-13 11:51:14.477 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:51:14.477 +03:30 [INF] ===============  End of observation process (0.7016 ms) ===============
+2022-12-13 11:51:19.479 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:51:19.479 +03:30 [INF] ===============  End of observation process (0.846 ms) ===============
+2022-12-13 11:51:24.482 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:51:24.482 +03:30 [INF] ===============  End of observation process (0.9192 ms) ===============
+2022-12-13 11:51:29.487 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:51:29.488 +03:30 [INF] ===============  End of observation process (1.3791 ms) ===============
+2022-12-13 11:51:34.489 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:51:34.490 +03:30 [INF] ===============  End of observation process (1.7051 ms) ===============
+2022-12-13 11:51:39.504 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:51:39.505 +03:30 [INF] ===============  End of observation process (0.9641 ms) ===============
+2022-12-13 11:51:44.519 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:51:44.520 +03:30 [INF] ===============  End of observation process (1.452 ms) ===============
+2022-12-13 11:51:49.531 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:51:49.532 +03:30 [INF] ===============  End of observation process (1.4986 ms) ===============
+2022-12-13 11:51:54.536 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:51:54.537 +03:30 [INF] ===============  End of observation process (1.8486 ms) ===============
+2022-12-13 11:51:59.552 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:51:59.553 +03:30 [INF] ===============  End of observation process (1.4809 ms) ===============
+2022-12-13 11:52:04.561 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:52:04.562 +03:30 [INF] ===============  End of observation process (1.2403 ms) ===============
+2022-12-13 11:52:09.577 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:52:09.578 +03:30 [INF] ===============  End of observation process (1.1275 ms) ===============
+2022-12-13 11:52:14.587 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:52:14.588 +03:30 [INF] ===============  End of observation process (1.3548 ms) ===============
+2022-12-13 11:52:19.604 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:52:19.605 +03:30 [INF] ===============  End of observation process (0.9883 ms) ===============
+2022-12-13 11:52:24.609 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:52:24.610 +03:30 [INF] ===============  End of observation process (1.1448 ms) ===============
+2022-12-13 11:52:29.619 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:52:29.620 +03:30 [INF] ===============  End of observation process (1.6105 ms) ===============
+2022-12-13 11:52:34.626 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:52:34.627 +03:30 [INF] ===============  End of observation process (1.4848 ms) ===============
+2022-12-13 11:52:39.638 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:52:39.639 +03:30 [INF] ===============  End of observation process (1.8896 ms) ===============
+2022-12-13 11:52:44.643 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:52:44.644 +03:30 [INF] ===============  End of observation process (1.1314 ms) ===============
+2022-12-13 11:52:49.659 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:52:49.660 +03:30 [INF] ===============  End of observation process (1.5669 ms) ===============
+2022-12-13 11:52:54.678 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:52:54.679 +03:30 [INF] ===============  End of observation process (1.6314 ms) ===============
+2022-12-13 11:52:59.694 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:52:59.695 +03:30 [INF] ===============  End of observation process (1.3996 ms) ===============
+2022-12-13 11:53:04.703 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:53:04.704 +03:30 [INF] ===============  End of observation process (1.6595 ms) ===============
+2022-12-13 11:53:09.715 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:53:09.716 +03:30 [INF] ===============  End of observation process (1.5635 ms) ===============
+2022-12-13 11:53:14.725 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:53:14.726 +03:30 [INF] ===============  End of observation process (1.6418 ms) ===============
+2022-12-13 11:53:19.732 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:53:19.733 +03:30 [INF] ===============  End of observation process (1.6191 ms) ===============
+2022-12-13 11:53:24.743 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:53:24.744 +03:30 [INF] ===============  End of observation process (1.4687 ms) ===============
+2022-12-13 11:53:29.757 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:53:29.758 +03:30 [INF] ===============  End of observation process (1.273 ms) ===============
+2022-12-13 11:53:34.775 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:53:34.776 +03:30 [INF] ===============  End of observation process (1.6232 ms) ===============
+2022-12-13 11:53:39.791 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:53:39.792 +03:30 [INF] ===============  End of observation process (1.5737 ms) ===============
+2022-12-13 11:53:44.798 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:53:44.799 +03:30 [INF] ===============  End of observation process (1.4822 ms) ===============
+2022-12-13 11:53:49.824 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:53:49.825 +03:30 [INF] ===============  End of observation process (1.7565 ms) ===============
+2022-12-13 11:53:54.839 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:53:54.840 +03:30 [INF] ===============  End of observation process (1.6788 ms) ===============
+2022-12-13 11:53:59.853 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:53:59.854 +03:30 [INF] ===============  End of observation process (1.5813 ms) ===============
+2022-12-13 11:54:04.868 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:54:04.869 +03:30 [INF] ===============  End of observation process (1.7922 ms) ===============
+2022-12-13 11:54:09.876 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:54:09.877 +03:30 [INF] ===============  End of observation process (1.4672 ms) ===============
+2022-12-13 11:54:14.885 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:54:14.886 +03:30 [INF] ===============  End of observation process (0.9425 ms) ===============
+2022-12-13 11:54:19.903 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:54:19.904 +03:30 [INF] ===============  End of observation process (1.6633 ms) ===============
+2022-12-13 11:54:24.908 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:54:24.909 +03:30 [INF] ===============  End of observation process (1.6582 ms) ===============
+2022-12-13 11:54:29.915 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:54:29.916 +03:30 [INF] ===============  End of observation process (1.3238 ms) ===============
+2022-12-13 11:54:34.929 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:54:34.930 +03:30 [INF] ===============  End of observation process (1.8548 ms) ===============
+2022-12-13 11:54:39.938 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:54:39.939 +03:30 [INF] ===============  End of observation process (1.1127 ms) ===============
+2022-12-13 11:54:44.943 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:54:44.944 +03:30 [INF] ===============  End of observation process (1.206 ms) ===============
+2022-12-13 11:54:49.963 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:54:49.964 +03:30 [INF] ===============  End of observation process (1.3841 ms) ===============
+2022-12-13 11:54:54.966 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:54:54.967 +03:30 [INF] ===============  End of observation process (1.0736 ms) ===============
+2022-12-13 11:54:59.991 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:54:59.992 +03:30 [INF] ===============  End of observation process (1.5613 ms) ===============
+2022-12-13 11:55:05.001 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:55:05.001 +03:30 [INF] ===============  End of observation process (0.8391 ms) ===============
+2022-12-13 11:55:10.015 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:55:10.016 +03:30 [INF] ===============  End of observation process (1.2367 ms) ===============
+2022-12-13 11:55:15.022 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:55:15.023 +03:30 [INF] ===============  End of observation process (1.6353 ms) ===============
+2022-12-13 11:55:20.041 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:55:20.042 +03:30 [INF] ===============  End of observation process (1.5147 ms) ===============
+2022-12-13 11:55:25.046 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:55:25.047 +03:30 [INF] ===============  End of observation process (1.3706 ms) ===============
+2022-12-13 11:55:30.062 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:55:30.062 +03:30 [INF] ===============  End of observation process (0.8916 ms) ===============
+2022-12-13 11:55:35.078 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:55:35.078 +03:30 [INF] ===============  End of observation process (0.8352 ms) ===============
+2022-12-13 11:55:40.105 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:55:40.106 +03:30 [INF] ===============  End of observation process (1.3496 ms) ===============
+2022-12-13 11:55:45.122 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:55:45.123 +03:30 [INF] ===============  End of observation process (1.2281 ms) ===============
+2022-12-13 11:55:50.129 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:55:50.130 +03:30 [INF] ===============  End of observation process (1.0112 ms) ===============
+2022-12-13 11:55:55.144 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:55:55.145 +03:30 [INF] ===============  End of observation process (1.3491 ms) ===============
+2022-12-13 11:56:00.150 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:56:00.151 +03:30 [INF] ===============  End of observation process (0.9554 ms) ===============
+2022-12-13 11:56:05.167 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:56:05.168 +03:30 [INF] ===============  End of observation process (1.23 ms) ===============
+2022-12-13 11:56:10.183 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:56:10.183 +03:30 [INF] ===============  End of observation process (0.8422 ms) ===============
+2022-12-13 11:56:15.200 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:56:15.201 +03:30 [INF] ===============  End of observation process (1.2539 ms) ===============
+2022-12-13 11:56:20.217 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:56:20.218 +03:30 [INF] ===============  End of observation process (1.4668 ms) ===============
+2022-12-13 11:56:25.225 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:56:25.226 +03:30 [INF] ===============  End of observation process (1.3732 ms) ===============
+2022-12-13 11:56:30.235 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:56:30.236 +03:30 [INF] ===============  End of observation process (1.2868 ms) ===============
+2022-12-13 11:56:35.243 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:56:35.244 +03:30 [INF] ===============  End of observation process (1.8538 ms) ===============
+2022-12-13 11:56:40.254 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:56:40.254 +03:30 [INF] ===============  End of observation process (0.7564 ms) ===============
+2022-12-13 11:56:45.269 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:56:45.270 +03:30 [INF] ===============  End of observation process (1.0011 ms) ===============
+2022-12-13 11:56:50.290 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:56:50.291 +03:30 [INF] ===============  End of observation process (1.1096 ms) ===============
+2022-12-13 11:56:55.297 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:56:55.298 +03:30 [INF] ===============  End of observation process (1.385 ms) ===============
+2022-12-13 11:57:00.318 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:57:00.318 +03:30 [INF] ===============  End of observation process (0.9443 ms) ===============
+2022-12-13 11:57:05.332 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:57:05.333 +03:30 [INF] ===============  End of observation process (1.4605 ms) ===============
+2022-12-13 11:57:10.341 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:57:10.342 +03:30 [INF] ===============  End of observation process (1.1886 ms) ===============
+2022-12-13 11:57:15.363 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:57:15.364 +03:30 [INF] ===============  End of observation process (1.429 ms) ===============
+2022-12-13 11:57:20.372 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:57:20.373 +03:30 [INF] ===============  End of observation process (0.9369 ms) ===============
+2022-12-13 11:57:25.387 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:57:25.388 +03:30 [INF] ===============  End of observation process (1.2771 ms) ===============
+2022-12-13 11:57:30.399 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:57:30.400 +03:30 [INF] ===============  End of observation process (1.2725 ms) ===============
+2022-12-13 11:57:35.404 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:57:35.405 +03:30 [INF] ===============  End of observation process (1.3721 ms) ===============
+2022-12-13 11:57:40.413 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:57:40.414 +03:30 [INF] ===============  End of observation process (1.087 ms) ===============
+2022-12-13 11:57:45.429 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:57:45.431 +03:30 [INF] ===============  End of observation process (1.5532 ms) ===============
+2022-12-13 11:57:50.435 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:57:50.439 +03:30 [INF] ===============  End of observation process (3.9998 ms) ===============
+2022-12-13 11:57:55.465 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:57:55.467 +03:30 [INF] ===============  End of observation process (1.6753 ms) ===============
+2022-12-13 11:58:00.469 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:58:00.471 +03:30 [INF] ===============  End of observation process (1.8796 ms) ===============
+2022-12-13 11:58:05.486 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:58:05.488 +03:30 [INF] ===============  End of observation process (1.8048 ms) ===============
+2022-12-13 11:58:10.495 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:58:10.497 +03:30 [INF] ===============  End of observation process (1.5484 ms) ===============
+2022-12-13 11:58:15.507 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:58:15.508 +03:30 [INF] ===============  End of observation process (1.2224 ms) ===============
+2022-12-13 11:58:20.514 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:58:20.516 +03:30 [INF] ===============  End of observation process (1.988 ms) ===============
+2022-12-13 11:58:25.522 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:58:25.523 +03:30 [INF] ===============  End of observation process (1.087 ms) ===============
+2022-12-13 11:58:30.539 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:58:30.541 +03:30 [INF] ===============  End of observation process (1.3369 ms) ===============
+2022-12-13 11:58:35.558 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:58:35.559 +03:30 [INF] ===============  End of observation process (0.8312 ms) ===============
+2022-12-13 11:58:40.573 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:58:40.574 +03:30 [INF] ===============  End of observation process (0.7417 ms) ===============
+2022-12-13 11:58:45.585 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:58:45.587 +03:30 [INF] ===============  End of observation process (1.4939 ms) ===============
+2022-12-13 11:58:50.592 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:58:50.594 +03:30 [INF] ===============  End of observation process (1.3189 ms) ===============
+2022-12-13 11:58:55.605 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:58:55.607 +03:30 [INF] ===============  End of observation process (1.6221 ms) ===============
+2022-12-13 11:59:00.621 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:59:00.623 +03:30 [INF] ===============  End of observation process (1.586 ms) ===============
+2022-12-13 11:59:05.630 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:59:05.631 +03:30 [INF] ===============  End of observation process (1.0329 ms) ===============
+2022-12-13 11:59:10.646 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:59:10.648 +03:30 [INF] ===============  End of observation process (1.4754 ms) ===============
+2022-12-13 11:59:15.660 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:59:15.662 +03:30 [INF] ===============  End of observation process (1.921 ms) ===============
+2022-12-13 11:59:20.673 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:59:20.674 +03:30 [INF] ===============  End of observation process (0.8381 ms) ===============
+2022-12-13 11:59:25.683 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:59:25.685 +03:30 [INF] ===============  End of observation process (1.7978 ms) ===============
+2022-12-13 11:59:30.696 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:59:30.698 +03:30 [INF] ===============  End of observation process (1.8348 ms) ===============
+2022-12-13 11:59:35.707 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:59:35.709 +03:30 [INF] ===============  End of observation process (1.8603 ms) ===============
+2022-12-13 11:59:40.720 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:59:40.722 +03:30 [INF] ===============  End of observation process (1.542 ms) ===============
+2022-12-13 11:59:45.723 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:59:45.725 +03:30 [INF] ===============  End of observation process (1.4541 ms) ===============
+2022-12-13 11:59:50.742 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:59:50.744 +03:30 [INF] ===============  End of observation process (1.3563 ms) ===============
+2022-12-13 11:59:55.749 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 11:59:55.751 +03:30 [INF] ===============  End of observation process (1.4585 ms) ===============
+2022-12-13 12:00:00.776 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:00:00.778 +03:30 [INF] ===============  End of observation process (1.454 ms) ===============
+2022-12-13 12:00:05.788 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:00:05.790 +03:30 [INF] ===============  End of observation process (1.6467 ms) ===============
+2022-12-13 12:00:10.805 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:00:10.807 +03:30 [INF] ===============  End of observation process (1.6787 ms) ===============
+2022-12-13 12:00:15.817 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:00:15.819 +03:30 [INF] ===============  End of observation process (1.8448 ms) ===============
+2022-12-13 12:00:20.833 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:00:20.835 +03:30 [INF] ===============  End of observation process (1.5418 ms) ===============
+2022-12-13 12:00:25.842 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:00:25.843 +03:30 [INF] ===============  End of observation process (0.8966 ms) ===============
+2022-12-13 12:00:30.849 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:00:30.851 +03:30 [INF] ===============  End of observation process (1.5047 ms) ===============
+2022-12-13 12:00:35.872 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:00:35.874 +03:30 [INF] ===============  End of observation process (1.4715 ms) ===============
+2022-12-13 12:00:40.877 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:00:40.879 +03:30 [INF] ===============  End of observation process (1.5947 ms) ===============
+2022-12-13 12:00:45.903 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:00:45.905 +03:30 [INF] ===============  End of observation process (1.4876 ms) ===============
+2022-12-13 12:00:50.921 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:00:50.923 +03:30 [INF] ===============  End of observation process (1.5196 ms) ===============
+2022-12-13 12:00:55.935 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:00:55.937 +03:30 [INF] ===============  End of observation process (1.925 ms) ===============
+2022-12-13 12:01:00.942 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:01:00.944 +03:30 [INF] ===============  End of observation process (1.8109 ms) ===============
+2022-12-13 12:01:05.964 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:01:05.965 +03:30 [INF] ===============  End of observation process (1.1612 ms) ===============
+2022-12-13 12:01:10.980 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:01:10.982 +03:30 [INF] ===============  End of observation process (1.416 ms) ===============
+2022-12-13 12:01:15.998 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:01:16.000 +03:30 [INF] ===============  End of observation process (1.4212 ms) ===============
+2022-12-13 12:01:21.008 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:01:21.010 +03:30 [INF] ===============  End of observation process (1.2949 ms) ===============
+2022-12-13 12:01:26.018 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:01:26.019 +03:30 [INF] ===============  End of observation process (1.1781 ms) ===============
+2022-12-13 12:01:31.026 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:01:31.027 +03:30 [INF] ===============  End of observation process (1.1688 ms) ===============
+2022-12-13 12:01:36.041 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:01:36.043 +03:30 [INF] ===============  End of observation process (1.3489 ms) ===============
+2022-12-13 12:01:41.053 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:01:41.055 +03:30 [INF] ===============  End of observation process (1.5168 ms) ===============
+2022-12-13 12:01:46.065 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:01:46.067 +03:30 [INF] ===============  End of observation process (1.419 ms) ===============
+2022-12-13 12:01:51.082 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:01:51.084 +03:30 [INF] ===============  End of observation process (1.7147 ms) ===============
+2022-12-13 12:01:56.104 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:01:56.106 +03:30 [INF] ===============  End of observation process (1.5357 ms) ===============
+2022-12-13 12:02:01.116 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:02:01.118 +03:30 [INF] ===============  End of observation process (1.5464 ms) ===============
+2022-12-13 12:02:06.135 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:02:06.137 +03:30 [INF] ===============  End of observation process (1.7276 ms) ===============
+2022-12-13 12:02:11.140 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:02:11.141 +03:30 [INF] ===============  End of observation process (1.2235 ms) ===============
+2022-12-13 12:02:16.150 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:02:16.152 +03:30 [INF] ===============  End of observation process (1.4974 ms) ===============
+2022-12-13 12:02:21.163 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:02:21.164 +03:30 [INF] ===============  End of observation process (1.1082 ms) ===============
+2022-12-13 12:02:26.174 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:02:26.175 +03:30 [INF] ===============  End of observation process (0.9687 ms) ===============
+2022-12-13 12:02:31.185 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:02:31.187 +03:30 [INF] ===============  End of observation process (1.67 ms) ===============
+2022-12-13 12:02:36.209 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:02:36.211 +03:30 [INF] ===============  End of observation process (1.4735 ms) ===============
+2022-12-13 12:02:41.231 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:02:41.233 +03:30 [INF] ===============  End of observation process (1.5669 ms) ===============
+2022-12-13 12:02:46.254 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:02:46.261 +03:30 [INF] ===============  End of observation process (1.7395 ms) ===============
+2022-12-13 12:02:51.281 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:02:51.282 +03:30 [INF] ===============  End of observation process (1.1147 ms) ===============
+2022-12-13 12:02:56.292 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:02:56.294 +03:30 [INF] ===============  End of observation process (1.6066 ms) ===============
+2022-12-13 12:03:01.297 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:03:01.299 +03:30 [INF] ===============  End of observation process (1.6462 ms) ===============
+2022-12-13 12:03:06.303 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:03:06.305 +03:30 [INF] ===============  End of observation process (1.534 ms) ===============
+2022-12-13 12:03:11.310 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:03:11.311 +03:30 [INF] ===============  End of observation process (1.2394 ms) ===============
+2022-12-13 12:03:16.326 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:03:16.327 +03:30 [INF] ===============  End of observation process (1.2561 ms) ===============
+2022-12-13 12:03:21.347 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:03:21.349 +03:30 [INF] ===============  End of observation process (1.634 ms) ===============
+2022-12-13 12:03:26.352 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:03:26.354 +03:30 [INF] ===============  End of observation process (1.4673 ms) ===============
+2022-12-13 12:03:31.364 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:03:31.366 +03:30 [INF] ===============  End of observation process (1.6522 ms) ===============
+2022-12-13 12:03:36.369 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:03:36.371 +03:30 [INF] ===============  End of observation process (1.3531 ms) ===============
+2022-12-13 12:03:41.382 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:03:41.384 +03:30 [INF] ===============  End of observation process (1.3414 ms) ===============
+2022-12-13 12:03:46.399 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:03:46.400 +03:30 [INF] ===============  End of observation process (0.9561 ms) ===============
+2022-12-13 12:03:51.413 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:03:51.415 +03:30 [INF] ===============  End of observation process (1.48 ms) ===============
+2022-12-13 12:03:56.428 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:03:56.430 +03:30 [INF] ===============  End of observation process (1.4898 ms) ===============
+2022-12-13 12:04:01.444 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:04:01.446 +03:30 [INF] ===============  End of observation process (1.6591 ms) ===============
+2022-12-13 12:04:06.458 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:04:06.460 +03:30 [INF] ===============  End of observation process (1.4942 ms) ===============
+2022-12-13 12:04:11.468 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:04:11.470 +03:30 [INF] ===============  End of observation process (1.5272 ms) ===============
+2022-12-13 12:04:16.478 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:04:16.480 +03:30 [INF] ===============  End of observation process (1.4616 ms) ===============
+2022-12-13 12:04:21.486 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:04:21.488 +03:30 [INF] ===============  End of observation process (1.6713 ms) ===============
+2022-12-13 12:04:26.501 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:04:26.503 +03:30 [INF] ===============  End of observation process (1.3679 ms) ===============
+2022-12-13 12:04:31.528 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:04:31.530 +03:30 [INF] ===============  End of observation process (1.6107 ms) ===============
+2022-12-13 12:04:36.555 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:04:36.557 +03:30 [INF] ===============  End of observation process (1.5535 ms) ===============
+2022-12-13 12:04:41.566 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:04:41.568 +03:30 [INF] ===============  End of observation process (1.5818 ms) ===============
+2022-12-13 12:04:46.584 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:04:46.586 +03:30 [INF] ===============  End of observation process (1.2379 ms) ===============
+2022-12-13 12:04:51.591 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:04:51.592 +03:30 [INF] ===============  End of observation process (0.876 ms) ===============
+2022-12-13 12:04:56.605 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:04:56.607 +03:30 [INF] ===============  End of observation process (1.7389 ms) ===============
+2022-12-13 12:05:01.623 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:05:01.625 +03:30 [INF] ===============  End of observation process (1.6476 ms) ===============
+2022-12-13 12:05:06.638 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:05:06.640 +03:30 [INF] ===============  End of observation process (1.1418 ms) ===============
+2022-12-13 12:05:11.653 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:05:11.654 +03:30 [INF] ===============  End of observation process (0.9844 ms) ===============
+2022-12-13 12:05:16.661 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:05:16.663 +03:30 [INF] ===============  End of observation process (1.3273 ms) ===============
+2022-12-13 12:05:21.668 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:05:21.670 +03:30 [INF] ===============  End of observation process (1.4187 ms) ===============
+2022-12-13 12:05:26.674 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:05:26.676 +03:30 [INF] ===============  End of observation process (1.6256 ms) ===============
+2022-12-13 12:05:31.688 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:05:31.690 +03:30 [INF] ===============  End of observation process (1.4529 ms) ===============
+2022-12-13 12:05:36.697 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:05:36.699 +03:30 [INF] ===============  End of observation process (1.5275 ms) ===============
+2022-12-13 12:05:41.710 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:05:41.711 +03:30 [INF] ===============  End of observation process (1.0016 ms) ===============
+2022-12-13 12:05:46.722 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:05:46.724 +03:30 [INF] ===============  End of observation process (1.6369 ms) ===============
+2022-12-13 12:05:51.740 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:05:51.742 +03:30 [INF] ===============  End of observation process (1.7747 ms) ===============
+2022-12-13 12:05:56.747 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:05:56.749 +03:30 [INF] ===============  End of observation process (1.2262 ms) ===============
+2022-12-13 12:06:01.758 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:06:01.759 +03:30 [INF] ===============  End of observation process (1.0526 ms) ===============
+2022-12-13 12:06:06.765 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:06:06.767 +03:30 [INF] ===============  End of observation process (1.5166 ms) ===============
+2022-12-13 12:06:11.770 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:06:11.780 +03:30 [INF] ===============  End of observation process (10.22 ms) ===============
+2022-12-13 12:06:16.793 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:06:16.795 +03:30 [INF] ===============  End of observation process (1.747 ms) ===============
+2022-12-13 12:06:21.797 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:06:21.799 +03:30 [INF] ===============  End of observation process (1.4297 ms) ===============
+2022-12-13 12:06:26.823 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:06:26.824 +03:30 [INF] ===============  End of observation process (0.9659 ms) ===============
+2022-12-13 12:06:31.830 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:06:31.831 +03:30 [INF] ===============  End of observation process (1.6882 ms) ===============
+2022-12-13 12:06:36.843 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:06:36.844 +03:30 [INF] ===============  End of observation process (1.5361 ms) ===============
+2022-12-13 12:06:41.858 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:06:41.865 +03:30 [INF] ===============  End of observation process (6.7932 ms) ===============
+2022-12-13 12:06:46.877 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:06:46.878 +03:30 [INF] ===============  End of observation process (0.8846 ms) ===============
+2022-12-13 12:06:51.883 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:06:51.884 +03:30 [INF] ===============  End of observation process (1.5952 ms) ===============
+2022-12-13 12:06:56.892 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:06:56.893 +03:30 [INF] ===============  End of observation process (1.5313 ms) ===============
+2022-12-13 12:07:01.904 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:07:01.904 +03:30 [INF] ===============  End of observation process (0.9046 ms) ===============
+2022-12-13 12:07:06.915 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:07:06.916 +03:30 [INF] ===============  End of observation process (1.5759 ms) ===============
+2022-12-13 12:07:11.929 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:07:11.930 +03:30 [INF] ===============  End of observation process (1.769 ms) ===============
+2022-12-13 12:07:16.946 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:07:16.947 +03:30 [INF] ===============  End of observation process (1.1591 ms) ===============
+2022-12-13 12:07:21.959 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:07:21.960 +03:30 [INF] ===============  End of observation process (1.594 ms) ===============
+2022-12-13 12:07:26.969 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:07:26.971 +03:30 [INF] ===============  End of observation process (1.5998 ms) ===============
+2022-12-13 12:07:31.980 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:07:31.981 +03:30 [INF] ===============  End of observation process (1.6555 ms) ===============
+2022-12-13 12:07:36.990 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:07:36.991 +03:30 [INF] ===============  End of observation process (1.0607 ms) ===============
+2022-12-13 12:07:42.006 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:07:42.007 +03:30 [INF] ===============  End of observation process (1.8539 ms) ===============
+2022-12-13 12:07:47.016 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:07:47.017 +03:30 [INF] ===============  End of observation process (0.9348 ms) ===============
+2022-12-13 12:07:52.023 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:07:52.024 +03:30 [INF] ===============  End of observation process (1.0717 ms) ===============
+2022-12-13 12:07:57.039 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:07:57.040 +03:30 [INF] ===============  End of observation process (1.2658 ms) ===============
+2022-12-13 12:08:02.062 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:08:02.063 +03:30 [INF] ===============  End of observation process (1.6756 ms) ===============
+2022-12-13 12:08:07.069 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:08:07.070 +03:30 [INF] ===============  End of observation process (1.1879 ms) ===============
+2022-12-13 12:08:12.081 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:08:12.082 +03:30 [INF] ===============  End of observation process (0.9299 ms) ===============
+2022-12-13 12:08:17.087 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:08:17.088 +03:30 [INF] ===============  End of observation process (1.2454 ms) ===============
+2022-12-13 12:08:22.100 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:08:22.101 +03:30 [INF] ===============  End of observation process (1.4481 ms) ===============
+2022-12-13 12:08:27.110 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:08:27.111 +03:30 [INF] ===============  End of observation process (1.6364 ms) ===============
+2022-12-13 12:08:32.127 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:08:32.128 +03:30 [INF] ===============  End of observation process (1.0945 ms) ===============
+2022-12-13 12:08:37.150 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:08:37.151 +03:30 [INF] ===============  End of observation process (1.5958 ms) ===============
+2022-12-13 12:08:42.156 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:08:42.157 +03:30 [INF] ===============  End of observation process (1.4443 ms) ===============
+2022-12-13 12:08:47.173 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:08:47.174 +03:30 [INF] ===============  End of observation process (1.4377 ms) ===============
+2022-12-13 12:08:52.176 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:08:52.178 +03:30 [INF] ===============  End of observation process (1.7024 ms) ===============
+2022-12-13 12:08:57.187 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:08:57.188 +03:30 [INF] ===============  End of observation process (1.3544 ms) ===============
+2022-12-13 12:09:02.192 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:09:02.194 +03:30 [INF] ===============  End of observation process (1.8194 ms) ===============
+2022-12-13 12:09:07.210 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:09:07.211 +03:30 [INF] ===============  End of observation process (0.8923 ms) ===============
+2022-12-13 12:09:12.224 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:09:12.225 +03:30 [INF] ===============  End of observation process (0.8682 ms) ===============
+2022-12-13 12:09:17.239 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:09:17.240 +03:30 [INF] ===============  End of observation process (1.4885 ms) ===============
+2022-12-13 12:09:22.248 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:09:22.249 +03:30 [INF] ===============  End of observation process (1.5015 ms) ===============
+2022-12-13 12:09:27.259 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:09:27.269 +03:30 [INF] ===============  End of observation process (9.66 ms) ===============
+2022-12-13 12:09:32.271 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:09:32.272 +03:30 [INF] ===============  End of observation process (0.797 ms) ===============
+2022-12-13 12:09:37.285 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:09:37.286 +03:30 [INF] ===============  End of observation process (1.447 ms) ===============
+2022-12-13 12:09:42.298 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:09:42.299 +03:30 [INF] ===============  End of observation process (1.4026 ms) ===============
+2022-12-13 12:09:47.302 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:09:47.303 +03:30 [INF] ===============  End of observation process (1.1193 ms) ===============
+2022-12-13 12:09:52.314 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:09:52.315 +03:30 [INF] ===============  End of observation process (1.1724 ms) ===============
+2022-12-13 12:09:57.326 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:09:57.338 +03:30 [INF] ===============  End of observation process (12.2772 ms) ===============
+2022-12-13 12:10:02.352 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:10:02.354 +03:30 [INF] ===============  End of observation process (1.8749 ms) ===============
+2022-12-13 12:10:07.370 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:10:07.372 +03:30 [INF] ===============  End of observation process (1.6703 ms) ===============
+2022-12-13 12:10:12.381 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:10:12.383 +03:30 [INF] ===============  End of observation process (1.6823 ms) ===============
+2022-12-13 12:10:17.391 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:10:17.393 +03:30 [INF] ===============  End of observation process (1.1311 ms) ===============
+2022-12-13 12:10:22.407 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:10:22.409 +03:30 [INF] ===============  End of observation process (1.6769 ms) ===============
+2022-12-13 12:10:27.413 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:10:27.416 +03:30 [INF] ===============  End of observation process (2.2643 ms) ===============
+2022-12-13 12:10:32.418 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:10:32.420 +03:30 [INF] ===============  End of observation process (1.6069 ms) ===============
+2022-12-13 12:10:37.432 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:10:37.434 +03:30 [INF] ===============  End of observation process (1.3882 ms) ===============
+2022-12-13 12:10:42.449 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:10:42.451 +03:30 [INF] ===============  End of observation process (1.4156 ms) ===============
+2022-12-13 12:10:47.469 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:10:47.471 +03:30 [INF] ===============  End of observation process (1.7069 ms) ===============
+2022-12-13 12:10:52.477 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:10:52.478 +03:30 [INF] ===============  End of observation process (1.13 ms) ===============
+2022-12-13 12:10:57.495 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:10:57.496 +03:30 [INF] ===============  End of observation process (0.9561 ms) ===============
+2022-12-13 12:11:02.499 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:11:02.503 +03:30 [INF] ===============  End of observation process (3.6454 ms) ===============
+2022-12-13 12:11:07.525 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:11:07.527 +03:30 [INF] ===============  End of observation process (1.1287 ms) ===============
+2022-12-13 12:11:12.543 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:11:12.545 +03:30 [INF] ===============  End of observation process (1.563 ms) ===============
+2022-12-13 12:11:17.555 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:11:17.557 +03:30 [INF] ===============  End of observation process (1.4981 ms) ===============
+2022-12-13 12:11:22.569 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:11:22.570 +03:30 [INF] ===============  End of observation process (0.8457 ms) ===============
+2022-12-13 12:11:27.573 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:11:27.575 +03:30 [INF] ===============  End of observation process (1.7374 ms) ===============
+2022-12-13 12:11:32.588 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:11:32.590 +03:30 [INF] ===============  End of observation process (1.6319 ms) ===============
+2022-12-13 12:11:37.611 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:11:37.613 +03:30 [INF] ===============  End of observation process (1.5221 ms) ===============
+2022-12-13 12:11:42.631 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:11:42.633 +03:30 [INF] ===============  End of observation process (1.4718 ms) ===============
+2022-12-13 12:11:47.638 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:11:47.640 +03:30 [INF] ===============  End of observation process (1.1689 ms) ===============
+2022-12-13 12:11:52.649 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:11:52.651 +03:30 [INF] ===============  End of observation process (1.2525 ms) ===============
+2022-12-13 12:11:57.661 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:11:57.663 +03:30 [INF] ===============  End of observation process (1.5056 ms) ===============
+2022-12-13 12:12:02.678 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:12:02.680 +03:30 [INF] ===============  End of observation process (1.9076 ms) ===============
+2022-12-13 12:12:07.690 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:12:07.691 +03:30 [INF] ===============  End of observation process (1.1571 ms) ===============
+2022-12-13 12:12:12.712 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:12:12.714 +03:30 [INF] ===============  End of observation process (1.5372 ms) ===============
+2022-12-13 12:12:17.723 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:12:17.725 +03:30 [INF] ===============  End of observation process (1.3284 ms) ===============
+2022-12-13 12:12:22.740 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:12:22.750 +03:30 [INF] ===============  End of observation process (10.0437 ms) ===============
+2022-12-13 12:12:27.752 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:12:27.754 +03:30 [INF] ===============  End of observation process (1.4931 ms) ===============
+2022-12-13 12:12:32.765 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:12:32.767 +03:30 [INF] ===============  End of observation process (1.8509 ms) ===============
+2022-12-13 12:12:37.779 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:12:37.781 +03:30 [INF] ===============  End of observation process (1.705 ms) ===============
+2022-12-13 12:12:42.793 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:12:42.794 +03:30 [INF] ===============  End of observation process (0.9775 ms) ===============
+2022-12-13 12:12:47.812 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:12:47.813 +03:30 [INF] ===============  End of observation process (0.9293 ms) ===============
+2022-12-13 12:12:52.818 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:12:52.820 +03:30 [INF] ===============  End of observation process (1.6648 ms) ===============
+2022-12-13 12:12:57.826 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:12:57.828 +03:30 [INF] ===============  End of observation process (1.7968 ms) ===============
+2022-12-13 12:13:02.837 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:13:02.839 +03:30 [INF] ===============  End of observation process (1.5493 ms) ===============
+2022-12-13 12:13:07.854 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:13:07.855 +03:30 [INF] ===============  End of observation process (0.8934 ms) ===============
+2022-12-13 12:13:12.870 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:13:12.871 +03:30 [INF] ===============  End of observation process (1.3418 ms) ===============
+2022-12-13 12:13:17.872 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:13:17.874 +03:30 [INF] ===============  End of observation process (1.6716 ms) ===============
+2022-12-13 12:13:22.889 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:13:22.891 +03:30 [INF] ===============  End of observation process (1.9503 ms) ===============
+2022-12-13 12:13:27.903 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:13:27.919 +03:30 [INF] ===============  End of observation process (15.6017 ms) ===============
+2022-12-13 12:13:32.944 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:13:32.948 +03:30 [INF] ===============  End of observation process (3.4911 ms) ===============
+2022-12-13 12:13:37.962 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:13:37.964 +03:30 [INF] ===============  End of observation process (1.5089 ms) ===============
+2022-12-13 12:13:42.980 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:13:42.981 +03:30 [INF] ===============  End of observation process (1.1143 ms) ===============
+2022-12-13 12:13:47.995 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:13:47.996 +03:30 [INF] ===============  End of observation process (0.7336 ms) ===============
+2022-12-13 12:13:53.006 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:13:53.007 +03:30 [INF] ===============  End of observation process (1.1249 ms) ===============
+2022-12-13 12:13:58.024 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:13:58.025 +03:30 [INF] ===============  End of observation process (1.4105 ms) ===============
+2022-12-13 12:14:03.041 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:14:03.043 +03:30 [INF] ===============  End of observation process (1.6709 ms) ===============
+2022-12-13 12:14:08.045 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:14:08.046 +03:30 [INF] ===============  End of observation process (1.4969 ms) ===============
+2022-12-13 12:14:13.048 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:14:13.049 +03:30 [INF] ===============  End of observation process (1.1943 ms) ===============
+2022-12-13 12:14:18.066 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:14:18.067 +03:30 [INF] ===============  End of observation process (1.1061 ms) ===============
+2022-12-13 12:14:23.082 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:14:23.083 +03:30 [INF] ===============  End of observation process (1.4639 ms) ===============
+2022-12-13 12:14:28.094 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:14:28.095 +03:30 [INF] ===============  End of observation process (1.2762 ms) ===============
+2022-12-13 12:14:33.106 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:14:33.108 +03:30 [INF] ===============  End of observation process (1.6909 ms) ===============
+2022-12-13 12:14:38.113 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:14:38.114 +03:30 [INF] ===============  End of observation process (1.4588 ms) ===============
+2022-12-13 12:14:43.117 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:14:43.118 +03:30 [INF] ===============  End of observation process (0.953 ms) ===============
+2022-12-13 12:14:48.127 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:14:48.129 +03:30 [INF] ===============  End of observation process (1.6916 ms) ===============
+2022-12-13 12:14:53.149 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:14:53.150 +03:30 [INF] ===============  End of observation process (1.3847 ms) ===============
+2022-12-13 12:14:58.155 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:14:58.156 +03:30 [INF] ===============  End of observation process (1.4111 ms) ===============
+2022-12-13 12:15:03.166 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:15:03.168 +03:30 [INF] ===============  End of observation process (1.9069 ms) ===============
+2022-12-13 12:15:08.171 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:15:08.172 +03:30 [INF] ===============  End of observation process (1.4766 ms) ===============
+2022-12-13 12:15:13.197 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:15:13.198 +03:30 [INF] ===============  End of observation process (1.1819 ms) ===============
+2022-12-13 12:15:18.202 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:15:18.217 +03:30 [INF] ===============  End of observation process (15.2739 ms) ===============
+2022-12-13 12:15:23.221 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:15:23.222 +03:30 [INF] ===============  End of observation process (1.4798 ms) ===============
+2022-12-13 12:15:28.228 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:15:28.229 +03:30 [INF] ===============  End of observation process (1.3917 ms) ===============
+2022-12-13 12:15:33.240 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:15:33.241 +03:30 [INF] ===============  End of observation process (1.1856 ms) ===============
+2022-12-13 12:15:38.249 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:15:38.251 +03:30 [INF] ===============  End of observation process (1.558 ms) ===============
+2022-12-13 12:15:43.266 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:15:43.267 +03:30 [INF] ===============  End of observation process (1.4054 ms) ===============
+2022-12-13 12:15:48.276 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:15:48.277 +03:30 [INF] ===============  End of observation process (0.9053 ms) ===============
+2022-12-13 12:15:53.284 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:15:53.285 +03:30 [INF] ===============  End of observation process (1.3573 ms) ===============
+2022-12-13 12:15:58.299 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:15:58.300 +03:30 [INF] ===============  End of observation process (1.371 ms) ===============
+2022-12-13 12:16:03.324 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:16:03.326 +03:30 [INF] ===============  End of observation process (1.7089 ms) ===============
+2022-12-13 12:16:08.349 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:16:08.351 +03:30 [INF] ===============  End of observation process (1.5656 ms) ===============
+2022-12-13 12:16:13.368 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:16:13.370 +03:30 [INF] ===============  End of observation process (1.9939 ms) ===============
+2022-12-13 12:16:18.384 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:16:18.386 +03:30 [INF] ===============  End of observation process (1.9078 ms) ===============
+2022-12-13 12:16:23.402 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:16:23.404 +03:30 [INF] ===============  End of observation process (1.6089 ms) ===============
+2022-12-13 12:16:28.421 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:16:28.423 +03:30 [INF] ===============  End of observation process (1.778 ms) ===============
+2022-12-13 12:16:33.428 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:16:33.430 +03:30 [INF] ===============  End of observation process (1.7928 ms) ===============
+2022-12-13 12:16:38.445 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:16:38.446 +03:30 [INF] ===============  End of observation process (1.3835 ms) ===============
+2022-12-13 12:16:43.459 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:16:43.461 +03:30 [INF] ===============  End of observation process (1.7375 ms) ===============
+2022-12-13 12:16:48.468 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:16:48.470 +03:30 [INF] ===============  End of observation process (1.5321 ms) ===============
+2022-12-13 12:16:53.477 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:16:53.478 +03:30 [INF] ===============  End of observation process (0.9655 ms) ===============
+2022-12-13 12:16:58.494 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:16:58.496 +03:30 [INF] ===============  End of observation process (1.2187 ms) ===============
+2022-12-13 12:17:03.502 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:17:03.504 +03:30 [INF] ===============  End of observation process (1.4302 ms) ===============
+2022-12-13 12:17:08.520 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:17:08.522 +03:30 [INF] ===============  End of observation process (1.3191 ms) ===============
+2022-12-13 12:17:13.528 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:17:13.530 +03:30 [INF] ===============  End of observation process (1.6976 ms) ===============
+2022-12-13 12:17:18.538 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:17:18.540 +03:30 [INF] ===============  End of observation process (1.2219 ms) ===============
+2022-12-13 12:17:23.548 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:17:23.550 +03:30 [INF] ===============  End of observation process (1.1588 ms) ===============
+2022-12-13 12:17:28.557 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:17:28.559 +03:30 [INF] ===============  End of observation process (1.3098 ms) ===============
+2022-12-13 12:17:33.572 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:17:33.574 +03:30 [INF] ===============  End of observation process (1.6853 ms) ===============
+2022-12-13 12:17:38.589 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:17:38.591 +03:30 [INF] ===============  End of observation process (1.7214 ms) ===============
+2022-12-13 12:17:43.603 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:17:43.605 +03:30 [INF] ===============  End of observation process (1.4591 ms) ===============
+2022-12-13 12:17:48.614 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:17:48.616 +03:30 [INF] ===============  End of observation process (1.4835 ms) ===============
+2022-12-13 12:17:53.632 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:17:53.633 +03:30 [INF] ===============  End of observation process (0.8691 ms) ===============
+2022-12-13 12:17:58.655 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:17:58.656 +03:30 [INF] ===============  End of observation process (0.9528 ms) ===============
+2022-12-13 12:18:03.658 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:18:03.660 +03:30 [INF] ===============  End of observation process (1.4983 ms) ===============
+2022-12-13 12:18:08.661 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:18:08.663 +03:30 [INF] ===============  End of observation process (1.2964 ms) ===============
+2022-12-13 12:18:13.685 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:18:13.687 +03:30 [INF] ===============  End of observation process (1.0876 ms) ===============
+2022-12-13 12:18:18.700 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:18:18.702 +03:30 [INF] ===============  End of observation process (1.5404 ms) ===============
+2022-12-13 12:18:23.713 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:18:23.715 +03:30 [INF] ===============  End of observation process (1.7923 ms) ===============
+2022-12-13 12:18:28.727 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:18:28.728 +03:30 [INF] ===============  End of observation process (1.0409 ms) ===============
+2022-12-13 12:18:33.733 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:18:33.735 +03:30 [INF] ===============  End of observation process (1.343 ms) ===============
+2022-12-13 12:18:38.747 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:18:38.749 +03:30 [INF] ===============  End of observation process (1.0788 ms) ===============
+2022-12-13 12:18:43.766 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:18:43.767 +03:30 [INF] ===============  End of observation process (1.3056 ms) ===============
+2022-12-13 12:21:34.770 +03:30 [INF] Starting up the Service...
+2022-12-13 12:21:36.610 +03:30 [INF] Loading poultries...
+2022-12-13 12:21:37.427 +03:30 [INF] Poultries loaded. (816.2397 ms)
+2022-12-13 12:21:37.435 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 8edbefbd-c063-4f5f-aae8-9427d917b384.
+2022-12-13 12:21:37.499 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 8edbefbd-c063-4f5f-aae8-9427d917b384.
+2022-12-13 12:21:37.540 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2022-12-13 12:21:37.541 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:21:37.560 +03:30 [WRN] Sensor with ID 1 has been unwatched due to persisting error. Error Type: NotAlive, Error happened date: 12/13/2022 11:45:43 AM
+2022-12-13 12:21:37.562 +03:30 [INF] ===============  End of observation process (21.4712 ms) ===============
+2022-12-13 12:21:42.564 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:21:42.566 +03:30 [INF] ===============  End of observation process (1.9794 ms) ===============
+2022-12-13 12:21:47.402 +03:30 [INF] ===============  Begin mqtt process  ===============
+2022-12-13 12:21:47.404 +03:30 [INF] MQTT Message received. Topic: Elma/ToServer/FromSensor/Scalar/Alive/1, Payload: T:33
+2022-12-13 12:21:47.413 +03:30 [INF] MQTT Message is from a sensor. Topic: Elma/ToServer/FromSensor/Scalar/Alive/1, Payload: T:33
+2022-12-13 12:21:47.414 +03:30 [WRN] A sensor sends invalid data/value or sensor is unknown. adding to unknown mqtt list. Topic: Elma/ToServer/FromSensor/Scalar/Alive/1 , Payload: T:33
+2022-12-13 12:21:47.416 +03:30 [INF] ===============  End of mqtt process 13.9286 ms) ===============
+2022-12-13 12:21:47.573 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:21:47.574 +03:30 [INF] ===============  End of observation process (1.2952 ms) ===============
+2022-12-13 12:21:52.588 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:21:52.590 +03:30 [INF] ===============  End of observation process (1.7022 ms) ===============
+2022-12-13 12:21:57.604 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:21:57.606 +03:30 [INF] ===============  End of observation process (1.7423 ms) ===============
+2022-12-13 12:22:02.613 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:22:02.614 +03:30 [INF] ===============  End of observation process (1.6064 ms) ===============
+2022-12-13 12:22:07.629 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:22:07.630 +03:30 [INF] ===============  End of observation process (1.6448 ms) ===============
+2022-12-13 12:22:12.634 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:22:12.636 +03:30 [INF] ===============  End of observation process (1.7308 ms) ===============
+2022-12-13 12:22:17.647 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:22:17.648 +03:30 [INF] ===============  End of observation process (1.7059 ms) ===============
+2022-12-13 12:22:22.655 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:22:22.660 +03:30 [INF] ===============  End of observation process (4.5344 ms) ===============
+2022-12-13 12:22:27.676 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:22:27.677 +03:30 [INF] ===============  End of observation process (1.4241 ms) ===============
+2022-12-13 12:22:32.699 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:22:32.700 +03:30 [INF] ===============  End of observation process (1.4272 ms) ===============
+2022-12-13 12:22:37.707 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:22:37.708 +03:30 [INF] ===============  End of observation process (1.6679 ms) ===============
+2022-12-13 12:22:42.713 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:22:42.714 +03:30 [INF] ===============  End of observation process (1.5192 ms) ===============
+2022-12-13 12:22:45.282 +03:30 [INF] ===============  Begin mqtt process  ===============
+2022-12-13 12:22:45.284 +03:30 [INF] MQTT Message received. Topic: Elma/ToServer/FromSensor/Alive/1, Payload: T:33
+2022-12-13 12:22:45.285 +03:30 [INF] MQTT Message is from a sensor. Topic: Elma/ToServer/FromSensor/Alive/1, Payload: T:33
+2022-12-13 12:22:45.285 +03:30 [INF] MQTT Message is KeepAlive from a sensor. Topic: Elma/ToServer/FromSensor/Alive/1, Payload: T:33
+2022-12-13 12:22:45.289 +03:30 [INF] Updating sensor error in database, if existed. Sensor ID: 1, Error Types: NotAlive...
+2022-12-13 12:22:45.374 +03:30 [INF] ===============  End of mqtt process 91.6018 ms) ===============
+2022-12-13 12:22:47.731 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:22:47.733 +03:30 [INF] Sensor unit is back online. ID: 1, Location: 2, Section: FarmLeftTop
+2022-12-13 12:22:47.734 +03:30 [INF] ===============  End of observation process (2.7782 ms) ===============
+2022-12-13 12:22:52.745 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:22:52.746 +03:30 [INF] ===============  End of observation process (1.6383 ms) ===============
+2022-12-13 12:22:57.363 +03:30 [INF] ===============  Begin mqtt process  ===============
+2022-12-13 12:22:57.364 +03:30 [INF] MQTT Message received. Topic: Elma/ToServer/FromSensor/Scalar/1, Payload: T:33
+2022-12-13 12:22:57.364 +03:30 [INF] MQTT Message is from a sensor. Topic: Elma/ToServer/FromSensor/Scalar/1, Payload: T:33
+2022-12-13 12:22:57.365 +03:30 [INF] MQTT Message is value from a scalar sensor. Topic: Elma/ToServer/FromSensor/Scalar/1, Payload: T:33
+2022-12-13 12:22:57.370 +03:30 [INF] Sensor is valid; Value is valid. Type: FarmScalar, LocationID: 2, Section: FarmLeftTop
+2022-12-13 12:22:57.371 +03:30 [INF] Updating sensor error in database, if existed. Sensor ID: 1, Error Types: InvalidTemperatureData...
+2022-12-13 12:22:57.672 +03:30 [INF] Sensor is valid; Value is valid. Type: FarmScalar, LocationID: 2, Section: FarmLeftTop
+2022-12-13 12:22:57.673 +03:30 [INF] Updating sensor error in database, if existed. Sensor ID: 1, Error Types: InvalidTemperatureValue...
+2022-12-13 12:22:57.712 +03:30 [INF] Sensor is valid; Value is valid. Type: FarmScalar, LocationID: 2, Section: FarmLeftTop
+2022-12-13 12:22:57.713 +03:30 [INF] Updating sensor error in database, if existed. Sensor ID: 1, Error Types: NotAlive...
+2022-12-13 12:22:57.738 +03:30 [INF] Sensor is valid; Value is valid. Type: FarmScalar, LocationID: 2, Section: FarmLeftTop
+2022-12-13 12:22:57.739 +03:30 [INF] Updating sensor error in database, if existed. Sensor ID: 1, Error Types: InvalidData...
+2022-12-13 12:22:57.757 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:22:57.758 +03:30 [INF] ===============  End of observation process (0.95 ms) ===============
+2022-12-13 12:22:58.065 +03:30 [INF] Writing sensor value in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop
+2022-12-13 12:22:58.126 +03:30 [INF] Scalar sensor value done processing. Count: 1
+2022-12-13 12:22:58.127 +03:30 [INF] ===============  End of mqtt process 764.6197 ms) ===============
+2022-12-13 12:23:02.773 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:23:02.774 +03:30 [INF] ===============  End of observation process (1.452 ms) ===============
+2022-12-13 12:23:07.786 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:23:07.787 +03:30 [INF] ===============  End of observation process (0.9965 ms) ===============
+2022-12-13 12:23:12.810 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:23:12.811 +03:30 [INF] ===============  End of observation process (0.9414 ms) ===============
+2022-12-13 12:23:17.834 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:23:17.836 +03:30 [INF] ===============  End of observation process (1.6724 ms) ===============
+2022-12-13 12:23:22.845 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:23:22.847 +03:30 [INF] ===============  End of observation process (1.59 ms) ===============
+2022-12-13 12:23:27.857 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:23:27.862 +03:30 [INF] ===============  End of observation process (1.5297 ms) ===============
+2022-12-13 12:23:32.875 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:23:32.876 +03:30 [INF] ===============  End of observation process (1.4283 ms) ===============
+2022-12-13 12:23:37.878 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:23:37.879 +03:30 [INF] ===============  End of observation process (1.1103 ms) ===============
+2022-12-13 12:23:42.890 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:23:42.891 +03:30 [WRN] Sensor with ID: 1 is not sending KeepAlive message since 12/13/2022 12:22:57 PM. Location: 2, Section: FarmLeftTop
+2022-12-13 12:23:42.894 +03:30 [INF] Writing sensor error in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop, Error Type: NotAlive
+2022-12-13 12:23:43.871 +03:30 [INF] ===============  End of observation process (980.9173 ms) ===============
+2022-12-13 12:23:48.873 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:23:48.875 +03:30 [INF] ===============  End of observation process (1.7807 ms) ===============
+2022-12-13 12:23:53.881 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:23:53.883 +03:30 [INF] ===============  End of observation process (1.863 ms) ===============
+2022-12-13 12:23:58.892 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:23:58.893 +03:30 [INF] ===============  End of observation process (1.4709 ms) ===============
+2022-12-13 12:25:58.781 +03:30 [INF] Starting up the Service...
+2022-12-13 12:26:00.552 +03:30 [INF] Loading poultries...
+2022-12-13 12:26:01.702 +03:30 [INF] Poultries loaded. (1148.9664 ms)
+2022-12-13 12:26:01.709 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 7e0d08e1-45fb-423c-aede-bf5ec5eabcc6.
+2022-12-13 12:26:01.772 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 7e0d08e1-45fb-423c-aede-bf5ec5eabcc6.
+2022-12-13 12:26:01.786 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2022-12-13 12:26:01.787 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:26:01.805 +03:30 [WRN] Sensor with ID 1 has been unwatched due to persisting error. Error Type: NotAlive, Error happened date: 12/13/2022 12:23:42 PM
+2022-12-13 12:26:01.807 +03:30 [INF] ===============  End of observation process (19.9085 ms) ===============
+2022-12-13 12:26:02.424 +03:30 [INF] ===============  Begin mqtt process  ===============
+2022-12-13 12:26:02.425 +03:30 [INF] MQTT Message received. Topic: Elma/ToServer/FromSensor/Scalar/1, Payload: T:33
+2022-12-13 12:26:02.437 +03:30 [INF] MQTT Message is from a sensor. Topic: Elma/ToServer/FromSensor/Scalar/1, Payload: T:33
+2022-12-13 12:26:02.438 +03:30 [INF] MQTT Message is value from a scalar sensor. Topic: Elma/ToServer/FromSensor/Scalar/1, Payload: T:33
+2022-12-13 12:26:02.443 +03:30 [INF] Sensor is valid; Value is valid. Type: FarmScalar, LocationID: 2, Section: FarmLeftTop
+2022-12-13 12:26:02.446 +03:30 [INF] Updating sensor error in database, if existed. Sensor ID: 1, Error Types: InvalidTemperatureData...
+2022-12-13 12:26:02.767 +03:30 [INF] Sensor is valid; Value is valid. Type: FarmScalar, LocationID: 2, Section: FarmLeftTop
+2022-12-13 12:26:02.768 +03:30 [INF] Updating sensor error in database, if existed. Sensor ID: 1, Error Types: InvalidTemperatureValue...
+2022-12-13 12:26:02.795 +03:30 [INF] Sensor is valid; Value is valid. Type: FarmScalar, LocationID: 2, Section: FarmLeftTop
+2022-12-13 12:26:02.796 +03:30 [INF] Updating sensor error in database, if existed. Sensor ID: 1, Error Types: NotAlive...
+2022-12-13 12:26:02.819 +03:30 [INF] Sensor is valid; Value is valid. Type: FarmScalar, LocationID: 2, Section: FarmLeftTop
+2022-12-13 12:26:02.820 +03:30 [INF] Updating sensor error in database, if existed. Sensor ID: 1, Error Types: InvalidData...
+2022-12-13 12:26:02.843 +03:30 [INF] Writing sensor value in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop
+2022-12-13 12:26:02.876 +03:30 [INF] Scalar sensor value done processing. Count: 1
+2022-12-13 12:26:02.878 +03:30 [INF] ===============  End of mqtt process 454.4009 ms) ===============
+2022-12-13 12:26:06.818 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:26:06.819 +03:30 [INF] Sensor unit is back online. ID: 1, Location: 2, Section: FarmLeftTop
+2022-12-13 12:26:06.820 +03:30 [INF] ===============  End of observation process (2.1582 ms) ===============
+2022-12-13 12:26:11.826 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:26:11.828 +03:30 [INF] ===============  End of observation process (1.2517 ms) ===============
+2022-12-13 12:26:16.843 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:26:16.845 +03:30 [INF] ===============  End of observation process (1.8616 ms) ===============
+2022-12-13 12:26:21.857 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:26:21.859 +03:30 [INF] ===============  End of observation process (1.3479 ms) ===============
+2022-12-13 12:26:26.873 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:26:26.875 +03:30 [INF] ===============  End of observation process (1.6218 ms) ===============
+2022-12-13 12:26:31.879 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:26:31.881 +03:30 [INF] ===============  End of observation process (1.5135 ms) ===============
+2022-12-13 12:26:36.888 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:26:36.889 +03:30 [INF] ===============  End of observation process (1.5961 ms) ===============
+2022-12-13 12:26:41.913 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:26:41.915 +03:30 [INF] ===============  End of observation process (1.1242 ms) ===============
+2022-12-13 12:26:46.932 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:26:46.934 +03:30 [INF] ===============  End of observation process (1.5421 ms) ===============
+2022-12-13 12:26:51.945 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:26:51.946 +03:30 [WRN] Sensor with ID: 1 is not sending KeepAlive message since 12/13/2022 12:26:02 PM. Location: 2, Section: FarmLeftTop
+2022-12-13 12:26:51.949 +03:30 [INF] Writing sensor error in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop, Error Type: NotAlive
+2022-12-13 12:26:52.007 +03:30 [INF] ===============  End of observation process (62.4088 ms) ===============
+2022-12-13 12:26:57.008 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:26:57.009 +03:30 [INF] ===============  End of observation process (1.7376 ms) ===============
+2022-12-13 12:27:02.022 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:27:02.023 +03:30 [INF] ===============  End of observation process (1.2038 ms) ===============
+2022-12-13 12:27:07.040 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:27:07.041 +03:30 [INF] ===============  End of observation process (1.1457 ms) ===============
+2022-12-13 12:27:12.054 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:27:12.055 +03:30 [INF] ===============  End of observation process (1.0197 ms) ===============
+2022-12-13 12:27:17.074 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:27:17.075 +03:30 [INF] ===============  End of observation process (1.4262 ms) ===============
+2022-12-13 12:27:22.084 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:27:22.086 +03:30 [INF] ===============  End of observation process (1.486 ms) ===============
+2022-12-13 12:27:27.098 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:27:27.100 +03:30 [INF] ===============  End of observation process (1.4555 ms) ===============
+2022-12-13 12:27:32.121 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:27:32.123 +03:30 [INF] ===============  End of observation process (1.6323 ms) ===============
+2022-12-13 12:27:37.126 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:27:37.128 +03:30 [INF] ===============  End of observation process (1.4589 ms) ===============
+2022-12-13 12:27:42.146 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:27:42.148 +03:30 [INF] ===============  End of observation process (1.7977 ms) ===============
+2022-12-13 12:27:47.158 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:27:47.160 +03:30 [INF] ===============  End of observation process (1.6666 ms) ===============
+2022-12-13 12:27:52.172 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:27:52.173 +03:30 [INF] ===============  End of observation process (0.8695 ms) ===============
+2022-12-13 12:27:57.178 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:27:57.179 +03:30 [INF] ===============  End of observation process (0.9877 ms) ===============
+2022-12-13 12:28:02.194 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:28:02.195 +03:30 [INF] ===============  End of observation process (1.1347 ms) ===============
+2022-12-13 12:28:07.196 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:28:07.206 +03:30 [INF] ===============  End of observation process (10.5668 ms) ===============
+2022-12-13 12:28:12.217 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:28:12.219 +03:30 [INF] ===============  End of observation process (1.6091 ms) ===============
+2022-12-13 12:28:17.229 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:28:17.230 +03:30 [INF] ===============  End of observation process (1.336 ms) ===============
+2022-12-13 12:28:22.238 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:28:22.240 +03:30 [INF] ===============  End of observation process (1.6309 ms) ===============
+2022-12-13 12:28:27.242 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:28:27.244 +03:30 [INF] ===============  End of observation process (1.6983 ms) ===============
+2022-12-13 12:28:32.245 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:28:32.246 +03:30 [WRN] Sensor with ID 1 has been unwatched due to persisting error. Error Type: NotAlive, Error happened date: 12/13/2022 12:26:51 PM
+2022-12-13 12:28:32.247 +03:30 [INF] ===============  End of observation process (2.1779 ms) ===============
+2022-12-13 12:28:37.257 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:28:37.259 +03:30 [INF] ===============  End of observation process (1.7357 ms) ===============
+2022-12-13 12:28:40.276 +03:30 [INF] ===============  Begin mqtt process  ===============
+2022-12-13 12:28:40.277 +03:30 [INF] MQTT Message received. Topic: Elma/ToServer/FromSensor/Scalar/1, Payload: T:33
+2022-12-13 12:28:40.278 +03:30 [INF] MQTT Message is from a sensor. Topic: Elma/ToServer/FromSensor/Scalar/1, Payload: T:33
+2022-12-13 12:28:40.279 +03:30 [INF] MQTT Message is value from a scalar sensor. Topic: Elma/ToServer/FromSensor/Scalar/1, Payload: T:33
+2022-12-13 12:28:40.280 +03:30 [INF] Sensor is valid; Value is valid. Type: FarmScalar, LocationID: 2, Section: FarmLeftTop
+2022-12-13 12:28:40.280 +03:30 [INF] Updating sensor error in database, if existed. Sensor ID: 1, Error Types: InvalidTemperatureData...
+2022-12-13 12:28:40.622 +03:30 [INF] Sensor is valid; Value is valid. Type: FarmScalar, LocationID: 2, Section: FarmLeftTop
+2022-12-13 12:28:40.624 +03:30 [INF] Updating sensor error in database, if existed. Sensor ID: 1, Error Types: InvalidTemperatureValue...
+2022-12-13 12:28:40.652 +03:30 [INF] Sensor is valid; Value is valid. Type: FarmScalar, LocationID: 2, Section: FarmLeftTop
+2022-12-13 12:28:40.653 +03:30 [INF] Updating sensor error in database, if existed. Sensor ID: 1, Error Types: NotAlive...
+2022-12-13 12:28:40.676 +03:30 [INF] Sensor is valid; Value is valid. Type: FarmScalar, LocationID: 2, Section: FarmLeftTop
+2022-12-13 12:28:40.677 +03:30 [INF] Updating sensor error in database, if existed. Sensor ID: 1, Error Types: InvalidData...
+2022-12-13 12:28:40.701 +03:30 [INF] Writing sensor value in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop
+2022-12-13 12:28:40.733 +03:30 [INF] Scalar sensor value done processing. Count: 2
+2022-12-13 12:28:40.743 +03:30 [INF] ===============  End of mqtt process 467.5303 ms) ===============
+2022-12-13 12:28:42.259 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:28:42.261 +03:30 [INF] Sensor unit is back online. ID: 1, Location: 2, Section: FarmLeftTop
+2022-12-13 12:28:42.262 +03:30 [INF] ===============  End of observation process (2.7161 ms) ===============
+2022-12-13 12:28:47.268 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:28:47.270 +03:30 [INF] ===============  End of observation process (1.2844 ms) ===============
+2022-12-13 12:28:52.278 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:28:52.280 +03:30 [INF] ===============  End of observation process (1.6122 ms) ===============
+2022-12-13 12:28:57.306 +03:30 [INF] ===============  Start observation process ===============
+2022-12-13 12:28:57.307 +03:30 [INF] ===============  End of observation process (0.8548 ms) ===============
