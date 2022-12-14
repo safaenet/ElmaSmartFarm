@@ -92,7 +92,6 @@ public partial class Worker
                                 //inform, save to db
                             }
                         }
-
                         var startDate = Poultries.Where(p => p.IsInPeriod).SelectMany(p => p.Farms.Where(f => f.IsInPeriod && f.Scalars.Sensors.Any(s => s.Id == sensor.Id))).FirstOrDefault()?.Period.StartDate;
                         if (!sensor.WatchTemperature && sensor.ActiveErrors.Any(e => e.ErrorType == SensorErrorType.InvalidTemperatureData || e.ErrorType == SensorErrorType.InvalidTemperatureValue) == false) //Temp sensor is healthy.
                             sensor.WatchTemperature = CheckToReWatchSensor(sensor, startDate);
@@ -344,7 +343,7 @@ public partial class Worker
             }
         BinarySets = null;
         #endregion
-
+        ProcessAlarmableErrors(Now);
         //var m = new MqttApplicationMessageBuilder().WithTopic("safa").WithPayload("dana").Build();
         //if (mqttClient.IsConnected) await mqttClient.PublishAsync(m);
         return null;
@@ -385,27 +384,297 @@ public partial class Worker
 
     private void ProcessAlarmableErrors(DateTime Now)
     {
-        //if (e.DateAlarmInformed == null && e.DateHappened.IsElapsed(firstInformTime)) //first alarm.
-        //{
-        //    e.AlarmInformCount = 1;
-        //    Log.Information($"Informing Alarm of {e.ErrorType}, Sensor ID: {sensor.Id}, Location: {sensor.LocationId}, Section: {sensor.Section}. Count: {e.AlarmInformCount}");
-        //    //inform, save to db
-        //    e.DateAlarmInformed = Now;
-        //}
-        //else if (e.AlarmInformCount % informCycleCount != 0 && e.DateAlarmInformed.IsElapsed(everyInformTime)) //alarm every.
-        //{
-        //    e.AlarmInformCount++;
-        //    Log.Information($"Informing Alarm of {e.ErrorType}, Sensor ID: {sensor.Id}, Location: {sensor.LocationId}, Section: {sensor.Section}. Count: {e.AlarmInformCount}");
-        //    //inform, save to db
-        //    e.DateAlarmInformed = Now;
-        //}
-        //else if (e.AlarmInformCount % informCycleCount == 0 && e.DateAlarmInformed.IsElapsed(snoozeTime)) //alarm sleep.
-        //{
-        //    e.AlarmInformCount++;
-        //    Log.Information($"Informing Alarm of {e.ErrorType}, Sensor ID: {sensor.Id}, Location: {sensor.LocationId}, Section: {sensor.Section}. Count: {e.AlarmInformCount}");
-        //    //inform, save to db
-        //    e.DateAlarmInformed = Now;
-        //}
+        foreach (var e in AlarmableSensorErrors.ToList())
+        {
+            if (e.DateErased.HasValue)
+            {
+                AlarmableSensorErrors.Remove(e);
+                //Disable light/siren alarm if active
+                continue;
+            }
+            var sensor = FindSensorsById(e.SensorId);
+            if (sensor == null) continue;
+            bool alarmEnable = false;
+            int firstInformTime = 0;
+            int everyInformTime = 0;
+            int snoozeTime = 0;
+            int informCycleCount = 0;
+            if (sensor.Type == SensorType.FarmScalar)
+            {
+                if (e.ErrorType == SensorErrorType.InvalidTemperatureData)
+                {
+                    alarmEnable = config.system.AlarmTempInvalidDataEnable;
+                    firstInformTime = config.system.AlarmTempInvalidDataFirstTime;
+                    everyInformTime = config.system.AlarmTempInvalidDataEvery;
+                    snoozeTime = config.system.AlarmTempInvalidDataSnooze;
+                    informCycleCount =  config.system.AlarmTempInvalidDataCountInCycle;
+                }
+                else if (e.ErrorType == SensorErrorType.InvalidTemperatureValue)
+                {
+                    alarmEnable = config.system.AlarmTempInvalidValueEnable;
+                    firstInformTime = config.system.AlarmTempInvalidValueFirstTime;
+                    everyInformTime = config.system.AlarmTempInvalidValueEvery;
+                    snoozeTime = config.system.AlarmTempInvalidValueSnooze;
+                    informCycleCount = config.system.AlarmTempInvalidValueCountInCycle;
+                }
+                else if (e.ErrorType == SensorErrorType.InvalidHumidityData)
+                {
+                    alarmEnable = config.system.AlarmHumidInvalidDataEnable;
+                    firstInformTime = config.system.AlarmHumidInvalidDataFirstTime;
+                    everyInformTime = config.system.AlarmHumidInvalidDataEvery;
+                    snoozeTime = config.system.AlarmHumidInvalidDataSnooze;
+                    informCycleCount = config.system.AlarmHumidInvalidDataCountInCycle;
+                }
+                else if (e.ErrorType == SensorErrorType.InvalidHumidityValue)
+                {
+                    alarmEnable = config.system.AlarmHumidInvalidValueEnable;
+                    firstInformTime = config.system.AlarmHumidInvalidValueFirstTime;
+                    everyInformTime = config.system.AlarmHumidInvalidValueEvery;
+                    snoozeTime = config.system.AlarmHumidInvalidValueSnooze;
+                    informCycleCount = config.system.AlarmHumidInvalidValueCountInCycle;
+                }
+                else if (e.ErrorType == SensorErrorType.InvalidLightData)
+                {
+                    alarmEnable = config.system.AlarmAmbientLightInvalidDataEnable;
+                    firstInformTime = config.system.AlarmAmbientLightInvalidDataFirstTime;
+                    everyInformTime = config.system.AlarmAmbientLightInvalidDataEvery;
+                    snoozeTime = config.system.AlarmAmbientLightInvalidDataSnooze;
+                    informCycleCount = config.system.AlarmAmbientLightInvalidDataCountInCycle;
+                }
+                else if (e.ErrorType == SensorErrorType.InvalidLightValue)
+                {
+                    alarmEnable = config.system.AlarmAmbientLightInvalidValueEnable;
+                    firstInformTime = config.system.AlarmAmbientLightInvalidValueFirstTime;
+                    everyInformTime = config.system.AlarmAmbientLightInvalidValueEvery;
+                    snoozeTime = config.system.AlarmAmbientLightInvalidValueSnooze;
+                    informCycleCount = config.system.AlarmAmbientLightInvalidValueCountInCycle;
+                }
+                else if (e.ErrorType == SensorErrorType.InvalidAmmoniaData)
+                {
+                    alarmEnable = config.system.AlarmAmmoniaInvalidDataEnable;
+                    firstInformTime = config.system.AlarmAmmoniaInvalidDataFirstTime;
+                    everyInformTime = config.system.AlarmAmmoniaInvalidDataEvery;
+                    snoozeTime = config.system.AlarmAmmoniaInvalidDataSnooze;
+                    informCycleCount = config.system.AlarmAmmoniaInvalidDataCountInCycle;
+                }
+                else if (e.ErrorType == SensorErrorType.InvalidAmmoniaValue)
+                {
+                    alarmEnable = config.system.AlarmAmmoniaInvalidValueEnable;
+                    firstInformTime = config.system.AlarmAmmoniaInvalidValueFirstTime;
+                    everyInformTime = config.system.AlarmAmmoniaInvalidValueEvery;
+                    snoozeTime = config.system.AlarmAmmoniaInvalidValueSnooze;
+                    informCycleCount = config.system.AlarmAmmoniaInvalidValueCountInCycle;
+                }
+                else if (e.ErrorType == SensorErrorType.InvalidCo2Data)
+                {
+                    alarmEnable = config.system.AlarmCo2InvalidDataEnable;
+                    firstInformTime = config.system.AlarmCo2InvalidDataFirstTime;
+                    everyInformTime = config.system.AlarmCo2InvalidDataEvery;
+                    snoozeTime = config.system.AlarmCo2InvalidDataSnooze;
+                    informCycleCount = config.system.AlarmCo2InvalidDataCountInCycle;
+                }
+                else if (e.ErrorType == SensorErrorType.InvalidCo2Value)
+                {
+                    alarmEnable = config.system.AlarmCo2InvalidValueEnable;
+                    firstInformTime = config.system.AlarmCo2InvalidValueFirstTime;
+                    everyInformTime = config.system.AlarmCo2InvalidValueEvery;
+                    snoozeTime = config.system.AlarmCo2InvalidValueSnooze;
+                    informCycleCount = config.system.AlarmCo2InvalidValueCountInCycle;
+                }
+                else if (e.ErrorType == SensorErrorType.NotAlive)
+                {
+                    alarmEnable = config.system.AlarmScalarNotAliveEnable;
+                    firstInformTime = config.system.AlarmScalarNotAliveFirstTime;
+                    everyInformTime = config.system.AlarmScalarNotAliveEvery;
+                    snoozeTime = config.system.AlarmScalarNotAliveSnooze;
+                    informCycleCount = config.system.AlarmScalarNotAliveCountInCycle;
+                }
+                else if (e.ErrorType == SensorErrorType.LowBattery)
+                {
+                    alarmEnable = config.system.AlarmScalarLowBatteryEnable;
+                    firstInformTime = config.system.AlarmScalarLowBatteryFirstTime;
+                    everyInformTime = config.system.AlarmScalarLowBatteryEvery;
+                    snoozeTime = config.system.AlarmScalarLowBatterySnooze;
+                    informCycleCount = config.system.AlarmScalarLowBatteryCountInCycle;
+                }
+            }
+            else if(sensor.Type == SensorType.FarmCommute)
+            {
+                if (e.ErrorType == SensorErrorType.InvalidData)
+                {
+                    alarmEnable = config.system.AlarmCommuteInvalidDataEnable;
+                    firstInformTime = config.system.AlarmCommuteInvalidDataFirstTime;
+                    everyInformTime = config.system.AlarmCommuteInvalidDataEvery;
+                    snoozeTime = config.system.AlarmCommuteInvalidDataSnooze;
+                    informCycleCount = config.system.AlarmCommuteInvalidDataCountInCycle;
+                }
+                else if (e.ErrorType == SensorErrorType.InvalidValue)
+                {
+                    alarmEnable = config.system.AlarmCommuteInvalidValueEnable;
+                    firstInformTime = config.system.AlarmCommuteInvalidValueFirstTime;
+                    everyInformTime = config.system.AlarmCommuteInvalidValueEvery;
+                    snoozeTime = config.system.AlarmCommuteInvalidValueSnooze;
+                    informCycleCount = config.system.AlarmCommuteInvalidValueCountInCycle;
+                }
+                else if (e.ErrorType == SensorErrorType.NotAlive)
+                {
+                    alarmEnable = config.system.AlarmCommuteNotAliveEnable;
+                    firstInformTime = config.system.AlarmCommuteNotAliveFirstTime;
+                    everyInformTime = config.system.AlarmCommuteNotAliveEvery;
+                    snoozeTime = config.system.AlarmCommuteNotAliveSnooze;
+                    informCycleCount = config.system.AlarmCommuteNotAliveCountInCycle;
+                }
+                else if (e.ErrorType == SensorErrorType.LowBattery)
+                {
+                    alarmEnable = config.system.AlarmCommuteLowBatteryEnable;
+                    firstInformTime = config.system.AlarmCommuteLowBatteryFirstTime;
+                    everyInformTime = config.system.AlarmCommuteLowBatteryEvery;
+                    snoozeTime = config.system.AlarmCommuteLowBatterySnooze;
+                    informCycleCount = config.system.AlarmCommuteLowBatteryCountInCycle;
+                }
+            }
+            else if(sensor.Type == SensorType.FarmFeed)
+            {
+                if (e.ErrorType == SensorErrorType.NotAlive)
+                {
+                    alarmEnable = config.system.AlarmFeedNotAliveEnable;
+                    firstInformTime = config.system.AlarmFeedNotAliveFirstTime;
+                    everyInformTime = config.system.AlarmFeedNotAliveEvery;
+                    snoozeTime = config.system.AlarmFeedNotAliveSnooze;
+                    informCycleCount = config.system.AlarmFeedNotAliveCountInCycle;
+                }
+                else if (e.ErrorType == SensorErrorType.LowBattery)
+                {
+                    alarmEnable = config.system.AlarmFeedLowBatteryEnable;
+                    firstInformTime = config.system.AlarmFeedLowBatteryFirstTime;
+                    everyInformTime = config.system.AlarmFeedLowBatteryEvery;
+                    snoozeTime = config.system.AlarmFeedLowBatterySnooze;
+                    informCycleCount = config.system.AlarmFeedLowBatteryCountInCycle;
+                }
+            }
+            else if(sensor.Type == SensorType.FarmCheckup)
+            {
+                if (e.ErrorType == SensorErrorType.NotAlive)
+                {
+                    alarmEnable = config.system.AlarmCheckupNotAliveEnable;
+                    firstInformTime = config.system.AlarmCheckupNotAliveFirstTime;
+                    everyInformTime = config.system.AlarmCheckupNotAliveEvery;
+                    snoozeTime = config.system.AlarmCheckupNotAliveSnooze;
+                    informCycleCount = config.system.AlarmCheckupNotAliveCountInCycle;
+                }
+                else if (e.ErrorType == SensorErrorType.LowBattery)
+                {
+                    alarmEnable = config.system.AlarmCheckupLowBatteryEnable;
+                    firstInformTime = config.system.AlarmCheckupLowBatteryFirstTime;
+                    everyInformTime = config.system.AlarmCheckupLowBatteryEvery;
+                    snoozeTime = config.system.AlarmCheckupLowBatterySnooze;
+                    informCycleCount = config.system.AlarmCheckupLowBatteryCountInCycle;
+                }
+            }
+            else if(sensor.Type == SensorType.FarmElectricPower)
+            {
+                if (e.ErrorType == SensorErrorType.InvalidData)
+                {
+                    alarmEnable = config.system.AlarmFarmPowerInvalidDataEnable;
+                    firstInformTime = config.system.AlarmFarmPowerInvalidDataFirstTime;
+                    everyInformTime = config.system.AlarmFarmPowerInvalidDataEvery;
+                    snoozeTime = config.system.AlarmFarmPowerInvalidDataSnooze;
+                    informCycleCount = config.system.AlarmFarmPowerInvalidDataCountInCycle;
+                }
+                else if (e.ErrorType == SensorErrorType.NotAlive)
+                {
+                    alarmEnable = config.system.AlarmFarmPowerNotAliveEnable;
+                    firstInformTime = config.system.AlarmFarmPowerNotAliveFirstTime;
+                    everyInformTime = config.system.AlarmFarmPowerNotAliveEvery;
+                    snoozeTime = config.system.AlarmFarmPowerNotAliveSnooze;
+                    informCycleCount = config.system.AlarmFarmPowerNotAliveCountInCycle;
+                }
+                else if (e.ErrorType == SensorErrorType.LowBattery)
+                {
+                    alarmEnable = config.system.AlarmFarmPowerLowBatteryEnable;
+                    firstInformTime = config.system.AlarmFarmPowerLowBatteryFirstTime;
+                    everyInformTime = config.system.AlarmFarmPowerLowBatteryEvery;
+                    snoozeTime = config.system.AlarmFarmPowerLowBatterySnooze;
+                    informCycleCount = config.system.AlarmFarmPowerLowBatteryCountInCycle;
+                }
+            }
+            else if(sensor.Type == SensorType.PoultryMainElectricPower)
+            {
+                if (e.ErrorType == SensorErrorType.InvalidData)
+                {
+                    alarmEnable = config.system.AlarmMainPowerInvalidDataEnable;
+                    firstInformTime = config.system.AlarmMainPowerInvalidDataFirstTime;
+                    everyInformTime = config.system.AlarmMainPowerInvalidDataEvery;
+                    snoozeTime = config.system.AlarmMainPowerInvalidDataSnooze;
+                    informCycleCount = config.system.AlarmMainPowerInvalidDataCountInCycle;
+                }
+                else if (e.ErrorType == SensorErrorType.NotAlive)
+                {
+                    alarmEnable = config.system.AlarmMainPowerNotAliveEnable;
+                    firstInformTime = config.system.AlarmMainPowerNotAliveFirstTime;
+                    everyInformTime = config.system.AlarmMainPowerNotAliveEvery;
+                    snoozeTime = config.system.AlarmMainPowerNotAliveSnooze;
+                    informCycleCount = config.system.AlarmMainPowerNotAliveCountInCycle;
+                }
+                else if (e.ErrorType == SensorErrorType.LowBattery)
+                {
+                    alarmEnable = config.system.AlarmMainPowerLowBatteryEnable;
+                    firstInformTime = config.system.AlarmMainPowerLowBatteryFirstTime;
+                    everyInformTime = config.system.AlarmMainPowerLowBatteryEvery;
+                    snoozeTime = config.system.AlarmMainPowerLowBatterySnooze;
+                    informCycleCount = config.system.AlarmMainPowerLowBatteryCountInCycle;
+                }
+            }
+            else if(sensor.Type == SensorType.PoultryBackupElectricPower)
+            {
+                if (e.ErrorType == SensorErrorType.InvalidData)
+                {
+                    alarmEnable = config.system.AlarmBackupPowerInvalidDataEnable;
+                    firstInformTime = config.system.AlarmBackupPowerInvalidDataFirstTime;
+                    everyInformTime = config.system.AlarmBackupPowerInvalidDataEvery;
+                    snoozeTime = config.system.AlarmBackupPowerInvalidDataSnooze;
+                    informCycleCount = config.system.AlarmBackupPowerInvalidDataCountInCycle;
+                }
+                else if (e.ErrorType == SensorErrorType.NotAlive)
+                {
+                    alarmEnable = config.system.AlarmBackupPowerNotAliveEnable;
+                    firstInformTime = config.system.AlarmBackupPowerNotAliveFirstTime;
+                    everyInformTime = config.system.AlarmBackupPowerNotAliveEvery;
+                    snoozeTime = config.system.AlarmBackupPowerNotAliveSnooze;
+                    informCycleCount = config.system.AlarmBackupPowerNotAliveCountInCycle;
+                }
+                else if (e.ErrorType == SensorErrorType.LowBattery)
+                {
+                    alarmEnable = config.system.AlarmBackupPowerLowBatteryEnable;
+                    firstInformTime = config.system.AlarmBackupPowerLowBatteryFirstTime;
+                    everyInformTime = config.system.AlarmBackupPowerLowBatteryEvery;
+                    snoozeTime = config.system.AlarmBackupPowerLowBatterySnooze;
+                    informCycleCount = config.system.AlarmBackupPowerLowBatteryCountInCycle;
+                }
+            }
+            if (!alarmEnable) continue;
+            if (e.DateAlarmInformed == null && e.DateHappened.IsElapsed(firstInformTime)) //first alarm.
+            {
+                e.AlarmInformCount = 1;
+                Log.Information($"Informing Alarm of {e.ErrorType}, Sensor ID: {sensor.Id}, Location: {sensor.LocationId}, Section: {sensor.Section}. Count: {e.AlarmInformCount}");
+                //inform, save to db
+                e.DateAlarmInformed = Now;
+            }
+            else if (e.AlarmInformCount % informCycleCount != 0 && e.DateAlarmInformed.IsElapsed(everyInformTime)) //alarm every.
+            {
+                e.AlarmInformCount++;
+                Log.Information($"Informing Alarm of {e.ErrorType}, Sensor ID: {sensor.Id}, Location: {sensor.LocationId}, Section: {sensor.Section}. Count: {e.AlarmInformCount}");
+                //inform, save to db
+                e.DateAlarmInformed = Now;
+            }
+            else if (e.AlarmInformCount % informCycleCount == 0 && e.DateAlarmInformed.IsElapsed(snoozeTime)) //alarm sleep.
+            {
+                e.AlarmInformCount++;
+                Log.Information($"Informing Alarm of {e.ErrorType}, Sensor ID: {sensor.Id}, Location: {sensor.LocationId}, Section: {sensor.Section}. Count: {e.AlarmInformCount}");
+                //inform, save to db
+                e.DateAlarmInformed = Now;
+            }
+        }
     }
 
     private async Task RunObserverTimerAsync()

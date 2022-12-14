@@ -4888,3 +4888,340 @@ System.InvalidOperationException: Nullable object must have a value.
 2022-12-14 14:40:39.943 +03:30 [INF] ===============  Start observation process ===============
 2022-12-14 14:40:39.988 +03:30 [INF] ===============  End of observation process (45.0746 ms) ===============
 2022-12-14 14:40:44.997 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:00:30.321 +03:30 [INF] Starting up the Service...
+2022-12-14 17:00:33.587 +03:30 [INF] Loading poultries...
+2022-12-14 17:00:34.826 +03:30 [INF] Poultries loaded. (1238.6094 ms)
+2022-12-14 17:00:34.838 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 661f3f94-ec99-4347-9dfa-fee743ecf710.
+2022-12-14 17:00:34.915 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 661f3f94-ec99-4347-9dfa-fee743ecf710.
+2022-12-14 17:00:34.944 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2022-12-14 17:00:34.945 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:00:34.974 +03:30 [INF] ===============  End of observation process (28.1814 ms) ===============
+2022-12-14 17:00:39.983 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:00:39.984 +03:30 [INF] ===============  End of observation process (1.3001 ms) ===============
+2022-12-14 17:00:44.996 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:00:44.997 +03:30 [INF] ===============  End of observation process (1.326 ms) ===============
+2022-12-14 17:00:50.007 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:00:50.009 +03:30 [INF] ===============  End of observation process (1.5188 ms) ===============
+2022-12-14 17:00:55.031 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:00:55.032 +03:30 [INF] ===============  End of observation process (1.1592 ms) ===============
+2022-12-14 17:01:00.040 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:01:00.041 +03:30 [INF] ===============  End of observation process (1.5607 ms) ===============
+2022-12-14 17:01:05.060 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:01:05.061 +03:30 [INF] ===============  End of observation process (1.4856 ms) ===============
+2022-12-14 17:01:10.081 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:01:10.082 +03:30 [INF] ===============  End of observation process (1.0368 ms) ===============
+2022-12-14 17:01:15.095 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:01:15.096 +03:30 [INF] ===============  End of observation process (1.1543 ms) ===============
+2022-12-14 17:01:20.105 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:01:20.111 +03:30 [WRN] Sensor with ID: 1 is not sending KeepAlive message since 12/14/2022 5:00:34 PM. Location: 2, Section: FarmLeftTop
+2022-12-14 17:01:20.115 +03:30 [INF] Writing sensor error in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop, Error Type: NotAlive
+2022-12-14 17:01:20.247 +03:30 [INF] ===============  End of observation process (142.4868 ms) ===============
+2022-12-14 17:01:25.271 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:01:25.274 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 2, Section: FarmLeftTop. Count: 1
+2022-12-14 17:01:25.275 +03:30 [INF] ===============  End of observation process (4.0681 ms) ===============
+2022-12-14 17:01:30.287 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:01:30.289 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 2, Section: FarmLeftTop. Count: 2
+2022-12-14 17:01:30.290 +03:30 [INF] ===============  End of observation process (2.6644 ms) ===============
+2022-12-14 17:01:35.292 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:01:35.293 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 2, Section: FarmLeftTop. Count: 3
+2022-12-14 17:01:35.294 +03:30 [INF] ===============  End of observation process (1.8939 ms) ===============
+2022-12-14 17:01:40.318 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:01:40.319 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 2, Section: FarmLeftTop. Count: 4
+2022-12-14 17:01:40.320 +03:30 [INF] ===============  End of observation process (1.8964 ms) ===============
+2022-12-14 17:01:45.326 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:01:45.327 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 2, Section: FarmLeftTop. Count: 5
+2022-12-14 17:01:45.328 +03:30 [INF] ===============  End of observation process (1.7522 ms) ===============
+2022-12-14 17:01:50.339 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:01:50.341 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 2, Section: FarmLeftTop. Count: 6
+2022-12-14 17:01:50.342 +03:30 [INF] ===============  End of observation process (3.3326 ms) ===============
+2022-12-14 17:01:55.353 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:01:55.354 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 2, Section: FarmLeftTop. Count: 7
+2022-12-14 17:01:55.356 +03:30 [INF] ===============  End of observation process (2.9325 ms) ===============
+2022-12-14 17:02:00.371 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:02:00.372 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 2, Section: FarmLeftTop. Count: 8
+2022-12-14 17:02:00.373 +03:30 [INF] ===============  End of observation process (2.0665 ms) ===============
+2022-12-14 17:02:05.396 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:02:05.397 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 2, Section: FarmLeftTop. Count: 9
+2022-12-14 17:02:05.399 +03:30 [INF] ===============  End of observation process (2.796 ms) ===============
+2022-12-14 17:02:10.411 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:02:10.412 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 2, Section: FarmLeftTop. Count: 10
+2022-12-14 17:02:10.413 +03:30 [INF] ===============  End of observation process (1.8849 ms) ===============
+2022-12-14 17:02:15.417 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:02:15.419 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 2, Section: FarmLeftTop. Count: 11
+2022-12-14 17:02:15.419 +03:30 [INF] ===============  End of observation process (2.2735 ms) ===============
+2022-12-14 17:02:20.428 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:02:20.429 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 2, Section: FarmLeftTop. Count: 12
+2022-12-14 17:02:20.429 +03:30 [INF] ===============  End of observation process (1.5587 ms) ===============
+2022-12-14 17:02:25.450 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:02:25.451 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 2, Section: FarmLeftTop. Count: 13
+2022-12-14 17:02:25.452 +03:30 [INF] ===============  End of observation process (1.7965 ms) ===============
+2022-12-14 17:02:30.458 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:02:30.459 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 2, Section: FarmLeftTop. Count: 14
+2022-12-14 17:02:30.460 +03:30 [INF] ===============  End of observation process (2.2123 ms) ===============
+2022-12-14 17:02:35.468 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:02:35.469 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 2, Section: FarmLeftTop. Count: 15
+2022-12-14 17:02:35.470 +03:30 [INF] ===============  End of observation process (2.0426 ms) ===============
+2022-12-14 17:02:40.490 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:02:40.491 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 2, Section: FarmLeftTop. Count: 16
+2022-12-14 17:02:40.492 +03:30 [INF] ===============  End of observation process (1.9061 ms) ===============
+2022-12-14 17:02:45.503 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:02:45.507 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 2, Section: FarmLeftTop. Count: 17
+2022-12-14 17:02:45.508 +03:30 [INF] ===============  End of observation process (5.3919 ms) ===============
+2022-12-14 17:02:48.151 +03:30 [INF] ===============  Begin mqtt process  ===============
+2022-12-14 17:02:48.152 +03:30 [INF] MQTT Message received. Topic: Elma/ToServer/FromSensor/Alive/1, Payload: 1
+2022-12-14 17:02:48.165 +03:30 [INF] MQTT Message is from a sensor. Topic: Elma/ToServer/FromSensor/Alive/1, Payload: 1
+2022-12-14 17:02:48.166 +03:30 [INF] MQTT Message is KeepAlive from a sensor. Topic: Elma/ToServer/FromSensor/Alive/1, Payload: 1
+2022-12-14 17:02:48.169 +03:30 [INF] Updating sensor error in database, if existed. Sensor ID: 1, Error Types: NotAlive...
+2022-12-14 17:02:48.218 +03:30 [INF] ===============  End of mqtt process 66.9346 ms) ===============
+2022-12-14 17:02:50.524 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:02:50.601 +03:30 [ERR] Exception thrown in Observer:
+System.InvalidOperationException: Collection was modified; enumeration operation may not execute.
+   at System.Collections.Generic.List`1.Enumerator.MoveNextRare()
+   at ElmaSmartFarm.Service.Worker.ObservePoultriesAsync() in D:\Users\Safa\Source\Repos\safaenet\ElmaSmartFarm\ElmaSmartFarm.Service\PoultriesObserver.cs:line 346
+   at ElmaSmartFarm.Service.Worker.RunObserverTimerAsync() in D:\Users\Safa\Source\Repos\safaenet\ElmaSmartFarm\ElmaSmartFarm.Service\PoultriesObserver.cs:line 691
+2022-12-14 17:02:50.670 +03:30 [INF] ===============  End of observation process (145.7506 ms) ===============
+2022-12-14 17:02:55.679 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:02:55.680 +03:30 [INF] ===============  End of observation process (0.8486 ms) ===============
+2022-12-14 17:03:00.680 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:03:00.682 +03:30 [INF] ===============  End of observation process (1.3812 ms) ===============
+2022-12-14 17:03:05.689 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:03:05.691 +03:30 [INF] ===============  End of observation process (1.529 ms) ===============
+2022-12-14 17:03:10.694 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:03:10.696 +03:30 [INF] ===============  End of observation process (1.5411 ms) ===============
+2022-12-14 17:03:15.710 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:03:15.712 +03:30 [INF] ===============  End of observation process (1.4829 ms) ===============
+2022-12-14 17:07:22.344 +03:30 [INF] Starting up the Service...
+2022-12-14 17:07:24.448 +03:30 [INF] Loading poultries...
+2022-12-14 17:07:25.434 +03:30 [INF] Poultries loaded. (985.8908 ms)
+2022-12-14 17:07:25.442 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: a0346f4c-489f-46fd-bdfe-a5b48a633446.
+2022-12-14 17:07:25.502 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: a0346f4c-489f-46fd-bdfe-a5b48a633446.
+2022-12-14 17:07:25.517 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2022-12-14 17:07:25.518 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:07:25.541 +03:30 [INF] ===============  End of observation process (22.5297 ms) ===============
+2022-12-14 17:07:30.557 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:07:30.558 +03:30 [INF] ===============  End of observation process (1.3291 ms) ===============
+2022-12-14 17:07:35.565 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:07:35.566 +03:30 [INF] ===============  End of observation process (1.2714 ms) ===============
+2022-12-14 17:07:35.941 +03:30 [INF] ===============  Begin mqtt process  ===============
+2022-12-14 17:07:35.943 +03:30 [INF] MQTT Message received. Topic: Elma/ToServer/FromSensor/Alive/1, Payload: 1
+2022-12-14 17:07:35.952 +03:30 [INF] MQTT Message is from a sensor. Topic: Elma/ToServer/FromSensor/Alive/1, Payload: 1
+2022-12-14 17:07:35.953 +03:30 [INF] MQTT Message is KeepAlive from a sensor. Topic: Elma/ToServer/FromSensor/Alive/1, Payload: 1
+2022-12-14 17:07:35.958 +03:30 [INF] Updating sensor error in database, if existed. Sensor ID: 1, Error Types: NotAlive...
+2022-12-14 17:07:36.049 +03:30 [INF] ===============  End of mqtt process 108.3263 ms) ===============
+2022-12-14 17:07:40.569 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:07:40.570 +03:30 [INF] ===============  End of observation process (0.9368 ms) ===============
+2022-12-14 17:07:45.575 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:07:45.576 +03:30 [INF] ===============  End of observation process (1.0265 ms) ===============
+2022-12-14 17:07:50.590 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:07:50.591 +03:30 [INF] ===============  End of observation process (1.0022 ms) ===============
+2022-12-14 17:07:55.604 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:07:55.605 +03:30 [INF] ===============  End of observation process (1.0289 ms) ===============
+2022-12-14 17:08:00.611 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:08:00.612 +03:30 [INF] ===============  End of observation process (1.0723 ms) ===============
+2022-12-14 17:08:05.631 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:08:05.632 +03:30 [INF] ===============  End of observation process (1.0654 ms) ===============
+2022-12-14 17:08:10.645 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:08:10.646 +03:30 [INF] ===============  End of observation process (1.1508 ms) ===============
+2022-12-14 17:08:15.651 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:08:15.652 +03:30 [INF] ===============  End of observation process (1.1408 ms) ===============
+2022-12-14 17:08:20.659 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:08:20.660 +03:30 [INF] ===============  End of observation process (0.8849 ms) ===============
+2022-12-14 17:08:25.673 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:08:25.680 +03:30 [WRN] Sensor with ID: 1 is not sending KeepAlive message since 12/14/2022 5:07:35 PM. Location: 2, Section: FarmLeftTop
+2022-12-14 17:08:25.685 +03:30 [INF] Writing sensor error in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop, Error Type: NotAlive
+2022-12-14 17:08:25.750 +03:30 [INF] ===============  End of observation process (76.6191 ms) ===============
+2022-12-14 17:08:30.758 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:08:30.760 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 2, Section: FarmLeftTop. Count: 1
+2022-12-14 17:08:30.761 +03:30 [INF] ===============  End of observation process (3.1315 ms) ===============
+2022-12-14 17:08:35.765 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:08:35.766 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 2, Section: FarmLeftTop. Count: 2
+2022-12-14 17:08:35.767 +03:30 [INF] ===============  End of observation process (1.9836 ms) ===============
+2022-12-14 17:08:40.770 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:08:40.771 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 2, Section: FarmLeftTop. Count: 3
+2022-12-14 17:08:40.772 +03:30 [INF] ===============  End of observation process (2.1506 ms) ===============
+2022-12-14 17:08:45.781 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:08:45.782 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 2, Section: FarmLeftTop. Count: 4
+2022-12-14 17:08:45.783 +03:30 [INF] ===============  End of observation process (2.023 ms) ===============
+2022-12-14 17:08:49.208 +03:30 [INF] ===============  Begin mqtt process  ===============
+2022-12-14 17:08:49.209 +03:30 [INF] MQTT Message received. Topic: Elma/ToServer/FromSensor/Alive/1, Payload: 1
+2022-12-14 17:08:49.210 +03:30 [INF] MQTT Message is from a sensor. Topic: Elma/ToServer/FromSensor/Alive/1, Payload: 1
+2022-12-14 17:08:49.211 +03:30 [INF] MQTT Message is KeepAlive from a sensor. Topic: Elma/ToServer/FromSensor/Alive/1, Payload: 1
+2022-12-14 17:08:49.213 +03:30 [INF] Updating sensor error in database, if existed. Sensor ID: 1, Error Types: NotAlive...
+2022-12-14 17:08:49.233 +03:30 [INF] ===============  End of mqtt process 24.4495 ms) ===============
+2022-12-14 17:08:50.798 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:08:50.799 +03:30 [INF] ===============  End of observation process (0.9279 ms) ===============
+2022-12-14 17:08:55.810 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:08:55.811 +03:30 [INF] ===============  End of observation process (0.9492 ms) ===============
+2022-12-14 17:09:00.830 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:09:00.831 +03:30 [INF] ===============  End of observation process (1.1563 ms) ===============
+2022-12-14 17:09:05.835 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:09:05.836 +03:30 [INF] ===============  End of observation process (0.9982 ms) ===============
+2022-12-14 17:09:10.859 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:09:10.860 +03:30 [INF] ===============  End of observation process (0.9265 ms) ===============
+2022-12-14 17:09:15.862 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:09:15.863 +03:30 [INF] ===============  End of observation process (0.9908 ms) ===============
+2022-12-14 17:09:20.870 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:09:20.871 +03:30 [INF] ===============  End of observation process (1.4403 ms) ===============
+2022-12-14 17:09:25.887 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:09:25.888 +03:30 [INF] ===============  End of observation process (1.2078 ms) ===============
+2022-12-14 17:09:30.900 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:09:30.901 +03:30 [INF] ===============  End of observation process (0.8946 ms) ===============
+2022-12-14 17:09:35.914 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:09:35.915 +03:30 [WRN] Sensor with ID: 1 is not sending KeepAlive message since 12/14/2022 5:08:49 PM. Location: 2, Section: FarmLeftTop
+2022-12-14 17:09:35.916 +03:30 [INF] Writing sensor error in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop, Error Type: NotAlive
+2022-12-14 17:09:38.070 +03:30 [INF] ===============  End of observation process (2156.3266 ms) ===============
+2022-12-14 17:09:43.081 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:09:43.082 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 2, Section: FarmLeftTop. Count: 1
+2022-12-14 17:09:43.083 +03:30 [INF] ===============  End of observation process (2.0543 ms) ===============
+2022-12-14 17:09:48.111 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:09:48.112 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 2, Section: FarmLeftTop. Count: 2
+2022-12-14 17:09:48.113 +03:30 [INF] ===============  End of observation process (1.7337 ms) ===============
+2022-12-14 17:09:53.123 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:09:53.124 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 2, Section: FarmLeftTop. Count: 3
+2022-12-14 17:09:53.125 +03:30 [INF] ===============  End of observation process (1.7074 ms) ===============
+2022-12-14 17:09:58.133 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:09:58.134 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 2, Section: FarmLeftTop. Count: 4
+2022-12-14 17:09:58.135 +03:30 [INF] ===============  End of observation process (2.1652 ms) ===============
+2022-12-14 17:10:03.157 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:10:03.159 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 2, Section: FarmLeftTop. Count: 5
+2022-12-14 17:10:03.161 +03:30 [INF] ===============  End of observation process (4.138 ms) ===============
+2022-12-14 17:10:08.177 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:10:08.178 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 2, Section: FarmLeftTop. Count: 6
+2022-12-14 17:10:08.179 +03:30 [INF] ===============  End of observation process (1.8198 ms) ===============
+2022-12-14 17:10:13.179 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:10:13.180 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 2, Section: FarmLeftTop. Count: 7
+2022-12-14 17:10:13.181 +03:30 [INF] ===============  End of observation process (1.7923 ms) ===============
+2022-12-14 17:10:18.206 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:10:18.207 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 2, Section: FarmLeftTop. Count: 8
+2022-12-14 17:10:18.208 +03:30 [INF] ===============  End of observation process (1.8493 ms) ===============
+2022-12-14 17:10:23.221 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:10:23.222 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 2, Section: FarmLeftTop. Count: 9
+2022-12-14 17:10:23.223 +03:30 [INF] ===============  End of observation process (1.9832 ms) ===============
+2022-12-14 17:10:28.229 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:10:28.230 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 2, Section: FarmLeftTop. Count: 10
+2022-12-14 17:10:28.231 +03:30 [INF] ===============  End of observation process (1.7833 ms) ===============
+2022-12-14 17:10:33.233 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:10:33.234 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 2, Section: FarmLeftTop. Count: 11
+2022-12-14 17:10:33.235 +03:30 [INF] ===============  End of observation process (1.8275 ms) ===============
+2022-12-14 17:10:38.242 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:10:38.243 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 2, Section: FarmLeftTop. Count: 12
+2022-12-14 17:10:38.244 +03:30 [INF] ===============  End of observation process (2.2344 ms) ===============
+2022-12-14 17:10:43.252 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:10:43.253 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 2, Section: FarmLeftTop. Count: 13
+2022-12-14 17:10:43.254 +03:30 [INF] ===============  End of observation process (2.0806 ms) ===============
+2022-12-14 17:10:48.267 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:10:48.268 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 2, Section: FarmLeftTop. Count: 14
+2022-12-14 17:10:48.269 +03:30 [INF] ===============  End of observation process (1.8255 ms) ===============
+2022-12-14 17:10:53.280 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:10:53.281 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 2, Section: FarmLeftTop. Count: 15
+2022-12-14 17:10:53.282 +03:30 [INF] ===============  End of observation process (1.7444 ms) ===============
+2022-12-14 17:10:58.292 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:10:58.293 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 2, Section: FarmLeftTop. Count: 16
+2022-12-14 17:10:58.294 +03:30 [INF] ===============  End of observation process (2.3984 ms) ===============
+2022-12-14 17:11:03.297 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:11:03.298 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 2, Section: FarmLeftTop. Count: 17
+2022-12-14 17:11:03.299 +03:30 [INF] ===============  End of observation process (1.8514 ms) ===============
+2022-12-14 17:11:08.310 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:11:08.311 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 2, Section: FarmLeftTop. Count: 18
+2022-12-14 17:11:08.312 +03:30 [INF] ===============  End of observation process (1.724 ms) ===============
+2022-12-14 17:11:13.330 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:11:13.331 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 2, Section: FarmLeftTop. Count: 19
+2022-12-14 17:11:13.332 +03:30 [INF] ===============  End of observation process (1.7828 ms) ===============
+2022-12-14 17:11:18.346 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:11:18.347 +03:30 [WRN] Sensor with ID 1 has been unwatched due to persisting error. Error Type: NotAlive, Error happened date: 12/14/2022 5:09:35 PM
+2022-12-14 17:11:18.348 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 2, Section: FarmLeftTop. Count: 20
+2022-12-14 17:11:18.349 +03:30 [INF] ===============  End of observation process (2.7429 ms) ===============
+2022-12-14 17:11:23.350 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:11:23.351 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 2, Section: FarmLeftTop. Count: 21
+2022-12-14 17:11:23.352 +03:30 [INF] ===============  End of observation process (2.054 ms) ===============
+2022-12-14 17:11:28.372 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:11:28.373 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 2, Section: FarmLeftTop. Count: 22
+2022-12-14 17:11:28.374 +03:30 [INF] ===============  End of observation process (1.9548 ms) ===============
+2022-12-14 17:11:33.379 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:11:33.380 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 2, Section: FarmLeftTop. Count: 23
+2022-12-14 17:11:33.381 +03:30 [INF] ===============  End of observation process (2.2096 ms) ===============
+2022-12-14 17:11:38.395 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:11:38.396 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 2, Section: FarmLeftTop. Count: 24
+2022-12-14 17:11:38.397 +03:30 [INF] ===============  End of observation process (2.2701 ms) ===============
+2022-12-14 17:11:43.404 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:11:43.405 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 2, Section: FarmLeftTop. Count: 25
+2022-12-14 17:11:43.406 +03:30 [INF] ===============  End of observation process (1.8398 ms) ===============
+2022-12-14 17:11:48.408 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:11:48.409 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 2, Section: FarmLeftTop. Count: 26
+2022-12-14 17:11:48.410 +03:30 [INF] ===============  End of observation process (1.83 ms) ===============
+2022-12-14 17:11:53.414 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:11:53.415 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 2, Section: FarmLeftTop. Count: 27
+2022-12-14 17:11:53.416 +03:30 [INF] ===============  End of observation process (1.9737 ms) ===============
+2022-12-14 17:11:58.433 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:11:58.434 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 2, Section: FarmLeftTop. Count: 28
+2022-12-14 17:11:58.435 +03:30 [INF] ===============  End of observation process (1.7933 ms) ===============
+2022-12-14 17:12:03.450 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:12:03.451 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 2, Section: FarmLeftTop. Count: 29
+2022-12-14 17:12:03.452 +03:30 [INF] ===============  End of observation process (1.7705 ms) ===============
+2022-12-14 17:12:08.466 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:12:08.467 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 2, Section: FarmLeftTop. Count: 30
+2022-12-14 17:12:08.468 +03:30 [INF] ===============  End of observation process (1.7892 ms) ===============
+2022-12-14 17:12:13.484 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:12:13.485 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 2, Section: FarmLeftTop. Count: 31
+2022-12-14 17:12:13.486 +03:30 [INF] ===============  End of observation process (1.8258 ms) ===============
+2022-12-14 17:12:18.501 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:12:18.503 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 2, Section: FarmLeftTop. Count: 32
+2022-12-14 17:12:18.504 +03:30 [INF] ===============  End of observation process (3.1285 ms) ===============
+2022-12-14 17:12:23.516 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:12:23.517 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 2, Section: FarmLeftTop. Count: 33
+2022-12-14 17:12:23.518 +03:30 [INF] ===============  End of observation process (1.7703 ms) ===============
+2022-12-14 17:12:28.523 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:12:28.524 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 2, Section: FarmLeftTop. Count: 34
+2022-12-14 17:12:28.525 +03:30 [INF] ===============  End of observation process (1.9015 ms) ===============
+2022-12-14 17:12:33.531 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:12:33.532 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 2, Section: FarmLeftTop. Count: 35
+2022-12-14 17:12:33.533 +03:30 [INF] ===============  End of observation process (1.741 ms) ===============
+2022-12-14 17:12:38.534 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:12:38.535 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 2, Section: FarmLeftTop. Count: 36
+2022-12-14 17:12:38.536 +03:30 [INF] ===============  End of observation process (2.3277 ms) ===============
+2022-12-14 17:12:43.548 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:12:43.549 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 2, Section: FarmLeftTop. Count: 37
+2022-12-14 17:12:43.550 +03:30 [INF] ===============  End of observation process (1.6979 ms) ===============
+2022-12-14 17:12:48.560 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:12:48.561 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 2, Section: FarmLeftTop. Count: 38
+2022-12-14 17:12:48.562 +03:30 [INF] ===============  End of observation process (2.1161 ms) ===============
+2022-12-14 17:12:53.572 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:12:53.573 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 2, Section: FarmLeftTop. Count: 39
+2022-12-14 17:12:53.574 +03:30 [INF] ===============  End of observation process (1.7572 ms) ===============
+2022-12-14 17:12:58.592 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:12:58.593 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 2, Section: FarmLeftTop. Count: 40
+2022-12-14 17:12:58.594 +03:30 [INF] ===============  End of observation process (1.7176 ms) ===============
+2022-12-14 17:13:03.610 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:13:03.611 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 2, Section: FarmLeftTop. Count: 41
+2022-12-14 17:13:03.612 +03:30 [INF] ===============  End of observation process (2.2266 ms) ===============
+2022-12-14 17:13:08.616 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:13:08.617 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 2, Section: FarmLeftTop. Count: 42
+2022-12-14 17:13:08.618 +03:30 [INF] ===============  End of observation process (1.82 ms) ===============
+2022-12-14 17:13:13.619 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:13:13.620 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 2, Section: FarmLeftTop. Count: 43
+2022-12-14 17:13:13.621 +03:30 [INF] ===============  End of observation process (2.0975 ms) ===============
+2022-12-14 17:13:18.636 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:13:18.637 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 2, Section: FarmLeftTop. Count: 44
+2022-12-14 17:13:18.638 +03:30 [INF] ===============  End of observation process (1.7313 ms) ===============
+2022-12-14 17:13:23.646 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:13:23.647 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 2, Section: FarmLeftTop. Count: 45
+2022-12-14 17:13:23.648 +03:30 [INF] ===============  End of observation process (1.7305 ms) ===============
+2022-12-14 17:13:28.654 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:13:28.655 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 2, Section: FarmLeftTop. Count: 46
+2022-12-14 17:13:28.656 +03:30 [INF] ===============  End of observation process (1.8708 ms) ===============
+2022-12-14 17:13:33.665 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:13:33.670 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 2, Section: FarmLeftTop. Count: 47
+2022-12-14 17:13:33.671 +03:30 [INF] ===============  End of observation process (6.1281 ms) ===============
+2022-12-14 17:13:36.244 +03:30 [INF] ===============  Begin mqtt process  ===============
+2022-12-14 17:13:36.246 +03:30 [INF] MQTT Message received. Topic: Elma/ToServer/FromSensor/Alive/1, Payload: 1
+2022-12-14 17:13:36.247 +03:30 [INF] MQTT Message is from a sensor. Topic: Elma/ToServer/FromSensor/Alive/1, Payload: 1
+2022-12-14 17:13:36.248 +03:30 [INF] MQTT Message is KeepAlive from a sensor. Topic: Elma/ToServer/FromSensor/Alive/1, Payload: 1
+2022-12-14 17:13:36.249 +03:30 [INF] Updating sensor error in database, if existed. Sensor ID: 1, Error Types: NotAlive...
+2022-12-14 17:13:36.272 +03:30 [INF] ===============  End of mqtt process 27.2859 ms) ===============
+2022-12-14 17:13:38.685 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:13:38.686 +03:30 [INF] Sensor unit is back online. ID: 1, Location: 2, Section: FarmLeftTop
+2022-12-14 17:13:38.687 +03:30 [INF] ===============  End of observation process (1.8225 ms) ===============
+2022-12-14 17:13:43.699 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:13:43.700 +03:30 [INF] ===============  End of observation process (0.9069 ms) ===============
+2022-12-14 17:13:48.717 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 17:13:48.718 +03:30 [INF] ===============  End of observation process (1.0261 ms) ===============

@@ -69,10 +69,10 @@ public enum PoultryInPeriodErrorType
 
 public enum AlarmDeviceType
 {
-    Light = 1,
-    Siren,
-    SMS,
-    Email
+    FarmLight = 1,
+    FarmSiren,
+    PoultryLight,
+    PoultrySiren
 }
 
 public enum AlarmLevel
