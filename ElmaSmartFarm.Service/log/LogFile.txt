@@ -4879,3 +4879,12 @@ System.InvalidOperationException: Nullable object must have a value.
 2022-12-13 12:28:52.280 +03:30 [INF] ===============  End of observation process (1.6122 ms) ===============
 2022-12-13 12:28:57.306 +03:30 [INF] ===============  Start observation process ===============
 2022-12-13 12:28:57.307 +03:30 [INF] ===============  End of observation process (0.8548 ms) ===============
+2022-12-14 14:40:32.485 +03:30 [INF] Starting up the Service...
+2022-12-14 14:40:37.353 +03:30 [INF] Loading poultries...
+2022-12-14 14:40:39.740 +03:30 [INF] Poultries loaded. (2386.794 ms)
+2022-12-14 14:40:39.755 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 900f400e-5f05-4574-8c73-862db74ba355.
+2022-12-14 14:40:39.913 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 900f400e-5f05-4574-8c73-862db74ba355.
+2022-12-14 14:40:39.942 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2022-12-14 14:40:39.943 +03:30 [INF] ===============  Start observation process ===============
+2022-12-14 14:40:39.988 +03:30 [INF] ===============  End of observation process (45.0746 ms) ===============
+2022-12-14 14:40:44.997 +03:30 [INF] ===============  Start observation process ===============
