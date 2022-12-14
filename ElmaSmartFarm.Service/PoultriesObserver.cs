@@ -383,31 +383,28 @@ public partial class Worker
         return false;
     }
 
-    private void ProcessAlarmableErrors(SensorModel sensor, bool WatchUnit, SensorErrorModel e, int firstInformTime, int everyInformTime, int snoozeTime, int informCycleCount, DateTime Now)
+    private void ProcessAlarmableErrors(DateTime Now)
     {
-        if (WatchUnit || e.AlarmInformCount < informCycleCount)
+        if (e.DateAlarmInformed == null && e.DateHappened.IsElapsed(firstInformTime)) //first alarm.
         {
-            if (e.DateAlarmInformed == null && e.DateHappened.IsElapsed(firstInformTime)) //first alarm.
-            {
-                e.AlarmInformCount = 1;
-                Log.Information($"Informing Alarm of {e.ErrorType}, Sensor ID: {sensor.Id}, Location: {sensor.LocationId}, Section: {sensor.Section}. Count: {e.AlarmInformCount}");
-                //inform, save to db
-                e.DateAlarmInformed = Now;
-            }
-            else if (e.AlarmInformCount % informCycleCount != 0 && e.DateAlarmInformed.IsElapsed(everyInformTime)) //alarm every.
-            {
-                e.AlarmInformCount++;
-                Log.Information($"Informing Alarm of {e.ErrorType}, Sensor ID: {sensor.Id}, Location: {sensor.LocationId}, Section: {sensor.Section}. Count: {e.AlarmInformCount}");
-                //inform, save to db
-                e.DateAlarmInformed = Now;
-            }
-            else if (e.AlarmInformCount % informCycleCount == 0 && e.DateAlarmInformed.IsElapsed(snoozeTime)) //alarm sleep.
-            {
-                e.AlarmInformCount++;
-                Log.Information($"Informing Alarm of {e.ErrorType}, Sensor ID: {sensor.Id}, Location: {sensor.LocationId}, Section: {sensor.Section}. Count: {e.AlarmInformCount}");
-                //inform, save to db
-                e.DateAlarmInformed = Now;
-            }
+            e.AlarmInformCount = 1;
+            Log.Information($"Informing Alarm of {e.ErrorType}, Sensor ID: {sensor.Id}, Location: {sensor.LocationId}, Section: {sensor.Section}. Count: {e.AlarmInformCount}");
+            //inform, save to db
+            e.DateAlarmInformed = Now;
+        }
+        else if (e.AlarmInformCount % informCycleCount != 0 && e.DateAlarmInformed.IsElapsed(everyInformTime)) //alarm every.
+        {
+            e.AlarmInformCount++;
+            Log.Information($"Informing Alarm of {e.ErrorType}, Sensor ID: {sensor.Id}, Location: {sensor.LocationId}, Section: {sensor.Section}. Count: {e.AlarmInformCount}");
+            //inform, save to db
+            e.DateAlarmInformed = Now;
+        }
+        else if (e.AlarmInformCount % informCycleCount == 0 && e.DateAlarmInformed.IsElapsed(snoozeTime)) //alarm sleep.
+        {
+            e.AlarmInformCount++;
+            Log.Information($"Informing Alarm of {e.ErrorType}, Sensor ID: {sensor.Id}, Location: {sensor.LocationId}, Section: {sensor.Section}. Count: {e.AlarmInformCount}");
+            //inform, save to db
+            e.DateAlarmInformed = Now;
         }
     }
 
