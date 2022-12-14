@@ -75,7 +75,7 @@ public partial class Worker
                                     if (config.system.AlarmCo2InvalidValueEnable && (sensor.WatchCo2 || e.AlarmInformCount < config.system.AlarmCo2InvalidValueCountInCycle) && e.DateHappened.IsElapsed(config.system.AlarmCo2InvalidValueFirstTime) && !AlarmableSensorErrors.Contains(e)) AlarmableSensorErrors.Add(e);
                                     if (sensor.WatchCo2) sensor.WatchCo2 = !CheckToUnWatch(e, sensor.IsWatched, sensor.WatchCo2, sensor.IsInPeriod, config.system.Co2InvalidValueWatchTimeout);
                                 }
-                                else if (sensor.IsWatched && e.ErrorType == SensorErrorType.NotAlive)
+                                else if (e.ErrorType == SensorErrorType.NotAlive)
                                 {
                                     if (config.system.AlarmScalarNotAliveEnable && (sensor.IsWatched || e.AlarmInformCount < config.system.AlarmScalarNotAliveCountInCycle) && e.DateHappened.IsElapsed(config.system.AlarmScalarNotAliveFirstTime) && !AlarmableSensorErrors.Contains(e)) AlarmableSensorErrors.Add(e);
                                     if (sensor.IsWatched) sensor.IsWatched = !CheckToUnWatch(e, sensor.IsWatched, sensor.IsWatched, sensor.IsInPeriod, config.system.ScalarNotAliveWatchTimeout);
@@ -141,7 +141,7 @@ public partial class Worker
                                     if (config.system.AlarmCommuteNotAliveEnable && (sensor.IsWatched || e.AlarmInformCount < config.system.AlarmCommuteNotAliveCountInCycle) && e.DateHappened.IsElapsed(config.system.AlarmCommuteNotAliveFirstTime) && !AlarmableSensorErrors.Contains(e)) AlarmableSensorErrors.Add(e);
                                     if (sensor.IsWatched) sensor.IsWatched = !CheckToUnWatch(e, sensor.IsWatched, sensor.IsWatched, sensor.IsInPeriod, config.system.CommuteNotAliveWatchTimeout);
                                 }
-                                else if (e.ErrorType == SensorErrorType.LowBattery)
+                                else if (sensor.IsWatched && e.ErrorType == SensorErrorType.LowBattery)
                                 {
                                     if (config.system.AlarmCommuteLowBatteryEnable && (sensor.IsWatched || e.AlarmInformCount < config.system.AlarmCommuteLowBatteryCountInCycle) && e.DateHappened.IsElapsed(config.system.AlarmCommuteLowBatteryFirstTime) && !AlarmableSensorErrors.Contains(e)) AlarmableSensorErrors.Add(e);
                                 }
@@ -174,7 +174,7 @@ public partial class Worker
                         {
                             foreach (var e in sensor.ActiveErrors)
                             {
-                                if (sensor.IsWatched && e.ErrorType == SensorErrorType.NotAlive)
+                                if (e.ErrorType == SensorErrorType.NotAlive)
                                 {
                                     bool AlarmPushButtonNotAliveEnable = false;
                                     int AlarmPushButtonNotAliveFirstTime = 0;
@@ -276,7 +276,7 @@ public partial class Worker
                                     if (AlarmBinaryInvalidDataEnable && (sensor.IsWatched || e.AlarmInformCount < AlarmBinaryInvalidDataCountInCycle) && e.DateHappened.IsElapsed(AlarmBinaryInvalidDataFirstTime) && !AlarmableSensorErrors.Contains(e)) AlarmableSensorErrors.Add(e);
                                     if (sensor.IsWatched) sensor.IsWatched = !CheckToUnWatch(e, sensor.IsWatched, sensor.IsWatched, sensor.IsInPeriod, BinaryInvalidDataWatchTimeout);
                                 }
-                                else if (sensor.IsWatched && e.ErrorType == SensorErrorType.NotAlive)
+                                else if (e.ErrorType == SensorErrorType.NotAlive)
                                 {
                                     bool AlarmBinaryNotAliveEnable = false;
                                     int AlarmBinaryNotAliveFirstTime = 0;
@@ -328,8 +328,8 @@ public partial class Worker
                                         AlarmBinaryLowBatteryEnable = config.system.AlarmBackupPowerLowBatteryEnable;
                                         AlarmBinaryLowBatteryFirstTime = config.system.AlarmBackupPowerLowBatteryFirstTime;
                                         AlarmBinaryLowBatteryCountInCycle = config.system.AlarmBackupPowerLowBatteryCountInCycle;
-                                        if (AlarmBinaryLowBatteryEnable && (sensor.IsWatched || e.AlarmInformCount < AlarmBinaryLowBatteryCountInCycle) && e.DateHappened.IsElapsed(AlarmBinaryLowBatteryFirstTime) && !AlarmableSensorErrors.Contains(e)) AlarmableSensorErrors.Add(e);
                                     }
+                                    if (AlarmBinaryLowBatteryEnable && (sensor.IsWatched || e.AlarmInformCount < AlarmBinaryLowBatteryCountInCycle) && e.DateHappened.IsElapsed(AlarmBinaryLowBatteryFirstTime) && !AlarmableSensorErrors.Contains(e)) AlarmableSensorErrors.Add(e);
                                 }
                             }
 
@@ -383,7 +383,7 @@ public partial class Worker
         return false;
     }
 
-    private void CheckForInform(SensorModel sensor, bool WatchUnit, SensorErrorModel e, int firstInformTime, int everyInformTime, int snoozeTime, int informCycleCount, DateTime Now)
+    private void ProcessAlarmableErrors(SensorModel sensor, bool WatchUnit, SensorErrorModel e, int firstInformTime, int everyInformTime, int snoozeTime, int informCycleCount, DateTime Now)
     {
         if (WatchUnit || e.AlarmInformCount < informCycleCount)
         {
