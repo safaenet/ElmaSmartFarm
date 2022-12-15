@@ -6,6 +6,7 @@ public class Config
     {
         DefaultConnectionString = SettingsDataAccess.AppConfiguration().GetSection("ConnectionStrings:default").Value;
         BaseUrl = SettingsDataAccess.AppConfiguration().GetSection("BaseUrl").Value;
+        PoultryName = SettingsDataAccess.AppConfiguration().GetSection("verbose_mode").Value ?? "Elma Smart Poultry";
         VerboseMode = bool.Parse(SettingsDataAccess.AppConfiguration().GetSection("verbose_mode").Value ?? "true");
         mqtt = new();
         system = new();
@@ -14,6 +15,7 @@ public class Config
     public MQTT mqtt { get; init; }
     public System system { get; set; }
     public string BaseUrl { get; init; }
+    public string PoultryName { get; set; }
     public bool VerboseMode { get; set; }
 }
 
@@ -170,12 +172,16 @@ public class System
         FarmTempMaxValue = double.Parse(SettingsDataAccess.AppConfiguration().GetSection("temperature:farm_max_value").Value ?? "35");
         OutdoorTempMinValue = double.Parse(SettingsDataAccess.AppConfiguration().GetSection("temperature:outdoor_min_value").Value ?? "-10");
         OutdoorTempMaxValue = double.Parse(SettingsDataAccess.AppConfiguration().GetSection("temperature:outdoor_max_value").Value ?? "60");
+        TempMinWorkingValue = double.Parse(SettingsDataAccess.AppConfiguration().GetSection("temperature:min_working_value").Value ?? "28");
+        TempMaxWorkingValue = double.Parse(SettingsDataAccess.AppConfiguration().GetSection("temperature:max_working_value").Value ?? "33");
         TempInvalidDataWatchTimeout = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("temperature:invalid_data_watch_timeout").Value ?? "300");
         TempInvalidValueWatchTimeout = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("temperature:invalid_value_watch_timeout").Value ?? "300");
 
 
         HumidMinValue = double.Parse(SettingsDataAccess.AppConfiguration().GetSection("humidity:min_value").Value ?? "20");
         HumidMaxValue = double.Parse(SettingsDataAccess.AppConfiguration().GetSection("humidity:max_value").Value ?? "35");
+        HumidMinWorkingValue = double.Parse(SettingsDataAccess.AppConfiguration().GetSection("humidity:min_working_value").Value ?? "30");
+        HumidMaxWorkingValue = double.Parse(SettingsDataAccess.AppConfiguration().GetSection("humidity:max_working_value").Value ?? "60");
         HumidInvalidDataWatchTimeout = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("humidity:invalid_data_watch_timeout").Value ?? "300");
         HumidInvalidValueWatchTimeout = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("humidity:invalid_value_watch_timeout").Value ?? "300");
 
@@ -186,11 +192,13 @@ public class System
 
         AmmoniaMinValue = double.Parse(SettingsDataAccess.AppConfiguration().GetSection("ammonia:min_value").Value ?? "0");
         AmmoniaMaxValue = double.Parse(SettingsDataAccess.AppConfiguration().GetSection("ammonia:max_value").Value ?? "100");
+        AmmoniaMaxWorkingValue = double.Parse(SettingsDataAccess.AppConfiguration().GetSection("ammonia:max_working_value").Value ?? "600");
         AmmoniaInvalidDataWatchTimeout = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("ammonia:invalid_data_watch_timeout").Value ?? "300");
         AmmoniaInvalidValueWatchTimeout = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("ammonia:invalid_value_watch_timeout").Value ?? "300");
 
         Co2MinValue = double.Parse(SettingsDataAccess.AppConfiguration().GetSection("co2:min_value").Value ?? "0");
         Co2MaxValue = double.Parse(SettingsDataAccess.AppConfiguration().GetSection("co2:max_value").Value ?? "100");
+        Co2MaxWorkingValue = double.Parse(SettingsDataAccess.AppConfiguration().GetSection("co2:max_working_value").Value ?? "600");
         Co2InvalidDataWatchTimeout = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("co2:invalid_data_watch_timeout").Value ?? "300");
         Co2InvalidValueWatchTimeout = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("co2:invalid_value_watch_timeout").Value ?? "300");
 
@@ -342,6 +350,8 @@ public class System
     public double FarmTempMaxValue { get; set; }
     public double OutdoorTempMinValue { get; set; }
     public double OutdoorTempMaxValue { get; set; }
+    public double TempMinWorkingValue { get; set; }
+    public double TempMaxWorkingValue { get; set; }
     public int TempInvalidDataWatchTimeout { get; set; }
     public int TempInvalidValueWatchTimeout { get; set; }
     #endregion
@@ -349,6 +359,8 @@ public class System
     #region Humidity Settings
     public double HumidMinValue { get; set; }
     public double HumidMaxValue { get; set; }
+    public double HumidMinWorkingValue { get; set; }
+    public double HumidMaxWorkingValue { get; set; }
     public int HumidInvalidDataWatchTimeout { get; set; }
     public int HumidInvalidValueWatchTimeout { get; set; }
     #endregion
@@ -363,6 +375,7 @@ public class System
     #region Ammonia Settings
     public double AmmoniaMinValue { get; set; }
     public double AmmoniaMaxValue { get; set; }
+    public double AmmoniaMaxWorkingValue { get; set; }
     public int AmmoniaInvalidDataWatchTimeout { get; set; }
     public int AmmoniaInvalidValueWatchTimeout { get; set; }
     #endregion
@@ -370,6 +383,7 @@ public class System
     #region Co2 Settings
     public double Co2MinValue { get; set; }
     public double Co2MaxValue { get; set; }
+    public double Co2MaxWorkingValue { get; set; }
     public int Co2InvalidDataWatchTimeout { get; set; }
     public int Co2InvalidValueWatchTimeout { get; set; }
     #endregion

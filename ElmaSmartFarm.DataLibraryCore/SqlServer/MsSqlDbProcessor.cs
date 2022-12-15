@@ -23,8 +23,7 @@ public class MsSqlDbProcessor : IDbProcessor
 
     private readonly IDataAccess DataAccess;
     private readonly Config config;
-    private readonly string LoadPoultriesQuery = @$"SELECT l.* FROM dbo.Locations l WHERE l.Type = {(int)LocationType.Poultry};";
-    private readonly string LoadFarmsQuery = $@"SELECT f.*, l.[Name], l.IsEnabled, l.Descriptions FROM Farms f LEFT JOIN dbo.Locations l ON f.Id = l.Id WHERE f.PoultryId IN (SELECT p.Id FROM Locations p WHERE p.[Type] = {(int)LocationType.Poultry});";
+    private readonly string LoadFarmsQuery = $@"SELECT * FROM Farms;";
     private const string LoadScalarSensorsQuery = @"SELECT s.*, ssd.*, s.Section FROM dbo.ScalarSensorDetails ssd LEFT JOIN dbo.Sensors s ON ssd.Id = s.Id WHERE s.[Type] = {0};";
     private const string LoadNonScalarSensorsQuery = @"SELECT s.* FROM dbo.Sensors s WHERE s.[Type] = {0};";
 
@@ -174,66 +173,61 @@ public class MsSqlDbProcessor : IDbProcessor
         return false;
     }
 
-    public async Task<List<PoultryModel>> LoadPoultriesAsync()
+    public async Task<PoultryModel> LoadPoultriesAsync()
     {
         try
         {
             var ticks = DateTime.Now.Ticks;
-            Log.Information($"Loading poultries...");
-            var poultries = await DataAccess.LoadDataAsync<PoultryModel>(LoadPoultriesQuery);
-            if (poultries != null && poultries.Any())
+            Log.Information($"Loading poultry...");
+            PoultryModel poultry = new();
+            poultry.Name = config.PoultryName;
+            var farms = await DataAccess.LoadDataAsync<FarmModel>(LoadFarmsQuery);
+            var poultryScalarSensor = (await DataAccess.LoadDataAsync<ScalarSensorModel>(LoadOutdoorScalarSensorsQuery)).FirstOrDefault();
+            var poultryMPowerSensor = (await DataAccess.LoadDataAsync<BinarySensorModel>(LoadPoultryMPowerSensorsQuery)).FirstOrDefault();
+            var poultryBPowerSensor = (await DataAccess.LoadDataAsync<BinarySensorModel>(LoadPoultryBPowerSensorsQuery)).FirstOrDefault();
+            var poultryInPeriodErrors = await DataAccess.LoadDataAsync<PoultryInPeriodErrorModel>(LoadPoultryInPeriodErrors);
+            var periods = await LoadActivePeriodsAsync();
+            if (farms != null && farms.Any())
             {
-                var farms = await DataAccess.LoadDataAsync<FarmModel>(LoadFarmsQuery);
-                var poultryScalarSensors = await DataAccess.LoadDataAsync<ScalarSensorModel>(LoadOutdoorScalarSensorsQuery);
-                var poultryMPowerSensors = await DataAccess.LoadDataAsync<BinarySensorModel>(LoadPoultryMPowerSensorsQuery);
-                var poultryBPowerSensors = await DataAccess.LoadDataAsync<BinarySensorModel>(LoadPoultryBPowerSensorsQuery);
-                var poultryInPeriodErrors = await DataAccess.LoadDataAsync<PoultryInPeriodErrorModel>(LoadPoultryInPeriodErrors);
-                var periods = await LoadActivePeriodsAsync();
-                if (farms != null && farms.Any())
+                var farmScalarSensors = await DataAccess.LoadDataAsync<ScalarSensorModel>(LoadFarmScalarSensorsQuery);
+                var farmFeedSensors = await DataAccess.LoadDataAsync<PushButtonSensorModel>(LoadFarmFeedSensorsQuery);
+                var farmCheckupSensors = await DataAccess.LoadDataAsync<PushButtonSensorModel>(LoadFarmCheckupSensorsQuery);
+                var farmCommuteSensors = await DataAccess.LoadDataAsync<CommuteSensorModel>(LoadFarmCommuteSensorsQuery);
+                var farmPowerSensors = await DataAccess.LoadDataAsync<BinarySensorModel>(LoadFarmPowerSensorsQuery);
+                var farmInPeriodErrors = await DataAccess.LoadDataAsync<FarmInPeriodErrorModel>(LoadFarmInPeriodErrors);
+                var sensorErrors = await DataAccess.LoadDataAsync<SensorErrorModel>(LoadSensorErrors);
+                if (sensorErrors != null && sensorErrors.Any())
                 {
-                    var farmScalarSensors = await DataAccess.LoadDataAsync<ScalarSensorModel>(LoadFarmScalarSensorsQuery);
-                    var farmFeedSensors = await DataAccess.LoadDataAsync<PushButtonSensorModel>(LoadFarmFeedSensorsQuery);
-                    var farmCheckupSensors = await DataAccess.LoadDataAsync<PushButtonSensorModel>(LoadFarmCheckupSensorsQuery);
-                    var farmCommuteSensors = await DataAccess.LoadDataAsync<CommuteSensorModel>(LoadFarmCommuteSensorsQuery);
-                    var farmPowerSensors = await DataAccess.LoadDataAsync<BinarySensorModel>(LoadFarmPowerSensorsQuery);
-                    var farmInPeriodErrors = await DataAccess.LoadDataAsync<FarmInPeriodErrorModel>(LoadFarmInPeriodErrors);
-                    var sensorErrors = await DataAccess.LoadDataAsync<SensorErrorModel>(LoadSensorErrors);
-                    if (sensorErrors != null && sensorErrors.Any())
-                    {
-                        if (farmScalarSensors != null) foreach (var s in farmScalarSensors) s.Errors = sensorErrors.Where(se => se.SensorId == s.Id).ToList();
-                        if (farmFeedSensors != null) foreach (var s in farmFeedSensors) s.Errors = sensorErrors.Where(se => se.SensorId == s.Id).ToList();
-                        if (farmCheckupSensors != null) foreach (var s in farmCheckupSensors) s.Errors = sensorErrors.Where(se => se.SensorId == s.Id).ToList();
-                        if (farmCommuteSensors != null) foreach (var s in farmCommuteSensors) s.Errors = sensorErrors.Where(se => se.SensorId == s.Id).ToList();
-                        if (farmPowerSensors != null) foreach (var s in farmPowerSensors) s.Errors = sensorErrors.Where(se => se.SensorId == s.Id).ToList();
-                        if (poultryMPowerSensors != null) foreach (var s in poultryMPowerSensors) s.Errors = sensorErrors.Where(se => se.SensorId == s.Id).ToList();
-                        if (poultryBPowerSensors != null) foreach (var s in poultryBPowerSensors) s.Errors = sensorErrors.Where(se => se.SensorId == s.Id).ToList();
-                    }
-                    foreach (var f in farms)
-                    {
-                        f.Scalars.Sensors = farmScalarSensors?.Where(s => s.LocationId == f.Id).ToList();
-                        f.Feeds.Sensors = farmFeedSensors?.Where(s => s.LocationId == f.Id).ToList();
-                        f.Checkups.Sensors = farmCheckupSensors?.Where(s => s.LocationId == f.Id).ToList();
-                        f.Commutes.Sensors = farmCommuteSensors?.Where(s => s.LocationId == f.Id).ToList();
-                        f.ElectricPowers.Sensors = farmPowerSensors?.Where(s => s.LocationId == f.Id).ToList();
-                        f.Period = periods?.Where(p => p.FarmId == f.Id)?.FirstOrDefault();
-                        if (periods != null && periods.Any()) f.InPeriodErrors = farmInPeriodErrors?.Where(e => e.FarmId == f.Id).ToList();
-                    }
+                    if (farmScalarSensors != null) foreach (var s in farmScalarSensors) s.Errors = sensorErrors.Where(se => se.SensorId == s.Id).ToList();
+                    if (farmFeedSensors != null) foreach (var s in farmFeedSensors) s.Errors = sensorErrors.Where(se => se.SensorId == s.Id).ToList();
+                    if (farmCheckupSensors != null) foreach (var s in farmCheckupSensors) s.Errors = sensorErrors.Where(se => se.SensorId == s.Id).ToList();
+                    if (farmCommuteSensors != null) foreach (var s in farmCommuteSensors) s.Errors = sensorErrors.Where(se => se.SensorId == s.Id).ToList();
+                    if (farmPowerSensors != null) foreach (var s in farmPowerSensors) s.Errors = sensorErrors.Where(se => se.SensorId == s.Id).ToList();
+                    if (poultryMPowerSensor != null) poultryMPowerSensor.Errors = sensorErrors.Where(se => se.SensorId == poultryMPowerSensor.Id).ToList();
+                    if (poultryBPowerSensor != null) poultryBPowerSensor.Errors = sensorErrors.Where(se => se.SensorId == poultryBPowerSensor.Id).ToList();
                 }
-                foreach (var p in poultries)
+                foreach (var f in farms)
                 {
-                    p.Farms = farms?.Where(f => f.PoultryId == p.Id).ToList();
-                    p.Scalar = poultryScalarSensors?.Where(s => s.LocationId == p.Id)?.FirstOrDefault();
-                    p.MainElectricPower = poultryMPowerSensors?.Where(s => s.LocationId == p.Id)?.FirstOrDefault();
-                    p.BackupElectricPower = poultryBPowerSensors?.Where(s => s.LocationId == p.Id)?.FirstOrDefault();
-                    if (periods != null && periods.Any()) p.InPeriodErrors = poultryInPeriodErrors?.Where(e => e.PoultryId == p.Id).ToList();
+                    f.Scalars.Sensors = farmScalarSensors?.Where(s => s.LocationId == f.Id).ToList();
+                    f.Feeds.Sensors = farmFeedSensors?.Where(s => s.LocationId == f.Id).ToList();
+                    f.Checkups.Sensors = farmCheckupSensors?.Where(s => s.LocationId == f.Id).ToList();
+                    f.Commutes.Sensors = farmCommuteSensors?.Where(s => s.LocationId == f.Id).ToList();
+                    f.ElectricPowers.Sensors = farmPowerSensors?.Where(s => s.LocationId == f.Id).ToList();
+                    f.Period = periods?.Where(p => p.FarmId == f.Id)?.FirstOrDefault();
+                    if (periods != null && periods.Any()) f.InPeriodErrors = farmInPeriodErrors?.Where(e => e.FarmId == f.Id).ToList();
                 }
             }
-            Log.Information($"Poultries loaded. ({TimeSpan.FromTicks(DateTime.Now.Ticks - ticks).TotalMilliseconds} ms)");
-            return poultries.ToList();
+            poultry.Farms = farms?.ToList();
+            poultry.Scalar = poultryScalarSensor;
+            poultry.MainElectricPower = poultryMPowerSensor;
+            poultry.BackupElectricPower = poultryBPowerSensor;
+            if (periods != null && periods.Any()) poultry.InPeriodErrors = poultryInPeriodErrors?.ToList();
+            Log.Information($"Poultry loaded. ({TimeSpan.FromTicks(DateTime.Now.Ticks - ticks).TotalMilliseconds} ms)");
+            return poultry;
         }
         catch (Exception ex)
         {
-            Log.Error(ex, $"Error when loading poultries.");
+            Log.Error(ex, $"Error when loading poultry.");
         }
         return null;
     }

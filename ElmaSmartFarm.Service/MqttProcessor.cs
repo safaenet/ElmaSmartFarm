@@ -351,7 +351,7 @@ public partial class Worker
 
     private async Task<int> UpdateSensorBatteryLevelAsync(int sensorId, int battery, DateTime now)
     {
-        if (Poultries == null) return 0;
+        if (Poultry == null) return 0;
         var sensor = FindSensorsById(sensorId);
         if (sensor != null && sensor.IsEnabled)
         {
@@ -376,7 +376,7 @@ public partial class Worker
 
     private async Task<int> UpdateSensorIPAddressAsync(int sensorId, string ip, DateTime now)
     {
-        if (Poultries == null) return 0;
+        if (Poultry == null) return 0;
         var sensor = FindSensorsById(sensorId);
         if (sensor != null && sensor.IsEnabled)
         {
@@ -389,7 +389,7 @@ public partial class Worker
 
     private async Task<int> UpdateSensorKeepAliveAsync(int sensorId, DateTime now)
     {
-        if (Poultries == null) return 0;
+        if (Poultry == null) return 0;
         if (config.system.IsKeepAliveEnabled == false)
         {
             Log.Warning($"KeepAlive is disabled but sensor a is sending KeepAlive message. Sensor ID: {sensorId}");
@@ -432,27 +432,27 @@ public partial class Worker
     /// </summary>
     private T? FindSensorsById<T>(int id) where T : SensorModel
     {
-        if (Poultries == null) return null;
+        if (Poultry == null) return null;
         T? sensor = null;
         if (typeof(T) == typeof(ScalarSensorModel))
         {
-            var x = (from s in Poultries.SelectMany(p => p.Farms.SelectMany(f => f.Scalars.Sensors)) where s != null && s.Id == id select s).FirstOrDefault();
-            if (x == null) x = (from p in Poultries where p != null && p.Scalar != null && p.Scalar.Id == id select p.Scalar).FirstOrDefault();
+            var x = (from s in Poultry.Farms.SelectMany(f => f.Scalars.Sensors) where s != null && s.Id == id select s).FirstOrDefault();
+            if (x == null) x = Poultry.Scalar.Id == id ? Poultry.Scalar : null;
             if (x != null) sensor = (T?)Convert.ChangeType(x, typeof(T));
         }
         else if (typeof(T) == typeof(CommuteSensorModel))
-            sensor = (T?)Convert.ChangeType((from s in Poultries.SelectMany(p => p.Farms.SelectMany(f => f.Commutes.Sensors)) where s != null && s.Id == id select s).FirstOrDefault(), typeof(T));
+            sensor = (T?)Convert.ChangeType((from s in Poultry.Farms.SelectMany(f => f.Commutes.Sensors) where s != null && s.Id == id select s).FirstOrDefault(), typeof(T));
         else if (typeof(T) == typeof(PushButtonSensorModel))
         {
-            var x = (from s in Poultries.SelectMany(p => p.Farms.SelectMany(f => f.Checkups.Sensors)) where s != null && s.Id == id select s).FirstOrDefault();
-            if (x == null) x = (from s in Poultries.SelectMany(p => p.Farms.SelectMany(f => f.Feeds.Sensors)) where s != null && s.Id == id select s).FirstOrDefault();
+            var x = (from s in Poultry.Farms.SelectMany(f => f.Checkups.Sensors) where s != null && s.Id == id select s).FirstOrDefault();
+            if (x == null) x = (from s in Poultry.Farms.SelectMany(f => f.Feeds.Sensors) where s != null && s.Id == id select s).FirstOrDefault();
             if (x != null) sensor = (T?)Convert.ChangeType(x, typeof(T));
         }
         else if (typeof(T) == typeof(BinarySensorModel))
         {
-            var x = (from s in Poultries.SelectMany(p => p.Farms.SelectMany(f => f.ElectricPowers.Sensors)) where s != null && s.Id == id select s).FirstOrDefault();
-            if (x == null) x = (from p in Poultries where p != null && p.MainElectricPower != null && p.MainElectricPower.Id == id select p.MainElectricPower).FirstOrDefault();
-            if (x == null) x = (from p in Poultries where p != null && p.BackupElectricPower != null && p.BackupElectricPower.Id == id select p.BackupElectricPower).FirstOrDefault();
+            var x = (from s in Poultry.Farms.SelectMany(f => f.ElectricPowers.Sensors) where s != null && s.Id == id select s).FirstOrDefault();
+            if (x == null) x = Poultry.MainElectricPower.Id == id ? Poultry.MainElectricPower : null;
+            if (x == null) x = Poultry.BackupElectricPower.Id == id ? Poultry.BackupElectricPower : null;
             if (x != null) sensor = (T?)Convert.ChangeType(x, typeof(T));
         }
         //else if (typeof(T) == typeof(SensorModel))
@@ -460,7 +460,7 @@ public partial class Worker
         //    var x = (from s in Poultries.SelectMany(p => p.Farms.SelectMany(f => f.Scalars.Sensors)) where s != null && s.Id == id select s).FirstOrDefault();
         //    if (x == null) x = (from p in Poultries where p != null && p.Scalar != null && p.Scalar.Id == id select p.Scalar).FirstOrDefault();
         //    if (x != null) sensor = (T?)Convert.ChangeType(x, typeof(T));
-            
+
         //    if(sensor == null) sensor = (T?)Convert.ChangeType((from s in Poultries.SelectMany(p => p.Farms.SelectMany(f => f.Commutes.Sensors)) where s != null && s.Id == id select s).FirstOrDefault(), typeof(T));
 
         //    if (sensor == null)
@@ -485,16 +485,16 @@ public partial class Worker
     /// </summary>
     private SensorModel? FindSensorsById(int id)
     {
-        if (Poultries == null) return null;
+        if (Poultry == null) return null;
         SensorModel? sensor = null;
-        sensor = (from s in Poultries.SelectMany(p => p.Farms.SelectMany(f => f.Scalars.Sensors)) where s != null && s.Id == id select s).FirstOrDefault();
-        if (sensor == null) sensor = (from p in Poultries where p != null && p.Scalar != null && p.Scalar.Id == id select p.Scalar).FirstOrDefault();
-        if (sensor == null) sensor = (from s in Poultries.SelectMany(p => p.Farms.SelectMany(f => f.Commutes.Sensors)) where s != null && s.Id == id select s).FirstOrDefault();
-        if (sensor == null) sensor = (from s in Poultries.SelectMany(p => p.Farms.SelectMany(f => f.Checkups.Sensors)) where s != null && s.Id == id select s).FirstOrDefault();
-        if (sensor == null) sensor = (from s in Poultries.SelectMany(p => p.Farms.SelectMany(f => f.Feeds.Sensors)) where s != null && s.Id == id select s).FirstOrDefault();
-        if (sensor == null) sensor = (from s in Poultries.SelectMany(p => p.Farms.SelectMany(f => f.ElectricPowers.Sensors)) where s != null && s.Id == id select s).FirstOrDefault();
-        if (sensor == null) sensor = (from p in Poultries where p != null && p.MainElectricPower != null && p.MainElectricPower.Id == id select p.MainElectricPower).FirstOrDefault();
-        if (sensor == null) sensor = (from p in Poultries where p != null && p.BackupElectricPower != null && p.BackupElectricPower.Id == id select p.BackupElectricPower).FirstOrDefault();
+        sensor = (from s in Poultry.Farms.SelectMany(f => f.Scalars.Sensors) where s != null && s.Id == id select s).FirstOrDefault();
+        if (sensor == null) sensor = Poultry.Scalar.Id == id ? Poultry.Scalar : null;
+        if (sensor == null) sensor = (from s in Poultry.Farms.SelectMany(f => f.Commutes.Sensors) where s != null && s.Id == id select s).FirstOrDefault();
+        if (sensor == null) sensor = (from s in Poultry.Farms.SelectMany(f => f.Checkups.Sensors) where s != null && s.Id == id select s).FirstOrDefault();
+        if (sensor == null) sensor = (from s in Poultry.Farms.SelectMany(f => f.Feeds.Sensors) where s != null && s.Id == id select s).FirstOrDefault();
+        if (sensor == null) sensor = (from s in Poultry.Farms.SelectMany(f => f.ElectricPowers.Sensors) where s != null && s.Id == id select s).FirstOrDefault();
+        if (sensor == null) sensor = Poultry.MainElectricPower.Id == id ? Poultry.MainElectricPower : null;
+        if (sensor == null) sensor = Poultry.BackupElectricPower.Id == id ? Poultry.BackupElectricPower : null;
         return sensor;
     }
 }

@@ -5409,3 +5409,90 @@ System.InvalidOperationException: Collection was modified; enumeration operation
 2022-12-15 19:05:23.721 +03:30 [INF] ===============  End of observation process (1.6474 ms) ===============
 2022-12-15 19:05:28.743 +03:30 [INF] ===============  Start observation process ===============
 2022-12-15 19:05:28.745 +03:30 [INF] ===============  End of observation process (1.5044 ms) ===============
+2022-12-15 21:36:24.472 +03:30 [INF] Starting up the Service...
+2022-12-15 21:36:28.143 +03:30 [INF] Loading poultry...
+2022-12-15 21:36:30.402 +03:30 [INF] Poultry loaded. (2257.3914 ms)
+2022-12-15 21:36:30.429 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 95a654fb-198f-491b-8768-2ac0cd9ea24f.
+2022-12-15 21:36:30.575 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 95a654fb-198f-491b-8768-2ac0cd9ea24f.
+2022-12-15 21:36:30.604 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2022-12-15 21:36:30.605 +03:30 [INF] ===============  Start observation process ===============
+2022-12-15 21:36:30.635 +03:30 [INF] ===============  End of observation process (29.5493 ms) ===============
+2022-12-15 21:36:35.670 +03:30 [INF] ===============  Start observation process ===============
+2022-12-15 21:36:35.671 +03:30 [INF] ===============  End of observation process (0.994 ms) ===============
+2022-12-15 21:36:40.686 +03:30 [INF] ===============  Start observation process ===============
+2022-12-15 21:36:40.687 +03:30 [INF] ===============  End of observation process (0.992 ms) ===============
+2022-12-15 21:36:45.705 +03:30 [INF] ===============  Start observation process ===============
+2022-12-15 21:36:45.706 +03:30 [INF] ===============  End of observation process (1.0127 ms) ===============
+2022-12-15 21:36:50.719 +03:30 [INF] ===============  Start observation process ===============
+2022-12-15 21:36:50.720 +03:30 [INF] ===============  End of observation process (1.1734 ms) ===============
+2022-12-15 21:36:55.725 +03:30 [INF] ===============  Start observation process ===============
+2022-12-15 21:36:55.728 +03:30 [INF] ===============  End of observation process (3.3593 ms) ===============
+2022-12-15 21:37:00.733 +03:30 [INF] ===============  Start observation process ===============
+2022-12-15 21:37:00.734 +03:30 [INF] ===============  End of observation process (1.0383 ms) ===============
+2022-12-15 21:37:05.742 +03:30 [INF] ===============  Start observation process ===============
+2022-12-15 21:37:05.743 +03:30 [INF] ===============  End of observation process (0.9079 ms) ===============
+2022-12-15 21:37:10.749 +03:30 [INF] ===============  Start observation process ===============
+2022-12-15 21:37:10.750 +03:30 [INF] ===============  End of observation process (1.1258 ms) ===============
+2022-12-15 21:37:15.759 +03:30 [INF] ===============  Start observation process ===============
+2022-12-15 21:37:15.769 +03:30 [WRN] Sensor with ID: 1 is not sending KeepAlive message since 12/15/2022 9:36:30 PM. Location: 2, Section: FarmLeftTop
+2022-12-15 21:37:15.773 +03:30 [INF] Writing sensor error in database. Sensor ID: 1, LocationID: 2, Section: FarmLeftTop, Error Type: NotAlive
+2022-12-15 21:37:15.938 +03:30 [INF] ===============  End of observation process (179.3486 ms) ===============
+2022-12-15 21:37:20.951 +03:30 [INF] ===============  Start observation process ===============
+2022-12-15 21:37:20.959 +03:30 [INF] ===============  End of observation process (8.6643 ms) ===============
+2022-12-15 21:37:25.965 +03:30 [INF] ===============  Start observation process ===============
+2022-12-15 21:37:25.967 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 2, Section: FarmLeftTop. Count: 1
+2022-12-15 21:37:25.968 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 2, Section: FarmLeftTop. Count: 1
+2022-12-15 21:37:25.969 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 2, Section: FarmLeftTop. Count: 1
+2022-12-15 21:37:25.970 +03:30 [INF] ===============  End of observation process (5.0459 ms) ===============
+2022-12-15 21:37:30.980 +03:30 [INF] ===============  Start observation process ===============
+2022-12-15 21:37:30.981 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 2, Section: FarmLeftTop. Count: 2
+2022-12-15 21:37:30.982 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 2, Section: FarmLeftTop. Count: 2
+2022-12-15 21:37:30.983 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 2, Section: FarmLeftTop. Count: 2
+2022-12-15 21:37:30.984 +03:30 [INF] ===============  End of observation process (4.2519 ms) ===============
+2022-12-15 21:37:35.988 +03:30 [INF] ===============  Start observation process ===============
+2022-12-15 21:37:35.990 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 2, Section: FarmLeftTop. Count: 3
+2022-12-15 21:37:35.992 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 2, Section: FarmLeftTop. Count: 3
+2022-12-15 21:37:35.993 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 2, Section: FarmLeftTop. Count: 3
+2022-12-15 21:37:35.995 +03:30 [INF] ===============  End of observation process (7.5524 ms) ===============
+2022-12-15 21:37:40.998 +03:30 [INF] ===============  Start observation process ===============
+2022-12-15 21:37:40.999 +03:30 [INF] ===============  End of observation process (1.006 ms) ===============
+2022-12-15 21:37:46.009 +03:30 [INF] ===============  Start observation process ===============
+2022-12-15 21:37:46.010 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 2, Section: FarmLeftTop. Count: 4
+2022-12-15 21:37:46.012 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 2, Section: FarmLeftTop. Count: 4
+2022-12-15 21:37:46.018 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 2, Section: FarmLeftTop. Count: 4
+2022-12-15 21:37:46.020 +03:30 [INF] ===============  End of observation process (10.8808 ms) ===============
+2022-12-15 21:37:51.033 +03:30 [INF] ===============  Start observation process ===============
+2022-12-15 21:37:51.034 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 2, Section: FarmLeftTop. Count: 5
+2022-12-15 21:37:51.035 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 2, Section: FarmLeftTop. Count: 5
+2022-12-15 21:37:51.036 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 2, Section: FarmLeftTop. Count: 5
+2022-12-15 21:37:51.037 +03:30 [INF] ===============  End of observation process (4.1181 ms) ===============
+2022-12-15 21:37:56.043 +03:30 [INF] ===============  Start observation process ===============
+2022-12-15 21:37:56.044 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 2, Section: FarmLeftTop. Count: 6
+2022-12-15 21:37:56.046 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 2, Section: FarmLeftTop. Count: 6
+2022-12-15 21:37:56.047 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 2, Section: FarmLeftTop. Count: 6
+2022-12-15 21:37:56.049 +03:30 [INF] ===============  End of observation process (6.1933 ms) ===============
+2022-12-15 22:25:06.367 +03:30 [INF] Starting up the Service...
+2022-12-15 22:25:09.541 +03:30 [INF] Loading poultry...
+2022-12-15 22:25:33.786 +03:30 [INF] Starting up the Service...
+2022-12-15 22:25:36.353 +03:30 [INF] Loading poultry...
+2022-12-15 22:27:06.333 +03:30 [ERR] Error when loading poultry.
+System.Data.SqlClient.SqlException (0x80131904): A network-related or instance-specific error occurred while establishing a connection to SQL Server. The server was not found or was not accessible. Verify that the instance name is correct and that SQL Server is configured to allow remote connections. (provider: Named Pipes Provider, error: 40 - Could not open a connection to SQL Server)
+ ---> System.ComponentModel.Win32Exception (53): The network path was not found.
+   at System.Data.SqlClient.SqlInternalConnectionTds..ctor(DbConnectionPoolIdentity identity, SqlConnectionString connectionOptions, SqlCredential credential, Object providerInfo, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance, SqlConnectionString userConnectionOptions, SessionData reconnectSessionData, Boolean applyTransientFaultHandling, String accessToken)
+   at System.Data.SqlClient.SqlConnectionFactory.CreateConnection(DbConnectionOptions options, DbConnectionPoolKey poolKey, Object poolGroupProviderInfo, DbConnectionPool pool, DbConnection owningConnection, DbConnectionOptions userOptions)
+   at System.Data.ProviderBase.DbConnectionFactory.CreatePooledConnection(DbConnectionPool pool, DbConnection owningObject, DbConnectionOptions options, DbConnectionPoolKey poolKey, DbConnectionOptions userOptions)
+   at System.Data.ProviderBase.DbConnectionPool.CreateObject(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   at System.Data.ProviderBase.DbConnectionPool.UserCreateRequest(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   at System.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, UInt32 waitForMultipleObjectsTimeout, Boolean allowCreate, Boolean onlyOneCheckConnection, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at System.Data.ProviderBase.DbConnectionPool.WaitForPendingOpen()
+--- End of stack trace from previous location ---
+   at Dapper.SqlMapper.QueryAsync[T](IDbConnection cnn, Type effectiveType, CommandDefinition command) in /_/Dapper/SqlMapper.Async.cs:line 417
+   at ElmaSmartFarm.DataLibraryCore.SqlServer.SqlDataAccess.LoadDataAsync[T](String sql) in D:\Users\Safa\Source\Repos\safaenet\ElmaSmartFarm\ElmaSmartFarm.DataLibraryCore\SqlServer\SqlDataAccess.cs:line 48
+   at ElmaSmartFarm.DataLibraryCore.SqlServer.MsSqlDbProcessor.LoadPoultriesAsync() in D:\Users\Safa\Source\Repos\safaenet\ElmaSmartFarm\ElmaSmartFarm.DataLibraryCore\SqlServer\MsSqlDbProcessor.cs:line 184
+ClientConnectionId:00000000-0000-0000-0000-000000000000
+Error Number:53,State:0,Class:20
+2022-12-15 22:27:06.583 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 7ebb2dda-c4a8-41ba-b878-6ab1e607e494.
+2022-12-15 22:27:38.548 +03:30 [INF] Starting up the Service...
+2022-12-15 22:27:41.292 +03:30 [INF] Loading poultry...
+2022-12-15 22:29:03.394 +03:30 [INF] Starting up the Service...
+2022-12-15 22:29:06.523 +03:30 [INF] Loading poultry...

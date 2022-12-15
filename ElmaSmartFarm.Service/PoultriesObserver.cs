@@ -7,13 +7,12 @@ namespace ElmaSmartFarm.Service;
 
 public partial class Worker
 {
-    private async Task<string?> ObservePoultriesAsync()
+    private async Task<string?> ObservePoultryAsync()
     {
-        var IsInPeriod = Poultries.Any(p => p.IsInPeriod);
         var Now = DateTime.Now;
 
         #region Observe Farm Scalar Sensors.
-        var FarmScalarSets = Poultries.SelectMany(p => p.Farms.Select(f => f.Scalars));
+        var FarmScalarSets = Poultry.Farms.Select(f => f.Scalars);
         if (FarmScalarSets != null)
             foreach (var set in FarmScalarSets)
             {
@@ -94,7 +93,7 @@ public partial class Worker
                                 //inform, save to db
                             }
                         }
-                        var startDate = Poultries.Where(p => p.IsInPeriod).SelectMany(p => p.Farms.Where(f => f.IsInPeriod && f.Scalars.Sensors.Any(s => s.Id == sensor.Id))).FirstOrDefault()?.Period.StartDate;
+                        var startDate = Poultry.Farms.Where(f => f.IsInPeriod && f.Scalars.Sensors.Any(s => s.Id == sensor.Id)).FirstOrDefault()?.Period.StartDate;
                         if (!sensor.WatchTemperature && sensor.ActiveErrors.Any(e => e.ErrorType == SensorErrorType.InvalidTemperatureData || e.ErrorType == SensorErrorType.InvalidTemperatureValue) == false) //Temp sensor is healthy.
                             sensor.WatchTemperature = CheckToReWatchSensor(sensor, startDate);
                         if (!sensor.WatchHumidity && sensor.ActiveErrors.Any(e => e.ErrorType == SensorErrorType.InvalidHumidityData || e.ErrorType == SensorErrorType.InvalidHumidityValue) == false) //Humidity sensor is healthy.
@@ -110,11 +109,15 @@ public partial class Worker
                         //Remove expired reads
                     }
                 }
+                if (set.MinimumTemperatureSensor.LastRead.Temperature < config.system.TempMinWorkingValue)
+                {
+
+                }
             }
         FarmScalarSets = null;
         #endregion
         #region Observe Commute Sensors.
-        var CommuteSets = Poultries.SelectMany(p => p.Farms.Select(f => f.Commutes));
+        var CommuteSets = Poultry.Farms.Select(f => f.Commutes);
         if (CommuteSets != null)
             foreach (var set in CommuteSets)
             {
@@ -150,7 +153,7 @@ public partial class Worker
                             }
                         }
 
-                        var startDate = Poultries.Where(p => p.IsInPeriod).SelectMany(p => p.Farms.Where(f => f.IsInPeriod && f.Commutes.Sensors.Any(s => s.Id == sensor.Id))).FirstOrDefault()?.Period.StartDate;
+                        var startDate = Poultry.Farms.Where(f => f.IsInPeriod && f.Commutes.Sensors.Any(s => s.Id == sensor.Id)).FirstOrDefault()?.Period.StartDate;
                         if (!sensor.IsWatched && sensor.ActiveErrors.Any(e => e.ErrorType == SensorErrorType.InvalidData || e.ErrorType == SensorErrorType.InvalidValue || e.ErrorType == SensorErrorType.NotAlive) == false) //Sensor is healthy.
                             sensor.IsWatched = CheckToReWatchSensor(sensor, startDate);
 
@@ -161,8 +164,8 @@ public partial class Worker
         CommuteSets = null;
         #endregion
         #region Observe PushButton Sensors.
-        var CheckupSets = Poultries.SelectMany(p => p.Farms.Select(f => f.Checkups));
-        var FeedSets = Poultries.SelectMany(p => p.Farms.Select(f => f.Feeds));
+        var CheckupSets = Poultry.Farms.Select(f => f.Checkups);
+        var FeedSets = Poultry.Farms.Select(f => f.Feeds);
         var PushButtonSets = CheckupSets.Concat(FeedSets);
         if (PushButtonSets != null)
             foreach (var set in PushButtonSets)
@@ -192,8 +195,8 @@ public partial class Worker
                             }
                         }
 
-                        var startDate = Poultries.Where(p => p.IsInPeriod).SelectMany(p => p.Farms.Where(f => f.IsInPeriod && f.Checkups.Sensors.Any(s => s.Id == sensor.Id))).FirstOrDefault()?.Period.StartDate;
-                        if (startDate == null) startDate = Poultries.Where(p => p.IsInPeriod).SelectMany(p => p.Farms.Where(f => f.IsInPeriod && f.Feeds.Sensors.Any(s => s.Id == sensor.Id))).FirstOrDefault()?.Period.StartDate;
+                        var startDate = Poultry.Farms.Where(f => f.IsInPeriod && f.Checkups.Sensors.Any(s => s.Id == sensor.Id)).FirstOrDefault()?.Period.StartDate;
+                        if (startDate == null) startDate = Poultry.Farms.Where(f => f.IsInPeriod && f.Feeds.Sensors.Any(s => s.Id == sensor.Id)).FirstOrDefault()?.Period.StartDate;
                         if (!sensor.IsWatched && sensor.ActiveErrors.Any(e => e.ErrorType == SensorErrorType.NotAlive) == false) //Sensor is healthy.
                             sensor.IsWatched = CheckToReWatchSensor(sensor, startDate);
 
@@ -206,7 +209,7 @@ public partial class Worker
         PushButtonSets = null;
         #endregion
         #region Observe Binary Sensors.
-        var BinarySets = Poultries.SelectMany(p => p.Farms.Select(f => f.ElectricPowers));
+        var BinarySets = Poultry.Farms.Select(f => f.ElectricPowers);
         if (BinarySets != null)
             foreach (var set in BinarySets)
             {
@@ -262,8 +265,8 @@ public partial class Worker
                                 }
                             }
 
-                            var startDate = Poultries.Where(p => p.IsInPeriod).SelectMany(p => p.Farms.Where(f => f.IsInPeriod && f.Checkups.Sensors.Any(s => s.Id == sensor.Id))).FirstOrDefault()?.Period.StartDate;
-                            if (startDate == null) startDate = Poultries.Where(p => p.IsInPeriod).SelectMany(p => p.Farms.Where(f => f.IsInPeriod && f.Feeds.Sensors.Any(s => s.Id == sensor.Id))).FirstOrDefault()?.Period.StartDate;
+                            var startDate = Poultry.Farms.Where(f => f.IsInPeriod && f.Checkups.Sensors.Any(s => s.Id == sensor.Id)).FirstOrDefault()?.Period.StartDate;
+                            if (startDate == null) startDate = Poultry.Farms.Where(f => f.IsInPeriod && f.Feeds.Sensors.Any(s => s.Id == sensor.Id)).FirstOrDefault()?.Period.StartDate;
                             if (!sensor.IsWatched && sensor.ActiveErrors.Any(e => e.ErrorType == SensorErrorType.NotAlive) == false) sensor.IsWatched = CheckToReWatchSensor(sensor, startDate);//Sensor is healthy.
 
                             //Remove expired reads
@@ -272,6 +275,16 @@ public partial class Worker
                 }
             }
         BinarySets = null;
+        #endregion
+
+        #region Observe Farms in Period
+        //if (Poultry.Farms != null)
+        //{
+        //    foreach (var f in Poultry.Farms)
+        //    {
+
+        //    }
+        //}
         #endregion
         ProcessAlarmableErrors(Now);
         //var m = new MqttApplicationMessageBuilder().WithTopic("safa").WithPayload("dana").Build();
@@ -537,9 +550,9 @@ public partial class Worker
                 if (config.VerboseMode) Log.Information($"===============  Start observation process ===============");
                 try
                 {
-                    if (Poultries != null && Poultries.Count > 0 && (Poultries.Any(p => p.IsInPeriod) || config.system.ObserveAlways))
+                    if (Poultry != null && (Poultry.IsInPeriod || config.system.ObserveAlways))
                     {
-                        var result = await ObservePoultriesAsync();
+                        var result = await ObservePoultryAsync();
                         if (!string.IsNullOrEmpty(result))
                             Log.Error($"Observation process returned with error: {result}");
                     }

@@ -42,10 +42,22 @@ public class SqlDataAccess : IDataAccess
         return await conn.QueryAsync<T>(sql, param);
     }
 
+    public IEnumerable<T> LoadData<T, U>(string sql, U param)
+    {
+        using IDbConnection conn = new SqlConnection(GetConnectionString());
+        return conn.Query<T>(sql, param);
+    }
+
     public async Task<IEnumerable<T>> LoadDataAsync<T>(string sql)
     {
         using IDbConnection conn = new SqlConnection(GetConnectionString());
         return await conn.QueryAsync<T>(sql);
+    }
+
+    public IEnumerable<T> LoadData<T>(string sql)
+    {
+        using IDbConnection conn = new SqlConnection(GetConnectionString());
+        return conn.Query<T>(sql);
     }
 
     public async Task<int> SaveDataAsync<T>(string sql, T data)

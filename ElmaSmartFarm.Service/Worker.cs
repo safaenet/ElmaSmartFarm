@@ -24,9 +24,11 @@ public partial class Worker : BackgroundService
     private MqttFactory mqttFactory;
     private IMqttClient mqttClient;
     private MqttClientOptions options;
-    private List<PoultryModel> Poultries;
+    private PoultryModel Poultry;
     private readonly List<MqttMessageModel> UnknownMqttMessages = new();
     private readonly List<SensorErrorModel> AlarmableSensorErrors = new();
+    private readonly List<FarmInPeriodErrorModel> AlarmableFarmPeriodErrors = new();
+    private readonly List<PoultryInPeriodErrorModel> AlarmablePoultryPeriodErrors = new();
     private readonly List<AlarmModel> FarmAlarms;
     private readonly AlarmModel PoultryAlarm;
     private bool CanRunObserver;
@@ -46,7 +48,7 @@ public partial class Worker : BackgroundService
         mqttClient.ConnectedAsync += MqttClient_ConnectedAsync;
         mqttClient.DisconnectedAsync += MqttClient_DisconnectedAsync;
 
-        Poultries = await DbProcessor.LoadPoultriesAsync();
+        Poultry = await DbProcessor.LoadPoultriesAsync();
         await TryReconnectAsync();
         CanRunObserver = true;
         return base.StartAsync(cancellationToken);

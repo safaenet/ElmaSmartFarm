@@ -64,7 +64,6 @@
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Farms.sql" />
-    <Build Include="Tables\Locations.sql" />
     <Build Include="Tables\Sensors\Values\BinarySensorValues.sql" />
     <Build Include="Tables\Sensors\Values\CommuteValues.sql" />
     <Build Include="Tables\Sensors\Values\TemperatureValues.sql" />

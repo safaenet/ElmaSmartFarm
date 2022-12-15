@@ -3,7 +3,6 @@
 public class FarmModel
 {
     public int Id { get; set; }
-    public int PoultryId { get; set; }
     public string Name { get; set; }
     public int FarmNumber { get; set; }
     public int MaxCapacity { get; set; }
@@ -17,5 +16,6 @@ public class FarmModel
     public bool IsInPeriod => IsEnabled && Period != null && Period.EndDate != null;
     public List<FarmInPeriodErrorModel> InPeriodErrors { get; set; }
     public bool HasSensorError => IsEnabled && ((Scalars != null && Scalars.HasError) || (Commutes != null && Commutes.HasError) || (Checkups != null && Checkups.HasError) || (Feeds != null && Feeds.HasError) || (ElectricPowers != null && ElectricPowers.HasError));
+    public bool HasPeriodError => IsInPeriod && InPeriodErrors != null && InPeriodErrors.Any(e => e.DateErased == null);
     public string Descriptions { get; set; }
 }

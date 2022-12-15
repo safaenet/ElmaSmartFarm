@@ -4,7 +4,6 @@ namespace ElmaSmartFarm.SharedLibrary.Models;
 
 public class PoultryModel
 {
-    public int Id { get; set; }
     public string Name { get; set; }
     public List<FarmModel> Farms { get; set; }
     public ScalarSensorModel Scalar { get; set; }
@@ -15,5 +14,5 @@ public class PoultryModel
     public int TotalLostChickenCount => Farms != null ? Farms.Sum(c => c.Period != null && c.Period.ChickenStatistics != null ? c.Period.ChickenStatistics.TotalLossCount : 0) : 0;
     public bool IsInPeriod => Farms != null && Farms.Any(f => f.Period != null && f.Period.EndDate != null);
     public List<PoultryInPeriodErrorModel> InPeriodErrors { get; set; }
-    public bool IsEnabled { get; set; }
+    public bool HasPeriodError => IsInPeriod && InPeriodErrors != null && InPeriodErrors.Any(e => e.DateErased == null);
 }
