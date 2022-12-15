@@ -88,7 +88,7 @@ public partial class Worker
                                     if (newRead.Temperature < config.system.TempMinWorkingValue)
                                     {
                                         var farm = FindFarmBySensorId(sensor.Id);
-                                        var newErr = GenerateFarmError(sensor, FarmInPeriodErrorType.LowTemperature, Now, farm?.Period?.Id ?? 0, $"Low Temp: {newRead.Temperature}");
+                                        var newErr = GenerateFarmError(sensor, FarmInPeriodErrorType.LowTemperature, Now, farm?.Period?.Id ?? 0, $"{FarmInPeriodErrorType.LowTemperature}: {newRead.Temperature}");
                                         if (farm != null && farm.InPeriodErrors.AddError(newErr, FarmInPeriodErrorType.LowTemperature, config.system.MaxFarmErrorCount))
                                         {
                                             //var newId = await DbProcessor.WriteSensorErrorToDbAsync(newErr, Now);
