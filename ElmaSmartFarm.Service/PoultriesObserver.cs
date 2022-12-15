@@ -29,62 +29,62 @@ public partial class Worker
                                 var alarmTimes = GetAlarmTimings(e.ErrorType);
                                 if (e.ErrorType == SensorErrorType.InvalidTemperatureData)
                                 {
-                                    if (alarmTimes.Enable && (sensor.WatchTemperature || e.AlarmInformCount < alarmTimes.CountInCycle) && e.DateHappened.IsElapsed(alarmTimes.FirstTime) && !AlarmableSensorErrors.Contains(e)) AlarmableSensorErrors.Add(e);
+                                    if (alarmTimes.Enable && (sensor.WatchTemperature) && e.DateHappened.IsElapsed(alarmTimes.RaiseTime) && !AlarmableSensorErrors.Contains(e)) AlarmableSensorErrors.Add(e);
                                     if(sensor.WatchTemperature) sensor.WatchTemperature = !CheckToUnWatch(e, sensor.IsWatched, sensor.WatchTemperature, sensor.IsInPeriod, config.system.TempInvalidDataWatchTimeout);
                                 }
                                 else if (e.ErrorType == SensorErrorType.InvalidTemperatureValue)
                                 {
-                                    if (alarmTimes.Enable && (sensor.WatchTemperature || e.AlarmInformCount < alarmTimes.CountInCycle) && e.DateHappened.IsElapsed(alarmTimes.FirstTime) && !AlarmableSensorErrors.Contains(e)) AlarmableSensorErrors.Add(e);
+                                    if (alarmTimes.Enable && (sensor.WatchTemperature) && e.DateHappened.IsElapsed(alarmTimes.RaiseTime) && !AlarmableSensorErrors.Contains(e)) AlarmableSensorErrors.Add(e);
                                     if (sensor.WatchTemperature) sensor.WatchTemperature = !CheckToUnWatch(e, sensor.IsWatched, sensor.WatchTemperature, sensor.IsInPeriod, config.system.TempInvalidValueWatchTimeout);
                                 }
                                 else if (e.ErrorType == SensorErrorType.InvalidHumidityData)
                                 {
-                                    if (alarmTimes.Enable && (sensor.WatchHumidity || e.AlarmInformCount < alarmTimes.CountInCycle) && e.DateHappened.IsElapsed(alarmTimes.FirstTime) && !AlarmableSensorErrors.Contains(e)) AlarmableSensorErrors.Add(e);
+                                    if (alarmTimes.Enable && (sensor.WatchHumidity) && e.DateHappened.IsElapsed(alarmTimes.RaiseTime) && !AlarmableSensorErrors.Contains(e)) AlarmableSensorErrors.Add(e);
                                     if (sensor.WatchHumidity) sensor.WatchHumidity = !CheckToUnWatch(e, sensor.IsWatched, sensor.WatchHumidity, sensor.IsInPeriod, config.system.HumidInvalidDataWatchTimeout);
                                 }
                                 else if (e.ErrorType == SensorErrorType.InvalidHumidityValue)
                                 {
-                                    if (alarmTimes.Enable && (sensor.WatchHumidity || e.AlarmInformCount < alarmTimes.CountInCycle) && e.DateHappened.IsElapsed(alarmTimes.FirstTime) && !AlarmableSensorErrors.Contains(e)) AlarmableSensorErrors.Add(e);
+                                    if (alarmTimes.Enable && (sensor.WatchHumidity) && e.DateHappened.IsElapsed(alarmTimes.RaiseTime) && !AlarmableSensorErrors.Contains(e)) AlarmableSensorErrors.Add(e);
                                     if (sensor.WatchHumidity) sensor.WatchHumidity = !CheckToUnWatch(e, sensor.IsWatched, sensor.WatchHumidity, sensor.IsInPeriod, config.system.HumidInvalidValueWatchTimeout);
                                 }
                                 else if (e.ErrorType == SensorErrorType.InvalidLightData)
                                 {
-                                    if (alarmTimes.Enable && (sensor.WatchLight || e.AlarmInformCount < alarmTimes.CountInCycle) && e.DateHappened.IsElapsed(alarmTimes.FirstTime) && !AlarmableSensorErrors.Contains(e)) AlarmableSensorErrors.Add(e);
+                                    if (alarmTimes.Enable && (sensor.WatchLight) && e.DateHappened.IsElapsed(alarmTimes.RaiseTime) && !AlarmableSensorErrors.Contains(e)) AlarmableSensorErrors.Add(e);
                                     if (sensor.WatchLight) sensor.WatchLight = !CheckToUnWatch(e, sensor.IsWatched, sensor.WatchLight, sensor.IsInPeriod, config.system.AmbientLightInvalidDataWatchTimeout);
                                 }
                                 else if (e.ErrorType == SensorErrorType.InvalidLightValue)
                                 {
-                                    if (alarmTimes.Enable && (sensor.WatchLight || e.AlarmInformCount < alarmTimes.CountInCycle) && e.DateHappened.IsElapsed(alarmTimes.FirstTime) && !AlarmableSensorErrors.Contains(e)) AlarmableSensorErrors.Add(e);
+                                    if (alarmTimes.Enable && (sensor.WatchLight) && e.DateHappened.IsElapsed(alarmTimes.RaiseTime) && !AlarmableSensorErrors.Contains(e)) AlarmableSensorErrors.Add(e);
                                     if (sensor.WatchLight) sensor.WatchLight = !CheckToUnWatch(e, sensor.IsWatched, sensor.WatchLight, sensor.IsInPeriod, config.system.AmbientLightInvalidValueWatchTimeout);
                                 }
                                 else if (e.ErrorType == SensorErrorType.InvalidAmmoniaData)
                                 {
-                                    if (alarmTimes.Enable && (sensor.WatchAmmonia || e.AlarmInformCount < alarmTimes.CountInCycle) && e.DateHappened.IsElapsed(alarmTimes.FirstTime) && !AlarmableSensorErrors.Contains(e)) AlarmableSensorErrors.Add(e);
+                                    if (alarmTimes.Enable && (sensor.WatchAmmonia) && e.DateHappened.IsElapsed(alarmTimes.RaiseTime) && !AlarmableSensorErrors.Contains(e)) AlarmableSensorErrors.Add(e);
                                     if (sensor.WatchAmmonia) sensor.WatchAmmonia = !CheckToUnWatch(e, sensor.IsWatched, sensor.WatchAmmonia, sensor.IsInPeriod, config.system.AmmoniaInvalidDataWatchTimeout);
                                 }
                                 else if (e.ErrorType == SensorErrorType.InvalidAmmoniaValue)
                                 {
-                                    if (alarmTimes.Enable && (sensor.WatchAmmonia || e.AlarmInformCount < alarmTimes.CountInCycle) && e.DateHappened.IsElapsed(alarmTimes.FirstTime) && !AlarmableSensorErrors.Contains(e)) AlarmableSensorErrors.Add(e);
+                                    if (alarmTimes.Enable && (sensor.WatchAmmonia) && e.DateHappened.IsElapsed(alarmTimes.RaiseTime) && !AlarmableSensorErrors.Contains(e)) AlarmableSensorErrors.Add(e);
                                     if (sensor.WatchAmmonia) sensor.WatchAmmonia = !CheckToUnWatch(e, sensor.IsWatched, sensor.WatchAmmonia, sensor.IsInPeriod, config.system.AmmoniaInvalidValueWatchTimeout);
                                 }
                                 else if (e.ErrorType == SensorErrorType.InvalidCo2Data)
                                 {
-                                    if (alarmTimes.Enable && (sensor.WatchCo2 || e.AlarmInformCount < alarmTimes.CountInCycle) && e.DateHappened.IsElapsed(alarmTimes.FirstTime) && !AlarmableSensorErrors.Contains(e)) AlarmableSensorErrors.Add(e);
+                                    if (alarmTimes.Enable && (sensor.WatchCo2) && e.DateHappened.IsElapsed(alarmTimes.RaiseTime) && !AlarmableSensorErrors.Contains(e)) AlarmableSensorErrors.Add(e);
                                     if (sensor.WatchCo2) sensor.WatchCo2 = !CheckToUnWatch(e, sensor.IsWatched, sensor.WatchCo2, sensor.IsInPeriod, config.system.Co2InvalidDataWatchTimeout);
                                 }
                                 else if (e.ErrorType == SensorErrorType.InvalidCo2Value)
                                 {
-                                    if (alarmTimes.Enable && (sensor.WatchCo2 || e.AlarmInformCount < alarmTimes.CountInCycle) && e.DateHappened.IsElapsed(alarmTimes.FirstTime) && !AlarmableSensorErrors.Contains(e)) AlarmableSensorErrors.Add(e);
+                                    if (alarmTimes.Enable && (sensor.WatchCo2) && e.DateHappened.IsElapsed(alarmTimes.RaiseTime) && !AlarmableSensorErrors.Contains(e)) AlarmableSensorErrors.Add(e);
                                     if (sensor.WatchCo2) sensor.WatchCo2 = !CheckToUnWatch(e, sensor.IsWatched, sensor.WatchCo2, sensor.IsInPeriod, config.system.Co2InvalidValueWatchTimeout);
                                 }
                                 else if (e.ErrorType == SensorErrorType.NotAlive)
                                 {
-                                    if (alarmTimes.Enable && (sensor.IsWatched || e.AlarmInformCount < alarmTimes.CountInCycle) && e.DateHappened.IsElapsed(alarmTimes.FirstTime) && !AlarmableSensorErrors.Contains(e)) AlarmableSensorErrors.Add(e);
+                                    if (alarmTimes.Enable && (sensor.IsWatched) && e.DateHappened.IsElapsed(alarmTimes.RaiseTime) && !AlarmableSensorErrors.Contains(e)) AlarmableSensorErrors.Add(e);
                                     if (sensor.IsWatched) sensor.IsWatched = !CheckToUnWatch(e, sensor.IsWatched, sensor.IsWatched, sensor.IsInPeriod, config.system.ScalarNotAliveWatchTimeout);
                                 }
                                 else if (sensor.IsWatched && e.ErrorType == SensorErrorType.LowBattery)
                                 {
-                                    if (alarmTimes.Enable && (sensor.IsWatched || e.AlarmInformCount < alarmTimes.CountInCycle) && e.DateHappened.IsElapsed(alarmTimes.FirstTime) && !AlarmableSensorErrors.Contains(e)) AlarmableSensorErrors.Add(e);
+                                    if (alarmTimes.Enable && (sensor.IsWatched) && e.DateHappened.IsElapsed(alarmTimes.RaiseTime) && !AlarmableSensorErrors.Contains(e)) AlarmableSensorErrors.Add(e);
                                 }
                             }
                             if (sensor.IsWatched && !sensor.WatchTemperature && !sensor.WatchHumidity && !sensor.WatchLight && !sensor.WatchAmmonia && !sensor.WatchCo2) //Sensor is fully damaged.
@@ -130,22 +130,22 @@ public partial class Worker
                                 var alarmTimes = GetAlarmTimings(e.ErrorType);
                                 if (e.ErrorType == SensorErrorType.InvalidData)
                                 {
-                                    if (alarmTimes.Enable && (sensor.IsWatched || e.AlarmInformCount < alarmTimes.CountInCycle) && e.DateHappened.IsElapsed(alarmTimes.FirstTime) && !AlarmableSensorErrors.Contains(e)) AlarmableSensorErrors.Add(e);
+                                    if (alarmTimes.Enable && (sensor.IsWatched) && e.DateHappened.IsElapsed(alarmTimes.RaiseTime) && !AlarmableSensorErrors.Contains(e)) AlarmableSensorErrors.Add(e);
                                     if (sensor.IsWatched) sensor.IsWatched = !CheckToUnWatch(e, sensor.IsWatched, sensor.IsWatched, sensor.IsInPeriod, config.system.CommuteInvalidDataWatchTimeout);
                                 }
                                 else if (e.ErrorType == SensorErrorType.InvalidValue)
                                 {
-                                    if (alarmTimes.Enable && (sensor.IsWatched || e.AlarmInformCount < alarmTimes.CountInCycle) && e.DateHappened.IsElapsed(alarmTimes.FirstTime) && !AlarmableSensorErrors.Contains(e)) AlarmableSensorErrors.Add(e);
+                                    if (alarmTimes.Enable && (sensor.IsWatched) && e.DateHappened.IsElapsed(alarmTimes.RaiseTime) && !AlarmableSensorErrors.Contains(e)) AlarmableSensorErrors.Add(e);
                                     if (sensor.IsWatched) sensor.IsWatched = !CheckToUnWatch(e, sensor.IsWatched, sensor.IsWatched, sensor.IsInPeriod, config.system.CommuteInvalidValueWatchTimeout);
                                 }
                                 else if (e.ErrorType == SensorErrorType.NotAlive)
                                 {
-                                    if (alarmTimes.Enable && (sensor.IsWatched || e.AlarmInformCount < alarmTimes.CountInCycle) && e.DateHappened.IsElapsed(alarmTimes.FirstTime) && !AlarmableSensorErrors.Contains(e)) AlarmableSensorErrors.Add(e);
+                                    if (alarmTimes.Enable && (sensor.IsWatched) && e.DateHappened.IsElapsed(alarmTimes.RaiseTime) && !AlarmableSensorErrors.Contains(e)) AlarmableSensorErrors.Add(e);
                                     if (sensor.IsWatched) sensor.IsWatched = !CheckToUnWatch(e, sensor.IsWatched, sensor.IsWatched, sensor.IsInPeriod, config.system.CommuteNotAliveWatchTimeout);
                                 }
                                 else if (sensor.IsWatched && e.ErrorType == SensorErrorType.LowBattery)
                                 {
-                                    if (alarmTimes.Enable && (sensor.IsWatched || e.AlarmInformCount < alarmTimes.CountInCycle) && e.DateHappened.IsElapsed(alarmTimes.FirstTime) && !AlarmableSensorErrors.Contains(e)) AlarmableSensorErrors.Add(e);
+                                    if (alarmTimes.Enable && (sensor.IsWatched) && e.DateHappened.IsElapsed(alarmTimes.RaiseTime) && !AlarmableSensorErrors.Contains(e)) AlarmableSensorErrors.Add(e);
                                 }
                             }
                         }
@@ -182,12 +182,12 @@ public partial class Worker
                                     int PushButtonNotAliveWatchTimeout = 0;
                                     if (sensor.Type == SensorType.FarmFeed) PushButtonNotAliveWatchTimeout = config.system.FeedNotAliveWatchTimeout;
                                     else if (sensor.Type == SensorType.FarmCheckup) PushButtonNotAliveWatchTimeout = config.system.CheckupNotAliveWatchTimeout;
-                                    if (alarmTimes.Enable && (sensor.IsWatched || e.AlarmInformCount < alarmTimes.CountInCycle) && e.DateHappened.IsElapsed(alarmTimes.FirstTime) && !AlarmableSensorErrors.Contains(e)) AlarmableSensorErrors.Add(e);
+                                    if (alarmTimes.Enable && (sensor.IsWatched) && e.DateHappened.IsElapsed(alarmTimes.RaiseTime) && !AlarmableSensorErrors.Contains(e)) AlarmableSensorErrors.Add(e);
                                     if (sensor.IsWatched) sensor.IsWatched = !CheckToUnWatch(e, sensor.IsWatched, sensor.IsWatched, sensor.IsInPeriod, PushButtonNotAliveWatchTimeout);
                                 }
                                 else if (sensor.IsWatched && e.ErrorType == SensorErrorType.LowBattery)
                                 {
-                                    if (alarmTimes.Enable && (sensor.IsWatched || e.AlarmInformCount < alarmTimes.CountInCycle) && e.DateHappened.IsElapsed(alarmTimes.FirstTime) && !AlarmableSensorErrors.Contains(e)) AlarmableSensorErrors.Add(e);
+                                    if (alarmTimes.Enable && (sensor.IsWatched) && e.DateHappened.IsElapsed(alarmTimes.RaiseTime) && !AlarmableSensorErrors.Contains(e)) AlarmableSensorErrors.Add(e);
                                 }
                             }
                         }
@@ -235,7 +235,7 @@ public partial class Worker
                                     {
                                         BinaryInvalidDataWatchTimeout = config.system.BackupPowerInvalidDataWatchTimeout;
                                     }
-                                    if (alarmTimes.Enable && (sensor.IsWatched || e.AlarmInformCount < alarmTimes.CountInCycle) && e.DateHappened.IsElapsed(alarmTimes.FirstTime) && !AlarmableSensorErrors.Contains(e)) AlarmableSensorErrors.Add(e);
+                                    if (alarmTimes.Enable && (sensor.IsWatched) && e.DateHappened.IsElapsed(alarmTimes.RaiseTime) && !AlarmableSensorErrors.Contains(e)) AlarmableSensorErrors.Add(e);
                                     if (sensor.IsWatched) sensor.IsWatched = !CheckToUnWatch(e, sensor.IsWatched, sensor.IsWatched, sensor.IsInPeriod, BinaryInvalidDataWatchTimeout);
                                 }
                                 else if (e.ErrorType == SensorErrorType.NotAlive)
@@ -253,12 +253,12 @@ public partial class Worker
                                     {
                                         BinaryNotAliveWatchTimeout = config.system.BackupPowerInvalidDataWatchTimeout;
                                     }
-                                    if (alarmTimes.Enable && (sensor.IsWatched || e.AlarmInformCount < alarmTimes.CountInCycle) && e.DateHappened.IsElapsed(alarmTimes.FirstTime) && !AlarmableSensorErrors.Contains(e)) AlarmableSensorErrors.Add(e);
+                                    if (alarmTimes.Enable && (sensor.IsWatched) && e.DateHappened.IsElapsed(alarmTimes.RaiseTime) && !AlarmableSensorErrors.Contains(e)) AlarmableSensorErrors.Add(e);
                                     if (sensor.IsWatched) sensor.IsWatched = !CheckToUnWatch(e, sensor.IsWatched, sensor.IsWatched, sensor.IsInPeriod, BinaryNotAliveWatchTimeout);
                                 }
                                 else if (sensor.IsWatched && e.ErrorType == SensorErrorType.LowBattery)
                                 {
-                                    if (alarmTimes.Enable && (sensor.IsWatched || e.AlarmInformCount < alarmTimes.CountInCycle) && e.DateHappened.IsElapsed(alarmTimes.FirstTime) && !AlarmableSensorErrors.Contains(e)) AlarmableSensorErrors.Add(e);
+                                    if (alarmTimes.Enable && (sensor.IsWatched) && e.DateHappened.IsElapsed(alarmTimes.RaiseTime) && !AlarmableSensorErrors.Contains(e)) AlarmableSensorErrors.Add(e);
                                 }
                             }
 
@@ -311,31 +311,87 @@ public partial class Worker
         {
             case 1:
                 a.Enable = config.system.AlarmLevelOneEnable;
-                a.FirstTime = config.system.AlarmLevelOneFirstTime;
-                a.Every = config.system.AlarmLevelOneEvery;
-                a.Snooze = config.system.AlarmLevelOneSnooze;
-                a.CountInCycle = config.system.AlarmLevelOneCountInCycle;
+                a.RaiseTime = config.system.AlarmLevelOneRaiseTime;
+                a.FarmAlarmEnable = config.system.AlarmLevelOneFarmAlarmEnable;
+                a.FarmAlarmRaiseTimeOffset = config.system.AlarmLevelOneFarmAlarmRaiseTimeOffset;
+                a.FarmAlarmEvery = config.system.AlarmLevelOneFarmAlarmEvery;
+                a.FarmAlarmSnooze = config.system.AlarmLevelOneFarmAlarmSnooze;
+                a.FarmAlarmCountInCycle = config.system.AlarmLevelOneFarmAlarmCountInCycle;
+
+                a.SmsEnable = config.system.AlarmLevelOneSmsEnable;
+                a.SmsRaiseTimeOffset = config.system.AlarmLevelOneSmsRaiseTimeOffset;
+                a.SmsEvery = config.system.AlarmLevelOneSmsEvery;
+                a.SmsSnooze = config.system.AlarmLevelOneSmsSnooze;
+                a.SmsCountInCycle = config.system.AlarmLevelOneSmsCountInCycle;
+
+                a.PoultryAlarmEnable = config.system.AlarmLevelOnePoultryAlarmEnable;
+                a.PoultryAlarmRaiseTimeOffset = config.system.AlarmLevelOnePoultryAlarmRaiseTimeOffset;
+                a.PoultryAlarmEvery = config.system.AlarmLevelOnePoultryAlarmEvery;
+                a.PoultryAlarmSnooze = config.system.AlarmLevelOnePoultryAlarmSnooze;
+                a.PoultryAlarmCountInCycle = config.system.AlarmLevelOnePoultryAlarmCountInCycle;
                 break;
             case 2:
                 a.Enable = config.system.AlarmLevelTwoEnable;
-                a.FirstTime = config.system.AlarmLevelTwoFirstTime;
-                a.Every = config.system.AlarmLevelTwoEvery;
-                a.Snooze = config.system.AlarmLevelTwoSnooze;
-                a.CountInCycle = config.system.AlarmLevelTwoCountInCycle;
+                a.RaiseTime = config.system.AlarmLevelTwoRaiseTime;
+                a.FarmAlarmEnable = config.system.AlarmLevelTwoFarmAlarmEnable;
+                a.FarmAlarmRaiseTimeOffset = config.system.AlarmLevelTwoFarmAlarmRaiseTimeOffset;
+                a.FarmAlarmEvery = config.system.AlarmLevelTwoFarmAlarmEvery;
+                a.FarmAlarmSnooze = config.system.AlarmLevelTwoFarmAlarmSnooze;
+                a.FarmAlarmCountInCycle = config.system.AlarmLevelTwoFarmAlarmCountInCycle;
+
+                a.SmsEnable = config.system.AlarmLevelTwoSmsEnable;
+                a.SmsRaiseTimeOffset = config.system.AlarmLevelTwoSmsRaiseTimeOffset;
+                a.SmsEvery = config.system.AlarmLevelTwoSmsEvery;
+                a.SmsSnooze = config.system.AlarmLevelTwoSmsSnooze;
+                a.SmsCountInCycle = config.system.AlarmLevelTwoSmsCountInCycle;
+
+                a.PoultryAlarmEnable = config.system.AlarmLevelTwoPoultryAlarmEnable;
+                a.PoultryAlarmRaiseTimeOffset = config.system.AlarmLevelTwoPoultryAlarmRaiseTimeOffset;
+                a.PoultryAlarmEvery = config.system.AlarmLevelTwoPoultryAlarmEvery;
+                a.PoultryAlarmSnooze = config.system.AlarmLevelTwoPoultryAlarmSnooze;
+                a.PoultryAlarmCountInCycle = config.system.AlarmLevelTwoPoultryAlarmCountInCycle;
                 break;
             case 3:
                 a.Enable = config.system.AlarmLevelThreeEnable;
-                a.FirstTime = config.system.AlarmLevelThreeFirstTime;
-                a.Every = config.system.AlarmLevelThreeEvery;
-                a.Snooze = config.system.AlarmLevelThreeSnooze;
-                a.CountInCycle = config.system.AlarmLevelThreeCountInCycle;
+                a.RaiseTime = config.system.AlarmLevelThreeRaiseTime;
+                a.FarmAlarmEnable = config.system.AlarmLevelThreeFarmAlarmEnable;
+                a.FarmAlarmRaiseTimeOffset = config.system.AlarmLevelThreeFarmAlarmRaiseTimeOffset;
+                a.FarmAlarmEvery = config.system.AlarmLevelThreeFarmAlarmEvery;
+                a.FarmAlarmSnooze = config.system.AlarmLevelThreeFarmAlarmSnooze;
+                a.FarmAlarmCountInCycle = config.system.AlarmLevelThreeFarmAlarmCountInCycle;
+
+                a.SmsEnable = config.system.AlarmLevelThreeSmsEnable;
+                a.SmsRaiseTimeOffset = config.system.AlarmLevelThreeSmsRaiseTimeOffset;
+                a.SmsEvery = config.system.AlarmLevelThreeSmsEvery;
+                a.SmsSnooze = config.system.AlarmLevelThreeSmsSnooze;
+                a.SmsCountInCycle = config.system.AlarmLevelThreeSmsCountInCycle;
+
+                a.PoultryAlarmEnable = config.system.AlarmLevelThreePoultryAlarmEnable;
+                a.PoultryAlarmRaiseTimeOffset = config.system.AlarmLevelThreePoultryAlarmRaiseTimeOffset;
+                a.PoultryAlarmEvery = config.system.AlarmLevelThreePoultryAlarmEvery;
+                a.PoultryAlarmSnooze = config.system.AlarmLevelThreePoultryAlarmSnooze;
+                a.PoultryAlarmCountInCycle = config.system.AlarmLevelThreePoultryAlarmCountInCycle;
                 break;
             case 4:
                 a.Enable = config.system.AlarmLevelFourEnable;
-                a.FirstTime = config.system.AlarmLevelFourFirstTime;
-                a.Every = config.system.AlarmLevelFourEvery;
-                a.Snooze = config.system.AlarmLevelFourSnooze;
-                a.CountInCycle = config.system.AlarmLevelFourCountInCycle;
+                a.RaiseTime = config.system.AlarmLevelFourRaiseTime;
+                a.FarmAlarmEnable = config.system.AlarmLevelFourFarmAlarmEnable;
+                a.FarmAlarmRaiseTimeOffset = config.system.AlarmLevelFourFarmAlarmRaiseTimeOffset;
+                a.FarmAlarmEvery = config.system.AlarmLevelFourFarmAlarmEvery;
+                a.FarmAlarmSnooze = config.system.AlarmLevelFourFarmAlarmSnooze;
+                a.FarmAlarmCountInCycle = config.system.AlarmLevelFourFarmAlarmCountInCycle;
+
+                a.SmsEnable = config.system.AlarmLevelFourSmsEnable;
+                a.SmsRaiseTimeOffset = config.system.AlarmLevelFourSmsRaiseTimeOffset;
+                a.SmsEvery = config.system.AlarmLevelFourSmsEvery;
+                a.SmsSnooze = config.system.AlarmLevelFourSmsSnooze;
+                a.SmsCountInCycle = config.system.AlarmLevelFourSmsCountInCycle;
+
+                a.PoultryAlarmEnable = config.system.AlarmLevelFourPoultryAlarmEnable;
+                a.PoultryAlarmRaiseTimeOffset = config.system.AlarmLevelFourPoultryAlarmRaiseTimeOffset;
+                a.PoultryAlarmEvery = config.system.AlarmLevelFourPoultryAlarmEvery;
+                a.PoultryAlarmSnooze = config.system.AlarmLevelFourPoultryAlarmSnooze;
+                a.PoultryAlarmCountInCycle = config.system.AlarmLevelFourPoultryAlarmCountInCycle;
                 break;
         }
         return a;
@@ -393,29 +449,78 @@ public partial class Worker
             var alarmTimes = GetAlarmTimings(e.ErrorType);
             if (alarmTimes.Enable)
             {
-                if (e.DateAlarmInformed == null && e.DateHappened.IsElapsed(alarmTimes.FirstTime)) //first alarm.
+                if (e.DateAlarmRaised == null) e.DateAlarmRaised = Now;
+                if (alarmTimes.FarmAlarmEnable && sensor.IsFarmSensor())
                 {
-                    e.AlarmInformCount = 1;
-                    Log.Information($"Informing Alarm of {e.ErrorType}, Sensor ID: {sensor.Id}, Location: {sensor.LocationId}, Section: {sensor.Section}. Count: {e.AlarmInformCount}");
-                    if (sensor.IsFarmSensor())
+                    if (e.DateFarmAlarmRaised == null && e.DateHappened.IsElapsed(alarmTimes.FarmAlarmRaiseTime)) //first alarm.
                     {
+                        e.FarmAlarmRaisedCount = 1;
+                        Log.Information($"Informing Alarm of {e.ErrorType}, Sensor ID: {sensor.Id}, Location: {sensor.LocationId}, Section: {sensor.Section}. Count: {e.FarmAlarmRaisedCount}");
 
+                        e.DateFarmAlarmRaised = Now;
                     }
-                    e.DateAlarmInformed = Now;
+                    else if (e.FarmAlarmRaisedCount % alarmTimes.FarmAlarmCountInCycle != 0 && e.DateFarmAlarmRaised.IsElapsed(alarmTimes.FarmAlarmEvery)) //alarm every.
+                    {
+                        e.FarmAlarmRaisedCount++;
+                        Log.Information($"Informing Alarm of {e.ErrorType}, Sensor ID: {sensor.Id}, Location: {sensor.LocationId}, Section: {sensor.Section}. Count: {e.FarmAlarmRaisedCount}");
+                        //inform, save to db
+                        e.DateFarmAlarmRaised = Now;
+                    }
+                    else if (e.FarmAlarmRaisedCount % alarmTimes.FarmAlarmCountInCycle == 0 && e.DateFarmAlarmRaised.IsElapsed(alarmTimes.FarmAlarmSnooze)) //alarm sleep.
+                    {
+                        e.FarmAlarmRaisedCount++;
+                        Log.Information($"Informing Alarm of {e.ErrorType}, Sensor ID: {sensor.Id}, Location: {sensor.LocationId}, Section: {sensor.Section}. Count: {e.FarmAlarmRaisedCount}");
+                        //inform, save to db
+                        e.DateFarmAlarmRaised = Now;
+                    }
                 }
-                else if (e.AlarmInformCount % alarmTimes.CountInCycle != 0 && e.DateAlarmInformed.IsElapsed(alarmTimes.Every)) //alarm every.
+                if (alarmTimes.SmsEnable)
                 {
-                    e.AlarmInformCount++;
-                    Log.Information($"Informing Alarm of {e.ErrorType}, Sensor ID: {sensor.Id}, Location: {sensor.LocationId}, Section: {sensor.Section}. Count: {e.AlarmInformCount}");
-                    //inform, save to db
-                    e.DateAlarmInformed = Now;
+                    if (e.DateSmsRaised == null && e.DateHappened.IsElapsed(alarmTimes.SmsRaiseTime)) //first alarm.
+                    {
+                        e.SmsRaisedCount = 1;
+                        Log.Information($"Informing Alarm of {e.ErrorType}, Sensor ID: {sensor.Id}, Location: {sensor.LocationId}, Section: {sensor.Section}. Count: {e.SmsRaisedCount}");
+                        //inform, save to db
+                        e.DateSmsRaised = Now;
+                    }
+                    else if (e.SmsRaisedCount % alarmTimes.SmsCountInCycle != 0 && e.DateSmsRaised.IsElapsed(alarmTimes.SmsEvery)) //alarm every.
+                    {
+                        e.SmsRaisedCount++;
+                        Log.Information($"Informing Alarm of {e.ErrorType}, Sensor ID: {sensor.Id}, Location: {sensor.LocationId}, Section: {sensor.Section}. Count: {e.SmsRaisedCount}");
+                        //inform, save to db
+                        e.DateSmsRaised = Now;
+                    }
+                    else if (e.SmsRaisedCount % alarmTimes.SmsCountInCycle == 0 && e.DateSmsRaised.IsElapsed(alarmTimes.SmsSnooze)) //alarm sleep.
+                    {
+                        e.SmsRaisedCount++;
+                        Log.Information($"Informing Alarm of {e.ErrorType}, Sensor ID: {sensor.Id}, Location: {sensor.LocationId}, Section: {sensor.Section}. Count: {e.SmsRaisedCount}");
+                        //inform, save to db
+                        e.DateSmsRaised = Now;
+                    }
                 }
-                else if (e.AlarmInformCount % alarmTimes.CountInCycle == 0 && e.DateAlarmInformed.IsElapsed(alarmTimes.Snooze)) //alarm sleep.
+                if (alarmTimes.PoultryAlarmEnable)
                 {
-                    e.AlarmInformCount++;
-                    Log.Information($"Informing Alarm of {e.ErrorType}, Sensor ID: {sensor.Id}, Location: {sensor.LocationId}, Section: {sensor.Section}. Count: {e.AlarmInformCount}");
-                    //inform, save to db
-                    e.DateAlarmInformed = Now;
+                    if (e.DatePoultryAlarmRaised == null && e.DateHappened.IsElapsed(alarmTimes.PoultryAlarmRaiseTime)) //first alarm.
+                    {
+                        e.PoultryAlarmRaisedCount = 1;
+                        Log.Information($"Informing Alarm of {e.ErrorType}, Sensor ID: {sensor.Id}, Location: {sensor.LocationId}, Section: {sensor.Section}. Count: {e.PoultryAlarmRaisedCount}");
+
+                        e.DatePoultryAlarmRaised = Now;
+                    }
+                    else if (e.PoultryAlarmRaisedCount % alarmTimes.PoultryAlarmCountInCycle != 0 && e.DatePoultryAlarmRaised.IsElapsed(alarmTimes.PoultryAlarmEvery)) //alarm every.
+                    {
+                        e.PoultryAlarmRaisedCount++;
+                        Log.Information($"Informing Alarm of {e.ErrorType}, Sensor ID: {sensor.Id}, Location: {sensor.LocationId}, Section: {sensor.Section}. Count: {e.PoultryAlarmRaisedCount}");
+                        //inform, save to db
+                        e.DatePoultryAlarmRaised = Now;
+                    }
+                    else if (e.PoultryAlarmRaisedCount % alarmTimes.PoultryAlarmCountInCycle == 0 && e.DatePoultryAlarmRaised.IsElapsed(alarmTimes.PoultryAlarmSnooze)) //alarm sleep.
+                    {
+                        e.PoultryAlarmRaisedCount++;
+                        Log.Information($"Informing Alarm of {e.ErrorType}, Sensor ID: {sensor.Id}, Location: {sensor.LocationId}, Section: {sensor.Section}. Count: {e.PoultryAlarmRaisedCount}");
+                        //inform, save to db
+                        e.DatePoultryAlarmRaised = Now;
+                    }
                 }
             }
         }

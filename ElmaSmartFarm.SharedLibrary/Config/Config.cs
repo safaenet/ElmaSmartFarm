@@ -68,6 +68,99 @@ public class System
         MaxSensorReadCount = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("max_sensor_read_count").Value ?? "10");
         SensorLowBatteryLevel = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("sensor_low_battery_level").Value ?? "10");
 
+        AlarmLevelLowBattery = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level:low_battery").Value ?? "1");
+        AlarmLevelNotAlive = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level:not_alive").Value ?? "2");
+        AlarmLevelInvalidData = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level:invalid_data").Value ?? "1");
+        AlarmLevelInvalidValue = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level:invalid_value").Value ?? "1");
+        AlarmLevelHighTemperature = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level:high_temp").Value ?? "3");
+        AlarmLevelLowTemperature = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level:low_temp").Value ?? "3");
+        AlarmLevelHighHumid = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level:high_humid").Value ?? "2");
+        AlarmLevelLowHumid = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level:low_humid").Value ?? "2");
+        AlarmLevelHighAmmonia = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level:high_ammonia").Value ?? "3");
+        AlarmLevelHighCo2 = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level:high_co2").Value ?? "3");
+        AlarmLevelLongTimeBright = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level:long_time_bright").Value ?? "2");
+        AlarmLevelLongTimeDark = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level:long_time_dark").Value ?? "2");
+        AlarmLevelHighBrightness = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level:high_brightness").Value ?? "2");
+        AlarmLevelLowBrightness = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level:low_brightness").Value ?? "2");
+        AlarmLevelLongNoFeed = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level:long_no_feed").Value ?? "3");
+        AlarmLevelLongLeave = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level:long_leave").Value ?? "3");
+        AlarmLevelNoPower = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level:no_power").Value ?? "4");
+
+        FarmAlarmDuration = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level_timeout:farm_alarm_duration").Value ?? "20");
+        PoultryAlarmDuration = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level_timeout:poultry_alarm_duration").Value ?? "20");
+
+        AlarmLevelOneEnable = bool.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level_timeout:1:enable").Value ?? "true");
+        AlarmLevelOneRaiseTime = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level_timeout:1:raise_time").Value ?? "60");
+        AlarmLevelOneFarmAlarmEnable = bool.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level_timeout:1:farm_alarm:enable").Value ?? "true");
+        AlarmLevelOneFarmAlarmRaiseTimeOffset = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level_timeout:1:farm_alarm:raise_time_offset").Value ?? "300");
+        AlarmLevelOneFarmAlarmEvery = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level_timeout:1:farm_alarm:every").Value ?? "300");
+        AlarmLevelOneFarmAlarmSnooze = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level_timeout:1:farm_alarm:snooze").Value ?? "3000");
+        AlarmLevelOneFarmAlarmCountInCycle = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level_timeout:1:farm_alarm:count_in_cycle").Value ?? "3");
+        AlarmLevelOneSmsEnable = bool.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level_timeout:1:sms:enable").Value ?? "true");
+        AlarmLevelOneSmsRaiseTimeOffset = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level_timeout:1:sms:raise_time_offset").Value ?? "300");
+        AlarmLevelOneSmsEvery = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level_timeout:1:sms:every").Value ?? "300");
+        AlarmLevelOneSmsSnooze = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level_timeout:1:sms:snooze").Value ?? "3000");
+        AlarmLevelOneSmsCountInCycle = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level_timeout:1:sms:count_in_cycle").Value ?? "3");
+        AlarmLevelOnePoultryAlarmEnable = bool.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level_timeout:1:poultry_alarm:enable").Value ?? "false");
+        AlarmLevelOnePoultryAlarmRaiseTimeOffset = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level_timeout:1:poultry_alarm:raise_time_offset").Value ?? "300");
+        AlarmLevelOnePoultryAlarmEvery = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level_timeout:1:poultry_alarm:every").Value ?? "300");
+        AlarmLevelOnePoultryAlarmSnooze = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level_timeout:1:poultry_alarm:snooze").Value ?? "3000");
+        AlarmLevelOnePoultryAlarmCountInCycle = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level_timeout:1:poultry_alarm:count_in_cycle").Value ?? "3");
+
+        AlarmLevelTwoEnable = bool.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level_timeout:2:enable").Value ?? "true");
+        AlarmLevelTwoRaiseTime = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level_timeout:2:raise_time").Value ?? "60");
+        AlarmLevelTwoFarmAlarmEnable = bool.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level_timeout:2:farm_alarm:enable").Value ?? "true");
+        AlarmLevelTwoFarmAlarmRaiseTimeOffset = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level_timeout:2:farm_alarm:raise_time_offset").Value ?? "300");
+        AlarmLevelTwoFarmAlarmEvery = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level_timeout:2:farm_alarm:every").Value ?? "300");
+        AlarmLevelTwoFarmAlarmSnooze = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level_timeout:2:farm_alarm:snooze").Value ?? "3000");
+        AlarmLevelTwoFarmAlarmCountInCycle = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level_timeout:2:farm_alarm:count_in_cycle").Value ?? "3");
+        AlarmLevelTwoSmsEnable = bool.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level_timeout:2:sms:enable").Value ?? "true");
+        AlarmLevelTwoSmsRaiseTimeOffset = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level_timeout:2:sms:raise_time_offset").Value ?? "300");
+        AlarmLevelTwoSmsEvery = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level_timeout:2:sms:every").Value ?? "300");
+        AlarmLevelTwoSmsSnooze = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level_timeout:2:sms:snooze").Value ?? "3000");
+        AlarmLevelTwoSmsCountInCycle = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level_timeout:2:sms:count_in_cycle").Value ?? "3");
+        AlarmLevelTwoPoultryAlarmEnable = bool.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level_timeout:2:poultry_alarm:enable").Value ?? "false");
+        AlarmLevelTwoPoultryAlarmRaiseTimeOffset = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level_timeout:2:poultry_alarm:raise_time_offset").Value ?? "300");
+        AlarmLevelTwoPoultryAlarmEvery = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level_timeout:2:poultry_alarm:every").Value ?? "300");
+        AlarmLevelTwoPoultryAlarmSnooze = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level_timeout:2:poultry_alarm:snooze").Value ?? "3000");
+        AlarmLevelTwoPoultryAlarmCountInCycle = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level_timeout:2:poultry_alarm:count_in_cycle").Value ?? "3");
+
+        AlarmLevelThreeEnable = bool.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level_timeout:3:enable").Value ?? "true");
+        AlarmLevelThreeRaiseTime = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level_timeout:3:raise_time").Value ?? "60");
+        AlarmLevelThreeFarmAlarmEnable = bool.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level_timeout:3:farm_alarm:enable").Value ?? "true");
+        AlarmLevelThreeFarmAlarmRaiseTimeOffset = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level_timeout:3:farm_alarm:raise_time_offset").Value ?? "300");
+        AlarmLevelThreeFarmAlarmEvery = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level_timeout:3:farm_alarm:every").Value ?? "300");
+        AlarmLevelThreeFarmAlarmSnooze = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level_timeout:3:farm_alarm:snooze").Value ?? "3000");
+        AlarmLevelThreeFarmAlarmCountInCycle = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level_timeout:3:farm_alarm:count_in_cycle").Value ?? "3");
+        AlarmLevelThreeSmsEnable = bool.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level_timeout:3:sms:enable").Value ?? "true");
+        AlarmLevelThreeSmsRaiseTimeOffset = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level_timeout:3:sms:raise_time_offset").Value ?? "300");
+        AlarmLevelThreeSmsEvery = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level_timeout:3:sms:every").Value ?? "300");
+        AlarmLevelThreeSmsSnooze = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level_timeout:3:sms:snooze").Value ?? "3000");
+        AlarmLevelThreeSmsCountInCycle = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level_timeout:3:sms:count_in_cycle").Value ?? "3");
+        AlarmLevelThreePoultryAlarmEnable = bool.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level_timeout:3:poultry_alarm:enable").Value ?? "true");
+        AlarmLevelThreePoultryAlarmRaiseTimeOffset = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level_timeout:3:poultry_alarm:raise_time_offset").Value ?? "300");
+        AlarmLevelThreePoultryAlarmEvery = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level_timeout:3:poultry_alarm:every").Value ?? "300");
+        AlarmLevelThreePoultryAlarmSnooze = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level_timeout:3:poultry_alarm:snooze").Value ?? "3000");
+        AlarmLevelThreePoultryAlarmCountInCycle = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level_timeout:3:poultry_alarm:count_in_cycle").Value ?? "3");
+
+        AlarmLevelFourEnable = bool.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level_timeout:4:enable").Value ?? "true");
+        AlarmLevelFourRaiseTime = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level_timeout:4:raise_time").Value ?? "60");
+        AlarmLevelFourFarmAlarmEnable = bool.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level_timeout:4:farm_alarm:enable").Value ?? "true");
+        AlarmLevelFourFarmAlarmRaiseTimeOffset = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level_timeout:4:farm_alarm:raise_time_offset").Value ?? "300");
+        AlarmLevelFourFarmAlarmEvery = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level_timeout:4:farm_alarm:every").Value ?? "300");
+        AlarmLevelFourFarmAlarmSnooze = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level_timeout:4:farm_alarm:snooze").Value ?? "3000");
+        AlarmLevelFourFarmAlarmCountInCycle = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level_timeout:4:farm_alarm:count_in_cycle").Value ?? "3");
+        AlarmLevelFourSmsEnable = bool.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level_timeout:4:sms:enable").Value ?? "true");
+        AlarmLevelFourSmsRaiseTimeOffset = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level_timeout:4:sms:raise_time_offset").Value ?? "300");
+        AlarmLevelFourSmsEvery = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level_timeout:4:sms:every").Value ?? "300");
+        AlarmLevelFourSmsSnooze = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level_timeout:4:sms:snooze").Value ?? "3000");
+        AlarmLevelFourSmsCountInCycle = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level_timeout:4:sms:count_in_cycle").Value ?? "3");
+        AlarmLevelFourPoultryAlarmEnable = bool.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level_timeout:4:poultry_alarm:enable").Value ?? "true");
+        AlarmLevelFourPoultryAlarmRaiseTimeOffset = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level_timeout:4:poultry_alarm:raise_time_offset").Value ?? "300");
+        AlarmLevelFourPoultryAlarmEvery = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level_timeout:4:poultry_alarm:every").Value ?? "300");
+        AlarmLevelFourPoultryAlarmSnooze = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level_timeout:4:poultry_alarm:snooze").Value ?? "3000");
+        AlarmLevelFourPoultryAlarmCountInCycle = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level_timeout:4:poultry_alarm:count_in_cycle").Value ?? "3");
+
         ScalarReadInterval = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("scalar_general:read_interval").Value ?? "30");
         WriteScalarToDbInterval = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("scalar_general:write_to_db_interval").Value ?? "30");
         WriteScalarToDbAlways = bool.Parse(SettingsDataAccess.AppConfiguration().GetSection("scalar_general:write_to_db_always").Value ?? "false");
@@ -164,26 +257,78 @@ public class System
 
     public int FarmAlarmDuration { get; set; }
     public int PoultryAlarmDuration { get; set; }
+
     public bool AlarmLevelOneEnable { get; set; }
-    public int AlarmLevelOneFirstTime { get; set; }
-    public int AlarmLevelOneEvery { get; set; }
-    public int AlarmLevelOneSnooze { get; set; }
-    public int AlarmLevelOneCountInCycle { get; set; }
+    public int AlarmLevelOneRaiseTime { get; set; }
+    public bool AlarmLevelOneFarmAlarmEnable { get; set; }
+    public int AlarmLevelOneFarmAlarmRaiseTimeOffset { get; set; }
+    public int AlarmLevelOneFarmAlarmEvery { get; set; }
+    public int AlarmLevelOneFarmAlarmSnooze { get; set; }
+    public int AlarmLevelOneFarmAlarmCountInCycle { get; set; }
+    public bool AlarmLevelOneSmsEnable { get; set; }
+    public int AlarmLevelOneSmsRaiseTimeOffset { get; set; }
+    public int AlarmLevelOneSmsEvery { get; set; }
+    public int AlarmLevelOneSmsSnooze { get; set; }
+    public int AlarmLevelOneSmsCountInCycle { get; set; }
+    public bool AlarmLevelOnePoultryAlarmEnable { get; set; }
+    public int AlarmLevelOnePoultryAlarmRaiseTimeOffset { get; set; }
+    public int AlarmLevelOnePoultryAlarmEvery { get; set; }
+    public int AlarmLevelOnePoultryAlarmSnooze { get; set; }
+    public int AlarmLevelOnePoultryAlarmCountInCycle { get; set; }
+
     public bool AlarmLevelTwoEnable { get; set; }
-    public int AlarmLevelTwoFirstTime { get; set; }
-    public int AlarmLevelTwoEvery { get; set; }
-    public int AlarmLevelTwoSnooze { get; set; }
-    public int AlarmLevelTwoCountInCycle { get; set; }
+    public int AlarmLevelTwoRaiseTime { get; set; }
+    public bool AlarmLevelTwoFarmAlarmEnable { get; set; }
+    public int AlarmLevelTwoFarmAlarmRaiseTimeOffset { get; set; }
+    public int AlarmLevelTwoFarmAlarmEvery { get; set; }
+    public int AlarmLevelTwoFarmAlarmSnooze { get; set; }
+    public int AlarmLevelTwoFarmAlarmCountInCycle { get; set; }
+    public bool AlarmLevelTwoSmsEnable { get; set; }
+    public int AlarmLevelTwoSmsRaiseTimeOffset { get; set; }
+    public int AlarmLevelTwoSmsEvery { get; set; }
+    public int AlarmLevelTwoSmsSnooze { get; set; }
+    public int AlarmLevelTwoSmsCountInCycle { get; set; }
+    public bool AlarmLevelTwoPoultryAlarmEnable { get; set; }
+    public int AlarmLevelTwoPoultryAlarmRaiseTimeOffset { get; set; }
+    public int AlarmLevelTwoPoultryAlarmEvery { get; set; }
+    public int AlarmLevelTwoPoultryAlarmSnooze { get; set; }
+    public int AlarmLevelTwoPoultryAlarmCountInCycle { get; set; }
+
     public bool AlarmLevelThreeEnable { get; set; }
-    public int AlarmLevelThreeFirstTime { get; set; }
-    public int AlarmLevelThreeEvery { get; set; }
-    public int AlarmLevelThreeSnooze { get; set; }
-    public int AlarmLevelThreeCountInCycle { get; set; }
+    public int AlarmLevelThreeRaiseTime { get; set; }
+    public bool AlarmLevelThreeFarmAlarmEnable { get; set; }
+    public int AlarmLevelThreeFarmAlarmRaiseTimeOffset { get; set; }
+    public int AlarmLevelThreeFarmAlarmEvery { get; set; }
+    public int AlarmLevelThreeFarmAlarmSnooze { get; set; }
+    public int AlarmLevelThreeFarmAlarmCountInCycle { get; set; }
+    public bool AlarmLevelThreeSmsEnable { get; set; }
+    public int AlarmLevelThreeSmsRaiseTimeOffset { get; set; }
+    public int AlarmLevelThreeSmsEvery { get; set; }
+    public int AlarmLevelThreeSmsSnooze { get; set; }
+    public int AlarmLevelThreeSmsCountInCycle { get; set; }
+    public bool AlarmLevelThreePoultryAlarmEnable { get; set; }
+    public int AlarmLevelThreePoultryAlarmRaiseTimeOffset { get; set; }
+    public int AlarmLevelThreePoultryAlarmEvery { get; set; }
+    public int AlarmLevelThreePoultryAlarmSnooze { get; set; }
+    public int AlarmLevelThreePoultryAlarmCountInCycle { get; set; }
+
     public bool AlarmLevelFourEnable { get; set; }
-    public int AlarmLevelFourFirstTime { get; set; }
-    public int AlarmLevelFourEvery { get; set; }
-    public int AlarmLevelFourSnooze { get; set; }
-    public int AlarmLevelFourCountInCycle { get; set; }
+    public int AlarmLevelFourRaiseTime { get; set; }
+    public bool AlarmLevelFourFarmAlarmEnable { get; set; }
+    public int AlarmLevelFourFarmAlarmRaiseTimeOffset { get; set; }
+    public int AlarmLevelFourFarmAlarmEvery { get; set; }
+    public int AlarmLevelFourFarmAlarmSnooze { get; set; }
+    public int AlarmLevelFourFarmAlarmCountInCycle { get; set; }
+    public bool AlarmLevelFourSmsEnable { get; set; }
+    public int AlarmLevelFourSmsRaiseTimeOffset { get; set; }
+    public int AlarmLevelFourSmsEvery { get; set; }
+    public int AlarmLevelFourSmsSnooze { get; set; }
+    public int AlarmLevelFourSmsCountInCycle { get; set; }
+    public bool AlarmLevelFourPoultryAlarmEnable { get; set; }
+    public int AlarmLevelFourPoultryAlarmRaiseTimeOffset { get; set; }
+    public int AlarmLevelFourPoultryAlarmEvery { get; set; }
+    public int AlarmLevelFourPoultryAlarmSnooze { get; set; }
+    public int AlarmLevelFourPoultryAlarmCountInCycle { get; set; }
 
     #region Scalar General Settings
     public double ScalarReadInterval { get; set; }
