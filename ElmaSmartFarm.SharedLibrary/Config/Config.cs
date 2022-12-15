@@ -374,6 +374,47 @@ public class System
     public int MaxSensorReadCount { get; set; }
     public int SensorLowBatteryLevel { get; set; }
 
+    public int AlarmLevelLowBattery { get; set; }
+    public int AlarmLevelNotAlive { get; set; }
+    public int AlarmLevelInvalidData { get; set; }
+    public int AlarmLevelInvalidValue { get; set; }
+    public int AlarmLevelHighTemperature { get; set; }
+    public int AlarmLevelLowTemperature { get; set; }
+    public int AlarmLevelHighHumid { get; set; }
+    public int AlarmLevelLowHumid { get; set; }
+    public int AlarmLevelHighAmmonia { get; set; }
+    public int AlarmLevelHighCo2 { get; set; }
+    public int AlarmLevelLongTimeBright { get; set; }
+    public int AlarmLevelLongTimeDark { get; set; }
+    public int AlarmLevelHighBrightness { get; set; }
+    public int AlarmLevelLowBrightness { get; set; }
+    public int AlarmLevelLongNoFeed { get; set; }
+    public int AlarmLevelLongLeave { get; set; }
+    public int AlarmLevelNoPower { get; set; }
+
+    public int FarmAlarmDuration { get; set; }
+    public int PoultryAlarmDuration { get; set; }
+    public bool AlarmLevelOneEnable { get; set; }
+    public int AlarmLevelOneFirstTime { get; set; }
+    public int AlarmLevelOneEvery { get; set; }
+    public int AlarmLevelOneSnooze { get; set; }
+    public int AlarmLevelOneCountInCycle { get; set; }
+    public bool AlarmLevelTwoEnable { get; set; }
+    public int AlarmLevelTwoFirstTime { get; set; }
+    public int AlarmLevelTwoEvery { get; set; }
+    public int AlarmLevelTwoSnooze { get; set; }
+    public int AlarmLevelTwoCountInCycle { get; set; }
+    public bool AlarmLevelThreeEnable { get; set; }
+    public int AlarmLevelThreeFirstTime { get; set; }
+    public int AlarmLevelThreeEvery { get; set; }
+    public int AlarmLevelThreeSnooze { get; set; }
+    public int AlarmLevelThreeCountInCycle { get; set; }
+    public bool AlarmLevelFourEnable { get; set; }
+    public int AlarmLevelFourFirstTime { get; set; }
+    public int AlarmLevelFourEvery { get; set; }
+    public int AlarmLevelFourSnooze { get; set; }
+    public int AlarmLevelFourCountInCycle { get; set; }
+
     #region Scalar General Settings
     public double ScalarReadInterval { get; set; }
     public int WriteScalarToDbInterval { get; set; }

@@ -25,6 +25,8 @@
     "no_power": 4
   },
   "alarm_level_timeout": {
+    "farm_alarm_duration": 20,
+    "poultry_alarm_duration": 20,
     "1": {
       "enable": true,
       "first_time": 5,
@@ -54,7 +56,6 @@
       "count_in_cycle": 3
     }
   },
-
   "scalar_general": {
     "read_interval": 15,
     "write_to_db_interval": 10, //(Seconds)
