@@ -70,6 +70,7 @@ public partial class Worker
                     return -1;
                 }
                 ScalarSensorReadModel newRead = new();
+                newRead.ReadDate = Now;
                 foreach (var p in payloads)
                 {
                     if (p.StartsWith("T:"))
@@ -79,7 +80,23 @@ public partial class Worker
                         {
                             newRead.Temperature = value + sensor.TemperatureOffset;
                             await EraseSensorErrors(sensor, Now, SensorErrorType.InvalidTemperatureData);
-                            if (newRead.HasValidTemp(sensor.Type)) await EraseSensorErrors(sensor, Now, SensorErrorType.InvalidTemperatureValue);
+                            if (newRead.HasValidTemp(sensor.Type))
+                            {
+                                await EraseSensorErrors(sensor, Now, SensorErrorType.InvalidTemperatureValue);
+                                if (sensor.IsWatched && sensor.IsInPeriod)
+                                {
+                                    if (newRead.Temperature < config.system.TempMinWorkingValue)
+                                    {
+                                        var farm = FindFarmBySensorId(sensor.Id);
+                                        var newErr = GenerateFarmError(sensor, FarmInPeriodErrorType.LowTemperature, Now, farm?.Period?.Id ?? 0, $"Low Temp: {newRead.Temperature}");
+                                        if (farm != null && farm.InPeriodErrors.AddError(newErr, FarmInPeriodErrorType.LowTemperature, config.system.MaxFarmErrorCount))
+                                        {
+                                            //var newId = await DbProcessor.WriteSensorErrorToDbAsync(newErr, Now);
+                                            //if (newId > 0) sensor.LastError.Id = newId;
+                                        }
+                                    }
+                                }
+                            }
                             else
                             {
                                 newRead.Temperature = null;
@@ -170,7 +187,7 @@ public partial class Worker
                 if (sensor.Values == null) sensor.Values = new();
                 if ((sensor.IsWatched || config.system.WriteScalarToDbAlways) && (sensor.Values.Count == 0 || sensor.LastSavedRead == null || sensor.LastSavedRead.ReadDate.IsElapsed(config.system.WriteScalarToDbInterval))) //Writable to db.
                 {
-                    var newId = await DbProcessor.WriteScalarSensorValueToDbAsync(sensor, newRead, Now);
+                    var newId = await DbProcessor.WriteScalarSensorValueToDbAsync(sensor, newRead);
                     if (newId > 0)
                     {
                         newRead.IsSavedToDb = true;
@@ -427,6 +444,18 @@ public partial class Worker
         };
     }
 
+    private static FarmInPeriodErrorModel GenerateFarmError(SensorModel sensor, FarmInPeriodErrorType type, DateTime Now, int periodId, string description = "")
+    {
+        return new FarmInPeriodErrorModel()
+        {
+            FarmId = sensor.LocationId,
+            PeriodId = periodId,
+            ErrorType = type,
+            DateHappened = Now,
+            Descriptions = description
+        };
+    }
+
     /// <summary>
     /// Looks for the sensors in all sensors of the Poultries.
     /// </summary>
@@ -436,23 +465,23 @@ public partial class Worker
         T? sensor = null;
         if (typeof(T) == typeof(ScalarSensorModel))
         {
-            var x = (from s in Poultry.Farms.SelectMany(f => f.Scalars.Sensors) where s != null && s.Id == id select s).FirstOrDefault();
-            if (x == null) x = Poultry.Scalar.Id == id ? Poultry.Scalar : null;
+            var x = (from s in Poultry.Farms?.SelectMany(f => f.Scalars.Sensors) where s != null && s.Id == id select s).FirstOrDefault();
+            if (x == null) x = Poultry.Scalar?.Id == id ? Poultry.Scalar : null;
             if (x != null) sensor = (T?)Convert.ChangeType(x, typeof(T));
         }
         else if (typeof(T) == typeof(CommuteSensorModel))
             sensor = (T?)Convert.ChangeType((from s in Poultry.Farms.SelectMany(f => f.Commutes.Sensors) where s != null && s.Id == id select s).FirstOrDefault(), typeof(T));
         else if (typeof(T) == typeof(PushButtonSensorModel))
         {
-            var x = (from s in Poultry.Farms.SelectMany(f => f.Checkups.Sensors) where s != null && s.Id == id select s).FirstOrDefault();
-            if (x == null) x = (from s in Poultry.Farms.SelectMany(f => f.Feeds.Sensors) where s != null && s.Id == id select s).FirstOrDefault();
+            var x = (from s in Poultry.Farms?.SelectMany(f => f.Checkups.Sensors) where s != null && s.Id == id select s).FirstOrDefault();
+            if (x == null) x = (from s in Poultry.Farms?.SelectMany(f => f.Feeds.Sensors) where s != null && s.Id == id select s).FirstOrDefault();
             if (x != null) sensor = (T?)Convert.ChangeType(x, typeof(T));
         }
         else if (typeof(T) == typeof(BinarySensorModel))
         {
-            var x = (from s in Poultry.Farms.SelectMany(f => f.ElectricPowers.Sensors) where s != null && s.Id == id select s).FirstOrDefault();
-            if (x == null) x = Poultry.MainElectricPower.Id == id ? Poultry.MainElectricPower : null;
-            if (x == null) x = Poultry.BackupElectricPower.Id == id ? Poultry.BackupElectricPower : null;
+            var x = (from s in Poultry.Farms?.SelectMany(f => f.ElectricPowers.Sensors) where s != null && s.Id == id select s).FirstOrDefault();
+            if (x == null) x = Poultry.MainElectricPower?.Id == id ? Poultry.MainElectricPower : null;
+            if (x == null) x = Poultry.BackupElectricPower?.Id == id ? Poultry.BackupElectricPower : null;
             if (x != null) sensor = (T?)Convert.ChangeType(x, typeof(T));
         }
         //else if (typeof(T) == typeof(SensorModel))

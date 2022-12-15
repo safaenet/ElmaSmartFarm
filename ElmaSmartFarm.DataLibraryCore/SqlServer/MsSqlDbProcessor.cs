@@ -69,7 +69,7 @@ public class MsSqlDbProcessor : IDbProcessor
             VALUES (@newId, @SensorId, @LocationId, @Section, @ErrorType, @DateHappened, @Descriptions); SELECT @Id = @newId";
     private readonly string EraseSensorErrorCmd = @"UPDATE SensorErrorLogs SET DateErased = @DateErased WHERE DateErased IS NULL AND SensorId = @SensorId AND ErrorType IN {0};";
 
-    public async Task<int> WriteScalarSensorValueToDbAsync(SensorModel sensor, ScalarSensorReadModel value, DateTime now)
+    public async Task<int> WriteScalarSensorValueToDbAsync(SensorModel sensor, ScalarSensorReadModel value)
     {
         try
         {
@@ -79,7 +79,7 @@ public class MsSqlDbProcessor : IDbProcessor
             dp.Add("@LocationId", sensor.LocationId);
             dp.Add("@Section", sensor.Section);
             dp.Add("@SensorId", sensor.Id);
-            dp.Add("@ReadDate", now);
+            dp.Add("@ReadDate", value.ReadDate);
             dp.Add("@Temperature", value.Temperature);
             dp.Add("@Humidity", value.Humidity);
             dp.Add("@Light", value.Light);

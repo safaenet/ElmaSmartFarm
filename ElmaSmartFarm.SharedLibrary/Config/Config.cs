@@ -67,6 +67,7 @@ public class System
         KeepAliveInterval = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("keep_alive_interval").Value ?? "15");
         KeepAliveWaitingTimeout = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("keep_alive_waiting_timeout").Value ?? "45");
         MaxSensorErrorCount = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("max_sensor_error_count").Value ?? "10");
+        MaxFarmErrorCount = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("max_farm_error_count").Value ?? "15");
         MaxSensorReadCount = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("max_sensor_read_count").Value ?? "10");
         SensorLowBatteryLevel = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("sensor_low_battery_level").Value ?? "10");
 
@@ -242,6 +243,7 @@ public class System
     public bool IsKeepAliveEnabled => KeepAliveInterval > 0;
     public int KeepAliveWaitingTimeout { get; set; }
     public int MaxSensorErrorCount { get; set; }
+    public int MaxFarmErrorCount { get; set; }
     public int MaxSensorReadCount { get; set; }
     public int SensorLowBatteryLevel { get; set; }
 

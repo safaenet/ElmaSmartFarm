@@ -1,4 +1,5 @@
 ﻿using ElmaSmartFarm.SharedLibrary;
+using ElmaSmartFarm.SharedLibrary.Models;
 using ElmaSmartFarm.SharedLibrary.Models.Alarm;
 using ElmaSmartFarm.SharedLibrary.Models.Sensors;
 using Serilog;
@@ -29,7 +30,7 @@ public partial class Worker
                                 if (e.ErrorType == SensorErrorType.InvalidTemperatureData)
                                 {
                                     if (alarmTimes.Enable && (sensor.WatchTemperature) && e.DateHappened.IsElapsed(alarmTimes.RaiseTime) && !AlarmableSensorErrors.Contains(e)) AlarmableSensorErrors.Add(e);
-                                    if(sensor.WatchTemperature) sensor.WatchTemperature = !CheckToUnWatch(e, sensor.IsWatched, sensor.WatchTemperature, sensor.IsInPeriod, config.system.TempInvalidDataWatchTimeout);
+                                    if (sensor.WatchTemperature) sensor.WatchTemperature = !CheckToUnWatch(e, sensor.IsWatched, sensor.WatchTemperature, sensor.IsInPeriod, config.system.TempInvalidDataWatchTimeout);
                                 }
                                 else if (e.ErrorType == SensorErrorType.InvalidTemperatureValue)
                                 {
@@ -109,7 +110,11 @@ public partial class Worker
                         //Remove expired reads
                     }
                 }
-                if (set.MinimumTemperatureSensor.LastRead.Temperature < config.system.TempMinWorkingValue)
+                if (set.MinimumTemperatureSensor?.LastRead != null && set.MinimumTemperatureSensor.LastRead.Temperature < config.system.TempMinWorkingValue)
+                {
+                    
+                }
+                else
                 {
 
                 }
@@ -294,14 +299,14 @@ public partial class Worker
 
     private AlarmTimesModel GetAlarmTimings(SensorErrorType e)
     {
-        AlarmTimesModel a = new();
+        int level = 0;
         switch (e)
         {
             case SensorErrorType.LowBattery:
-                a.Level = config.system.AlarmLevelLowBattery;
+                level = config.system.AlarmLevelLowBattery;
                 break;
             case SensorErrorType.NotAlive:
-                a.Level = config.system.AlarmLevelNotAlive;
+                level = config.system.AlarmLevelNotAlive;
                 break;
             case SensorErrorType.InvalidData:
             case SensorErrorType.InvalidTemperatureData:
@@ -309,7 +314,7 @@ public partial class Worker
             case SensorErrorType.InvalidLightData:
             case SensorErrorType.InvalidAmmoniaData:
             case SensorErrorType.InvalidCo2Data:
-                a.Level = config.system.AlarmLevelInvalidData;
+                level = config.system.AlarmLevelInvalidData;
                 break;
             case SensorErrorType.InvalidValue:
             case SensorErrorType.InvalidTemperatureValue:
@@ -317,9 +322,64 @@ public partial class Worker
             case SensorErrorType.InvalidLightValue:
             case SensorErrorType.InvalidAmmoniaValue:
             case SensorErrorType.InvalidCo2Value:
-                a.Level = config.system.AlarmLevelInvalidValue;
+                level = config.system.AlarmLevelInvalidValue;
                 break;
         }
+        return GetAlarmTimingByLevel(level);
+    }
+
+    private AlarmTimesModel GetAlarmTimings(FarmInPeriodErrorType e)
+    {
+        int level = 0;
+        switch (e)
+        {
+            case FarmInPeriodErrorType.HighTemperature:
+                level = config.system.AlarmLevelHighTemperature;
+                break;
+            case FarmInPeriodErrorType.LowTemperature:
+                level = config.system.AlarmLevelLowTemperature;
+                break;
+            case FarmInPeriodErrorType.HighHumidity:
+                level = config.system.AlarmLevelHighHumid;
+                break;
+            case FarmInPeriodErrorType.LowHumidity:
+                level = config.system.AlarmLevelLowHumid;
+                break;
+            case FarmInPeriodErrorType.HighAmmonia:
+                level = config.system.AlarmLevelHighAmmonia;
+                break;
+            case FarmInPeriodErrorType.HighCo2:
+                level = config.system.AlarmLevelHighCo2;
+                break;
+            case FarmInPeriodErrorType.LongTimeBright:
+                level = config.system.AlarmLevelLongTimeBright;
+                break;
+            case FarmInPeriodErrorType.LongTimeDark:
+                level = config.system.AlarmLevelLongTimeDark;
+                break;
+            case FarmInPeriodErrorType.HighBrightness:
+                level = config.system.AlarmLevelHighBrightness;
+                break;
+            case FarmInPeriodErrorType.LowBrightness:
+                level = config.system.AlarmLevelLowBrightness;
+                break;
+            case FarmInPeriodErrorType.LongNoFeed:
+                level = config.system.AlarmLevelLongNoFeed;
+                break;
+            case FarmInPeriodErrorType.LongLeave:
+                level = config.system.AlarmLevelLongLeave;
+                break;
+            case FarmInPeriodErrorType.NoPower:
+                level = config.system.AlarmLevelNoPower;
+                break;
+        }
+        return GetAlarmTimingByLevel(level);
+    }
+
+    private AlarmTimesModel GetAlarmTimingByLevel(int level)
+    {
+        AlarmTimesModel a = new();
+        a.Level = level;
         switch (a.Level)
         {
             case 1:
@@ -408,6 +468,11 @@ public partial class Worker
                 break;
         }
         return a;
+    }
+
+    private FarmModel? FindFarmBySensorId(int Id)
+    {
+        return (from f in Poultry.Farms where Poultry.Farms.Select(pf => pf.Scalars).SelectMany(sc => sc.ActiveSensors).Any(As => As.Id == Id) select f).FirstOrDefault();
     }
 
     private async Task CheckKeepAliveMessageDate(SensorModel sensor, int keepAliveTimeout, DateTime Now)
