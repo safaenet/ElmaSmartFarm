@@ -5,6 +5,52 @@
   "max_sensor_read_count": 10,
   "sensor_low_battery_level": 10,
 
+  "alarm_level": {
+    "low_battery": 1,
+    "not_alive": 2,
+    "invalid_data": 1,
+    "invalid_value": 1,
+    "high_temp": 3,
+    "low_temp": 3,
+    "high_humid": 2,
+    "low_humid": 2,
+    "high_ammonia": 3,
+    "high_co2": 3,
+    "long_time_bright": 2,
+    "long_time_dark": 2,
+    "high_brightness": 2,
+    "low_brightness": 2,
+    "long_no_feed": 3,
+    "long_leave": 3,
+    "no_power": 4
+  },
+  "alarm_level_timeout": {
+    "1": {
+      "first_time": 5,
+      "every": 5,
+      "snooze": 5,
+      "count_in_cycle": 3
+    },
+    "2": {
+      "first_time": 5,
+      "every": 5,
+      "snooze": 5,
+      "count_in_cycle": 3
+    },
+    "3": {
+      "first_time": 5,
+      "every": 5,
+      "snooze": 5,
+      "count_in_cycle": 3
+    },
+    "4": {
+      "first_time": 5,
+      "every": 5,
+      "snooze": 5,
+      "count_in_cycle": 3
+    }
+  },
+
   "scalar_general": {
     "read_interval": 15,
     "write_to_db_interval": 10, //(Seconds)

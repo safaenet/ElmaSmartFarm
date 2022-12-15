@@ -50,12 +50,12 @@ public enum FarmInPeriodErrorType
     LowTemperature,
     HighHumidity,
     LowHumidity,
+    HighAmmonia,
+    HighCo2,
     LongTimeBright,
     LongTimeDark,
     HighBrightness,
     LowBrightness,
-    HighAmmonia,
-    HighCo2,
     LongNoFeed,
     LongLeave,
     NoPower
@@ -78,8 +78,9 @@ public enum AlarmDeviceType
 public enum AlarmLevel
 {
     Low = 1,
-    Medium,
-    High
+    Warning,
+    Critical,
+    Fatal
 }
 
 public enum CommuteSensorValueType

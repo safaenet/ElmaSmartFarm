@@ -180,5 +180,11 @@ namespace ElmaSmartFarm.SharedLibrary
             if (r.Co2.HasValue == false || r.Co2.Value < config.system.Co2MinValue || r.Co2.Value > config.system.Co2MaxValue) return false;
             return true;
         }
+
+        public static bool IsFarmSensor(this SensorModel s)
+        {
+            if (s.Type == SensorType.OutdoorScalar || s.Type == SensorType.PoultryMainElectricPower || s.Type == SensorType.PoultryBackupElectricPower) return false;
+            return true;
+        }
     }
 }
