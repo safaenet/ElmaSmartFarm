@@ -26,24 +26,28 @@
   },
   "alarm_level_timeout": {
     "1": {
+      "enable": true,
       "first_time": 5,
       "every": 5,
       "snooze": 5,
       "count_in_cycle": 3
     },
     "2": {
+      "enable": true,
       "first_time": 5,
       "every": 5,
       "snooze": 5,
       "count_in_cycle": 3
     },
     "3": {
+      "enable": true,
       "first_time": 5,
       "every": 5,
       "snooze": 5,
       "count_in_cycle": 3
     },
     "4": {
+      "enable": true,
       "first_time": 5,
       "every": 5,
       "snooze": 5,
