@@ -8,4 +8,5 @@ public class ScalarSensorReadModel : SensorReadModel
     public double? Ammonia { get; set; }
     public double? Co2 { get; set; }
     public bool HasValue => Temperature != null || Humidity != null || Light != null || Ammonia != null || Co2 != null;
+    public string AllValues => $"T:{Temperature}, H:{Humidity}, L:{Light}, A:{Ammonia}, C:{Co2}";
 }

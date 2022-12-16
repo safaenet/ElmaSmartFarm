@@ -376,7 +376,7 @@ public partial class Worker
         if (config.VerboseMode) Log.Error($"{ErrorToAdd} detected in one of farms. sensor ID: {sensor.Id}");
         if (farm != null)
         {
-            var newErr = GenerateFarmError(sensor, ErrorToAdd, Now, farm.Period?.Id ?? 0, $"{ErrorToAdd}: {newRead.Humidity}");
+            var newErr = GenerateFarmError(sensor, ErrorToAdd, Now, farm.Period?.Id ?? 0, $"{ErrorToAdd}: {newRead.AllValues}");
             if (farm.InPeriodErrors == null) farm.InPeriodErrors = new();
             if (farm.InPeriodErrors.AddError(newErr, ErrorToAdd, config.system.MaxFarmErrorCount))
             {
