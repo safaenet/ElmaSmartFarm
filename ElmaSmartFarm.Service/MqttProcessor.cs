@@ -447,18 +447,8 @@ public partial class Worker
 
     private async Task AddkValueRangeFarmError(FarmModel farm, SensorModel sensor, ScalarSensorReadModel newRead, FarmInPeriodErrorType ErrorToAdd, FarmInPeriodErrorType? ErrorToErase, DateTime Now)
     {
-        if (config.VerboseMode) Log.Error($"{ErrorToAdd} detected in one of farms. sensor ID: {sensor.Id}");
-        if (farm != null)
-        {
-            var newErr = GenerateFarmError(sensor, ErrorToAdd, Now, farm.Period?.Id ?? 0, $"{ErrorToAdd}: {newRead.AllValues}");
-            if (farm.InPeriodErrors == null) farm.InPeriodErrors = new();
-            if (farm.InPeriodErrors.AddError(newErr, ErrorToAdd, config.system.MaxFarmErrorCount))
-            {
-                var newId = await DbProcessor.WriteFarmErrorToDbAsync(newErr, Now);
-                if (newId > 0) newErr.Id = newId;
-            }
-            if(ErrorToErase.HasValue) await EraseFarmErrors(farm, Now, ErrorToErase.Value);
-        }
+        await AddFarmError(farm, sensor, newRead.ReadDate, ErrorToAdd, Now);
+        if (ErrorToErase.HasValue) await EraseFarmErrors(farm, Now, ErrorToErase.Value);
     }
 
     private async Task EraseSensorErrors<T>(T s, DateTime Now, params SensorErrorType[] types) where T : SensorModel

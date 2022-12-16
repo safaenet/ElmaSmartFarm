@@ -90,7 +90,9 @@ public class System
         AlarmLevelLowBrightness = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level:low_brightness").Value ?? "2");
         AlarmLevelLongNoFeed = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level:long_no_feed").Value ?? "3");
         AlarmLevelLongLeave = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level:long_leave").Value ?? "3");
-        AlarmLevelNoPower = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level:no_power").Value ?? "4");
+        AlarmLevelNoPower = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level:no_farm_power").Value ?? "4");
+        AlarmLevelNoMainPower = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level:no_main_power").Value ?? "4");
+        AlarmLevelNoBackupPower = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level:no_backup_power").Value ?? "4");
 
         FarmAlarmDuration = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level_timeout:farm_alarm_duration").Value ?? "20");
         PoultryAlarmDuration = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level_timeout:poultry_alarm_duration").Value ?? "20");
@@ -273,6 +275,8 @@ public class System
     public int AlarmLevelLongNoFeed { get; set; }
     public int AlarmLevelLongLeave { get; set; }
     public int AlarmLevelNoPower { get; set; }
+    public int AlarmLevelNoMainPower { get; set; }
+    public int AlarmLevelNoBackupPower { get; set; }
 
     public int FarmAlarmDuration { get; set; }
     public int PoultryAlarmDuration { get; set; }

@@ -25,7 +25,9 @@
     "low_brightness": 2,
     "long_no_feed": 3,
     "long_leave": 3,
-    "no_power": 4
+    "no_farm_power": 4,
+    "no_main_power": 4,
+    "no_backup_power": 4
   },
   "alarm_level_timeout": {
     "farm_alarm_duration": 20,

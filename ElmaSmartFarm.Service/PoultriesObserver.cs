@@ -158,7 +158,9 @@ public partial class Worker
 
                         if (sensor.IsInPeriod && ((sensor.LastCommuteDate == null && SystemUpTime.IsElapsed(config.system.FarmCheckupInterval)) || (sensor.LastCommuteDate != null && sensor.LastCommuteDate.IsElapsed(config.system.FarmCheckupInterval))))
                         {
-                            await CheckInterval(sensor, sensor.LastRead == null ? SystemUpTime : sensor.LastRead.ReadDate, FarmInPeriodErrorType.LongLeave, Now);
+                            var farm = FindFarmBySensorId(sensor.Id);
+                            if (farm == null) Log.Error($"Farm for the indoor sensor not detected. Sensor ID: {sensor.Id} (System Error)");
+                            else await AddFarmError(farm, sensor, sensor.LastRead == null ? SystemUpTime : sensor.LastRead.ReadDate, FarmInPeriodErrorType.LongLeave, Now);
                         }
                     }
                 }
@@ -210,14 +212,18 @@ public partial class Worker
                             {
                                 if ((sensor.LastRead == null && SystemUpTime.IsElapsed(config.system.FeedInterval)) || (sensor.LastRead != null && sensor.LastRead.ReadDate.IsElapsed(config.system.FeedInterval)))
                                 {
-                                    await CheckInterval(sensor, sensor.LastRead == null ? SystemUpTime : sensor.LastRead.ReadDate, FarmInPeriodErrorType.LongNoFeed, Now);
+                                    var farm = FindFarmBySensorId(sensor.Id);
+                                    if (farm == null) Log.Error($"Farm for the indoor sensor not detected. Sensor ID: {sensor.Id} (System Error)");
+                                    else await AddFarmError(farm, sensor, sensor.LastRead == null ? SystemUpTime : sensor.LastRead.ReadDate, FarmInPeriodErrorType.LongNoFeed, Now);
                                 }
                             }
                             else if (sensor.Type == SensorType.FarmCheckup)
                             {
                                 if ((sensor.LastRead == null && SystemUpTime.IsElapsed(config.system.FarmCheckupInterval)) || (sensor.LastRead != null && sensor.LastRead.ReadDate.IsElapsed(config.system.FarmCheckupInterval)))
                                 {
-                                    await CheckInterval(sensor, sensor.LastRead == null ? SystemUpTime : sensor.LastRead.ReadDate, FarmInPeriodErrorType.LongLeave, Now);
+                                    var farm = FindFarmBySensorId(sensor.Id);
+                                    if (farm == null) Log.Error($"Farm for the indoor sensor not detected. Sensor ID: {sensor.Id} (System Error)");
+                                    else await AddFarmError(farm, sensor, sensor.LastRead == null ? SystemUpTime : sensor.LastRead.ReadDate, FarmInPeriodErrorType.LongLeave, Now);
                                 }
                             }
                         }
@@ -304,12 +310,10 @@ public partial class Worker
         return null;
     }
 
-    private async Task CheckInterval(SensorModel sensor, DateTime? ReadDate, FarmInPeriodErrorType ErrorType, DateTime Now)
+    private async Task AddFarmError(FarmModel farm , SensorModel sensor, DateTime? ReadDate, FarmInPeriodErrorType ErrorType, DateTime Now)
     {
         if (config.VerboseMode) Log.Warning($"{ErrorType} detected in one of farms. sensor ID: {sensor.Id}");
-        var farm = FindFarmBySensorId(sensor.Id);
-        if (farm == null) Log.Error($"Farm for the indoor sensor not detected. Sensor ID: {sensor.Id} (System Error)");
-        else
+        if (farm != null)
         {
             if (config.VerboseMode) Log.Warning($"{ErrorType} detected in farm ID: {farm.Id}, Name: {farm.Name}. sensor ID: {sensor.Id}");
             var newErr = GenerateFarmError(sensor, ErrorType, Now, farm.Period?.Id ?? 0, $"{ErrorType} since: {(ReadDate == null ? SystemUpTime : ReadDate)}, Detected by: {sensor.Type}");
@@ -395,6 +399,21 @@ public partial class Worker
                 break;
             case FarmInPeriodErrorType.NoPower:
                 level = config.system.AlarmLevelNoPower;
+                break;
+        }
+        return GetAlarmTimingByLevel(level);
+    }
+
+    private AlarmTimesModel GetAlarmTimings(PoultryInPeriodErrorType e)
+    {
+        int level = 0;
+        switch (e)
+        {
+            case PoultryInPeriodErrorType.NoMainPower:
+                level = config.system.AlarmLevelNoMainPower;
+                break;
+            case PoultryInPeriodErrorType.NoBackupPower:
+                level = config.system.AlarmLevelNoBackupPower;
                 break;
         }
         return GetAlarmTimingByLevel(level);
