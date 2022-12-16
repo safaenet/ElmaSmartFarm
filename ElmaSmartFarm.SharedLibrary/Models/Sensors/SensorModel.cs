@@ -9,7 +9,7 @@ public class SensorModel : SensorBaseModel
     public SensorErrorModel LastError => Errors?.MaxBy(x => x.DateHappened);
     public IEnumerable<SensorErrorModel> ActiveErrors => Errors.Where(e => e.DateErased == null);
     public bool HasError => IsEnabled && ActiveErrors.Any();
-    public bool IsInPeriod { get; set; }
+    public bool IsInPeriod { get; set; } = true;
     public int WatchStartDay { get; set; }
     public bool IsWatched { get; set; } = true;
 }

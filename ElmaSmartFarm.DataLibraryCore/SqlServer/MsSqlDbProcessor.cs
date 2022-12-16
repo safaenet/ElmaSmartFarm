@@ -67,7 +67,11 @@ public class MsSqlDbProcessor : IDbProcessor
     private readonly string WriteSensorErrorCmd = @"DECLARE @newId int; SET @newId = (SELECT ISNULL(MAX([Id]), 0) FROM [SensorErrorLogs]) + 1;
             INSERT INTO SensorErrorLogs (Id, SensorId, LocationId, Section, ErrorType, DateHappened, Descriptions)
             VALUES (@newId, @SensorId, @LocationId, @Section, @ErrorType, @DateHappened, @Descriptions); SELECT @Id = @newId";
+    private readonly string WriteFarmErrorCmd = @"DECLARE @newId int; SET @newId = (SELECT ISNULL(MAX([Id]), 0) FROM [FarmInPeriodErrorLogs]) + 1;
+            INSERT INTO FarmInPeriodErrorLogs (Id, FarmId, PeriodId, ErrorType, DateHappened, CausedSensorId, Descriptions)
+            VALUES (@newId, @FarmId, @PeriodId, @ErrorType, @DateHappened, @CausedSensorId, @Descriptions); SELECT @Id = @newId";
     private readonly string EraseSensorErrorCmd = @"UPDATE SensorErrorLogs SET DateErased = @DateErased WHERE DateErased IS NULL AND SensorId = @SensorId AND ErrorType IN {0};";
+    private readonly string EraseFarmErrorCmd = @"UPDATE FarmInPeriodErrorLogs SET DateErased = @DateErased WHERE DateErased IS NULL AND FarmId = @FarmId AND ErrorType IN {0};";
 
     public async Task<int> WriteScalarSensorValueToDbAsync(SensorModel sensor, ScalarSensorReadModel value)
     {
@@ -149,6 +153,31 @@ public class MsSqlDbProcessor : IDbProcessor
         return 0;
     }
 
+    public async Task<int> WriteFarmErrorToDbAsync(FarmInPeriodErrorModel error, DateTime now)
+    {
+        try
+        {
+            if (config.VerboseMode) Log.Information($"Writing farm error in database. Farm ID: {error.FarmId}, Period ID: {error.PeriodId}, Error Type: {error.ErrorType}, Caused sensor ID: {error.CausedSensorId}");
+            DynamicParameters dp = new();
+            dp.Add("@Id", 0, System.Data.DbType.Int32, System.Data.ParameterDirection.Output);
+            dp.Add("@FarmId", error.FarmId);
+            dp.Add("@PeriodId", error.PeriodId);
+            dp.Add("@ErrorType", error.ErrorType);
+            dp.Add("@DateHappened", now);
+            dp.Add("@CausedSensorId", error.CausedSensorId);
+            dp.Add("@Descriptions", error.Descriptions);
+            _ = await DataAccess.SaveDataAsync(WriteFarmErrorCmd, dp);
+            var newId = dp.Get<int>("@Id");
+            if (newId == 0) Log.Error($"Error when writing farm error. Farm ID: {error.FarmId}, Period ID: {error.PeriodId}, Error Type: {error.ErrorType}, Caused sensor ID: {error.CausedSensorId}. (System Error)");
+            return newId;
+        }
+        catch (Exception ex)
+        {
+            Log.Error(ex, $"Error when writing farm error in database. Farm ID: {error.FarmId}, Period ID: {error.PeriodId}, Error Type: {error.ErrorType}, Caused sensor ID: {error.CausedSensorId}");
+        }
+        return 0;
+    }
+
     public async Task<bool> EraseSensorErrorFromDbAsync(int sensorId, DateTime eraseDate, params SensorErrorType[] types)
     {
         try
@@ -169,6 +198,30 @@ public class MsSqlDbProcessor : IDbProcessor
         catch (Exception ex)
         {
             Log.Error(ex, $"Error when updating sensor error in database. Sensor ID: {sensorId}, Error Types: {types[0]}...");
+        }
+        return false;
+    }
+
+    public async Task<bool> EraseFarmErrorFromDbAsync(int farmId, DateTime eraseDate, params FarmInPeriodErrorType[] types)
+    {
+        try
+        {
+            if (types == null || types.Length == 0) return false;
+            if (config.VerboseMode) Log.Information($"Updating farm error in database, if existed. Farm ID: {farmId}, Error Types: {types[0]}...");
+            DynamicParameters dp = new();
+            dp.Add("@FarmId", farmId);
+            dp.Add("@DateErased", eraseDate);
+            string errors = "";
+            foreach (var t in types) errors += ((int)t).ToString() + ",";
+            errors = errors.Remove(errors.Length - 1, 1);
+            errors = "(" + errors + ")";
+            var sql = string.Format(EraseFarmErrorCmd, errors);
+            var i = await DataAccess.SaveDataAsync(sql, dp);
+            return i > 0;
+        }
+        catch (Exception ex)
+        {
+            Log.Error(ex, $"Error when updating farm error in database. Farm ID: {farmId}, Error Types: {types[0]}...");
         }
         return false;
     }

@@ -612,7 +612,7 @@ public partial class Worker
             if (CanRunObserver)
             {
                 ticks = DateTime.Now.Ticks;
-                if (config.VerboseMode) Log.Information($"===============  Start observation process ===============");
+                //if (config.VerboseMode) Log.Information($"===============  Start observation process ===============");
                 try
                 {
                     if (Poultry != null && (Poultry.IsInPeriod || config.system.ObserveAlways))
@@ -626,7 +626,7 @@ public partial class Worker
                 {
                     Log.Error(ex, "Exception thrown in Observer:");
                 }
-                if (config.VerboseMode) Log.Information($"===============  End of observation process ({TimeSpan.FromTicks(DateTime.Now.Ticks - ticks).TotalMilliseconds} ms) ===============");
+                //if (config.VerboseMode) Log.Information($"===============  End of observation process ({TimeSpan.FromTicks(DateTime.Now.Ticks - ticks).TotalMilliseconds} ms) ===============");
                 await Task.Delay(TimeSpan.FromSeconds(config.system.ObserverCheckInterval));
             }
         }

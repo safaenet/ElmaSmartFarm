@@ -83,17 +83,17 @@ public partial class Worker
                             if (newRead.HasValidTemp(sensor.Type))
                             {
                                 await EraseSensorErrors(sensor, Now, SensorErrorType.InvalidTemperatureValue);
-                                if (sensor.IsWatched && sensor.IsInPeriod)
+                                if (sensor.IsFarmSensor() && sensor.IsWatched && sensor.IsInPeriod)
                                 {
-                                    if (newRead.Temperature < config.system.TempMinWorkingValue)
+                                    var farm = FindFarmBySensorId(sensor.Id);
+                                    if (farm == null) Log.Error($"Farm for the indoor sensor not detected. Sensor ID: {sensor.Id} (System Error)");
+                                    else
                                     {
-                                        var farm = FindFarmBySensorId(sensor.Id);
-                                        var newErr = GenerateFarmError(sensor, FarmInPeriodErrorType.LowTemperature, Now, farm?.Period?.Id ?? 0, $"{FarmInPeriodErrorType.LowTemperature}: {newRead.Temperature}");
-                                        if (farm != null && farm.InPeriodErrors.AddError(newErr, FarmInPeriodErrorType.LowTemperature, config.system.MaxFarmErrorCount))
-                                        {
-                                            //var newId = await DbProcessor.WriteSensorErrorToDbAsync(newErr, Now);
-                                            //if (newId > 0) sensor.LastError.Id = newId;
-                                        }
+                                        if (newRead.Temperature < config.system.TempMinWorkingValue)
+                                            await AddkValueRangeFarmError(farm, sensor, newRead, FarmInPeriodErrorType.LowTemperature, FarmInPeriodErrorType.HighTemperature, Now);
+                                        else if (newRead.Temperature > config.system.TempMaxWorkingValue)
+                                            await AddkValueRangeFarmError(farm, sensor, newRead, FarmInPeriodErrorType.HighTemperature, FarmInPeriodErrorType.LowTemperature, Now);
+                                        else if (farm != null) await EraseFarmErrors(farm, Now, FarmInPeriodErrorType.LowTemperature, FarmInPeriodErrorType.HighTemperature);
                                     }
                                 }
                             }
@@ -113,7 +113,23 @@ public partial class Worker
                         {
                             newRead.Humidity = value + sensor.HumidityOffset;
                             await EraseSensorErrors(sensor, Now, SensorErrorType.InvalidHumidityData);
-                            if (newRead.HasValidHumid()) await EraseSensorErrors(sensor, Now, SensorErrorType.InvalidHumidityValue);
+                            if (newRead.HasValidHumid())
+                            {
+                                await EraseSensorErrors(sensor, Now, SensorErrorType.InvalidHumidityValue);
+                                if (sensor.IsFarmSensor() && sensor.IsWatched && sensor.IsInPeriod)
+                                {
+                                    var farm = FindFarmBySensorId(sensor.Id);
+                                    if (farm == null) Log.Error($"Farm for the indoor sensor not detected. Sensor ID: {sensor.Id} (System Error)");
+                                    else
+                                    {
+                                        if (newRead.Humidity < config.system.HumidMinWorkingValue)
+                                            await AddkValueRangeFarmError(farm, sensor, newRead, FarmInPeriodErrorType.LowHumidity, FarmInPeriodErrorType.HighHumidity, Now);
+                                        else if (newRead.Humidity > config.system.HumidMaxWorkingValue)
+                                            await AddkValueRangeFarmError(farm, sensor, newRead, FarmInPeriodErrorType.HighHumidity, FarmInPeriodErrorType.LowHumidity, Now);
+                                        else if (farm != null) await EraseFarmErrors(farm, Now, FarmInPeriodErrorType.LowHumidity, FarmInPeriodErrorType.HighHumidity);
+                                    }
+                                }
+                            }
                             else
                             {
                                 newRead.Humidity = null;
@@ -147,7 +163,21 @@ public partial class Worker
                         {
                             newRead.Ammonia = value + sensor.AmmoniaOffset;
                             await EraseSensorErrors(sensor, Now, SensorErrorType.InvalidAmmoniaData);
-                            if (newRead.HasValidAmmonia()) await EraseSensorErrors(sensor, Now, SensorErrorType.InvalidAmmoniaValue);
+                            if (newRead.HasValidAmmonia())
+                            {
+                                await EraseSensorErrors(sensor, Now, SensorErrorType.InvalidAmmoniaValue);
+                                if (sensor.IsFarmSensor() && sensor.IsWatched && sensor.IsInPeriod)
+                                {
+                                    var farm = FindFarmBySensorId(sensor.Id);
+                                    if (farm == null) Log.Error($"Farm for the indoor sensor not detected. Sensor ID: {sensor.Id} (System Error)");
+                                    else
+                                    {
+                                        if (newRead.Ammonia > config.system.AmmoniaMaxWorkingValue)
+                                            await AddkValueRangeFarmError(farm, sensor, newRead, FarmInPeriodErrorType.HighAmmonia, null, Now);
+                                        else if (farm != null) await EraseFarmErrors(farm, Now, FarmInPeriodErrorType.HighAmmonia);
+                                    }
+                                }
+                            }
                             else
                             {
                                 newRead.Ammonia = null;
@@ -164,7 +194,21 @@ public partial class Worker
                         {
                             newRead.Co2 = value + sensor.Co2Offset;
                             await EraseSensorErrors(sensor, Now, SensorErrorType.InvalidCo2Data);
-                            if (newRead.HasValidCo2()) await EraseSensorErrors(sensor, Now, SensorErrorType.InvalidCo2Value);
+                            if (newRead.HasValidCo2())
+                            {
+                                await EraseSensorErrors(sensor, Now, SensorErrorType.InvalidCo2Value);
+                                if (sensor.IsFarmSensor() && sensor.IsWatched && sensor.IsInPeriod)
+                                {
+                                    var farm = FindFarmBySensorId(sensor.Id);
+                                    if (farm == null) Log.Error($"Farm for the indoor sensor not detected. Sensor ID: {sensor.Id} (System Error)");
+                                    else
+                                    {
+                                        if (newRead.Co2 > config.system.AmmoniaMaxWorkingValue)
+                                            await AddkValueRangeFarmError(farm, sensor, newRead, FarmInPeriodErrorType.HighCo2, null, Now);
+                                        else if (farm != null) await EraseFarmErrors(farm, Now, FarmInPeriodErrorType.HighCo2);
+                                    }
+                                }
+                            }
                             else
                             {
                                 newRead.Co2 = null;
@@ -327,6 +371,21 @@ public partial class Worker
         return 0;
     }
 
+    private async Task AddkValueRangeFarmError(FarmModel farm, SensorModel sensor, ScalarSensorReadModel newRead, FarmInPeriodErrorType ErrorToAdd, FarmInPeriodErrorType? ErrorToErase, DateTime Now)
+    {
+        if (config.VerboseMode) Log.Error($"{ErrorToAdd} detected in one of farms. sensor ID: {sensor.Id}");
+        if (farm != null)
+        {
+            var newErr = GenerateFarmError(sensor, ErrorToAdd, Now, farm.Period?.Id ?? 0, $"{ErrorToAdd}: {newRead.Humidity}");
+            if (farm.InPeriodErrors == null) farm.InPeriodErrors = new();
+            if (farm.InPeriodErrors.AddError(newErr, ErrorToAdd, config.system.MaxFarmErrorCount))
+            {
+                var newId = await DbProcessor.WriteFarmErrorToDbAsync(newErr, Now);
+                if (newId > 0) newErr.Id = newId;
+            }
+            if(ErrorToErase.HasValue) await EraseFarmErrors(farm, Now, ErrorToErase.Value);
+        }
+    }
     private async Task EraseSensorErrors<T>(T s, DateTime Now, params SensorErrorType[] types) where T : SensorModel
     {
         if (types == null || types.Length == 0) return;
@@ -337,6 +396,16 @@ public partial class Worker
             if (e == SensorErrorType.NotAlive) s.KeepAliveMessageDate = Now;
         }
         await DbProcessor.EraseSensorErrorFromDbAsync(s.Id, Now, types);
+    }
+
+    private async Task EraseFarmErrors(FarmModel f, DateTime Now, params FarmInPeriodErrorType[] types)
+    {
+        if (types == null || types.Length == 0) return;
+        foreach (var e in types)
+        {
+            f.InPeriodErrors.EraseError(e, Now);
+        }
+        await DbProcessor.EraseFarmErrorFromDbAsync(f.Id, Now, types);
     }
 
     private async Task InvalidSensorValueHandler<T>(T s, MqttMessageModel mqtt, SensorErrorType e, DateTime Now) where T : SensorModel
@@ -452,6 +521,7 @@ public partial class Worker
             PeriodId = periodId,
             ErrorType = type,
             DateHappened = Now,
+            CausedSensorId = sensor.Id,
             Descriptions = description
         };
     }
