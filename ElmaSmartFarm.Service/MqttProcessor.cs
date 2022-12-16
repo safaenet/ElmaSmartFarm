@@ -274,6 +274,8 @@ public partial class Worker
                 }
                 if (sensor.Values.Count >= config.system.MaxSensorReadCount) sensor.Values.RemoveOldestNotSaved(config.VerboseMode);
                 sensor.Values.Add(newRead);
+                var farm = FindFarmBySensorId(sensor.Id);
+                if (farm != null) await EraseFarmErrors(farm, Now, FarmInPeriodErrorType.LongLeave);
                 if (config.VerboseMode) Log.Information($"Commute sensor value done processing: {sensor.LastRead.ReadDate}, : {sensor.LastRead.Value}, Count: {sensor.Values.Count}");
             }
             #endregion
@@ -302,6 +304,12 @@ public partial class Worker
                 }
                 if (sensor.Values.Count >= config.system.MaxSensorReadCount) sensor.Values.RemoveOldestNotSaved(config.VerboseMode);
                 sensor.Values.Add(newRead);
+                var farm = FindFarmBySensorId(sensor.Id);
+                if (farm != null)
+                {
+                    if (sensor.Type == SensorType.FarmFeed) await EraseFarmErrors(farm, Now, FarmInPeriodErrorType.LongNoFeed);
+                    else if (sensor.Type == SensorType.FarmCheckup) await EraseFarmErrors(farm, Now, FarmInPeriodErrorType.LongLeave);
+                }
                 if (config.VerboseMode) Log.Information($"PushButton sensor value done processing: {sensor.LastRead.ReadDate}, : {sensor.LastRead.Value}, Count: {sensor.Values.Count}");
             }
             #endregion
@@ -358,6 +366,72 @@ public partial class Worker
                 }
                 if (sensor.Values.Count >= config.system.MaxSensorReadCount) sensor.Values.RemoveOldestNotSaved(config.VerboseMode);
                 sensor.Values.Add(newRead);
+
+                if (sensor.IsInPeriod)
+                {
+                    if (sensor.Type == SensorType.FarmElectricPower)
+                    {
+                        if (newRead.Value == BinarySensorValueType.Off)
+                        {
+                            if (config.VerboseMode) Log.Warning($"{FarmInPeriodErrorType.NoPower} detected in one of farms. sensor ID: {sensor.Id}");
+                            var farm = FindFarmBySensorId(sensor.Id);
+                            if (farm == null) Log.Error($"Farm for the indoor sensor not detected. Sensor ID: {sensor.Id} (System Error)");
+                            else
+                            {
+                                if (config.VerboseMode) Log.Warning($"{FarmInPeriodErrorType.NoPower} detected in farm ID: {farm.Id}, Name: {farm.Name}. sensor ID: {sensor.Id}");
+                                var newErr = GenerateFarmError(sensor, FarmInPeriodErrorType.NoPower, Now, farm.Period?.Id ?? 0, $"{FarmInPeriodErrorType.NoPower} on: {newRead.ReadDate}, Detected by: {sensor.Type}");
+                                if (farm.InPeriodErrors == null) farm.InPeriodErrors = new();
+                                if (farm.InPeriodErrors.AddError(newErr, FarmInPeriodErrorType.NoPower, config.system.MaxFarmErrorCount))
+                                {
+                                    var newId = await DbProcessor.WriteFarmErrorToDbAsync(newErr, Now);
+                                    if (newId > 0) newErr.Id = newId;
+                                }
+                            }
+                        }
+                        else if (newRead.Value == BinarySensorValueType.On)
+                        {
+                            var farm = FindFarmBySensorId(sensor.Id);
+                            if (farm != null) await EraseFarmErrors(farm, Now, FarmInPeriodErrorType.NoPower);
+                        }
+                    }
+                    else if (sensor.Type == SensorType.PoultryMainElectricPower)
+                    {
+                        if (newRead.Value == BinarySensorValueType.Off)
+                        {
+                            if (config.VerboseMode) Log.Warning($"{PoultryInPeriodErrorType.NoMainPower} detected in poultry. sensor ID: {sensor.Id}");
+                            var newErr = GeneratePoultryError(sensor, PoultryInPeriodErrorType.NoMainPower, Now, $"{PoultryInPeriodErrorType.NoMainPower} on: {newRead.ReadDate}, Detected by: {sensor.Type}");
+                            if (Poultry.InPeriodErrors == null) Poultry.InPeriodErrors = new();
+                            if (Poultry.InPeriodErrors.AddError(newErr, config.system.MaxPoultryErrorCount))
+                            {
+                                var newId = await DbProcessor.WritePoultryErrorToDbAsync(newErr, Now);
+                                if (newId > 0) newErr.Id = newId;
+                            }
+                        }
+                        else if (newRead.Value == BinarySensorValueType.On)
+                        {
+                            await ErasePoultryErrors(Now, PoultryInPeriodErrorType.NoMainPower);
+                        }
+                    }
+                    else if (sensor.Type == SensorType.PoultryBackupElectricPower)
+                    {
+                        if (newRead.Value == BinarySensorValueType.Off)
+                        {
+                            if (config.VerboseMode) Log.Warning($"{PoultryInPeriodErrorType.NoBackupPower} detected in poultry. sensor ID: {sensor.Id}");
+                            var newErr = GeneratePoultryError(sensor, PoultryInPeriodErrorType.NoBackupPower, Now, $"{PoultryInPeriodErrorType.NoBackupPower} on: {newRead.ReadDate}, Detected by: {sensor.Type}");
+                            if (Poultry.InPeriodErrors == null) Poultry.InPeriodErrors = new();
+                            if (Poultry.InPeriodErrors.AddError(newErr, config.system.MaxPoultryErrorCount))
+                            {
+                                var newId = await DbProcessor.WritePoultryErrorToDbAsync(newErr, Now);
+                                if (newId > 0) newErr.Id = newId;
+                            }
+                        }
+                        else if (newRead.Value == BinarySensorValueType.On)
+                        {
+                            await ErasePoultryErrors(Now, PoultryInPeriodErrorType.NoBackupPower);
+                        }
+                    }
+                }
+
                 if (config.VerboseMode) Log.Information($"Binary sensor value done processing: {sensor.LastRead.ReadDate}, : {sensor.LastRead.Value}, Count: {sensor.Values.Count}");
             }
             #endregion
@@ -386,6 +460,7 @@ public partial class Worker
             if(ErrorToErase.HasValue) await EraseFarmErrors(farm, Now, ErrorToErase.Value);
         }
     }
+
     private async Task EraseSensorErrors<T>(T s, DateTime Now, params SensorErrorType[] types) where T : SensorModel
     {
         if (types == null || types.Length == 0) return;
@@ -406,6 +481,16 @@ public partial class Worker
             f.InPeriodErrors.EraseError(e, Now);
         }
         await DbProcessor.EraseFarmErrorFromDbAsync(f.Id, Now, types);
+    }
+
+    private async Task ErasePoultryErrors(DateTime Now, params PoultryInPeriodErrorType[] types)
+    {
+        if (types == null || types.Length == 0) return;
+        foreach (var e in types)
+        {
+            Poultry.InPeriodErrors.EraseError(e, Now);
+        }
+        await DbProcessor.ErasePoultryErrorFromDbAsync(Now, types);
     }
 
     private async Task InvalidSensorValueHandler<T>(T s, MqttMessageModel mqtt, SensorErrorType e, DateTime Now) where T : SensorModel
@@ -522,6 +607,16 @@ public partial class Worker
             ErrorType = type,
             DateHappened = Now,
             CausedSensorId = sensor.Id,
+            Descriptions = description
+        };
+    }
+
+    private static PoultryInPeriodErrorModel GeneratePoultryError(SensorModel sensor, PoultryInPeriodErrorType type, DateTime Now, string description = "")
+    {
+        return new PoultryInPeriodErrorModel()
+        {
+            ErrorType = type,
+            DateHappened = Now,
             Descriptions = description
         };
     }

@@ -32,6 +32,7 @@ public partial class Worker : BackgroundService
     private readonly List<AlarmModel> FarmAlarms;
     private readonly AlarmModel PoultryAlarm;
     private bool CanRunObserver;
+    private DateTime SystemUpTime;
 
     public override async Task<Task> StartAsync(CancellationToken cancellationToken)
     {
@@ -50,6 +51,7 @@ public partial class Worker : BackgroundService
 
         Poultry = await DbProcessor.LoadPoultriesAsync();
         await TryReconnectAsync();
+        SystemUpTime = DateTime.Now;
         CanRunObserver = true;
         return base.StartAsync(cancellationToken);
     }

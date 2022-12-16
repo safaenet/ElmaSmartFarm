@@ -68,8 +68,11 @@ public class System
         KeepAliveWaitingTimeout = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("keep_alive_waiting_timeout").Value ?? "45");
         MaxSensorErrorCount = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("max_sensor_error_count").Value ?? "10");
         MaxFarmErrorCount = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("max_farm_error_count").Value ?? "15");
+        MaxPoultryErrorCount = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("max_poultry_error_count").Value ?? "10");
         MaxSensorReadCount = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("max_sensor_read_count").Value ?? "10");
         SensorLowBatteryLevel = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("sensor_low_battery_level").Value ?? "10");
+        FarmCheckupInterval = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("farm_checkup_interval").Value ?? "1800");
+        FeedInterval = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("feed_interval").Value ?? "3600");
 
         AlarmLevelLowBattery = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level:low_battery").Value ?? "1");
         AlarmLevelNotAlive = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level:not_alive").Value ?? "2");
@@ -220,6 +223,7 @@ public class System
         WriteFarmPowerToDbAlways = bool.Parse(SettingsDataAccess.AppConfiguration().GetSection("farm_power:write_to_db_always").Value ?? "false");
         FarmPowerNotAliveWatchTimeout = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("farm_power:not_alive_watch_timeout").Value ?? "300");
         FarmPowerInvalidDataWatchTimeout = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("farm_power:invalid_data_watch_timeout").Value ?? "300");
+        FarmPowerNoPowerTimeout = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("farm_power:no_power_timeout").Value ?? "60");
 
         MainPowerReadInterval=int.Parse(SettingsDataAccess.AppConfiguration().GetSection("main_power:read_interval").Value ?? "60");
         WriteMainPowerOnValueChange= bool.Parse(SettingsDataAccess.AppConfiguration().GetSection("main_power:write_on_value_change").Value ?? "true");
@@ -227,13 +231,15 @@ public class System
         WriteMainPowerToDbAlways = bool.Parse(SettingsDataAccess.AppConfiguration().GetSection("main_power:write_to_db_always").Value ?? "false");
         MainPowerNotAliveWatchTimeout = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("main_power:not_alive_watch_timeout").Value ?? "300");
         MainPowerInvalidDataWatchTimeout = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("main_power:invalid_data_watch_timeout").Value ?? "300");
+        MainPowerNoPowerTimeout = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("main_power:no_power_timeout").Value ?? "60");
 
-        BackupPowerReadInterval=int.Parse(SettingsDataAccess.AppConfiguration().GetSection("backup_power:read_interval").Value ?? "60");
+        BackupPowerReadInterval =int.Parse(SettingsDataAccess.AppConfiguration().GetSection("backup_power:read_interval").Value ?? "60");
         WriteBackupPowerOnValueChange= bool.Parse(SettingsDataAccess.AppConfiguration().GetSection("backup_power:write_on_value_change").Value ?? "true");
         WriteBackupPowerToDbInterval=int.Parse(SettingsDataAccess.AppConfiguration().GetSection("backup_power:write_to_db_interval").Value ?? "60");
         WriteBackupPowerToDbAlways = bool.Parse(SettingsDataAccess.AppConfiguration().GetSection("backup_power:write_to_db_always").Value ?? "false");
         BackupPowerNotAliveWatchTimeout = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("backup_power:not_alive_watch_timeout").Value ?? "300");
         BackupPowerInvalidDataWatchTimeout = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("backup_power:invalid_data_watch_timeout").Value ?? "300");
+        BackupPowerNoPowerTimeout = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("backup_power:no_power_timeout").Value ?? "60");
 
         ObserverCheckInterval = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("observer:observer_check_interval").Value ?? "5");
         ObserveAlways = bool.Parse(SettingsDataAccess.AppConfiguration().GetSection("observer:observe_always").Value ?? "false");
@@ -244,8 +250,11 @@ public class System
     public int KeepAliveWaitingTimeout { get; set; }
     public int MaxSensorErrorCount { get; set; }
     public int MaxFarmErrorCount { get; set; }
+    public int MaxPoultryErrorCount { get; set; }
     public int MaxSensorReadCount { get; set; }
     public int SensorLowBatteryLevel { get; set; }
+    public int FarmCheckupInterval { get; set; }
+    public int FeedInterval { get; set; }
 
     public int AlarmLevelLowBattery { get; set; }
     public int AlarmLevelNotAlive { get; set; }
@@ -414,6 +423,7 @@ public class System
     public bool WriteFarmPowerToDbAlways { get; set; }
     public int FarmPowerNotAliveWatchTimeout { get; set; }
     public int FarmPowerInvalidDataWatchTimeout { get; set; }
+    public int FarmPowerNoPowerTimeout { get; set; }
     #endregion
 
     #region Main Power Sensor Settings
@@ -423,6 +433,7 @@ public class System
     public bool WriteMainPowerToDbAlways { get; set; }
     public int MainPowerNotAliveWatchTimeout { get; set; }
     public int MainPowerInvalidDataWatchTimeout { get; set; }
+    public int MainPowerNoPowerTimeout { get; set; }
     #endregion
 
     #region Backup Power Sensor Settings
@@ -432,6 +443,7 @@ public class System
     public bool WriteBackupPowerToDbAlways { get; set; }
     public int BackupPowerNotAliveWatchTimeout { get; set; }
     public int BackupPowerInvalidDataWatchTimeout { get; set; }
+    public int BackupPowerNoPowerTimeout { get; set; }
     #endregion
 
     #region Observer Settings

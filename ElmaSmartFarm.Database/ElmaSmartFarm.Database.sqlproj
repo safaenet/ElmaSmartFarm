@@ -76,8 +76,8 @@
     <Build Include="Tables\AlarmDevices.sql" />
     <Build Include="Tables\Logs\SensorErrorLogs.sql" />
     <Build Include="Tables\Contacts.sql" />
-    <Build Include="Tables\Logs\FarmInPeriodErrorLogs.sql" />
-    <Build Include="Tables\Logs\PoultryInPeriodErrorLogs.sql" />
+    <Build Include="Tables\Logs\FarmErrorLogs.sql" />
+    <Build Include="Tables\Logs\PoultryErrorLogs.sql" />
     <Build Include="Tables\Sensors\ScalarSensorDetails.sql" />
     <Build Include="Tables\Sensors\Values\Co2Values.sql" />
     <Build Include="Tables\Sensors\Values\HumidityValues.sql" />

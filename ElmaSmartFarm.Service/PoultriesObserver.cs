@@ -110,14 +110,6 @@ public partial class Worker
                         //Remove expired reads
                     }
                 }
-                if (set.MinimumTemperatureSensor?.LastRead != null && set.MinimumTemperatureSensor.LastRead.Temperature < config.system.TempMinWorkingValue)
-                {
-                    
-                }
-                else
-                {
-
-                }
             }
         FarmScalarSets = null;
         #endregion
@@ -163,6 +155,11 @@ public partial class Worker
                             sensor.IsWatched = CheckToReWatchSensor(sensor, startDate);
 
                         //Remove expired reads
+
+                        if (sensor.IsInPeriod && ((sensor.LastCommuteDate == null && SystemUpTime.IsElapsed(config.system.FarmCheckupInterval)) || (sensor.LastCommuteDate != null && sensor.LastCommuteDate.IsElapsed(config.system.FarmCheckupInterval))))
+                        {
+                            await CheckInterval(sensor, sensor.LastRead == null ? SystemUpTime : sensor.LastRead.ReadDate, FarmInPeriodErrorType.LongLeave, Now);
+                        }
                     }
                 }
             }
@@ -206,6 +203,24 @@ public partial class Worker
                             sensor.IsWatched = CheckToReWatchSensor(sensor, startDate);
 
                         //Remove expired reads
+
+                        if (sensor.IsInPeriod)
+                        {
+                            if (sensor.Type == SensorType.FarmFeed)
+                            {
+                                if ((sensor.LastRead == null && SystemUpTime.IsElapsed(config.system.FeedInterval)) || (sensor.LastRead != null && sensor.LastRead.ReadDate.IsElapsed(config.system.FeedInterval)))
+                                {
+                                    await CheckInterval(sensor, sensor.LastRead == null ? SystemUpTime : sensor.LastRead.ReadDate, FarmInPeriodErrorType.LongNoFeed, Now);
+                                }
+                            }
+                            else if (sensor.Type == SensorType.FarmCheckup)
+                            {
+                                if ((sensor.LastRead == null && SystemUpTime.IsElapsed(config.system.FarmCheckupInterval)) || (sensor.LastRead != null && sensor.LastRead.ReadDate.IsElapsed(config.system.FarmCheckupInterval)))
+                                {
+                                    await CheckInterval(sensor, sensor.LastRead == null ? SystemUpTime : sensor.LastRead.ReadDate, FarmInPeriodErrorType.LongLeave, Now);
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -269,34 +284,43 @@ public partial class Worker
                                     if (alarmTimes.Enable && (sensor.IsWatched) && e.DateHappened.IsElapsed(alarmTimes.RaiseTime) && !AlarmableSensorErrors.Contains(e)) AlarmableSensorErrors.Add(e);
                                 }
                             }
-
-                            var startDate = Poultry.Farms.Where(f => f.IsInPeriod && f.Checkups.Sensors.Any(s => s.Id == sensor.Id)).FirstOrDefault()?.Period.StartDate;
-                            if (startDate == null) startDate = Poultry.Farms.Where(f => f.IsInPeriod && f.Feeds.Sensors.Any(s => s.Id == sensor.Id)).FirstOrDefault()?.Period.StartDate;
-                            if (!sensor.IsWatched && sensor.ActiveErrors.Any(e => e.ErrorType == SensorErrorType.NotAlive) == false) sensor.IsWatched = CheckToReWatchSensor(sensor, startDate);//Sensor is healthy.
-
-                            //Remove expired reads
                         }
+
+                        var startDate = Poultry.Farms.Where(f => f.IsInPeriod && f.Checkups.Sensors.Any(s => s.Id == sensor.Id)).FirstOrDefault()?.Period.StartDate;
+                        if (startDate == null) startDate = Poultry.Farms.Where(f => f.IsInPeriod && f.Feeds.Sensors.Any(s => s.Id == sensor.Id)).FirstOrDefault()?.Period.StartDate;
+                        if (!sensor.IsWatched && sensor.ActiveErrors.Any(e => e.ErrorType == SensorErrorType.NotAlive) == false) sensor.IsWatched = CheckToReWatchSensor(sensor, startDate);//Sensor is healthy.
+
+                        //Remove expired reads
+                                                
                     }
                 }
             }
         BinarySets = null;
         #endregion
 
-        #region Observe Farms in Period
-        //if (Poultry.Farms != null)
-        //{
-        //    foreach (var f in Poultry.Farms)
-        //    {
-
-        //    }
-        //}
-        #endregion
         ProcessAlarmableErrors(Now);
         //var m = new MqttApplicationMessageBuilder().WithTopic("safa").WithPayload("dana").Build();
         //if (mqttClient.IsConnected) await mqttClient.PublishAsync(m);
         return null;
     }
 
+    private async Task CheckInterval(SensorModel sensor, DateTime? ReadDate, FarmInPeriodErrorType ErrorType, DateTime Now)
+    {
+        if (config.VerboseMode) Log.Warning($"{ErrorType} detected in one of farms. sensor ID: {sensor.Id}");
+        var farm = FindFarmBySensorId(sensor.Id);
+        if (farm == null) Log.Error($"Farm for the indoor sensor not detected. Sensor ID: {sensor.Id} (System Error)");
+        else
+        {
+            if (config.VerboseMode) Log.Warning($"{ErrorType} detected in farm ID: {farm.Id}, Name: {farm.Name}. sensor ID: {sensor.Id}");
+            var newErr = GenerateFarmError(sensor, ErrorType, Now, farm.Period?.Id ?? 0, $"{ErrorType} since: {(ReadDate == null ? SystemUpTime : ReadDate)}, Detected by: {sensor.Type}");
+            if (farm.InPeriodErrors == null) farm.InPeriodErrors = new();
+            if (farm.InPeriodErrors.AddError(newErr, ErrorType, config.system.MaxFarmErrorCount))
+            {
+                var newId = await DbProcessor.WriteFarmErrorToDbAsync(newErr, Now);
+                if (newId > 0) newErr.Id = newId;
+            }
+        }
+    }
     private AlarmTimesModel GetAlarmTimings(SensorErrorType e)
     {
         int level = 0;

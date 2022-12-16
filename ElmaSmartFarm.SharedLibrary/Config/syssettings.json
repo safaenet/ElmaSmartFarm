@@ -3,8 +3,11 @@
   "keep_alive_waiting_timeout": 45,
   "max_sensor_error_count": 10,
   "max_farm_error_count": 15,
+  "max_poultry_error_count": 10,
   "max_sensor_read_count": 10,
   "sensor_low_battery_level": 10,
+  "farm_checkup_interval": 10,
+  "feed_interval": 10,
   "alarm_level": {
     "low_battery": 1,
     "not_alive": 2,
@@ -192,7 +195,8 @@
     "write_to_db_interval": 30, //(Seconds)
     "write_to_db_always": true,
     "not_alive_watch_timeout": 100,
-    "invalid_data_watch_timeout": 100
+    "invalid_data_watch_timeout": 100,
+    "no_power_timeout": 30
   },
   "main_power": {
     "read_interval": 30,
@@ -200,7 +204,8 @@
     "write_to_db_interval": 30, //(Seconds)
     "write_to_db_always": true,
     "not_alive_watch_timeout": 100,
-    "invalid_data_watch_timeout": 100
+    "invalid_data_watch_timeout": 100,
+    "no_power_timeout": 30
   },
   "backup_power": {
     "read_interval": 30,
@@ -208,7 +213,8 @@
     "write_to_db_interval": 30, //(Seconds)
     "write_to_db_always": true,
     "not_alive_watch_timeout": 100,
-    "invalid_data_watch_timeout": 100
+    "invalid_data_watch_timeout": 100,
+    "no_power_timeout": 30
   },
   "observer": {
     "observer_check_interval": 5,

@@ -6784,3 +6784,86 @@ System.ArgumentNullException: Value cannot be null. (Parameter 'source')
 2022-12-16 11:45:26.550 +03:30 [INF] Updating sensor error in database, if existed. Sensor ID: 1, Error Types: InvalidData...
 2022-12-16 11:45:26.586 +03:30 [INF] Scalar sensor value done processing. Count: 3
 2022-12-16 11:45:26.595 +03:30 [INF] ===============  End of mqtt process 390.6911 ms) ===============
+2022-12-16 15:28:04.623 +03:30 [INF] Starting up the Service...
+2022-12-16 15:28:07.328 +03:30 [INF] Loading poultry...
+2022-12-16 15:28:08.608 +03:30 [ERR] Error when loading poultry.
+System.Data.SqlClient.SqlException (0x80131904): Invalid object name 'PoultryInPeriodErrorLogs'.
+   at System.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__126_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.Tasks.Task.<>c.<.cctor>b__272_0(Object obj)
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Dapper.SqlMapper.QueryAsync[T](IDbConnection cnn, Type effectiveType, CommandDefinition command) in /_/Dapper/SqlMapper.Async.cs:line 418
+   at ElmaSmartFarm.DataLibraryCore.SqlServer.SqlDataAccess.LoadDataAsync[T](String sql) in D:\Users\Safa\Source\Repos\safaenet\ElmaSmartFarm\ElmaSmartFarm.DataLibraryCore\SqlServer\SqlDataAccess.cs:line 54
+   at ElmaSmartFarm.DataLibraryCore.SqlServer.MsSqlDbProcessor.LoadPoultriesAsync() in D:\Users\Safa\Source\Repos\safaenet\ElmaSmartFarm\ElmaSmartFarm.DataLibraryCore\SqlServer\MsSqlDbProcessor.cs:line 289
+ClientConnectionId:1d96b4af-7d43-4d0c-b79c-4d61fdef91dc
+Error Number:208,State:1,Class:16
+2022-12-16 15:28:08.770 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 88db0ac1-3a50-4de6-a35c-c95f5d7bf2f6.
+2022-12-16 15:28:08.942 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 88db0ac1-3a50-4de6-a35c-c95f5d7bf2f6.
+2022-12-16 15:28:08.963 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2022-12-16 15:29:29.259 +03:30 [INF] Starting up the Service...
+2022-12-16 15:29:33.194 +03:30 [INF] Loading poultry...
+2022-12-16 15:29:34.427 +03:30 [INF] Poultry loaded. (1233.4476 ms)
+2022-12-16 15:29:34.453 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 2000a819-a7c2-41cf-9025-ed99e81e90d4.
+2022-12-16 15:29:34.561 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 2000a819-a7c2-41cf-9025-ed99e81e90d4.
+2022-12-16 15:29:34.585 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2022-12-16 15:30:45.779 +03:30 [INF] Starting up the Service...
+2022-12-16 15:30:48.303 +03:30 [INF] Loading poultry...
+2022-12-16 15:30:50.448 +03:30 [INF] Poultry loaded. (2144.9193 ms)
+2022-12-16 15:30:50.492 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 5763b7fe-df22-43ca-9568-ab01b8472f5b.
+2022-12-16 15:30:50.671 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 5763b7fe-df22-43ca-9568-ab01b8472f5b.
+2022-12-16 15:30:50.700 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2022-12-16 15:31:35.842 +03:30 [WRN] Sensor with ID: 1 is not sending KeepAlive message since 12/16/2022 3:30:50 PM. Location: 1, Section: FarmLeftTop
+2022-12-16 15:31:35.847 +03:30 [INF] Writing sensor error in database. Sensor ID: 1, LocationID: 1, Section: FarmLeftTop, Error Type: NotAlive
+2022-12-16 15:31:45.992 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 1, Section: FarmLeftTop. Count: 1
+2022-12-16 15:31:45.993 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 1, Section: FarmLeftTop. Count: 1
+2022-12-16 15:31:45.994 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 1, Section: FarmLeftTop. Count: 1
+2022-12-16 15:31:50.999 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 1, Section: FarmLeftTop. Count: 2
+2022-12-16 15:31:51.000 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 1, Section: FarmLeftTop. Count: 2
+2022-12-16 15:31:51.001 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 1, Section: FarmLeftTop. Count: 2
+2022-12-16 15:31:56.021 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 1, Section: FarmLeftTop. Count: 3
+2022-12-16 15:31:56.022 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 1, Section: FarmLeftTop. Count: 3
+2022-12-16 15:31:56.023 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 1, Section: FarmLeftTop. Count: 3
+2022-12-16 15:32:06.042 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 1, Section: FarmLeftTop. Count: 4
+2022-12-16 15:32:06.062 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 1, Section: FarmLeftTop. Count: 4
+2022-12-16 15:32:06.063 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 1, Section: FarmLeftTop. Count: 4
+2022-12-16 15:32:11.081 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 1, Section: FarmLeftTop. Count: 5
+2022-12-16 15:32:11.082 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 1, Section: FarmLeftTop. Count: 5
+2022-12-16 15:32:11.083 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 1, Section: FarmLeftTop. Count: 5
+2022-12-16 15:32:16.098 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 1, Section: FarmLeftTop. Count: 6
+2022-12-16 15:32:16.099 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 1, Section: FarmLeftTop. Count: 6
+2022-12-16 15:32:16.100 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 1, Section: FarmLeftTop. Count: 6
+2022-12-16 15:32:26.115 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 1, Section: FarmLeftTop. Count: 7
+2022-12-16 15:32:26.116 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 1, Section: FarmLeftTop. Count: 7
+2022-12-16 15:32:26.117 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 1, Section: FarmLeftTop. Count: 7
+2022-12-16 15:32:31.123 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 1, Section: FarmLeftTop. Count: 8
+2022-12-16 15:32:31.125 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 1, Section: FarmLeftTop. Count: 8
+2022-12-16 15:32:31.133 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 1, Section: FarmLeftTop. Count: 8
+2022-12-16 15:32:36.150 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 1, Section: FarmLeftTop. Count: 9
+2022-12-16 15:32:36.151 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 1, Section: FarmLeftTop. Count: 9
+2022-12-16 15:32:36.153 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 1, Section: FarmLeftTop. Count: 9
+2022-12-16 15:32:46.166 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 1, Section: FarmLeftTop. Count: 10
+2022-12-16 15:32:46.167 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 1, Section: FarmLeftTop. Count: 10
+2022-12-16 15:32:46.168 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 1, Section: FarmLeftTop. Count: 10
+2022-12-16 15:32:51.173 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 1, Section: FarmLeftTop. Count: 11
+2022-12-16 15:32:51.174 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 1, Section: FarmLeftTop. Count: 11
+2022-12-16 15:32:51.175 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 1, Section: FarmLeftTop. Count: 11
+2022-12-16 15:32:56.193 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 1, Section: FarmLeftTop. Count: 12
+2022-12-16 15:32:56.194 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 1, Section: FarmLeftTop. Count: 12
+2022-12-16 15:32:56.203 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 1, Section: FarmLeftTop. Count: 12
+2022-12-16 15:33:06.258 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 1, Section: FarmLeftTop. Count: 13
+2022-12-16 15:33:06.259 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 1, Section: FarmLeftTop. Count: 13
+2022-12-16 15:33:06.260 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 1, Section: FarmLeftTop. Count: 13
+2022-12-16 15:33:11.278 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 1, Section: FarmLeftTop. Count: 14
+2022-12-16 15:33:11.279 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 1, Section: FarmLeftTop. Count: 14
+2022-12-16 15:33:11.281 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 1, Section: FarmLeftTop. Count: 14
+2022-12-16 15:33:16.289 +03:30 [WRN] Sensor with ID 1 has been unwatched due to persisting error. Error Type: NotAlive, Error happened date: 12/16/2022 3:31:35 PM
+2022-12-16 15:33:16.290 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 1, Section: FarmLeftTop. Count: 15
+2022-12-16 15:33:16.291 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 1, Section: FarmLeftTop. Count: 15
+2022-12-16 15:33:16.292 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 1, Section: FarmLeftTop. Count: 15
+2022-12-16 15:33:26.329 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 1, Section: FarmLeftTop. Count: 16
+2022-12-16 15:33:26.330 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 1, Section: FarmLeftTop. Count: 16
+2022-12-16 15:33:26.331 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 1, Section: FarmLeftTop. Count: 16

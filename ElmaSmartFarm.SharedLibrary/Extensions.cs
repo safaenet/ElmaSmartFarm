@@ -126,6 +126,21 @@ namespace ElmaSmartFarm.SharedLibrary
             return true;
         }
 
+        public static bool AddError(this List<PoultryInPeriodErrorModel> Errors, PoultryInPeriodErrorModel newError, int MaxPoultryErrorCount)
+        {
+            if (newError == null) return false;
+            var e = Errors.Where(e => e.ErrorType == newError.ErrorType && e.DateErased == null);
+            if (e != null && e.Any()) return false;
+            Errors.Add(newError);
+            if (Errors.Count > MaxPoultryErrorCount) //Remove oldest record.
+            {
+                var error = Errors.Where(x => x.DateErased != null)?.MinBy(x => x.DateErased);
+                if (error != null) Errors.Remove(error);
+                else Log.Warning($"Error count in poultry error list has reached limit but not erased! (System Error).");
+            }
+            return true;
+        }
+
         public static bool EraseError(this List<SensorErrorModel> Errors, SensorErrorType t, DateTime now)
         {
             if (Errors == null) return false;
@@ -136,6 +151,15 @@ namespace ElmaSmartFarm.SharedLibrary
         }
 
         public static bool EraseError(this List<FarmInPeriodErrorModel> Errors, FarmInPeriodErrorType t, DateTime now)
+        {
+            if (Errors == null) return false;
+            var err = Errors.FirstOrDefault(e => e.ErrorType == t && e.DateErased == null);
+            if (err == null) return false;
+            err.DateErased = now;
+            return true;
+        }
+
+        public static bool EraseError(this List<PoultryInPeriodErrorModel> Errors, PoultryInPeriodErrorType t, DateTime now)
         {
             if (Errors == null) return false;
             var err = Errors.FirstOrDefault(e => e.ErrorType == t && e.DateErased == null);

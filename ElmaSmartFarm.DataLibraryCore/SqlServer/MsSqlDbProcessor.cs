@@ -42,8 +42,8 @@ public class MsSqlDbProcessor : IDbProcessor
             SELECT * FROM dbo.Feeds f WHERE f.PeriodId IN (SELECT p.Id FROM dbo.[Periods] p WHERE p.EndDate IS NULL);";
 
     private const string LoadSensorErrors = "SELECT * FROM dbo.SensorErrorLogs WHERE DateErased IS NULL;";
-    private const string LoadFarmInPeriodErrors = "SELECT * FROM FarmInPeriodErrorLogs WHERE DateErased IS NULL;";
-    private const string LoadPoultryInPeriodErrors = "SELECT * FROM PoultryInPeriodErrorLogs WHERE DateErased IS NULL;";
+    private const string LoadFarmErrors = "SELECT * FROM FarmErrorLogs WHERE DateErased IS NULL;";
+    private const string LoadPoultryErrors = "SELECT * FROM PoultryErrorLogs WHERE DateErased IS NULL;";
 
     private readonly string WriteScalarSensorValueCmd = @"DECLARE @newId INT;
             DECLARE @newTId INT; SET @newTId = (SELECT ISNULL(MAX([Id]), 0) FROM [TemperatureValues]) + 1;
@@ -67,11 +67,14 @@ public class MsSqlDbProcessor : IDbProcessor
     private readonly string WriteSensorErrorCmd = @"DECLARE @newId int; SET @newId = (SELECT ISNULL(MAX([Id]), 0) FROM [SensorErrorLogs]) + 1;
             INSERT INTO SensorErrorLogs (Id, SensorId, LocationId, Section, ErrorType, DateHappened, Descriptions)
             VALUES (@newId, @SensorId, @LocationId, @Section, @ErrorType, @DateHappened, @Descriptions); SELECT @Id = @newId";
-    private readonly string WriteFarmErrorCmd = @"DECLARE @newId int; SET @newId = (SELECT ISNULL(MAX([Id]), 0) FROM [FarmInPeriodErrorLogs]) + 1;
-            INSERT INTO FarmInPeriodErrorLogs (Id, FarmId, PeriodId, ErrorType, DateHappened, CausedSensorId, Descriptions)
+    private readonly string WriteFarmErrorCmd = @"DECLARE @newId int; SET @newId = (SELECT ISNULL(MAX([Id]), 0) FROM [FarmErrorLogs]) + 1;
+            INSERT INTO FarmErrorLogs (Id, FarmId, PeriodId, ErrorType, DateHappened, CausedSensorId, Descriptions)
             VALUES (@newId, @FarmId, @PeriodId, @ErrorType, @DateHappened, @CausedSensorId, @Descriptions); SELECT @Id = @newId";
+    private readonly string WritePoultryErrorCmd = @"DECLARE @newId int; SET @newId = (SELECT ISNULL(MAX([Id]), 0) FROM [PoultryErrorLogs]) + 1;
+            INSERT INTO PoultryErrorLogs (Id, ErrorType, DateHappened, Descriptions) VALUES (@newId, @ErrorType, @DateHappened, @Descriptions); SELECT @Id = @newId";
     private readonly string EraseSensorErrorCmd = @"UPDATE SensorErrorLogs SET DateErased = @DateErased WHERE DateErased IS NULL AND SensorId = @SensorId AND ErrorType IN {0};";
-    private readonly string EraseFarmErrorCmd = @"UPDATE FarmInPeriodErrorLogs SET DateErased = @DateErased WHERE DateErased IS NULL AND FarmId = @FarmId AND ErrorType IN {0};";
+    private readonly string EraseFarmErrorCmd = @"UPDATE FarmErrorLogs SET DateErased = @DateErased WHERE DateErased IS NULL AND FarmId = @FarmId AND ErrorType IN {0};";
+    private readonly string ErasePoultryErrorCmd = @"UPDATE PoultryErrorLogs SET DateErased = @DateErased WHERE DateErased IS NULL AND ErrorType IN {0};";
 
     public async Task<int> WriteScalarSensorValueToDbAsync(SensorModel sensor, ScalarSensorReadModel value)
     {
@@ -178,6 +181,28 @@ public class MsSqlDbProcessor : IDbProcessor
         return 0;
     }
 
+    public async Task<int> WritePoultryErrorToDbAsync(PoultryInPeriodErrorModel error, DateTime now)
+    {
+        try
+        {
+            if (config.VerboseMode) Log.Information($"Writing poultry error in database. Error Type: {error.ErrorType}");
+            DynamicParameters dp = new();
+            dp.Add("@Id", 0, System.Data.DbType.Int32, System.Data.ParameterDirection.Output);
+            dp.Add("@ErrorType", error.ErrorType);
+            dp.Add("@DateHappened", now);
+            dp.Add("@Descriptions", error.Descriptions);
+            _ = await DataAccess.SaveDataAsync(WritePoultryErrorCmd, dp);
+            var newId = dp.Get<int>("@Id");
+            if (newId == 0) Log.Error($"Error when writing poultry error. Error Type: {error.ErrorType}. (System Error)");
+            return newId;
+        }
+        catch (Exception ex)
+        {
+            Log.Error(ex, $"Error when writing poultry error in database. Error Type: {error.ErrorType}");
+        }
+        return 0;
+    }
+
     public async Task<bool> EraseSensorErrorFromDbAsync(int sensorId, DateTime eraseDate, params SensorErrorType[] types)
     {
         try
@@ -226,6 +251,29 @@ public class MsSqlDbProcessor : IDbProcessor
         return false;
     }
 
+    public async Task<bool> ErasePoultryErrorFromDbAsync(DateTime eraseDate, params PoultryInPeriodErrorType[] types)
+    {
+        try
+        {
+            if (types == null || types.Length == 0) return false;
+            if (config.VerboseMode) Log.Information($"Updating poultry error in database, if existed. Error Types: {types[0]}...");
+            DynamicParameters dp = new();
+            dp.Add("@DateErased", eraseDate);
+            string errors = "";
+            foreach (var t in types) errors += ((int)t).ToString() + ",";
+            errors = errors.Remove(errors.Length - 1, 1);
+            errors = "(" + errors + ")";
+            var sql = string.Format(ErasePoultryErrorCmd, errors);
+            var i = await DataAccess.SaveDataAsync(sql, dp);
+            return i > 0;
+        }
+        catch (Exception ex)
+        {
+            Log.Error(ex, $"Error when updating poultry error in database. Error Types: {types[0]}...");
+        }
+        return false;
+    }
+
     public async Task<PoultryModel> LoadPoultriesAsync()
     {
         try
@@ -238,7 +286,7 @@ public class MsSqlDbProcessor : IDbProcessor
             var poultryScalarSensor = (await DataAccess.LoadDataAsync<ScalarSensorModel>(LoadOutdoorScalarSensorsQuery)).FirstOrDefault();
             var poultryMPowerSensor = (await DataAccess.LoadDataAsync<BinarySensorModel>(LoadPoultryMPowerSensorsQuery)).FirstOrDefault();
             var poultryBPowerSensor = (await DataAccess.LoadDataAsync<BinarySensorModel>(LoadPoultryBPowerSensorsQuery)).FirstOrDefault();
-            var poultryInPeriodErrors = await DataAccess.LoadDataAsync<PoultryInPeriodErrorModel>(LoadPoultryInPeriodErrors);
+            var poultryInPeriodErrors = await DataAccess.LoadDataAsync<PoultryInPeriodErrorModel>(LoadPoultryErrors);
             var periods = await LoadActivePeriodsAsync();
             if (farms != null && farms.Any())
             {
@@ -247,7 +295,7 @@ public class MsSqlDbProcessor : IDbProcessor
                 var farmCheckupSensors = await DataAccess.LoadDataAsync<PushButtonSensorModel>(LoadFarmCheckupSensorsQuery);
                 var farmCommuteSensors = await DataAccess.LoadDataAsync<CommuteSensorModel>(LoadFarmCommuteSensorsQuery);
                 var farmPowerSensors = await DataAccess.LoadDataAsync<BinarySensorModel>(LoadFarmPowerSensorsQuery);
-                var farmInPeriodErrors = await DataAccess.LoadDataAsync<FarmInPeriodErrorModel>(LoadFarmInPeriodErrors);
+                var farmInPeriodErrors = await DataAccess.LoadDataAsync<FarmInPeriodErrorModel>(LoadFarmErrors);
                 var sensorErrors = await DataAccess.LoadDataAsync<SensorErrorModel>(LoadSensorErrors);
                 if (sensorErrors != null && sensorErrors.Any())
                 {

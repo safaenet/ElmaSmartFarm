@@ -18,4 +18,6 @@ public interface IDbProcessor
     //Task<bool> EraseSensorErrorFromDbAsync(int sensorId, SensorErrorType type, DateTime eraseDate);
     Task<bool> EraseSensorErrorFromDbAsync(int sensorId, DateTime eraseDate, params SensorErrorType[] types);
     Task<bool> EraseFarmErrorFromDbAsync(int farmId, DateTime eraseDate, params FarmInPeriodErrorType[] types);
+    Task<bool> ErasePoultryErrorFromDbAsync(DateTime eraseDate, params PoultryInPeriodErrorType[] types);
+    Task<int> WritePoultryErrorToDbAsync(PoultryInPeriodErrorModel error, DateTime now);
 }
