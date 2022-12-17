@@ -612,7 +612,7 @@ public partial class Worker
         }
     }
 
-    private void ProcessAlarms(AlarmTimesModel alarmTimes, ErrorModel e, DateTime Now)
+    private void ProcessAlarms(AlarmTimesModel alarmTimes, ErrorModel e, DateTime Now, int farmId = 0)
     {
         if (alarmTimes.Enable)
         {
@@ -646,21 +646,21 @@ public partial class Worker
                 {
                     e.SmsRaisedCount = 1;
                     Log.Information($"Informing Alarm. Count: {e.SmsRaisedCount}");
-                    //inform, save to db
+                    //send sms, save to db
                     e.DateSmsRaised = Now;
                 }
                 else if (e.SmsRaisedCount % alarmTimes.SmsCountInCycle != 0 && e.DateSmsRaised.IsElapsed(alarmTimes.SmsEvery)) //alarm every.
                 {
                     e.SmsRaisedCount++;
                     Log.Information($"Informing Alarm. Count: {e.SmsRaisedCount}");
-                    //inform, save to db
+                    //send sms, save to db
                     e.DateSmsRaised = Now;
                 }
                 else if (e.SmsRaisedCount % alarmTimes.SmsCountInCycle == 0 && e.DateSmsRaised.IsElapsed(alarmTimes.SmsSnooze)) //alarm sleep.
                 {
                     e.SmsRaisedCount++;
                     Log.Information($"Informing Alarm. Count: {e.SmsRaisedCount}");
-                    //inform, save to db
+                    //send sms, save to db
                     e.DateSmsRaised = Now;
                 }
             }
