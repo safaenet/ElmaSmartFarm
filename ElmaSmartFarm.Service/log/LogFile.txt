@@ -6867,3 +6867,103 @@ Error Number:208,State:1,Class:16
 2022-12-16 15:33:26.329 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 1, Section: FarmLeftTop. Count: 16
 2022-12-16 15:33:26.330 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 1, Section: FarmLeftTop. Count: 16
 2022-12-16 15:33:26.331 +03:30 [INF] Informing Alarm of NotAlive, Sensor ID: 1, Location: 1, Section: FarmLeftTop. Count: 16
+2022-12-17 22:58:44.235 +03:30 [INF] Starting up the Service...
+2022-12-17 22:58:48.747 +03:30 [INF] Loading poultry...
+2022-12-17 22:58:51.224 +03:30 [INF] Poultry loaded. (2477.0312 ms)
+2022-12-17 22:58:51.260 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 1dac9aaf-cb0a-4df2-801d-2e26e39ea451.
+2022-12-17 22:58:51.423 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 1dac9aaf-cb0a-4df2-801d-2e26e39ea451.
+2022-12-17 22:58:51.445 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2022-12-17 22:58:51.499 +03:30 [WRN] Sensor with ID 1 has been unwatched due to persisting error. Error Type: NotAlive, Error happened date: 12/16/2022 3:31:35 PM
+2022-12-17 22:58:51.508 +03:30 [INF] Informing Alarm. Count: 1
+2022-12-17 22:58:51.510 +03:30 [INF] Informing Alarm. Count: 1
+2022-12-17 22:58:51.511 +03:30 [INF] Informing Alarm. Count: 1
+2022-12-17 22:58:56.527 +03:30 [INF] Informing Alarm. Count: 2
+2022-12-17 22:58:56.531 +03:30 [INF] Informing Alarm. Count: 2
+2022-12-17 22:58:56.532 +03:30 [INF] Informing Alarm. Count: 2
+2022-12-17 22:59:01.547 +03:30 [INF] Informing Alarm. Count: 3
+2022-12-17 22:59:01.548 +03:30 [INF] Informing Alarm. Count: 3
+2022-12-17 22:59:01.548 +03:30 [INF] Informing Alarm. Count: 3
+2022-12-17 22:59:11.581 +03:30 [INF] Informing Alarm. Count: 4
+2022-12-17 22:59:11.582 +03:30 [INF] Informing Alarm. Count: 4
+2022-12-17 22:59:11.583 +03:30 [INF] Informing Alarm. Count: 4
+2022-12-17 22:59:16.603 +03:30 [INF] Informing Alarm. Count: 5
+2022-12-17 22:59:16.604 +03:30 [INF] Informing Alarm. Count: 5
+2022-12-17 22:59:16.604 +03:30 [INF] Informing Alarm. Count: 5
+2022-12-17 22:59:21.613 +03:30 [INF] Informing Alarm. Count: 6
+2022-12-17 22:59:21.614 +03:30 [INF] Informing Alarm. Count: 6
+2022-12-17 22:59:21.615 +03:30 [INF] Informing Alarm. Count: 6
+2022-12-17 23:21:38.671 +03:30 [INF] Starting up the Service...
+2022-12-17 23:21:41.808 +03:30 [INF] Loading poultry...
+2022-12-17 23:21:44.377 +03:30 [INF] Poultry loaded. (2568.6285 ms)
+2022-12-17 23:21:44.403 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: aceb28ba-279b-479a-9369-ddcd0e9c5961.
+2022-12-17 23:21:44.585 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: aceb28ba-279b-479a-9369-ddcd0e9c5961.
+2022-12-17 23:21:44.611 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2022-12-17 23:21:44.657 +03:30 [WRN] Sensor with ID 1 has been unwatched due to persisting error. Error Type: NotAlive, Error happened date: 12/16/2022 3:31:35 PM
+2022-12-17 23:21:44.665 +03:30 [INF] Informing Alarm. Count: 1
+2022-12-17 23:21:44.667 +03:30 [INF] Informing Alarm. Count: 1
+2022-12-17 23:21:44.670 +03:30 [INF] Informing Alarm. Count: 1
+2022-12-17 23:21:49.686 +03:30 [INF] Informing Alarm. Count: 2
+2022-12-17 23:21:49.687 +03:30 [INF] Informing Alarm. Count: 2
+2022-12-17 23:21:49.687 +03:30 [INF] Informing Alarm. Count: 2
+2022-12-17 23:21:54.700 +03:30 [INF] Informing Alarm. Count: 3
+2022-12-17 23:21:54.703 +03:30 [INF] Informing Alarm. Count: 3
+2022-12-17 23:21:54.704 +03:30 [INF] Informing Alarm. Count: 3
+2022-12-17 23:22:04.751 +03:30 [INF] Informing Alarm. Count: 4
+2022-12-17 23:22:04.752 +03:30 [INF] Informing Alarm. Count: 4
+2022-12-17 23:22:04.752 +03:30 [INF] Informing Alarm. Count: 4
+2022-12-17 23:22:09.685 +03:30 [WRN] Disconnected from MQTT Broker: 192.168.1.106, Port: 1883, Client Id: aceb28ba-279b-479a-9369-ddcd0e9c5961.
+2022-12-17 23:22:09.776 +03:30 [ERR] Error connecting to MQTT Broker. retrying in 5 seconds...
+2022-12-17 23:22:09.787 +03:30 [INF] Informing Alarm. Count: 5
+2022-12-17 23:22:09.791 +03:30 [INF] Informing Alarm. Count: 5
+2022-12-17 23:22:09.792 +03:30 [INF] Informing Alarm. Count: 5
+2022-12-17 23:22:14.795 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: aceb28ba-279b-479a-9369-ddcd0e9c5961.
+2022-12-17 23:22:14.796 +03:30 [INF] Informing Alarm. Count: 6
+2022-12-17 23:22:14.803 +03:30 [INF] Informing Alarm. Count: 6
+2022-12-17 23:22:14.805 +03:30 [INF] Informing Alarm. Count: 6
+2022-12-17 23:22:14.806 +03:30 [WRN] Disconnected from MQTT Broker: 192.168.1.106, Port: 1883, Client Id: aceb28ba-279b-479a-9369-ddcd0e9c5961.
+2022-12-17 23:22:14.858 +03:30 [ERR] Error connecting to MQTT Broker. retrying in 5 seconds...
+2022-12-17 23:22:19.875 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: aceb28ba-279b-479a-9369-ddcd0e9c5961.
+2022-12-17 23:22:19.926 +03:30 [WRN] Disconnected from MQTT Broker: 192.168.1.106, Port: 1883, Client Id: aceb28ba-279b-479a-9369-ddcd0e9c5961.
+2022-12-17 23:22:19.997 +03:30 [ERR] Error connecting to MQTT Broker. retrying in 5 seconds...
+2022-12-17 23:22:24.818 +03:30 [INF] Informing Alarm. Count: 7
+2022-12-17 23:22:24.819 +03:30 [INF] Informing Alarm. Count: 7
+2022-12-17 23:22:24.820 +03:30 [INF] Informing Alarm. Count: 7
+2022-12-17 23:22:25.004 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: aceb28ba-279b-479a-9369-ddcd0e9c5961.
+2022-12-17 23:22:25.012 +03:30 [WRN] Disconnected from MQTT Broker: 192.168.1.106, Port: 1883, Client Id: aceb28ba-279b-479a-9369-ddcd0e9c5961.
+2022-12-17 23:22:25.087 +03:30 [ERR] Error connecting to MQTT Broker. retrying in 5 seconds...
+2022-12-17 23:22:29.821 +03:30 [INF] Informing Alarm. Count: 8
+2022-12-17 23:22:29.823 +03:30 [INF] Informing Alarm. Count: 8
+2022-12-17 23:22:29.824 +03:30 [INF] Informing Alarm. Count: 8
+2022-12-17 23:22:30.098 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: aceb28ba-279b-479a-9369-ddcd0e9c5961.
+2022-12-17 23:22:30.131 +03:30 [WRN] Disconnected from MQTT Broker: 192.168.1.106, Port: 1883, Client Id: aceb28ba-279b-479a-9369-ddcd0e9c5961.
+2022-12-17 23:22:30.208 +03:30 [ERR] Error connecting to MQTT Broker. retrying in 5 seconds...
+2022-12-17 23:22:34.846 +03:30 [INF] Informing Alarm. Count: 9
+2022-12-17 23:22:34.851 +03:30 [INF] Informing Alarm. Count: 9
+2022-12-17 23:22:34.853 +03:30 [INF] Informing Alarm. Count: 9
+2022-12-17 23:22:35.216 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: aceb28ba-279b-479a-9369-ddcd0e9c5961.
+2022-12-17 23:22:35.223 +03:30 [WRN] Disconnected from MQTT Broker: 192.168.1.106, Port: 1883, Client Id: aceb28ba-279b-479a-9369-ddcd0e9c5961.
+2022-12-17 23:22:35.289 +03:30 [ERR] Error connecting to MQTT Broker. retrying in 5 seconds...
+2022-12-17 23:22:40.299 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: aceb28ba-279b-479a-9369-ddcd0e9c5961.
+2022-12-17 23:22:40.313 +03:30 [WRN] Disconnected from MQTT Broker: 192.168.1.106, Port: 1883, Client Id: aceb28ba-279b-479a-9369-ddcd0e9c5961.
+2022-12-17 23:22:40.399 +03:30 [ERR] Error connecting to MQTT Broker. retrying in 5 seconds...
+2022-12-17 23:22:44.876 +03:30 [INF] Informing Alarm. Count: 10
+2022-12-17 23:22:44.877 +03:30 [INF] Informing Alarm. Count: 10
+2022-12-17 23:22:44.878 +03:30 [INF] Informing Alarm. Count: 10
+2022-12-17 23:22:45.408 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: aceb28ba-279b-479a-9369-ddcd0e9c5961.
+2022-12-17 23:22:45.414 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: aceb28ba-279b-479a-9369-ddcd0e9c5961.
+2022-12-17 23:22:45.419 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2022-12-17 23:22:49.885 +03:30 [INF] Informing Alarm. Count: 11
+2022-12-17 23:22:49.886 +03:30 [INF] Informing Alarm. Count: 11
+2022-12-17 23:22:49.887 +03:30 [INF] Informing Alarm. Count: 11
+2022-12-17 23:22:54.888 +03:30 [INF] Informing Alarm. Count: 12
+2022-12-17 23:22:54.890 +03:30 [INF] Informing Alarm. Count: 12
+2022-12-17 23:22:54.890 +03:30 [INF] Informing Alarm. Count: 12
+2022-12-17 23:23:04.904 +03:30 [INF] Informing Alarm. Count: 13
+2022-12-17 23:23:04.905 +03:30 [INF] Informing Alarm. Count: 13
+2022-12-17 23:23:04.907 +03:30 [INF] Informing Alarm. Count: 13
+2022-12-17 23:23:09.919 +03:30 [INF] Informing Alarm. Count: 14
+2022-12-17 23:23:09.920 +03:30 [INF] Informing Alarm. Count: 14
+2022-12-17 23:23:09.921 +03:30 [INF] Informing Alarm. Count: 14
+2022-12-17 23:23:14.937 +03:30 [INF] Informing Alarm. Count: 15
+2022-12-17 23:23:14.938 +03:30 [INF] Informing Alarm. Count: 15
+2022-12-17 23:23:14.940 +03:30 [INF] Informing Alarm. Count: 15
