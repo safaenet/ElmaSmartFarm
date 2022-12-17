@@ -70,7 +70,6 @@ public enum PoultryInPeriodErrorType
 public enum AlarmDeviceType
 {
     FarmLight = 1,
-    FarmSiren,
     PoultryLight,
     PoultrySiren
 }

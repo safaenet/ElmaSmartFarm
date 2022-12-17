@@ -456,11 +456,17 @@ public partial class Worker
                 a.SmsSnooze = config.system.AlarmLevelOneSmsSnooze;
                 a.SmsCountInCycle = config.system.AlarmLevelOneSmsCountInCycle;
 
-                a.PoultryAlarmEnable = config.system.AlarmLevelOnePoultryAlarmEnable;
-                a.PoultryAlarmRaiseTimeOffset = config.system.AlarmLevelOnePoultryAlarmRaiseTimeOffset;
-                a.PoultryAlarmEvery = config.system.AlarmLevelOnePoultryAlarmEvery;
-                a.PoultryAlarmSnooze = config.system.AlarmLevelOnePoultryAlarmSnooze;
-                a.PoultryAlarmCountInCycle = config.system.AlarmLevelOnePoultryAlarmCountInCycle;
+                a.PoultryLightAlarmEnable = config.system.AlarmLevelOnePoultryLightAlarmEnable;
+                a.PoultryLightAlarmRaiseTimeOffset = config.system.AlarmLevelOnePoultryLightAlarmRaiseTimeOffset;
+                a.PoultryLightAlarmEvery = config.system.AlarmLevelOnePoultryLightAlarmEvery;
+                a.PoultryLightAlarmSnooze = config.system.AlarmLevelOnePoultryLightAlarmSnooze;
+                a.PoultryLightAlarmCountInCycle = config.system.AlarmLevelOnePoultryLightAlarmCountInCycle;
+
+                a.PoultrySirenAlarmEnable = config.system.AlarmLevelOnePoultryLightAlarmEnable;
+                a.PoultrySirenAlarmRaiseTimeOffset = config.system.AlarmLevelOnePoultryLightAlarmRaiseTimeOffset;
+                a.PoultrySirenAlarmEvery = config.system.AlarmLevelOnePoultryLightAlarmEvery;
+                a.PoultrySirenAlarmSnooze = config.system.AlarmLevelOnePoultryLightAlarmSnooze;
+                a.PoultrySirenAlarmCountInCycle = config.system.AlarmLevelOnePoultryLightAlarmCountInCycle;
                 break;
             case 2:
                 a.Enable = config.system.AlarmLevelTwoEnable;
@@ -477,11 +483,17 @@ public partial class Worker
                 a.SmsSnooze = config.system.AlarmLevelTwoSmsSnooze;
                 a.SmsCountInCycle = config.system.AlarmLevelTwoSmsCountInCycle;
 
-                a.PoultryAlarmEnable = config.system.AlarmLevelTwoPoultryAlarmEnable;
-                a.PoultryAlarmRaiseTimeOffset = config.system.AlarmLevelTwoPoultryAlarmRaiseTimeOffset;
-                a.PoultryAlarmEvery = config.system.AlarmLevelTwoPoultryAlarmEvery;
-                a.PoultryAlarmSnooze = config.system.AlarmLevelTwoPoultryAlarmSnooze;
-                a.PoultryAlarmCountInCycle = config.system.AlarmLevelTwoPoultryAlarmCountInCycle;
+                a.PoultryLightAlarmEnable = config.system.AlarmLevelTwoPoultryLightAlarmEnable;
+                a.PoultryLightAlarmRaiseTimeOffset = config.system.AlarmLevelTwoPoultryLightAlarmRaiseTimeOffset;
+                a.PoultryLightAlarmEvery = config.system.AlarmLevelTwoPoultryLightAlarmEvery;
+                a.PoultryLightAlarmSnooze = config.system.AlarmLevelTwoPoultryLightAlarmSnooze;
+                a.PoultryLightAlarmCountInCycle = config.system.AlarmLevelTwoPoultryLightAlarmCountInCycle;
+
+                a.PoultrySirenAlarmEnable = config.system.AlarmLevelTwoPoultryLightAlarmEnable;
+                a.PoultrySirenAlarmRaiseTimeOffset = config.system.AlarmLevelTwoPoultryLightAlarmRaiseTimeOffset;
+                a.PoultrySirenAlarmEvery = config.system.AlarmLevelTwoPoultryLightAlarmEvery;
+                a.PoultrySirenAlarmSnooze = config.system.AlarmLevelTwoPoultryLightAlarmSnooze;
+                a.PoultrySirenAlarmCountInCycle = config.system.AlarmLevelTwoPoultryLightAlarmCountInCycle;
                 break;
             case 3:
                 a.Enable = config.system.AlarmLevelThreeEnable;
@@ -498,11 +510,17 @@ public partial class Worker
                 a.SmsSnooze = config.system.AlarmLevelThreeSmsSnooze;
                 a.SmsCountInCycle = config.system.AlarmLevelThreeSmsCountInCycle;
 
-                a.PoultryAlarmEnable = config.system.AlarmLevelThreePoultryAlarmEnable;
-                a.PoultryAlarmRaiseTimeOffset = config.system.AlarmLevelThreePoultryAlarmRaiseTimeOffset;
-                a.PoultryAlarmEvery = config.system.AlarmLevelThreePoultryAlarmEvery;
-                a.PoultryAlarmSnooze = config.system.AlarmLevelThreePoultryAlarmSnooze;
-                a.PoultryAlarmCountInCycle = config.system.AlarmLevelThreePoultryAlarmCountInCycle;
+                a.PoultryLightAlarmEnable = config.system.AlarmLevelThreePoultryLightAlarmEnable;
+                a.PoultryLightAlarmRaiseTimeOffset = config.system.AlarmLevelThreePoultryLightAlarmRaiseTimeOffset;
+                a.PoultryLightAlarmEvery = config.system.AlarmLevelThreePoultryLightAlarmEvery;
+                a.PoultryLightAlarmSnooze = config.system.AlarmLevelThreePoultryLightAlarmSnooze;
+                a.PoultryLightAlarmCountInCycle = config.system.AlarmLevelThreePoultryLightAlarmCountInCycle;
+
+                a.PoultrySirenAlarmEnable = config.system.AlarmLevelThreePoultryLightAlarmEnable;
+                a.PoultrySirenAlarmRaiseTimeOffset = config.system.AlarmLevelThreePoultryLightAlarmRaiseTimeOffset;
+                a.PoultrySirenAlarmEvery = config.system.AlarmLevelThreePoultryLightAlarmEvery;
+                a.PoultrySirenAlarmSnooze = config.system.AlarmLevelThreePoultryLightAlarmSnooze;
+                a.PoultrySirenAlarmCountInCycle = config.system.AlarmLevelThreePoultryLightAlarmCountInCycle;
                 break;
             case 4:
                 a.Enable = config.system.AlarmLevelFourEnable;
@@ -519,11 +537,17 @@ public partial class Worker
                 a.SmsSnooze = config.system.AlarmLevelFourSmsSnooze;
                 a.SmsCountInCycle = config.system.AlarmLevelFourSmsCountInCycle;
 
-                a.PoultryAlarmEnable = config.system.AlarmLevelFourPoultryAlarmEnable;
-                a.PoultryAlarmRaiseTimeOffset = config.system.AlarmLevelFourPoultryAlarmRaiseTimeOffset;
-                a.PoultryAlarmEvery = config.system.AlarmLevelFourPoultryAlarmEvery;
-                a.PoultryAlarmSnooze = config.system.AlarmLevelFourPoultryAlarmSnooze;
-                a.PoultryAlarmCountInCycle = config.system.AlarmLevelFourPoultryAlarmCountInCycle;
+                a.PoultryLightAlarmEnable = config.system.AlarmLevelFourPoultryLightAlarmEnable;
+                a.PoultryLightAlarmRaiseTimeOffset = config.system.AlarmLevelFourPoultryLightAlarmRaiseTimeOffset;
+                a.PoultryLightAlarmEvery = config.system.AlarmLevelFourPoultryLightAlarmEvery;
+                a.PoultryLightAlarmSnooze = config.system.AlarmLevelFourPoultryLightAlarmSnooze;
+                a.PoultryLightAlarmCountInCycle = config.system.AlarmLevelFourPoultryLightAlarmCountInCycle;
+
+                a.PoultrySirenAlarmEnable = config.system.AlarmLevelFourPoultryLightAlarmEnable;
+                a.PoultrySirenAlarmRaiseTimeOffset = config.system.AlarmLevelFourPoultryLightAlarmRaiseTimeOffset;
+                a.PoultrySirenAlarmEvery = config.system.AlarmLevelFourPoultryLightAlarmEvery;
+                a.PoultrySirenAlarmSnooze = config.system.AlarmLevelFourPoultryLightAlarmSnooze;
+                a.PoultrySirenAlarmCountInCycle = config.system.AlarmLevelFourPoultryLightAlarmCountInCycle;
                 break;
         }
         return a;
@@ -612,7 +636,7 @@ public partial class Worker
         }
     }
 
-    private void ProcessAlarms(AlarmTimesModel alarmTimes, ErrorModel e, DateTime Now, int farmId = 0)
+    private void ProcessAlarms(AlarmTimesModel alarmTimes, SensorErrorModel e, DateTime Now)
     {
         if (alarmTimes.Enable)
         {
@@ -664,23 +688,253 @@ public partial class Worker
                     e.DateSmsRaised = Now;
                 }
             }
-            if (alarmTimes.PoultryAlarmEnable)
+            if (alarmTimes.PoultryLightAlarmEnable)
             {
-                if (e.DatePoultryAlarmRaised == null && e.DateHappened.IsElapsed(alarmTimes.PoultryAlarmRaiseTime)) //first alarm.
+                if (e.DatePoultryAlarmRaised == null && e.DateHappened.IsElapsed(alarmTimes.PoultryLightAlarmRaiseTime)) //first alarm.
                 {
                     e.PoultryAlarmRaisedCount = 1;
                     Log.Information($"Informing Alarm. Count: {e.PoultryAlarmRaisedCount}");
                     //inform, save to db
                     e.DatePoultryAlarmRaised = Now;
                 }
-                else if (e.PoultryAlarmRaisedCount % alarmTimes.PoultryAlarmCountInCycle != 0 && e.DatePoultryAlarmRaised.IsElapsed(alarmTimes.PoultryAlarmEvery)) //alarm every.
+                else if (e.PoultryAlarmRaisedCount % alarmTimes.PoultryLightAlarmCountInCycle != 0 && e.DatePoultryAlarmRaised.IsElapsed(alarmTimes.PoultryLightAlarmEvery)) //alarm every.
                 {
                     e.PoultryAlarmRaisedCount++;
                     Log.Information($"Informing Alarm. Count: {e.PoultryAlarmRaisedCount}");
                     //inform, save to db
                     e.DatePoultryAlarmRaised = Now;
                 }
-                else if (e.PoultryAlarmRaisedCount % alarmTimes.PoultryAlarmCountInCycle == 0 && e.DatePoultryAlarmRaised.IsElapsed(alarmTimes.PoultryAlarmSnooze)) //alarm sleep.
+                else if (e.PoultryAlarmRaisedCount % alarmTimes.PoultryLightAlarmCountInCycle == 0 && e.DatePoultryAlarmRaised.IsElapsed(alarmTimes.PoultryLightAlarmSnooze)) //alarm sleep.
+                {
+                    e.PoultryAlarmRaisedCount++;
+                    Log.Information($"Informing Alarm. Count: {e.PoultryAlarmRaisedCount}");
+                    //inform, save to db
+                    e.DatePoultryAlarmRaised = Now;
+                }
+            }
+            if (alarmTimes.PoultrySirenAlarmEnable)
+            {
+                if (e.DatePoultryAlarmRaised == null && e.DateHappened.IsElapsed(alarmTimes.PoultrySirenAlarmRaiseTime)) //first alarm.
+                {
+                    e.PoultryAlarmRaisedCount = 1;
+                    Log.Information($"Informing Alarm. Count: {e.PoultryAlarmRaisedCount}");
+                    //inform, save to db
+                    e.DatePoultryAlarmRaised = Now;
+                }
+                else if (e.PoultryAlarmRaisedCount % alarmTimes.PoultrySirenAlarmCountInCycle != 0 && e.DatePoultryAlarmRaised.IsElapsed(alarmTimes.PoultrySirenAlarmEvery)) //alarm every.
+                {
+                    e.PoultryAlarmRaisedCount++;
+                    Log.Information($"Informing Alarm. Count: {e.PoultryAlarmRaisedCount}");
+                    //inform, save to db
+                    e.DatePoultryAlarmRaised = Now;
+                }
+                else if (e.PoultryAlarmRaisedCount % alarmTimes.PoultrySirenAlarmCountInCycle == 0 && e.DatePoultryAlarmRaised.IsElapsed(alarmTimes.PoultrySirenAlarmSnooze)) //alarm sleep.
+                {
+                    e.PoultryAlarmRaisedCount++;
+                    Log.Information($"Informing Alarm. Count: {e.PoultryAlarmRaisedCount}");
+                    //inform, save to db
+                    e.DatePoultryAlarmRaised = Now;
+                }
+            }
+        }
+    }
+
+    private void ProcessAlarms(AlarmTimesModel alarmTimes, FarmInPeriodErrorModel e, DateTime Now)
+    {
+        if (alarmTimes.Enable)
+        {
+            if (alarmTimes.FarmAlarmEnable)
+            {
+                if (e.DateFarmAlarmRaised == null && e.DateHappened.IsElapsed(alarmTimes.FarmAlarmRaiseTime)) //first alarm.
+                {
+                    e.FarmAlarmRaisedCount = 1;
+                    Log.Information($"Informing Alarm. Count: {e.FarmAlarmRaisedCount}");
+                    //inform, save to db
+                    e.DateFarmAlarmRaised = Now;
+                }
+                else if (e.FarmAlarmRaisedCount % alarmTimes.FarmAlarmCountInCycle != 0 && e.DateFarmAlarmRaised.IsElapsed(alarmTimes.FarmAlarmEvery)) //alarm every.
+                {
+                    e.FarmAlarmRaisedCount++;
+                    Log.Information($"Informing Alarm. Count: {e.FarmAlarmRaisedCount}");
+                    //inform, save to db
+                    e.DateFarmAlarmRaised = Now;
+                }
+                else if (e.FarmAlarmRaisedCount % alarmTimes.FarmAlarmCountInCycle == 0 && e.DateFarmAlarmRaised.IsElapsed(alarmTimes.FarmAlarmSnooze)) //alarm sleep.
+                {
+                    e.FarmAlarmRaisedCount++;
+                    Log.Information($"Informing Alarm. Count: {e.FarmAlarmRaisedCount}");
+                    //inform, save to db
+                    e.DateFarmAlarmRaised = Now;
+                }
+            }
+            if (alarmTimes.SmsEnable)
+            {
+                if (e.DateSmsRaised == null && e.DateHappened.IsElapsed(alarmTimes.SmsRaiseTime)) //first alarm.
+                {
+                    e.SmsRaisedCount = 1;
+                    Log.Information($"Informing Alarm. Count: {e.SmsRaisedCount}");
+                    //send sms, save to db
+                    e.DateSmsRaised = Now;
+                }
+                else if (e.SmsRaisedCount % alarmTimes.SmsCountInCycle != 0 && e.DateSmsRaised.IsElapsed(alarmTimes.SmsEvery)) //alarm every.
+                {
+                    e.SmsRaisedCount++;
+                    Log.Information($"Informing Alarm. Count: {e.SmsRaisedCount}");
+                    //send sms, save to db
+                    e.DateSmsRaised = Now;
+                }
+                else if (e.SmsRaisedCount % alarmTimes.SmsCountInCycle == 0 && e.DateSmsRaised.IsElapsed(alarmTimes.SmsSnooze)) //alarm sleep.
+                {
+                    e.SmsRaisedCount++;
+                    Log.Information($"Informing Alarm. Count: {e.SmsRaisedCount}");
+                    //send sms, save to db
+                    e.DateSmsRaised = Now;
+                }
+            }
+            if (alarmTimes.PoultryLightAlarmEnable)
+            {
+                if (e.DatePoultryAlarmRaised == null && e.DateHappened.IsElapsed(alarmTimes.PoultryLightAlarmRaiseTime)) //first alarm.
+                {
+                    e.PoultryAlarmRaisedCount = 1;
+                    Log.Information($"Informing Alarm. Count: {e.PoultryAlarmRaisedCount}");
+                    //inform, save to db
+                    e.DatePoultryAlarmRaised = Now;
+                }
+                else if (e.PoultryAlarmRaisedCount % alarmTimes.PoultryLightAlarmCountInCycle != 0 && e.DatePoultryAlarmRaised.IsElapsed(alarmTimes.PoultryLightAlarmEvery)) //alarm every.
+                {
+                    e.PoultryAlarmRaisedCount++;
+                    Log.Information($"Informing Alarm. Count: {e.PoultryAlarmRaisedCount}");
+                    //inform, save to db
+                    e.DatePoultryAlarmRaised = Now;
+                }
+                else if (e.PoultryAlarmRaisedCount % alarmTimes.PoultryLightAlarmCountInCycle == 0 && e.DatePoultryAlarmRaised.IsElapsed(alarmTimes.PoultryLightAlarmSnooze)) //alarm sleep.
+                {
+                    e.PoultryAlarmRaisedCount++;
+                    Log.Information($"Informing Alarm. Count: {e.PoultryAlarmRaisedCount}");
+                    //inform, save to db
+                    e.DatePoultryAlarmRaised = Now;
+                }
+            }
+            if (alarmTimes.PoultrySirenAlarmEnable)
+            {
+                if (e.DatePoultryAlarmRaised == null && e.DateHappened.IsElapsed(alarmTimes.PoultrySirenAlarmRaiseTime)) //first alarm.
+                {
+                    e.PoultryAlarmRaisedCount = 1;
+                    Log.Information($"Informing Alarm. Count: {e.PoultryAlarmRaisedCount}");
+                    //inform, save to db
+                    e.DatePoultryAlarmRaised = Now;
+                }
+                else if (e.PoultryAlarmRaisedCount % alarmTimes.PoultrySirenAlarmCountInCycle != 0 && e.DatePoultryAlarmRaised.IsElapsed(alarmTimes.PoultrySirenAlarmEvery)) //alarm every.
+                {
+                    e.PoultryAlarmRaisedCount++;
+                    Log.Information($"Informing Alarm. Count: {e.PoultryAlarmRaisedCount}");
+                    //inform, save to db
+                    e.DatePoultryAlarmRaised = Now;
+                }
+                else if (e.PoultryAlarmRaisedCount % alarmTimes.PoultrySirenAlarmCountInCycle == 0 && e.DatePoultryAlarmRaised.IsElapsed(alarmTimes.PoultrySirenAlarmSnooze)) //alarm sleep.
+                {
+                    e.PoultryAlarmRaisedCount++;
+                    Log.Information($"Informing Alarm. Count: {e.PoultryAlarmRaisedCount}");
+                    //inform, save to db
+                    e.DatePoultryAlarmRaised = Now;
+                }
+            }
+        }
+    }
+
+    private void ProcessAlarms(AlarmTimesModel alarmTimes, PoultryInPeriodErrorModel e, DateTime Now)
+    {
+        if (alarmTimes.Enable)
+        {
+            if (alarmTimes.FarmAlarmEnable)
+            {
+                if (e.DateFarmAlarmRaised == null && e.DateHappened.IsElapsed(alarmTimes.FarmAlarmRaiseTime)) //first alarm.
+                {
+                    e.FarmAlarmRaisedCount = 1;
+                    Log.Information($"Informing Alarm. Count: {e.FarmAlarmRaisedCount}");
+                    //inform, save to db
+                    e.DateFarmAlarmRaised = Now;
+                }
+                else if (e.FarmAlarmRaisedCount % alarmTimes.FarmAlarmCountInCycle != 0 && e.DateFarmAlarmRaised.IsElapsed(alarmTimes.FarmAlarmEvery)) //alarm every.
+                {
+                    e.FarmAlarmRaisedCount++;
+                    Log.Information($"Informing Alarm. Count: {e.FarmAlarmRaisedCount}");
+                    //inform, save to db
+                    e.DateFarmAlarmRaised = Now;
+                }
+                else if (e.FarmAlarmRaisedCount % alarmTimes.FarmAlarmCountInCycle == 0 && e.DateFarmAlarmRaised.IsElapsed(alarmTimes.FarmAlarmSnooze)) //alarm sleep.
+                {
+                    e.FarmAlarmRaisedCount++;
+                    Log.Information($"Informing Alarm. Count: {e.FarmAlarmRaisedCount}");
+                    //inform, save to db
+                    e.DateFarmAlarmRaised = Now;
+                }
+            }
+            if (alarmTimes.SmsEnable)
+            {
+                if (e.DateSmsRaised == null && e.DateHappened.IsElapsed(alarmTimes.SmsRaiseTime)) //first alarm.
+                {
+                    e.SmsRaisedCount = 1;
+                    Log.Information($"Informing Alarm. Count: {e.SmsRaisedCount}");
+                    //send sms, save to db
+                    e.DateSmsRaised = Now;
+                }
+                else if (e.SmsRaisedCount % alarmTimes.SmsCountInCycle != 0 && e.DateSmsRaised.IsElapsed(alarmTimes.SmsEvery)) //alarm every.
+                {
+                    e.SmsRaisedCount++;
+                    Log.Information($"Informing Alarm. Count: {e.SmsRaisedCount}");
+                    //send sms, save to db
+                    e.DateSmsRaised = Now;
+                }
+                else if (e.SmsRaisedCount % alarmTimes.SmsCountInCycle == 0 && e.DateSmsRaised.IsElapsed(alarmTimes.SmsSnooze)) //alarm sleep.
+                {
+                    e.SmsRaisedCount++;
+                    Log.Information($"Informing Alarm. Count: {e.SmsRaisedCount}");
+                    //send sms, save to db
+                    e.DateSmsRaised = Now;
+                }
+            }
+            if (alarmTimes.PoultryLightAlarmEnable)
+            {
+                if (e.DatePoultryAlarmRaised == null && e.DateHappened.IsElapsed(alarmTimes.PoultryLightAlarmRaiseTime)) //first alarm.
+                {
+                    e.PoultryAlarmRaisedCount = 1;
+                    Log.Information($"Informing Alarm. Count: {e.PoultryAlarmRaisedCount}");
+                    //inform, save to db
+                    e.DatePoultryAlarmRaised = Now;
+                }
+                else if (e.PoultryAlarmRaisedCount % alarmTimes.PoultryLightAlarmCountInCycle != 0 && e.DatePoultryAlarmRaised.IsElapsed(alarmTimes.PoultryLightAlarmEvery)) //alarm every.
+                {
+                    e.PoultryAlarmRaisedCount++;
+                    Log.Information($"Informing Alarm. Count: {e.PoultryAlarmRaisedCount}");
+                    //inform, save to db
+                    e.DatePoultryAlarmRaised = Now;
+                }
+                else if (e.PoultryAlarmRaisedCount % alarmTimes.PoultryLightAlarmCountInCycle == 0 && e.DatePoultryAlarmRaised.IsElapsed(alarmTimes.PoultryLightAlarmSnooze)) //alarm sleep.
+                {
+                    e.PoultryAlarmRaisedCount++;
+                    Log.Information($"Informing Alarm. Count: {e.PoultryAlarmRaisedCount}");
+                    //inform, save to db
+                    e.DatePoultryAlarmRaised = Now;
+                }
+            }
+            if (alarmTimes.PoultrySirenAlarmEnable)
+            {
+                if (e.DatePoultryAlarmRaised == null && e.DateHappened.IsElapsed(alarmTimes.PoultrySirenAlarmRaiseTime)) //first alarm.
+                {
+                    e.PoultryAlarmRaisedCount = 1;
+                    Log.Information($"Informing Alarm. Count: {e.PoultryAlarmRaisedCount}");
+                    //inform, save to db
+                    e.DatePoultryAlarmRaised = Now;
+                }
+                else if (e.PoultryAlarmRaisedCount % alarmTimes.PoultrySirenAlarmCountInCycle != 0 && e.DatePoultryAlarmRaised.IsElapsed(alarmTimes.PoultrySirenAlarmEvery)) //alarm every.
+                {
+                    e.PoultryAlarmRaisedCount++;
+                    Log.Information($"Informing Alarm. Count: {e.PoultryAlarmRaisedCount}");
+                    //inform, save to db
+                    e.DatePoultryAlarmRaised = Now;
+                }
+                else if (e.PoultryAlarmRaisedCount % alarmTimes.PoultrySirenAlarmCountInCycle == 0 && e.DatePoultryAlarmRaised.IsElapsed(alarmTimes.PoultrySirenAlarmSnooze)) //alarm sleep.
                 {
                     e.PoultryAlarmRaisedCount++;
                     Log.Information($"Informing Alarm. Count: {e.PoultryAlarmRaisedCount}");
