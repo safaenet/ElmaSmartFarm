@@ -598,7 +598,7 @@ public partial class Worker
             if (e.DateErased.HasValue)
             {
                 AlarmableSensorErrors.Remove(e);
-                //Disable light/siren alarm if active
+                DisableAlarmIfNoErrorExists(e.LocationId);
                 continue;
             }
             var sensor = FindSensorsById(e.SensorId);
@@ -636,13 +636,10 @@ public partial class Worker
         }
     }
 
-    private void DisableAlarmIfNoErrorExist()
+    private void DisableAlarmIfNoErrorExists(int LocationId)
     {
-        foreach (var farm in Poultry.Farms)
-        {
-            var a = AlarmableSensorErrors?.Where(e => e.LocationId == farm.Id)?.Count();
-            if (a == null || a == 0) ;//Send disable farm alarm mqtt
-        }
+        if (!AlarmableSensorErrors.Any(e => e.LocationId == LocationId)) ;//Send disable farm alarm mqtt
+        if (!AlarmableFarmPeriodErrors.Any(e => e.FarmId == LocationId)) ;//Send disable farm alarm mqtt
     }
 
     private void ProcessAlarms(AlarmTimesModel alarmTimes, SensorErrorModel e, DateTime Now)
