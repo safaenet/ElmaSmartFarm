@@ -636,6 +636,15 @@ public partial class Worker
         }
     }
 
+    private void DisableAlarmIfNoErrorExist()
+    {
+        foreach (var farm in Poultry.Farms)
+        {
+            var a = AlarmableSensorErrors?.Where(e => e.LocationId == farm.Id)?.Count();
+            if (a == null || a == 0) ;//Send disable farm alarm mqtt
+        }
+    }
+
     private void ProcessAlarms(AlarmTimesModel alarmTimes, SensorErrorModel e, DateTime Now)
     {
         if (alarmTimes.Enable)

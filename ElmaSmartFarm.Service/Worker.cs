@@ -29,9 +29,7 @@ public partial class Worker : BackgroundService
     private readonly List<SensorErrorModel> AlarmableSensorErrors = new();
     private readonly List<FarmInPeriodErrorModel> AlarmableFarmPeriodErrors = new();
     private readonly List<PoultryInPeriodErrorModel> AlarmablePoultryPeriodErrors = new();
-    private readonly List<AlarmModel> FarmAlarms;
-    private readonly AlarmModel PoultryLightAlarm;
-    private readonly AlarmModel PoultrySirenAlarm;
+    private readonly List<AlarmModel> AlarmDevices;
     private bool CanRunObserver;
     private DateTime SystemUpTime;
 
