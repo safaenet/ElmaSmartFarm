@@ -598,7 +598,6 @@ public partial class Worker
             if (e.DateErased.HasValue)
             {
                 AlarmableSensorErrors.Remove(e);
-                //Disable light/siren alarm if active
                 continue;
             }
             var alarmTimes = GetAlarmTimings(e.ErrorType);
@@ -610,7 +609,6 @@ public partial class Worker
             if (e.DateErased.HasValue)
             {
                 AlarmableFarmPeriodErrors.Remove(e);
-                //Disable light/siren alarm if active
                 continue;
             }
             var alarmTimes = GetAlarmTimings(e.ErrorType);
@@ -622,7 +620,6 @@ public partial class Worker
             if (e.DateErased.HasValue)
             {
                 AlarmablePoultryPeriodErrors.Remove(e);
-                //Disable light/siren alarm if active
                 continue;
             }
             var alarmTimes = GetAlarmTimings(e.ErrorType);
