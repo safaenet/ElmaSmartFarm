@@ -636,7 +636,7 @@ public partial class Worker
                 if (e.DateFarmAlarmRaised == null && e.DateHappened.IsElapsed(alarmTimes.FarmAlarmRaiseTime)) //first alarm.
                 {
                     e.FarmAlarmRaisedCount = 1;
-                    Log.Information($"Informing Alarm. Count: {e.FarmAlarmRaisedCount}");
+                    Log.Information($"Activating farm alarm. Count: {e.FarmAlarmRaisedCount}, Level: {alarmTimes.Level}");
                     //save to db
                     Task.Run(() => TriggerAlarm(e, AlarmDeviceType.FarmLight, e.LocationId));
                     e.DateFarmAlarmRaised = Now;
@@ -644,7 +644,7 @@ public partial class Worker
                 else if (e.FarmAlarmRaisedCount % alarmTimes.FarmAlarmCountInCycle != 0 && e.DateFarmAlarmRaised.IsElapsed(alarmTimes.FarmAlarmEvery)) //alarm every.
                 {
                     e.FarmAlarmRaisedCount++;
-                    Log.Information($"Informing Alarm. Count: {e.FarmAlarmRaisedCount}");
+                    Log.Information($"Activating farm alarm. Count: {e.FarmAlarmRaisedCount}, Level: {alarmTimes.Level}");
                     //save to db
                     Task.Run(() => TriggerAlarm(e, AlarmDeviceType.FarmLight, e.LocationId));
                     e.DateFarmAlarmRaised = Now;
@@ -652,7 +652,7 @@ public partial class Worker
                 else if (e.FarmAlarmRaisedCount % alarmTimes.FarmAlarmCountInCycle == 0 && e.DateFarmAlarmRaised.IsElapsed(alarmTimes.FarmAlarmSnooze)) //alarm sleep.
                 {
                     e.FarmAlarmRaisedCount++;
-                    Log.Information($"Informing Alarm. Count: {e.FarmAlarmRaisedCount}");
+                    Log.Information($"Activating farm alarm. Count: {e.FarmAlarmRaisedCount}, Level: {alarmTimes.Level}");
                     //save to db
                     Task.Run(() => TriggerAlarm(e, AlarmDeviceType.FarmLight, e.LocationId));
                     e.DateFarmAlarmRaised = Now;
@@ -663,21 +663,21 @@ public partial class Worker
                 if (e.DateSmsRaised == null && e.DateHappened.IsElapsed(alarmTimes.SmsRaiseTime)) //first alarm.
                 {
                     e.SmsRaisedCount = 1;
-                    Log.Information($"Informing Alarm. Count: {e.SmsRaisedCount}");
+                    Log.Information($"Sending Sms. Count: {e.SmsRaisedCount}, Level: {alarmTimes.Level}");
                     //send sms, save to db
                     e.DateSmsRaised = Now;
                 }
                 else if (e.SmsRaisedCount % alarmTimes.SmsCountInCycle != 0 && e.DateSmsRaised.IsElapsed(alarmTimes.SmsEvery)) //alarm every.
                 {
                     e.SmsRaisedCount++;
-                    Log.Information($"Informing Alarm. Count: {e.SmsRaisedCount}");
+                    Log.Information($"Sending Sms. Count: {e.SmsRaisedCount}, Level: {alarmTimes.Level}");
                     //send sms, save to db
                     e.DateSmsRaised = Now;
                 }
                 else if (e.SmsRaisedCount % alarmTimes.SmsCountInCycle == 0 && e.DateSmsRaised.IsElapsed(alarmTimes.SmsSnooze)) //alarm sleep.
                 {
                     e.SmsRaisedCount++;
-                    Log.Information($"Informing Alarm. Count: {e.SmsRaisedCount}");
+                    Log.Information($"Sending Sms. Count: {e.SmsRaisedCount}, Level: {alarmTimes.Level}");
                     //send sms, save to db
                     e.DateSmsRaised = Now;
                 }
@@ -687,7 +687,7 @@ public partial class Worker
                 if (e.DatePoultryAlarmRaised == null && e.DateHappened.IsElapsed(alarmTimes.PoultryLightAlarmRaiseTime)) //first alarm.
                 {
                     e.PoultryAlarmRaisedCount = 1;
-                    Log.Information($"Informing Alarm. Count: {e.PoultryAlarmRaisedCount}");
+                    Log.Information($"Activating poultry light alarm. Count: {e.PoultryAlarmRaisedCount}, Level: {alarmTimes.Level}");
                     //save to db
                     Task.Run(() => TriggerAlarm(e, AlarmDeviceType.PoultryLight));
                     e.DatePoultryAlarmRaised = Now;
@@ -695,7 +695,7 @@ public partial class Worker
                 else if (e.PoultryAlarmRaisedCount % alarmTimes.PoultryLightAlarmCountInCycle != 0 && e.DatePoultryAlarmRaised.IsElapsed(alarmTimes.PoultryLightAlarmEvery)) //alarm every.
                 {
                     e.PoultryAlarmRaisedCount++;
-                    Log.Information($"Informing Alarm. Count: {e.PoultryAlarmRaisedCount}");
+                    Log.Information($"Activating poultry light alarm. Count: {e.PoultryAlarmRaisedCount}, Level: {alarmTimes.Level}");
                     //save to db
                     Task.Run(() => TriggerAlarm(e, AlarmDeviceType.PoultryLight));
                     e.DatePoultryAlarmRaised = Now;
@@ -703,7 +703,7 @@ public partial class Worker
                 else if (e.PoultryAlarmRaisedCount % alarmTimes.PoultryLightAlarmCountInCycle == 0 && e.DatePoultryAlarmRaised.IsElapsed(alarmTimes.PoultryLightAlarmSnooze)) //alarm sleep.
                 {
                     e.PoultryAlarmRaisedCount++;
-                    Log.Information($"Informing Alarm. Count: {e.PoultryAlarmRaisedCount}");
+                    Log.Information($"Activating poultry light alarm. Count: {e.PoultryAlarmRaisedCount}, Level: {alarmTimes.Level}");
                     //save to db
                     Task.Run(() => TriggerAlarm(e, AlarmDeviceType.PoultryLight));
                     e.DatePoultryAlarmRaised = Now;
@@ -714,7 +714,7 @@ public partial class Worker
                 if (e.DatePoultryAlarmRaised == null && e.DateHappened.IsElapsed(alarmTimes.PoultrySirenAlarmRaiseTime)) //first alarm.
                 {
                     e.PoultryAlarmRaisedCount = 1;
-                    Log.Information($"Informing Alarm. Count: {e.PoultryAlarmRaisedCount}");
+                    Log.Information($"Activating poultry siren alarm. Count: {e.PoultryAlarmRaisedCount}, Level: {alarmTimes.Level}");
                     //save to db
                     Task.Run(() => TriggerAlarm(e, AlarmDeviceType.PoultrySiren));
                     e.DatePoultryAlarmRaised = Now;
@@ -722,7 +722,7 @@ public partial class Worker
                 else if (e.PoultryAlarmRaisedCount % alarmTimes.PoultrySirenAlarmCountInCycle != 0 && e.DatePoultryAlarmRaised.IsElapsed(alarmTimes.PoultrySirenAlarmEvery)) //alarm every.
                 {
                     e.PoultryAlarmRaisedCount++;
-                    Log.Information($"Informing Alarm. Count: {e.PoultryAlarmRaisedCount}");
+                    Log.Information($"Activating poultry siren alarm. Count: {e.PoultryAlarmRaisedCount}, Level: {alarmTimes.Level}");
                     //save to db
                     Task.Run(() => TriggerAlarm(e, AlarmDeviceType.PoultrySiren));
                     e.DatePoultryAlarmRaised = Now;
@@ -730,7 +730,7 @@ public partial class Worker
                 else if (e.PoultryAlarmRaisedCount % alarmTimes.PoultrySirenAlarmCountInCycle == 0 && e.DatePoultryAlarmRaised.IsElapsed(alarmTimes.PoultrySirenAlarmSnooze)) //alarm sleep.
                 {
                     e.PoultryAlarmRaisedCount++;
-                    Log.Information($"Informing Alarm. Count: {e.PoultryAlarmRaisedCount}");
+                    Log.Information($"Activating poultry siren alarm. Count: {e.PoultryAlarmRaisedCount}, Level: {alarmTimes.Level}");
                     //save to db
                     Task.Run(() => TriggerAlarm(e, AlarmDeviceType.PoultrySiren));
                     e.DatePoultryAlarmRaised = Now;
@@ -748,7 +748,7 @@ public partial class Worker
                 if (e.DateFarmAlarmRaised == null && e.DateHappened.IsElapsed(alarmTimes.FarmAlarmRaiseTime)) //first alarm.
                 {
                     e.FarmAlarmRaisedCount = 1;
-                    Log.Information($"Informing Alarm. Count: {e.FarmAlarmRaisedCount}");
+                    Log.Information($"Activating farm alarm. Count: {e.FarmAlarmRaisedCount}, Level: {alarmTimes.Level}");
                     //save to db
                     Task.Run(() => TriggerAlarm(e,AlarmDeviceType.FarmLight, e.FarmId));
                     e.DateFarmAlarmRaised = Now;
@@ -756,7 +756,7 @@ public partial class Worker
                 else if (e.FarmAlarmRaisedCount % alarmTimes.FarmAlarmCountInCycle != 0 && e.DateFarmAlarmRaised.IsElapsed(alarmTimes.FarmAlarmEvery)) //alarm every.
                 {
                     e.FarmAlarmRaisedCount++;
-                    Log.Information($"Informing Alarm. Count: {e.FarmAlarmRaisedCount}");
+                    Log.Information($"Activating farm alarm. Count: {e.FarmAlarmRaisedCount}, Level: {alarmTimes.Level}");
                     //save to db
                     Task.Run(() => TriggerAlarm(e, AlarmDeviceType.FarmLight, e.FarmId));
                     e.DateFarmAlarmRaised = Now;
@@ -764,7 +764,7 @@ public partial class Worker
                 else if (e.FarmAlarmRaisedCount % alarmTimes.FarmAlarmCountInCycle == 0 && e.DateFarmAlarmRaised.IsElapsed(alarmTimes.FarmAlarmSnooze)) //alarm sleep.
                 {
                     e.FarmAlarmRaisedCount++;
-                    Log.Information($"Informing Alarm. Count: {e.FarmAlarmRaisedCount}");
+                    Log.Information($"Activating farm alarm. Count: {e.FarmAlarmRaisedCount}, Level: {alarmTimes.Level}");
                     //save to db
                     Task.Run(() => TriggerAlarm(e, AlarmDeviceType.FarmLight, e.FarmId));
                     e.DateFarmAlarmRaised = Now;
@@ -775,21 +775,21 @@ public partial class Worker
                 if (e.DateSmsRaised == null && e.DateHappened.IsElapsed(alarmTimes.SmsRaiseTime)) //first alarm.
                 {
                     e.SmsRaisedCount = 1;
-                    Log.Information($"Informing Alarm. Count: {e.SmsRaisedCount}");
+                    Log.Information($"Sending Sms. Count: {e.SmsRaisedCount}, Level: {alarmTimes.Level}");
                     //send sms, save to db
                     e.DateSmsRaised = Now;
                 }
                 else if (e.SmsRaisedCount % alarmTimes.SmsCountInCycle != 0 && e.DateSmsRaised.IsElapsed(alarmTimes.SmsEvery)) //alarm every.
                 {
                     e.SmsRaisedCount++;
-                    Log.Information($"Informing Alarm. Count: {e.SmsRaisedCount}");
+                    Log.Information($"Sending Sms. Count: {e.SmsRaisedCount}, Level: {alarmTimes.Level}");
                     //send sms, save to db
                     e.DateSmsRaised = Now;
                 }
                 else if (e.SmsRaisedCount % alarmTimes.SmsCountInCycle == 0 && e.DateSmsRaised.IsElapsed(alarmTimes.SmsSnooze)) //alarm sleep.
                 {
                     e.SmsRaisedCount++;
-                    Log.Information($"Informing Alarm. Count: {e.SmsRaisedCount}");
+                    Log.Information($"Sending Sms. Count: {e.SmsRaisedCount}, Level: {alarmTimes.Level}");
                     //send sms, save to db
                     e.DateSmsRaised = Now;
                 }
@@ -799,7 +799,7 @@ public partial class Worker
                 if (e.DatePoultryAlarmRaised == null && e.DateHappened.IsElapsed(alarmTimes.PoultryLightAlarmRaiseTime)) //first alarm.
                 {
                     e.PoultryAlarmRaisedCount = 1;
-                    Log.Information($"Informing Alarm. Count: {e.PoultryAlarmRaisedCount}");
+                    Log.Information($"Activating poultry light alarm. Count: {e.PoultryAlarmRaisedCount}, Level: {alarmTimes.Level}");
                     //save to db
                     Task.Run(() => TriggerAlarm(e, AlarmDeviceType.PoultryLight));
                     e.DatePoultryAlarmRaised = Now;
@@ -807,7 +807,7 @@ public partial class Worker
                 else if (e.PoultryAlarmRaisedCount % alarmTimes.PoultryLightAlarmCountInCycle != 0 && e.DatePoultryAlarmRaised.IsElapsed(alarmTimes.PoultryLightAlarmEvery)) //alarm every.
                 {
                     e.PoultryAlarmRaisedCount++;
-                    Log.Information($"Informing Alarm. Count: {e.PoultryAlarmRaisedCount}");
+                    Log.Information($"Activating poultry light alarm. Count: {e.PoultryAlarmRaisedCount}, Level: {alarmTimes.Level}");
                     //save to db
                     Task.Run(() => TriggerAlarm(e, AlarmDeviceType.PoultryLight));
                     e.DatePoultryAlarmRaised = Now;
@@ -815,7 +815,7 @@ public partial class Worker
                 else if (e.PoultryAlarmRaisedCount % alarmTimes.PoultryLightAlarmCountInCycle == 0 && e.DatePoultryAlarmRaised.IsElapsed(alarmTimes.PoultryLightAlarmSnooze)) //alarm sleep.
                 {
                     e.PoultryAlarmRaisedCount++;
-                    Log.Information($"Informing Alarm. Count: {e.PoultryAlarmRaisedCount}");
+                    Log.Information($"Activating poultry light alarm. Count: {e.PoultryAlarmRaisedCount}, Level: {alarmTimes.Level}");
                     //save to db
                     Task.Run(() => TriggerAlarm(e, AlarmDeviceType.PoultryLight));
                     e.DatePoultryAlarmRaised = Now;
@@ -826,7 +826,7 @@ public partial class Worker
                 if (e.DatePoultryAlarmRaised == null && e.DateHappened.IsElapsed(alarmTimes.PoultrySirenAlarmRaiseTime)) //first alarm.
                 {
                     e.PoultryAlarmRaisedCount = 1;
-                    Log.Information($"Informing Alarm. Count: {e.PoultryAlarmRaisedCount}");
+                    Log.Information($"Activating poultry siren alarm. Count: {e.PoultryAlarmRaisedCount}, Level: {alarmTimes.Level}");
                     //save to db
                     Task.Run(() => TriggerAlarm(e, AlarmDeviceType.PoultrySiren));
                     e.DatePoultryAlarmRaised = Now;
@@ -834,7 +834,7 @@ public partial class Worker
                 else if (e.PoultryAlarmRaisedCount % alarmTimes.PoultrySirenAlarmCountInCycle != 0 && e.DatePoultryAlarmRaised.IsElapsed(alarmTimes.PoultrySirenAlarmEvery)) //alarm every.
                 {
                     e.PoultryAlarmRaisedCount++;
-                    Log.Information($"Informing Alarm. Count: {e.PoultryAlarmRaisedCount}");
+                    Log.Information($"Activating poultry siren alarm. Count: {e.PoultryAlarmRaisedCount}, Level: {alarmTimes.Level}");
                     //save to db
                     Task.Run(() => TriggerAlarm(e, AlarmDeviceType.PoultrySiren));
                     e.DatePoultryAlarmRaised = Now;
@@ -842,7 +842,7 @@ public partial class Worker
                 else if (e.PoultryAlarmRaisedCount % alarmTimes.PoultrySirenAlarmCountInCycle == 0 && e.DatePoultryAlarmRaised.IsElapsed(alarmTimes.PoultrySirenAlarmSnooze)) //alarm sleep.
                 {
                     e.PoultryAlarmRaisedCount++;
-                    Log.Information($"Informing Alarm. Count: {e.PoultryAlarmRaisedCount}");
+                    Log.Information($"Activating poultry siren alarm. Count: {e.PoultryAlarmRaisedCount}, Level: {alarmTimes.Level}");
                     //save to db
                     Task.Run(() => TriggerAlarm(e, AlarmDeviceType.PoultrySiren));
                     e.DatePoultryAlarmRaised = Now;
@@ -887,21 +887,21 @@ public partial class Worker
                 if (e.DateSmsRaised == null && e.DateHappened.IsElapsed(alarmTimes.SmsRaiseTime)) //first alarm.
                 {
                     e.SmsRaisedCount = 1;
-                    Log.Information($"Informing Alarm. Count: {e.SmsRaisedCount}");
+                    Log.Information($"Sending Sms. Count: {e.SmsRaisedCount}, Level: {alarmTimes.Level}");
                     //send sms, save to db
                     e.DateSmsRaised = Now;
                 }
                 else if (e.SmsRaisedCount % alarmTimes.SmsCountInCycle != 0 && e.DateSmsRaised.IsElapsed(alarmTimes.SmsEvery)) //alarm every.
                 {
                     e.SmsRaisedCount++;
-                    Log.Information($"Informing Alarm. Count: {e.SmsRaisedCount}");
+                    Log.Information($"Sending Sms. Count: {e.SmsRaisedCount}, Level: {alarmTimes.Level}");
                     //send sms, save to db
                     e.DateSmsRaised = Now;
                 }
                 else if (e.SmsRaisedCount % alarmTimes.SmsCountInCycle == 0 && e.DateSmsRaised.IsElapsed(alarmTimes.SmsSnooze)) //alarm sleep.
                 {
                     e.SmsRaisedCount++;
-                    Log.Information($"Informing Alarm. Count: {e.SmsRaisedCount}");
+                    Log.Information($"Sending Sms. Count: {e.SmsRaisedCount}, Level: {alarmTimes.Level}");
                     //send sms, save to db
                     e.DateSmsRaised = Now;
                 }
@@ -911,7 +911,7 @@ public partial class Worker
                 if (e.DatePoultryAlarmRaised == null && e.DateHappened.IsElapsed(alarmTimes.PoultryLightAlarmRaiseTime)) //first alarm.
                 {
                     e.PoultryAlarmRaisedCount = 1;
-                    Log.Information($"Informing Alarm. Count: {e.PoultryAlarmRaisedCount}");
+                    Log.Information($"Activating poultry light alarm. Count: {e.PoultryAlarmRaisedCount}, Level: {alarmTimes.Level}");
                     //save to db
                     Task.Run(() => TriggerAlarm(e, AlarmDeviceType.PoultryLight));
                     e.DatePoultryAlarmRaised = Now;
@@ -919,7 +919,7 @@ public partial class Worker
                 else if (e.PoultryAlarmRaisedCount % alarmTimes.PoultryLightAlarmCountInCycle != 0 && e.DatePoultryAlarmRaised.IsElapsed(alarmTimes.PoultryLightAlarmEvery)) //alarm every.
                 {
                     e.PoultryAlarmRaisedCount++;
-                    Log.Information($"Informing Alarm. Count: {e.PoultryAlarmRaisedCount}");
+                    Log.Information($"Activating poultry light alarm. Count: {e.PoultryAlarmRaisedCount}, Level: {alarmTimes.Level}");
                     //save to db
                     Task.Run(() => TriggerAlarm(e, AlarmDeviceType.PoultryLight));
                     e.DatePoultryAlarmRaised = Now;
@@ -927,7 +927,7 @@ public partial class Worker
                 else if (e.PoultryAlarmRaisedCount % alarmTimes.PoultryLightAlarmCountInCycle == 0 && e.DatePoultryAlarmRaised.IsElapsed(alarmTimes.PoultryLightAlarmSnooze)) //alarm sleep.
                 {
                     e.PoultryAlarmRaisedCount++;
-                    Log.Information($"Informing Alarm. Count: {e.PoultryAlarmRaisedCount}");
+                    Log.Information($"Activating poultry light alarm. Count: {e.PoultryAlarmRaisedCount}, Level: {alarmTimes.Level}");
                     //save to db
                     Task.Run(() => TriggerAlarm(e, AlarmDeviceType.PoultryLight));
                     e.DatePoultryAlarmRaised = Now;
@@ -938,7 +938,7 @@ public partial class Worker
                 if (e.DatePoultryAlarmRaised == null && e.DateHappened.IsElapsed(alarmTimes.PoultrySirenAlarmRaiseTime)) //first alarm.
                 {
                     e.PoultryAlarmRaisedCount = 1;
-                    Log.Information($"Informing Alarm. Count: {e.PoultryAlarmRaisedCount}");
+                    Log.Information($"Activating poultry siren alarm. Count: {e.PoultryAlarmRaisedCount}, Level: {alarmTimes.Level}");
                     //save to db
                     Task.Run(() => TriggerAlarm(e, AlarmDeviceType.PoultrySiren));
                     e.DatePoultryAlarmRaised = Now;
@@ -946,7 +946,7 @@ public partial class Worker
                 else if (e.PoultryAlarmRaisedCount % alarmTimes.PoultrySirenAlarmCountInCycle != 0 && e.DatePoultryAlarmRaised.IsElapsed(alarmTimes.PoultrySirenAlarmEvery)) //alarm every.
                 {
                     e.PoultryAlarmRaisedCount++;
-                    Log.Information($"Informing Alarm. Count: {e.PoultryAlarmRaisedCount}");
+                    Log.Information($"Activating poultry siren alarm. Count: {e.PoultryAlarmRaisedCount}, Level: {alarmTimes.Level}");
                     //save to db
                     Task.Run(() => TriggerAlarm(e, AlarmDeviceType.PoultrySiren));
                     e.DatePoultryAlarmRaised = Now;
@@ -954,7 +954,7 @@ public partial class Worker
                 else if (e.PoultryAlarmRaisedCount % alarmTimes.PoultrySirenAlarmCountInCycle == 0 && e.DatePoultryAlarmRaised.IsElapsed(alarmTimes.PoultrySirenAlarmSnooze)) //alarm sleep.
                 {
                     e.PoultryAlarmRaisedCount++;
-                    Log.Information($"Informing Alarm. Count: {e.PoultryAlarmRaisedCount}");
+                    Log.Information($"Activating poultry siren alarm. Count: {e.PoultryAlarmRaisedCount}, Level: {alarmTimes.Level}");
                     //save to db
                     Task.Run(() => TriggerAlarm(e, AlarmDeviceType.PoultrySiren));
                     e.DatePoultryAlarmRaised = Now;
@@ -965,10 +965,10 @@ public partial class Worker
 
     private void TriggerAlarm(ErrorModel e, AlarmDeviceType type, int AlarmLocationId = 0)
     {
-        var alarms = AlarmDevices?.Where(a => a.DeviceType == type && a.LocationId == AlarmLocationId);
+        var alarms = Poultry.AlarmDevices?.Where(a => a.IsEnabled && a.Type == type && a.LocationId == AlarmLocationId);
         if (alarms != null)
         {
-            if (config.VerboseMode) Log.Information($"Activating alarm. Alarm type: {type}, Alarm location ID: {AlarmLocationId}, Error: {e.Descriptions}");
+            //if (config.VerboseMode) Log.Information($"Activating alarm. Alarm type: {type}, Alarm location ID: {AlarmLocationId}, Error: {e.Descriptions}, Thread: {Environment.CurrentManagedThreadId}");
             var start = DateTime.Now;
             while (e.DateErased == null && !start.IsElapsed(AlarmLocationId == 0 ? config.system.PoultryAlarmDuration : config.system.FarmAlarmDuration))
             {
@@ -978,7 +978,7 @@ public partial class Worker
                     {
                         if (type != AlarmDeviceType.PoultrySiren || (type == AlarmDeviceType.PoultrySiren && !alarm.IsSnoozed) || (type == AlarmDeviceType.PoultrySiren && alarm.IsSnoozed && alarm.SnoozedTime.IsElapsed(config.system.SirenSnoozeDuration)))
                         {
-                            if (config.VerboseMode) Log.Information($"Reactivating alarm. Alarm type: {type}, Alarm location ID: {AlarmLocationId}, Error: {e.Descriptions}");
+                            Log.Information($"Activating/Reactivating alarm. Alarm type: {type}, Alarm location ID: {AlarmLocationId}, Error: {e.Descriptions}, Thread: {Environment.CurrentManagedThreadId}");
                             //Send active mqtt to alarm.
                             alarm.IsSnoozed = false;
                             alarm.IsActive = true;
@@ -986,19 +986,19 @@ public partial class Worker
                     }
                 }
             }
-            if (config.VerboseMode) Log.Information($"Deactivating alarm. Alarm type: {type}, Alarm location ID: {AlarmLocationId}, Error: {e.Descriptions}");
+            if (config.VerboseMode) Log.Information($"Deactivating alarm. Alarm type: {type}, Alarm location ID: {AlarmLocationId}, Error: {e.Descriptions}, Thread: {Environment.CurrentManagedThreadId}");
             foreach (var alarm in alarms)
             {
                 //Send deactive mqtt to alarm.
                 alarm.IsActive = false;
             }
         }
-        else Log.Warning($"Alarm needs to be activated but no alarm device is found for the error. Alarm type: {type}, Alarm location ID: {AlarmLocationId}");
+        else Log.Warning($"Alarm needs to be activated but no alarm device is found for the error. Alarm type: {type}, Alarm location ID: {AlarmLocationId}, Thread: {Environment.CurrentManagedThreadId}");
     }
 
     private void SnoozeSirens()
     {
-        var alarms = AlarmDevices?.Where(a => a.DeviceType == AlarmDeviceType.PoultrySiren);
+        var alarms = Poultry.AlarmDevices?.Where(a => a.IsEnabled && a.Type == AlarmDeviceType.PoultrySiren);
         if (alarms != null && alarms.Any())
             foreach (var alarm in alarms)
             {

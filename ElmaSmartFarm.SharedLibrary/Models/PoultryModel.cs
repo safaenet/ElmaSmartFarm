@@ -1,4 +1,5 @@
-﻿using ElmaSmartFarm.SharedLibrary.Models.Sensors;
+﻿using ElmaSmartFarm.SharedLibrary.Models.Alarm;
+using ElmaSmartFarm.SharedLibrary.Models.Sensors;
 
 namespace ElmaSmartFarm.SharedLibrary.Models;
 
@@ -15,4 +16,5 @@ public class PoultryModel
     public bool IsInPeriod => Farms != null && Farms.Any(f => f.Period != null && f.Period.EndDate != null);
     public List<PoultryInPeriodErrorModel> InPeriodErrors { get; set; }
     public bool HasPeriodError => IsInPeriod && InPeriodErrors != null && InPeriodErrors.Any(e => e.DateErased == null);
+    public List<AlarmModel> AlarmDevices { get; set; }
 }

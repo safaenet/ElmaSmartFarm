@@ -29,7 +29,6 @@ public partial class Worker : BackgroundService
     private readonly List<SensorErrorModel> AlarmableSensorErrors = new();
     private readonly List<FarmInPeriodErrorModel> AlarmableFarmPeriodErrors = new();
     private readonly List<PoultryInPeriodErrorModel> AlarmablePoultryPeriodErrors = new();
-    private readonly List<AlarmModel> AlarmDevices;
     private bool CanRunObserver;
     private DateTime SystemUpTime;
 
@@ -48,7 +47,7 @@ public partial class Worker : BackgroundService
         mqttClient.ConnectedAsync += MqttClient_ConnectedAsync;
         mqttClient.DisconnectedAsync += MqttClient_DisconnectedAsync;
 
-        Poultry = await DbProcessor.LoadPoultriesAsync();
+        Poultry = await DbProcessor.LoadPoultryAsync();
         await TryReconnectAsync();
         SystemUpTime = DateTime.Now;
         CanRunObserver = true;

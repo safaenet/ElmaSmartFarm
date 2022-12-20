@@ -11,7 +11,7 @@ public interface IDbProcessor
 {
     Task<int> WriteScalarSensorValueToDbAsync(SensorModel sensor, ScalarSensorReadModel value);
     Task<int> WriteSensorValueToDbAsync(SensorModel sensor, double value, DateTime now, double offset = 0);
-    Task<PoultryModel> LoadPoultriesAsync();
+    Task<PoultryModel> LoadPoultryAsync();
     Task<int> WriteSensorErrorToDbAsync(SensorErrorModel error, DateTime now);
     Task<int> WriteFarmErrorToDbAsync(FarmInPeriodErrorModel error, DateTime now);
     //Task<bool> EraseSensorErrorFromDbAsync(SensorBaseModel sensor, SensorErrorType type, DateTime eraseDate);

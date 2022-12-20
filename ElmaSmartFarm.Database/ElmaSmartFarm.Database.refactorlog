@@ -182,4 +182,11 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="ReadValue" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="6b584265-93b9-4e7d-a992-b7ec48da5407" ChangeDateTime="12/20/2022 18:58:09">
+    <Property Name="ElementName" Value="[dbo].[AlarmDevices].[Type]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[AlarmDevices]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="DeviceType" />
+  </Operation>
 </Operations>

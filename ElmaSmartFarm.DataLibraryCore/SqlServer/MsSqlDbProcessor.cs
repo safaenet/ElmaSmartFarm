@@ -3,6 +3,7 @@ using ElmaSmartFarm.DataLibraryCore.Interfaces;
 using ElmaSmartFarm.SharedLibrary;
 using ElmaSmartFarm.SharedLibrary.Config;
 using ElmaSmartFarm.SharedLibrary.Models;
+using ElmaSmartFarm.SharedLibrary.Models.Alarm;
 using ElmaSmartFarm.SharedLibrary.Models.Sensors;
 using Serilog;
 using System;
@@ -75,6 +76,7 @@ public class MsSqlDbProcessor : IDbProcessor
     private readonly string EraseSensorErrorCmd = @"UPDATE SensorErrorLogs SET DateErased = @DateErased WHERE DateErased IS NULL AND SensorId = @SensorId AND ErrorType IN {0};";
     private readonly string EraseFarmErrorCmd = @"UPDATE FarmErrorLogs SET DateErased = @DateErased WHERE DateErased IS NULL AND FarmId = @FarmId AND ErrorType IN {0};";
     private readonly string ErasePoultryErrorCmd = @"UPDATE PoultryErrorLogs SET DateErased = @DateErased WHERE DateErased IS NULL AND ErrorType IN {0};";
+    private readonly string LoadAlarmsQuery = @"SELECT * FROM AlarmDevices;";
 
     public async Task<int> WriteScalarSensorValueToDbAsync(SensorModel sensor, ScalarSensorReadModel value)
     {
@@ -274,7 +276,7 @@ public class MsSqlDbProcessor : IDbProcessor
         return false;
     }
 
-    public async Task<PoultryModel> LoadPoultriesAsync()
+    public async Task<PoultryModel> LoadPoultryAsync()
     {
         try
         {
@@ -282,6 +284,7 @@ public class MsSqlDbProcessor : IDbProcessor
             Log.Information($"Loading poultry...");
             PoultryModel poultry = new();
             poultry.Name = config.PoultryName;
+            poultry.AlarmDevices = (await DataAccess.LoadDataAsync<AlarmModel>(LoadAlarmsQuery)).ToList();
             var farms = await DataAccess.LoadDataAsync<FarmModel>(LoadFarmsQuery);
             var poultryScalarSensor = (await DataAccess.LoadDataAsync<ScalarSensorModel>(LoadOutdoorScalarSensorsQuery)).FirstOrDefault();
             var poultryMPowerSensor = (await DataAccess.LoadDataAsync<BinarySensorModel>(LoadPoultryMPowerSensorsQuery)).FirstOrDefault();

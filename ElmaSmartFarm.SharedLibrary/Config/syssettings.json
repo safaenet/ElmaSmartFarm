@@ -30,9 +30,9 @@
     "no_backup_power": 4
   },
   "alarm_level_timeout": {
-    "farm_alarm_duration": 20,
-    "poultry_alarm_duration": 20,
-    "siren_snooze_duration": 10,
+    "farm_alarm_duration": 5,
+    "poultry_alarm_duration": 5,
+    "siren_snooze_duration": 5,
     "1": {
       "enable": true,
       "raise_time": 5,
@@ -40,28 +40,28 @@
         "enable": true,
         "raise_time_offset": 5,
         "every": 5,
-        "snooze": 10,
+        "snooze": 100,
         "count_in_cycle": 3
       },
       "sms": {
         "enable": true,
         "raise_time_offset": 5,
         "every": 5,
-        "snooze": 10,
+        "snooze": 100,
         "count_in_cycle": 3
       },
       "poultry_light_alarm": {
         "enable": true,
         "raise_time_offset": 5,
         "every": 5,
-        "snooze": 10,
+        "snooze": 100,
         "count_in_cycle": 3
       },
       "poultry_siren_alarm": {
         "enable": true,
         "raise_time_offset": 5,
         "every": 5,
-        "snooze": 10,
+        "snooze": 100,
         "count_in_cycle": 3
       }
     },
@@ -71,29 +71,29 @@
       "farm_alarm": {
         "enable": true,
         "raise_time_offset": 5,
-        "every": 5,
-        "snooze": 10,
+        "every": 15,
+        "snooze": 100,
         "count_in_cycle": 3
       },
       "sms": {
-        "enable": true,
+        "enable": false,
         "raise_time_offset": 5,
-        "every": 5,
-        "snooze": 10,
+        "every": 15,
+        "snooze": 100,
         "count_in_cycle": 3
       },
       "poultry_light_alarm": {
         "enable": true,
         "raise_time_offset": 5,
-        "every": 5,
-        "snooze": 10,
+        "every": 15,
+        "snooze": 100,
         "count_in_cycle": 3
       },
       "poultry_siren_alarm": {
         "enable": true,
         "raise_time_offset": 5,
-        "every": 5,
-        "snooze": 10,
+        "every": 15,
+        "snooze": 100,
         "count_in_cycle": 3
       }
     },
@@ -248,7 +248,7 @@
     "no_power_timeout": 30
   },
   "observer": {
-    "observer_check_interval": 5,
+    "observer_check_interval": 1,
     "observe_always": true
   }
 }

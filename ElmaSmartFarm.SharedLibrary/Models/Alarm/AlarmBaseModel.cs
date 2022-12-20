@@ -4,8 +4,7 @@ public class AlarmBaseModel
 {
     public int Id { get; set; }
     public string Name { get; set; }
-    public AlarmDeviceType DeviceType { get; set; }
-    public LocationType LocationType { get; set; }
+    public AlarmDeviceType Type { get; set; }
     /// <summary>
     /// The location (Farm/Poultry) to which this alarm device is attached to. This is needed for mqtt message.
     /// </summary>
