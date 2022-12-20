@@ -96,6 +96,7 @@ public class System
 
         FarmAlarmDuration = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level_timeout:farm_alarm_duration").Value ?? "20");
         PoultryAlarmDuration = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level_timeout:poultry_alarm_duration").Value ?? "20");
+        SirenSnoozeDuration = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level_timeout:siren_snooze_duration").Value ?? "60");
 
         AlarmLevelOneEnable = bool.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level_timeout:1:enable").Value ?? "true");
         AlarmLevelOneRaiseTime = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("alarm_level_timeout:1:raise_time").Value ?? "60");
@@ -300,6 +301,7 @@ public class System
 
     public int FarmAlarmDuration { get; set; }
     public int PoultryAlarmDuration { get; set; }
+    public int SirenSnoozeDuration { get; set; }
 
     public bool AlarmLevelOneEnable { get; set; }
     public int AlarmLevelOneRaiseTime { get; set; }

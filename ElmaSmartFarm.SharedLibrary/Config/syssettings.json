@@ -32,6 +32,7 @@
   "alarm_level_timeout": {
     "farm_alarm_duration": 20,
     "poultry_alarm_duration": 20,
+    "siren_snooze_duration": 10,
     "1": {
       "enable": true,
       "raise_time": 5,

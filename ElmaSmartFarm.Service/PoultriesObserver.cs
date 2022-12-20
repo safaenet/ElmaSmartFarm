@@ -601,12 +601,6 @@ public partial class Worker
                 //Disable light/siren alarm if active
                 continue;
             }
-            var sensor = FindSensorsById(e.SensorId);
-            if (sensor == null)
-            {
-                Log.Error($"No sensor found related to the Error. Sensor ID: {e.SensorId}, Error Type: {e.ErrorType}, Date Happened: {e.DateHappened}");
-                continue;
-            }
             var alarmTimes = GetAlarmTimings(e.ErrorType);
             ProcessAlarms(alarmTimes, e, Now);
         }
@@ -972,29 +966,50 @@ public partial class Worker
         }
     }
 
-    private void TriggerAlarm(ErrorModel e, AlarmDeviceType type, int LocationId = 0)
+    private void TriggerAlarm(ErrorModel e, AlarmDeviceType type, int AlarmLocationId = 0)
     {
-        var alarms = AlarmDevices.Where(a => a.DeviceType == type && a.LocationId == LocationId);
+        var alarms = AlarmDevices?.Where(a => a.DeviceType == type && a.LocationId == AlarmLocationId);
         if (alarms != null)
         {
+            if (config.VerboseMode) Log.Information($"Activating alarm. Alarm type: {type}, Alarm location ID: {AlarmLocationId}, Error: {e.Descriptions}");
             var start = DateTime.Now;
-            while (e.DateErased == null && !start.IsElapsed(config.system.FarmAlarmDuration))
+            while (e.DateErased == null && !start.IsElapsed(AlarmLocationId == 0 ? config.system.PoultryAlarmDuration : config.system.FarmAlarmDuration))
             {
                 foreach (var alarm in alarms)
                 {
                     if (!alarm.IsActive)
                     {
-                        //Send active mqtt to alarm.
-                        alarm.IsActive = true;
+                        if (type != AlarmDeviceType.PoultrySiren || (type == AlarmDeviceType.PoultrySiren && !alarm.IsSnoozed) || (type == AlarmDeviceType.PoultrySiren && alarm.IsSnoozed && alarm.SnoozedTime.IsElapsed(config.system.SirenSnoozeDuration)))
+                        {
+                            if (config.VerboseMode) Log.Information($"Reactivating alarm. Alarm type: {type}, Alarm location ID: {AlarmLocationId}, Error: {e.Descriptions}");
+                            //Send active mqtt to alarm.
+                            alarm.IsSnoozed = false;
+                            alarm.IsActive = true;
+                        }
                     }
                 }
             }
+            if (config.VerboseMode) Log.Information($"Deactivating alarm. Alarm type: {type}, Alarm location ID: {AlarmLocationId}, Error: {e.Descriptions}");
             foreach (var alarm in alarms)
             {
                 //Send deactive mqtt to alarm.
                 alarm.IsActive = false;
             }
         }
+        else Log.Warning($"Alarm needs to be activated but no alarm device is found for the error. Alarm type: {type}, Alarm location ID: {AlarmLocationId}");
+    }
+
+    private void SnoozeSirens()
+    {
+        var alarms = AlarmDevices?.Where(a => a.DeviceType == AlarmDeviceType.PoultrySiren);
+        if (alarms != null && alarms.Any())
+            foreach (var alarm in alarms)
+            {
+                alarm.IsActive = false;
+                alarm.IsSnoozed = true;
+                alarm.SnoozedTime = DateTime.Now;
+                //Send deactive mqtt to alarm.
+            }
     }
 
     private async Task RunObserverTimerAsync()

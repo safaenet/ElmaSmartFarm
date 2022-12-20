@@ -6967,3 +6967,78 @@ Error Number:208,State:1,Class:16
 2022-12-17 23:23:14.937 +03:30 [INF] Informing Alarm. Count: 15
 2022-12-17 23:23:14.938 +03:30 [INF] Informing Alarm. Count: 15
 2022-12-17 23:23:14.940 +03:30 [INF] Informing Alarm. Count: 15
+2022-12-20 17:43:10.061 +03:30 [INF] Starting up the Service...
+2022-12-20 17:43:12.515 +03:30 [INF] Loading poultry...
+2022-12-20 17:43:14.419 +03:30 [INF] Poultry loaded. (1904.3214 ms)
+2022-12-20 17:43:14.427 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 2e14317d-486f-4d09-9cb9-cd226f601e9c.
+2022-12-20 17:43:14.492 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 2e14317d-486f-4d09-9cb9-cd226f601e9c.
+2022-12-20 17:43:14.506 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2022-12-20 17:43:14.536 +03:30 [WRN] Sensor with ID 1 has been unwatched due to persisting error. Error Type: NotAlive, Error happened date: 12/16/2022 3:31:35 PM
+2022-12-20 17:43:14.541 +03:30 [INF] Informing Alarm. Count: 1
+2022-12-20 17:43:14.542 +03:30 [INF] Informing Alarm. Count: 1
+2022-12-20 17:43:14.543 +03:30 [INF] Informing Alarm. Count: 1
+2022-12-20 17:44:10.278 +03:30 [INF] Starting up the Service...
+2022-12-20 17:44:11.660 +03:30 [INF] Loading poultry...
+2022-12-20 17:44:12.678 +03:30 [INF] Poultry loaded. (1018.0787 ms)
+2022-12-20 17:44:12.689 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 203c6505-69e1-43ea-820f-9bdf05e25e81.
+2022-12-20 17:44:12.759 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 203c6505-69e1-43ea-820f-9bdf05e25e81.
+2022-12-20 17:44:12.774 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2022-12-20 17:44:12.794 +03:30 [WRN] Sensor with ID 1 has been unwatched due to persisting error. Error Type: NotAlive, Error happened date: 12/16/2022 3:31:35 PM
+2022-12-20 17:44:12.800 +03:30 [INF] Informing Alarm. Count: 1
+2022-12-20 17:44:12.801 +03:30 [INF] Informing Alarm. Count: 1
+2022-12-20 17:44:12.802 +03:30 [INF] Informing Alarm. Count: 1
+2022-12-20 17:44:17.812 +03:30 [INF] Informing Alarm. Count: 2
+2022-12-20 17:44:17.814 +03:30 [INF] Informing Alarm. Count: 2
+2022-12-20 17:44:17.814 +03:30 [INF] Informing Alarm. Count: 2
+2022-12-20 17:45:19.239 +03:30 [INF] Starting up the Service...
+2022-12-20 17:45:20.656 +03:30 [INF] Loading poultry...
+2022-12-20 17:45:21.633 +03:30 [INF] Poultry loaded. (977.9623 ms)
+2022-12-20 17:45:21.641 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: c81b17de-6ded-4ddb-a809-46c21147cb13.
+2022-12-20 17:45:21.701 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: c81b17de-6ded-4ddb-a809-46c21147cb13.
+2022-12-20 17:45:21.714 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2022-12-20 17:45:21.734 +03:30 [WRN] Sensor with ID 1 has been unwatched due to persisting error. Error Type: NotAlive, Error happened date: 12/16/2022 3:31:35 PM
+2022-12-20 17:45:21.739 +03:30 [INF] Informing Alarm. Count: 1
+2022-12-20 17:45:21.740 +03:30 [INF] Informing Alarm. Count: 1
+2022-12-20 17:45:21.741 +03:30 [WRN] Alarm needs to be activated but no alarm is found for the error.
+2022-12-20 17:45:21.741 +03:30 [INF] Informing Alarm. Count: 1
+2022-12-20 17:45:21.742 +03:30 [WRN] Alarm needs to be activated but no alarm is found for the error.
+2022-12-20 17:45:26.762 +03:30 [INF] Informing Alarm. Count: 2
+2022-12-20 17:45:26.764 +03:30 [INF] Informing Alarm. Count: 2
+2022-12-20 17:45:26.764 +03:30 [WRN] Alarm needs to be activated but no alarm is found for the error.
+2022-12-20 17:45:26.765 +03:30 [INF] Informing Alarm. Count: 2
+2022-12-20 17:45:26.766 +03:30 [WRN] Alarm needs to be activated but no alarm is found for the error.
+2022-12-20 17:45:31.773 +03:30 [INF] Informing Alarm. Count: 3
+2022-12-20 17:45:31.774 +03:30 [INF] Informing Alarm. Count: 3
+2022-12-20 17:45:31.774 +03:30 [WRN] Alarm needs to be activated but no alarm is found for the error.
+2022-12-20 17:45:31.775 +03:30 [INF] Informing Alarm. Count: 3
+2022-12-20 17:45:31.776 +03:30 [WRN] Alarm needs to be activated but no alarm is found for the error.
+2022-12-20 17:45:41.786 +03:30 [INF] Informing Alarm. Count: 4
+2022-12-20 17:45:41.787 +03:30 [INF] Informing Alarm. Count: 4
+2022-12-20 17:45:41.788 +03:30 [WRN] Alarm needs to be activated but no alarm is found for the error.
+2022-12-20 17:45:41.789 +03:30 [INF] Informing Alarm. Count: 4
+2022-12-20 17:45:41.790 +03:30 [WRN] Alarm needs to be activated but no alarm is found for the error.
+2022-12-20 17:45:46.795 +03:30 [INF] Informing Alarm. Count: 5
+2022-12-20 17:45:46.797 +03:30 [INF] Informing Alarm. Count: 5
+2022-12-20 17:45:46.797 +03:30 [WRN] Alarm needs to be activated but no alarm is found for the error.
+2022-12-20 17:45:46.798 +03:30 [INF] Informing Alarm. Count: 5
+2022-12-20 17:45:46.800 +03:30 [WRN] Alarm needs to be activated but no alarm is found for the error.
+2022-12-20 17:45:51.808 +03:30 [INF] Informing Alarm. Count: 6
+2022-12-20 17:45:51.809 +03:30 [INF] Informing Alarm. Count: 6
+2022-12-20 17:45:51.809 +03:30 [WRN] Alarm needs to be activated but no alarm is found for the error.
+2022-12-20 17:45:51.810 +03:30 [INF] Informing Alarm. Count: 6
+2022-12-20 17:45:51.812 +03:30 [WRN] Alarm needs to be activated but no alarm is found for the error.
+2022-12-20 17:46:01.828 +03:30 [INF] Informing Alarm. Count: 7
+2022-12-20 17:46:01.829 +03:30 [WRN] Alarm needs to be activated but no alarm is found for the error.
+2022-12-20 17:46:01.830 +03:30 [INF] Informing Alarm. Count: 7
+2022-12-20 17:46:01.831 +03:30 [INF] Informing Alarm. Count: 7
+2022-12-20 17:46:01.831 +03:30 [WRN] Alarm needs to be activated but no alarm is found for the error.
+2022-12-20 17:46:06.843 +03:30 [INF] Informing Alarm. Count: 8
+2022-12-20 17:46:06.844 +03:30 [INF] Informing Alarm. Count: 8
+2022-12-20 17:46:06.844 +03:30 [WRN] Alarm needs to be activated but no alarm is found for the error.
+2022-12-20 17:46:06.844 +03:30 [INF] Informing Alarm. Count: 8
+2022-12-20 17:46:06.846 +03:30 [WRN] Alarm needs to be activated but no alarm is found for the error.
+2022-12-20 17:46:11.865 +03:30 [INF] Informing Alarm. Count: 9
+2022-12-20 17:46:11.866 +03:30 [INF] Informing Alarm. Count: 9
+2022-12-20 17:46:11.866 +03:30 [WRN] Alarm needs to be activated but no alarm is found for the error.
+2022-12-20 17:46:11.868 +03:30 [INF] Informing Alarm. Count: 9
+2022-12-20 17:46:11.870 +03:30 [WRN] Alarm needs to be activated but no alarm is found for the error.
