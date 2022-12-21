@@ -2,6 +2,7 @@
 using ElmaSmartFarm.SharedLibrary.Models;
 using ElmaSmartFarm.SharedLibrary.Models.Alarm;
 using ElmaSmartFarm.SharedLibrary.Models.Sensors;
+using MQTTnet;
 using Serilog;
 
 namespace ElmaSmartFarm.Service;
@@ -321,8 +322,6 @@ public partial class Worker
         #endregion
 
         ProcessAlarmableErrors(Now);
-        //var m = new MqttApplicationMessageBuilder().WithTopic("safa").WithPayload("dana").Build();
-        //if (mqttClient.IsConnected) await mqttClient.PublishAsync(m);
         return null;
     }
 
@@ -963,12 +962,11 @@ public partial class Worker
         }
     }
 
-    private void TriggerAlarm(ErrorModel e, AlarmDeviceType type, int AlarmLocationId = 0)
+    private async Task TriggerAlarm(ErrorModel e, AlarmDeviceType type, int AlarmLocationId = 0)
     {
         var alarms = Poultry.AlarmDevices?.Where(a => a.IsEnabled && a.Type == type && a.LocationId == AlarmLocationId);
         if (alarms != null)
         {
-            //if (config.VerboseMode) Log.Information($"Activating alarm. Alarm type: {type}, Alarm location ID: {AlarmLocationId}, Error: {e.Descriptions}, Thread: {Environment.CurrentManagedThreadId}");
             var start = DateTime.Now;
             while (e.DateErased == null && !start.IsElapsed(AlarmLocationId == 0 ? config.system.PoultryAlarmDuration : config.system.FarmAlarmDuration))
             {
@@ -979,9 +977,12 @@ public partial class Worker
                         if (type != AlarmDeviceType.PoultrySiren || (type == AlarmDeviceType.PoultrySiren && !alarm.IsSnoozed) || (type == AlarmDeviceType.PoultrySiren && alarm.IsSnoozed && alarm.SnoozedTime.IsElapsed(config.system.SirenSnoozeDuration)))
                         {
                             Log.Information($"Activating/Reactivating alarm. Alarm type: {type}, Alarm location ID: {AlarmLocationId}, Error: {e.Descriptions}, Thread: {Environment.CurrentManagedThreadId}");
-                            //Send active mqtt to alarm.
-                            alarm.IsSnoozed = false;
-                            alarm.IsActive = true;
+                            var result = await TurnOnOffAlarm(alarm, true);
+                            if (result)
+                            {
+                                alarm.IsSnoozed = false;
+                                alarm.SnoozedTime = null;
+                            }
                         }
                     }
                 }
@@ -989,24 +990,43 @@ public partial class Worker
             if (config.VerboseMode) Log.Information($"Deactivating alarm. Alarm type: {type}, Alarm location ID: {AlarmLocationId}, Error: {e.Descriptions}, Thread: {Environment.CurrentManagedThreadId}");
             foreach (var alarm in alarms)
             {
-                //Send deactive mqtt to alarm.
-                alarm.IsActive = false;
+                await TurnOnOffAlarm(alarm, false);
             }
         }
         else Log.Warning($"Alarm needs to be activated but no alarm device is found for the error. Alarm type: {type}, Alarm location ID: {AlarmLocationId}, Thread: {Environment.CurrentManagedThreadId}");
     }
 
-    private void SnoozeSirens()
+    private async Task SnoozeSirens()
     {
         var alarms = Poultry.AlarmDevices?.Where(a => a.IsEnabled && a.Type == AlarmDeviceType.PoultrySiren);
         if (alarms != null && alarms.Any())
             foreach (var alarm in alarms)
             {
-                alarm.IsActive = false;
                 alarm.IsSnoozed = true;
                 alarm.SnoozedTime = DateTime.Now;
-                //Send deactive mqtt to alarm.
+                await TurnOnOffAlarm(alarm, false);
             }
+    }
+
+    private async Task<bool> SendMqttMessage(string Topic, string Payload = "1", int QoS = 2)
+    {
+        if (string.IsNullOrEmpty(Topic) || string.IsNullOrEmpty(Payload)) return false;
+        if (QoS > 2) QoS = 2; else if (QoS < 0) QoS = 0;
+        var message = new MqttApplicationMessageBuilder().WithTopic(Topic).WithPayload(Payload).WithQualityOfServiceLevel((MQTTnet.Protocol.MqttQualityOfServiceLevel)QoS).Build();
+        MQTTnet.Client.MqttClientPublishResult result = new();
+        if(mqttClient.IsConnected) result = await mqttClient.PublishAsync(message);
+        return result.IsSuccess;
+    }
+
+    private async Task<bool> TurnOnOffAlarm(AlarmModel alarm, bool On)
+    {
+        if (alarm == null) return false;
+        var topic = config.mqtt.ToAlarmTopic + config.mqtt.FromServerSubTopic + "/" + alarm.Id.ToString();
+        var message = On ? $"{(alarm.Type == AlarmDeviceType.FarmLight ? config.system.FarmAlarmDuration : config.system.PoultryAlarmDuration)}" : "0";
+        var result = await SendMqttMessage(topic, message);
+        if (result) alarm.IsActive = On;
+        else Log.Error($"Error when sending Mqtt message to turn alarm {(On ? "On" : "Off")}. Mqtt connection status: {mqttClient.IsConnected}");
+        return result;
     }
 
     private async Task RunObserverTimerAsync()
