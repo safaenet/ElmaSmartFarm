@@ -77,6 +77,10 @@ public class MsSqlDbProcessor : IDbProcessor
     private readonly string EraseFarmErrorCmd = @"UPDATE FarmErrorLogs SET DateErased = @DateErased WHERE DateErased IS NULL AND FarmId = @FarmId AND ErrorType IN {0};";
     private readonly string ErasePoultryErrorCmd = @"UPDATE PoultryErrorLogs SET DateErased = @DateErased WHERE DateErased IS NULL AND ErrorType IN {0};";
     private readonly string LoadAlarmsQuery = @"SELECT * FROM AlarmDevices;";
+    private readonly string WriteSensorWatchLogCmd = @"DECLARE @newId int; SET @newId = (SELECT ISNULL(MAX([Id]), 0) FROM [SensorWatchLogs]) + 1;
+            INSERT INTO SensorWatchLogs ([Id], SensorId, LocationId, Section, Action, DateHappened) VALUES (@newId, @SensorId, @LocationId, @Section, @Action, @DateHappened); SELECT @Id = @newId;";
+    private readonly string WriteAlarmTriggerLogCmd = @"DECLARE @newId int; SET @newId = (SELECT ISNULL(MAX([Id]), 0) FROM [AlarmTriggerLogs]) + 1;
+            INSERT INTO AlarmTriggerLogs ([Id], AlarmId, LocationId, Action, DateHappened) VALUES (@newId, @AlarmId, @LocationId, @Action, @DateHappened); SELECT @Id = @newId;";
 
     public async Task<int> WriteScalarSensorValueToDbAsync(SensorModel sensor, ScalarSensorReadModel value)
     {
@@ -274,6 +278,53 @@ public class MsSqlDbProcessor : IDbProcessor
             Log.Error(ex, $"Error when updating poultry error in database. Error Types: {types[0]}...");
         }
         return false;
+    }
+
+    public async Task<int> WriteSensorWatchLogToDbAsync(int sensorId, int locationId, SensorSection section, SensorWatchAction action, DateTime now)
+    {
+        try
+        {
+            if (config.VerboseMode) Log.Information($"Writing sensor watch log in database. Sensor ID: {sensorId}, Action: {action}");
+            DynamicParameters dp = new();
+            dp.Add("@Id", 0, System.Data.DbType.Int32, System.Data.ParameterDirection.Output);
+            dp.Add("@SensorId", sensorId);
+            dp.Add("@LocationId", locationId);
+            dp.Add("@Section", section);
+            dp.Add("@Action", action);
+            dp.Add("@DateHappened", now);
+            _ = await DataAccess.SaveDataAsync(WriteSensorWatchLogCmd, dp);
+            var newId = dp.Get<int>("@Id");
+            if (newId == 0) Log.Error($"Error when writing sensor watch log. Sensor ID: {sensorId}, Action: {action}. (System Error)");
+            return newId;
+        }
+        catch (Exception ex)
+        {
+            Log.Error(ex, $"Error when writing sensor watch log in database. Sensor ID: {sensorId}, Action: {action}. (System Error)");
+        }
+        return 0;
+    }
+
+    public async Task<int> WriteAlarmTriggerLogToDbAsync(int alarmId, int locationId, AlarmTriggerType action, DateTime now)
+    {
+        try
+        {
+            if (config.VerboseMode) Log.Information($"Writing alarm trigger log in database. Sensor ID: {alarmId}, Action: {action}");
+            DynamicParameters dp = new();
+            dp.Add("@Id", 0, System.Data.DbType.Int32, System.Data.ParameterDirection.Output);
+            dp.Add("@AlarmId", alarmId);
+            dp.Add("@LocationId", locationId);
+            dp.Add("@Action", action);
+            dp.Add("@DateHappened", now);
+            _ = await DataAccess.SaveDataAsync(WriteAlarmTriggerLogCmd, dp);
+            var newId = dp.Get<int>("@Id");
+            if (newId == 0) Log.Error($"Error when writing alarm trigger log. Sensor ID: {alarmId}, Action: {action}. (System Error)");
+            return newId;
+        }
+        catch (Exception ex)
+        {
+            Log.Error(ex, $"Error when writing alarm trigger log in database. Sensor ID: {alarmId}, Action: {action}. (System Error)");
+        }
+        return 0;
     }
 
     public async Task<PoultryModel> LoadPoultryAsync()

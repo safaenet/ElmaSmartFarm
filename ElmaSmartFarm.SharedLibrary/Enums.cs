@@ -44,6 +44,15 @@ public enum SensorErrorType
     InvalidCo2Value
 }
 
+/// <summary>
+/// Used for "Action" in database, Table: SensorWatchLogs.
+/// </summary>
+public enum SensorWatchAction
+{
+    Unwatch = 0,
+    Watch
+}
+
 public enum FarmInPeriodErrorType
 {
     HighTemperature = 1,
@@ -80,6 +89,15 @@ public enum AlarmLevel
     Warning,
     Critical,
     Fatal
+}
+
+/// <summary>
+/// Used for "Action" in database, Table: AlarmTriggerLogs.
+/// </summary>
+public enum AlarmTriggerType
+{
+    Off = 0,
+    On
 }
 
 public enum CommuteSensorValueType

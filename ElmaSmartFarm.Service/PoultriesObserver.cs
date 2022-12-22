@@ -31,57 +31,57 @@ public partial class Worker
                                 if (e.ErrorType == SensorErrorType.InvalidTemperatureData)
                                 {
                                     if (alarmTimes.Enable && (sensor.WatchTemperature) && e.DateHappened.IsElapsed(alarmTimes.RaiseTime) && !AlarmableSensorErrors.Contains(e)) AlarmableSensorErrors.Add(e);
-                                    if (sensor.WatchTemperature) sensor.WatchTemperature = !CheckToUnWatch(e, sensor.IsWatched, sensor.WatchTemperature, sensor.IsInPeriod, config.system.TempInvalidDataWatchTimeout);
+                                    if (sensor.WatchTemperature) sensor.WatchTemperature = !await CheckToUnWatch(e, sensor.IsWatched, sensor.WatchTemperature, sensor.IsInPeriod, config.system.TempInvalidDataWatchTimeout);
                                 }
                                 else if (e.ErrorType == SensorErrorType.InvalidTemperatureValue)
                                 {
                                     if (alarmTimes.Enable && (sensor.WatchTemperature) && e.DateHappened.IsElapsed(alarmTimes.RaiseTime) && !AlarmableSensorErrors.Contains(e)) AlarmableSensorErrors.Add(e);
-                                    if (sensor.WatchTemperature) sensor.WatchTemperature = !CheckToUnWatch(e, sensor.IsWatched, sensor.WatchTemperature, sensor.IsInPeriod, config.system.TempInvalidValueWatchTimeout);
+                                    if (sensor.WatchTemperature) sensor.WatchTemperature = !await CheckToUnWatch(e, sensor.IsWatched, sensor.WatchTemperature, sensor.IsInPeriod, config.system.TempInvalidValueWatchTimeout);
                                 }
                                 else if (e.ErrorType == SensorErrorType.InvalidHumidityData)
                                 {
                                     if (alarmTimes.Enable && (sensor.WatchHumidity) && e.DateHappened.IsElapsed(alarmTimes.RaiseTime) && !AlarmableSensorErrors.Contains(e)) AlarmableSensorErrors.Add(e);
-                                    if (sensor.WatchHumidity) sensor.WatchHumidity = !CheckToUnWatch(e, sensor.IsWatched, sensor.WatchHumidity, sensor.IsInPeriod, config.system.HumidInvalidDataWatchTimeout);
+                                    if (sensor.WatchHumidity) sensor.WatchHumidity = !await CheckToUnWatch(e, sensor.IsWatched, sensor.WatchHumidity, sensor.IsInPeriod, config.system.HumidInvalidDataWatchTimeout);
                                 }
                                 else if (e.ErrorType == SensorErrorType.InvalidHumidityValue)
                                 {
                                     if (alarmTimes.Enable && (sensor.WatchHumidity) && e.DateHappened.IsElapsed(alarmTimes.RaiseTime) && !AlarmableSensorErrors.Contains(e)) AlarmableSensorErrors.Add(e);
-                                    if (sensor.WatchHumidity) sensor.WatchHumidity = !CheckToUnWatch(e, sensor.IsWatched, sensor.WatchHumidity, sensor.IsInPeriod, config.system.HumidInvalidValueWatchTimeout);
+                                    if (sensor.WatchHumidity) sensor.WatchHumidity = !await CheckToUnWatch(e, sensor.IsWatched, sensor.WatchHumidity, sensor.IsInPeriod, config.system.HumidInvalidValueWatchTimeout);
                                 }
                                 else if (e.ErrorType == SensorErrorType.InvalidLightData)
                                 {
                                     if (alarmTimes.Enable && (sensor.WatchLight) && e.DateHappened.IsElapsed(alarmTimes.RaiseTime) && !AlarmableSensorErrors.Contains(e)) AlarmableSensorErrors.Add(e);
-                                    if (sensor.WatchLight) sensor.WatchLight = !CheckToUnWatch(e, sensor.IsWatched, sensor.WatchLight, sensor.IsInPeriod, config.system.AmbientLightInvalidDataWatchTimeout);
+                                    if (sensor.WatchLight) sensor.WatchLight = !await CheckToUnWatch(e, sensor.IsWatched, sensor.WatchLight, sensor.IsInPeriod, config.system.AmbientLightInvalidDataWatchTimeout);
                                 }
                                 else if (e.ErrorType == SensorErrorType.InvalidLightValue)
                                 {
                                     if (alarmTimes.Enable && (sensor.WatchLight) && e.DateHappened.IsElapsed(alarmTimes.RaiseTime) && !AlarmableSensorErrors.Contains(e)) AlarmableSensorErrors.Add(e);
-                                    if (sensor.WatchLight) sensor.WatchLight = !CheckToUnWatch(e, sensor.IsWatched, sensor.WatchLight, sensor.IsInPeriod, config.system.AmbientLightInvalidValueWatchTimeout);
+                                    if (sensor.WatchLight) sensor.WatchLight = !await CheckToUnWatch(e, sensor.IsWatched, sensor.WatchLight, sensor.IsInPeriod, config.system.AmbientLightInvalidValueWatchTimeout);
                                 }
                                 else if (e.ErrorType == SensorErrorType.InvalidAmmoniaData)
                                 {
                                     if (alarmTimes.Enable && (sensor.WatchAmmonia) && e.DateHappened.IsElapsed(alarmTimes.RaiseTime) && !AlarmableSensorErrors.Contains(e)) AlarmableSensorErrors.Add(e);
-                                    if (sensor.WatchAmmonia) sensor.WatchAmmonia = !CheckToUnWatch(e, sensor.IsWatched, sensor.WatchAmmonia, sensor.IsInPeriod, config.system.AmmoniaInvalidDataWatchTimeout);
+                                    if (sensor.WatchAmmonia) sensor.WatchAmmonia = !await CheckToUnWatch(e, sensor.IsWatched, sensor.WatchAmmonia, sensor.IsInPeriod, config.system.AmmoniaInvalidDataWatchTimeout);
                                 }
                                 else if (e.ErrorType == SensorErrorType.InvalidAmmoniaValue)
                                 {
                                     if (alarmTimes.Enable && (sensor.WatchAmmonia) && e.DateHappened.IsElapsed(alarmTimes.RaiseTime) && !AlarmableSensorErrors.Contains(e)) AlarmableSensorErrors.Add(e);
-                                    if (sensor.WatchAmmonia) sensor.WatchAmmonia = !CheckToUnWatch(e, sensor.IsWatched, sensor.WatchAmmonia, sensor.IsInPeriod, config.system.AmmoniaInvalidValueWatchTimeout);
+                                    if (sensor.WatchAmmonia) sensor.WatchAmmonia = !await CheckToUnWatch(e, sensor.IsWatched, sensor.WatchAmmonia, sensor.IsInPeriod, config.system.AmmoniaInvalidValueWatchTimeout);
                                 }
                                 else if (e.ErrorType == SensorErrorType.InvalidCo2Data)
                                 {
                                     if (alarmTimes.Enable && (sensor.WatchCo2) && e.DateHappened.IsElapsed(alarmTimes.RaiseTime) && !AlarmableSensorErrors.Contains(e)) AlarmableSensorErrors.Add(e);
-                                    if (sensor.WatchCo2) sensor.WatchCo2 = !CheckToUnWatch(e, sensor.IsWatched, sensor.WatchCo2, sensor.IsInPeriod, config.system.Co2InvalidDataWatchTimeout);
+                                    if (sensor.WatchCo2) sensor.WatchCo2 = !await CheckToUnWatch(e, sensor.IsWatched, sensor.WatchCo2, sensor.IsInPeriod, config.system.Co2InvalidDataWatchTimeout);
                                 }
                                 else if (e.ErrorType == SensorErrorType.InvalidCo2Value)
                                 {
                                     if (alarmTimes.Enable && (sensor.WatchCo2) && e.DateHappened.IsElapsed(alarmTimes.RaiseTime) && !AlarmableSensorErrors.Contains(e)) AlarmableSensorErrors.Add(e);
-                                    if (sensor.WatchCo2) sensor.WatchCo2 = !CheckToUnWatch(e, sensor.IsWatched, sensor.WatchCo2, sensor.IsInPeriod, config.system.Co2InvalidValueWatchTimeout);
+                                    if (sensor.WatchCo2) sensor.WatchCo2 = !await CheckToUnWatch(e, sensor.IsWatched, sensor.WatchCo2, sensor.IsInPeriod, config.system.Co2InvalidValueWatchTimeout);
                                 }
                                 else if (e.ErrorType == SensorErrorType.NotAlive)
                                 {
                                     if (alarmTimes.Enable && (sensor.IsWatched) && e.DateHappened.IsElapsed(alarmTimes.RaiseTime) && !AlarmableSensorErrors.Contains(e)) AlarmableSensorErrors.Add(e);
-                                    if (sensor.IsWatched) sensor.IsWatched = !CheckToUnWatch(e, sensor.IsWatched, sensor.IsWatched, sensor.IsInPeriod, config.system.ScalarNotAliveWatchTimeout);
+                                    if (sensor.IsWatched) sensor.IsWatched = !await CheckToUnWatch(e, sensor.IsWatched, sensor.IsWatched, sensor.IsInPeriod, config.system.ScalarNotAliveWatchTimeout);
                                 }
                                 else if (sensor.IsWatched && e.ErrorType == SensorErrorType.LowBattery)
                                 {
@@ -97,16 +97,16 @@ public partial class Worker
                         }
                         var startDate = Poultry.Farms.Where(f => f.IsInPeriod && f.Scalars.Sensors.Any(s => s.Id == sensor.Id)).FirstOrDefault()?.Period.StartDate;
                         if (!sensor.WatchTemperature && sensor.ActiveErrors.Any(e => e.ErrorType == SensorErrorType.InvalidTemperatureData || e.ErrorType == SensorErrorType.InvalidTemperatureValue) == false) //Temp sensor is healthy.
-                            sensor.WatchTemperature = CheckToReWatchSensor(sensor, startDate);
+                            sensor.WatchTemperature = await CheckToReWatchSensor(sensor, startDate);
                         if (!sensor.WatchHumidity && sensor.ActiveErrors.Any(e => e.ErrorType == SensorErrorType.InvalidHumidityData || e.ErrorType == SensorErrorType.InvalidHumidityValue) == false) //Humidity sensor is healthy.
-                            sensor.WatchHumidity = CheckToReWatchSensor(sensor, startDate);
+                            sensor.WatchHumidity = await CheckToReWatchSensor(sensor, startDate);
                         if (!sensor.WatchLight && sensor.ActiveErrors.Any(e => e.ErrorType == SensorErrorType.InvalidLightData || e.ErrorType == SensorErrorType.InvalidLightValue) == false) //Light sensor is healthy.
-                            sensor.WatchLight = CheckToReWatchSensor(sensor, startDate);
+                            sensor.WatchLight = await CheckToReWatchSensor(sensor, startDate);
                         if (!sensor.WatchAmmonia && sensor.ActiveErrors.Any(e => e.ErrorType == SensorErrorType.InvalidAmmoniaData || e.ErrorType == SensorErrorType.InvalidAmmoniaValue) == false) //Ammonia sensor is healthy.
-                            sensor.WatchAmmonia = CheckToReWatchSensor(sensor, startDate);
+                            sensor.WatchAmmonia = await CheckToReWatchSensor(sensor, startDate);
                         if (!sensor.WatchCo2 && sensor.ActiveErrors.Any(e => e.ErrorType == SensorErrorType.InvalidCo2Data || e.ErrorType == SensorErrorType.InvalidCo2Value) == false) //Co2 sensor is healthy.
-                            sensor.WatchCo2 = CheckToReWatchSensor(sensor, startDate);
-                        if (!sensor.IsWatched && sensor.ActiveErrors.Any(e => e.ErrorType == SensorErrorType.NotAlive) == false && (sensor.WatchTemperature || sensor.WatchHumidity || sensor.WatchLight || sensor.WatchAmmonia || sensor.WatchCo2)) sensor.IsWatched = CheckToReWatchSensor(sensor, startDate); //Sensor is alive and healthy (again).
+                            sensor.WatchCo2 = await CheckToReWatchSensor(sensor, startDate);
+                        if (!sensor.IsWatched && sensor.ActiveErrors.Any(e => e.ErrorType == SensorErrorType.NotAlive) == false && (sensor.WatchTemperature || sensor.WatchHumidity || sensor.WatchLight || sensor.WatchAmmonia || sensor.WatchCo2)) sensor.IsWatched = await CheckToReWatchSensor(sensor, startDate); //Sensor is alive and healthy (again).
 
                         //Remove expired reads
                     }
@@ -132,17 +132,17 @@ public partial class Worker
                                 if (e.ErrorType == SensorErrorType.InvalidData)
                                 {
                                     if (alarmTimes.Enable && (sensor.IsWatched) && e.DateHappened.IsElapsed(alarmTimes.RaiseTime) && !AlarmableSensorErrors.Contains(e)) AlarmableSensorErrors.Add(e);
-                                    if (sensor.IsWatched) sensor.IsWatched = !CheckToUnWatch(e, sensor.IsWatched, sensor.IsWatched, sensor.IsInPeriod, config.system.CommuteInvalidDataWatchTimeout);
+                                    if (sensor.IsWatched) sensor.IsWatched = !await CheckToUnWatch(e, sensor.IsWatched, sensor.IsWatched, sensor.IsInPeriod, config.system.CommuteInvalidDataWatchTimeout);
                                 }
                                 else if (e.ErrorType == SensorErrorType.InvalidValue)
                                 {
                                     if (alarmTimes.Enable && (sensor.IsWatched) && e.DateHappened.IsElapsed(alarmTimes.RaiseTime) && !AlarmableSensorErrors.Contains(e)) AlarmableSensorErrors.Add(e);
-                                    if (sensor.IsWatched) sensor.IsWatched = !CheckToUnWatch(e, sensor.IsWatched, sensor.IsWatched, sensor.IsInPeriod, config.system.CommuteInvalidValueWatchTimeout);
+                                    if (sensor.IsWatched) sensor.IsWatched = !await CheckToUnWatch(e, sensor.IsWatched, sensor.IsWatched, sensor.IsInPeriod, config.system.CommuteInvalidValueWatchTimeout);
                                 }
                                 else if (e.ErrorType == SensorErrorType.NotAlive)
                                 {
                                     if (alarmTimes.Enable && (sensor.IsWatched) && e.DateHappened.IsElapsed(alarmTimes.RaiseTime) && !AlarmableSensorErrors.Contains(e)) AlarmableSensorErrors.Add(e);
-                                    if (sensor.IsWatched) sensor.IsWatched = !CheckToUnWatch(e, sensor.IsWatched, sensor.IsWatched, sensor.IsInPeriod, config.system.CommuteNotAliveWatchTimeout);
+                                    if (sensor.IsWatched) sensor.IsWatched = !await CheckToUnWatch(e, sensor.IsWatched, sensor.IsWatched, sensor.IsInPeriod, config.system.CommuteNotAliveWatchTimeout);
                                 }
                                 else if (sensor.IsWatched && e.ErrorType == SensorErrorType.LowBattery)
                                 {
@@ -153,7 +153,7 @@ public partial class Worker
 
                         var startDate = Poultry.Farms.Where(f => f.IsInPeriod && f.Commutes.Sensors.Any(s => s.Id == sensor.Id)).FirstOrDefault()?.Period.StartDate;
                         if (!sensor.IsWatched && sensor.ActiveErrors.Any(e => e.ErrorType == SensorErrorType.InvalidData || e.ErrorType == SensorErrorType.InvalidValue || e.ErrorType == SensorErrorType.NotAlive) == false) //Sensor is healthy.
-                            sensor.IsWatched = CheckToReWatchSensor(sensor, startDate);
+                            sensor.IsWatched = await CheckToReWatchSensor(sensor, startDate);
 
                         //Remove expired reads
 
@@ -191,7 +191,7 @@ public partial class Worker
                                     if (sensor.Type == SensorType.FarmFeed) PushButtonNotAliveWatchTimeout = config.system.FeedNotAliveWatchTimeout;
                                     else if (sensor.Type == SensorType.FarmCheckup) PushButtonNotAliveWatchTimeout = config.system.CheckupNotAliveWatchTimeout;
                                     if (alarmTimes.Enable && (sensor.IsWatched) && e.DateHappened.IsElapsed(alarmTimes.RaiseTime) && !AlarmableSensorErrors.Contains(e)) AlarmableSensorErrors.Add(e);
-                                    if (sensor.IsWatched) sensor.IsWatched = !CheckToUnWatch(e, sensor.IsWatched, sensor.IsWatched, sensor.IsInPeriod, PushButtonNotAliveWatchTimeout);
+                                    if (sensor.IsWatched) sensor.IsWatched = !await CheckToUnWatch(e, sensor.IsWatched, sensor.IsWatched, sensor.IsInPeriod, PushButtonNotAliveWatchTimeout);
                                 }
                                 else if (sensor.IsWatched && e.ErrorType == SensorErrorType.LowBattery)
                                 {
@@ -203,7 +203,7 @@ public partial class Worker
                         var startDate = Poultry.Farms.Where(f => f.IsInPeriod && f.Checkups.Sensors.Any(s => s.Id == sensor.Id)).FirstOrDefault()?.Period.StartDate;
                         if (startDate == null) startDate = Poultry.Farms.Where(f => f.IsInPeriod && f.Feeds.Sensors.Any(s => s.Id == sensor.Id)).FirstOrDefault()?.Period.StartDate;
                         if (!sensor.IsWatched && sensor.ActiveErrors.Any(e => e.ErrorType == SensorErrorType.NotAlive) == false) //Sensor is healthy.
-                            sensor.IsWatched = CheckToReWatchSensor(sensor, startDate);
+                            sensor.IsWatched = await CheckToReWatchSensor(sensor, startDate);
 
                         //Remove expired reads
 
@@ -266,7 +266,7 @@ public partial class Worker
                                         BinaryInvalidDataWatchTimeout = config.system.BackupPowerInvalidDataWatchTimeout;
                                     }
                                     if (alarmTimes.Enable && (sensor.IsWatched) && e.DateHappened.IsElapsed(alarmTimes.RaiseTime) && !AlarmableSensorErrors.Contains(e)) AlarmableSensorErrors.Add(e);
-                                    if (sensor.IsWatched) sensor.IsWatched = !CheckToUnWatch(e, sensor.IsWatched, sensor.IsWatched, sensor.IsInPeriod, BinaryInvalidDataWatchTimeout);
+                                    if (sensor.IsWatched) sensor.IsWatched = !await CheckToUnWatch(e, sensor.IsWatched, sensor.IsWatched, sensor.IsInPeriod, BinaryInvalidDataWatchTimeout);
                                 }
                                 else if (e.ErrorType == SensorErrorType.NotAlive)
                                 {
@@ -284,7 +284,7 @@ public partial class Worker
                                         BinaryNotAliveWatchTimeout = config.system.BackupPowerInvalidDataWatchTimeout;
                                     }
                                     if (alarmTimes.Enable && (sensor.IsWatched) && e.DateHappened.IsElapsed(alarmTimes.RaiseTime) && !AlarmableSensorErrors.Contains(e)) AlarmableSensorErrors.Add(e);
-                                    if (sensor.IsWatched) sensor.IsWatched = !CheckToUnWatch(e, sensor.IsWatched, sensor.IsWatched, sensor.IsInPeriod, BinaryNotAliveWatchTimeout);
+                                    if (sensor.IsWatched) sensor.IsWatched = !await CheckToUnWatch(e, sensor.IsWatched, sensor.IsWatched, sensor.IsInPeriod, BinaryNotAliveWatchTimeout);
                                 }
                                 else if (sensor.IsWatched && e.ErrorType == SensorErrorType.LowBattery)
                                 {
@@ -295,7 +295,7 @@ public partial class Worker
 
                         var startDate = Poultry.Farms.Where(f => f.IsInPeriod && f.Checkups.Sensors.Any(s => s.Id == sensor.Id)).FirstOrDefault()?.Period.StartDate;
                         if (startDate == null) startDate = Poultry.Farms.Where(f => f.IsInPeriod && f.Feeds.Sensors.Any(s => s.Id == sensor.Id)).FirstOrDefault()?.Period.StartDate;
-                        if (!sensor.IsWatched && sensor.ActiveErrors.Any(e => e.ErrorType == SensorErrorType.NotAlive) == false) sensor.IsWatched = CheckToReWatchSensor(sensor, startDate);//Sensor is healthy.
+                        if (!sensor.IsWatched && sensor.ActiveErrors.Any(e => e.ErrorType == SensorErrorType.NotAlive) == false) sensor.IsWatched = await CheckToReWatchSensor(sensor, startDate);//Sensor is healthy.
 
                         //Remove expired reads
                                                 
@@ -340,6 +340,7 @@ public partial class Worker
             }
         }
     }
+
     private AlarmTimesModel GetAlarmTimings(SensorErrorType e)
     {
         int level = 0;
@@ -568,22 +569,24 @@ public partial class Worker
         }
     }
 
-    private bool CheckToReWatchSensor(SensorModel sensor, DateTime? PeriodStartDate)
+    private async Task<bool> CheckToReWatchSensor(SensorModel sensor, DateTime? PeriodStartDate)
     {
         if (config.system.ObserveAlways || (sensor.IsInPeriod && PeriodStartDate.IsElapsed(sensor.WatchStartDay * 86400)))
         {
             Log.Information($"Sensor unit is back online. ID: {sensor.Id}, Location: {sensor.LocationId}, Section: {sensor.Section}");
-            //Inform the watch, save to db
+            await DbProcessor.WriteSensorWatchLogToDbAsync(sensor.Id, sensor.LocationId, sensor.Section, SensorWatchAction.Watch, DateTime.Now);
+            //Inform the watch
             return true;
         }
         return false;
     }
 
-    private bool CheckToUnWatch(SensorErrorModel e, bool SensorWatch, bool UnitWatch, bool SensorIsInPeriod, int Elapse)
+    private async Task<bool> CheckToUnWatch(SensorErrorModel e, bool SensorWatch, bool UnitWatch, bool SensorIsInPeriod, int Elapse)
     {
         if (SensorWatch && UnitWatch && e.DateHappened.IsElapsed(Elapse) && (SensorIsInPeriod || config.system.ObserveAlways))
         {
-            //inform, save to db
+            await DbProcessor.WriteSensorWatchLogToDbAsync(e.SensorId, e.LocationId, e.Section, SensorWatchAction.Unwatch, DateTime.Now);
+            //inform the unwatch
             Log.Warning($"Sensor with ID {e.SensorId} has been unwatched due to persisting error. Error Type: {e.ErrorType}, Error happened date: {e.DateHappened}");
             return true;
         }
@@ -636,7 +639,6 @@ public partial class Worker
                 {
                     e.FarmAlarmRaisedCount = 1;
                     Log.Information($"Activating farm alarm. Count: {e.FarmAlarmRaisedCount}, Level: {alarmTimes.Level}");
-                    //save to db
                     Task.Run(() => TriggerAlarm(e, AlarmDeviceType.FarmLight, e.LocationId));
                     e.DateFarmAlarmRaised = Now;
                 }
@@ -644,7 +646,6 @@ public partial class Worker
                 {
                     e.FarmAlarmRaisedCount++;
                     Log.Information($"Activating farm alarm. Count: {e.FarmAlarmRaisedCount}, Level: {alarmTimes.Level}");
-                    //save to db
                     Task.Run(() => TriggerAlarm(e, AlarmDeviceType.FarmLight, e.LocationId));
                     e.DateFarmAlarmRaised = Now;
                 }
@@ -652,7 +653,6 @@ public partial class Worker
                 {
                     e.FarmAlarmRaisedCount++;
                     Log.Information($"Activating farm alarm. Count: {e.FarmAlarmRaisedCount}, Level: {alarmTimes.Level}");
-                    //save to db
                     Task.Run(() => TriggerAlarm(e, AlarmDeviceType.FarmLight, e.LocationId));
                     e.DateFarmAlarmRaised = Now;
                 }
@@ -687,7 +687,6 @@ public partial class Worker
                 {
                     e.PoultryAlarmRaisedCount = 1;
                     Log.Information($"Activating poultry light alarm. Count: {e.PoultryAlarmRaisedCount}, Level: {alarmTimes.Level}");
-                    //save to db
                     Task.Run(() => TriggerAlarm(e, AlarmDeviceType.PoultryLight));
                     e.DatePoultryAlarmRaised = Now;
                 }
@@ -695,7 +694,6 @@ public partial class Worker
                 {
                     e.PoultryAlarmRaisedCount++;
                     Log.Information($"Activating poultry light alarm. Count: {e.PoultryAlarmRaisedCount}, Level: {alarmTimes.Level}");
-                    //save to db
                     Task.Run(() => TriggerAlarm(e, AlarmDeviceType.PoultryLight));
                     e.DatePoultryAlarmRaised = Now;
                 }
@@ -703,7 +701,6 @@ public partial class Worker
                 {
                     e.PoultryAlarmRaisedCount++;
                     Log.Information($"Activating poultry light alarm. Count: {e.PoultryAlarmRaisedCount}, Level: {alarmTimes.Level}");
-                    //save to db
                     Task.Run(() => TriggerAlarm(e, AlarmDeviceType.PoultryLight));
                     e.DatePoultryAlarmRaised = Now;
                 }
@@ -714,7 +711,6 @@ public partial class Worker
                 {
                     e.PoultryAlarmRaisedCount = 1;
                     Log.Information($"Activating poultry siren alarm. Count: {e.PoultryAlarmRaisedCount}, Level: {alarmTimes.Level}");
-                    //save to db
                     Task.Run(() => TriggerAlarm(e, AlarmDeviceType.PoultrySiren));
                     e.DatePoultryAlarmRaised = Now;
                 }
@@ -722,7 +718,6 @@ public partial class Worker
                 {
                     e.PoultryAlarmRaisedCount++;
                     Log.Information($"Activating poultry siren alarm. Count: {e.PoultryAlarmRaisedCount}, Level: {alarmTimes.Level}");
-                    //save to db
                     Task.Run(() => TriggerAlarm(e, AlarmDeviceType.PoultrySiren));
                     e.DatePoultryAlarmRaised = Now;
                 }
@@ -730,7 +725,6 @@ public partial class Worker
                 {
                     e.PoultryAlarmRaisedCount++;
                     Log.Information($"Activating poultry siren alarm. Count: {e.PoultryAlarmRaisedCount}, Level: {alarmTimes.Level}");
-                    //save to db
                     Task.Run(() => TriggerAlarm(e, AlarmDeviceType.PoultrySiren));
                     e.DatePoultryAlarmRaised = Now;
                 }
@@ -748,7 +742,6 @@ public partial class Worker
                 {
                     e.FarmAlarmRaisedCount = 1;
                     Log.Information($"Activating farm alarm. Count: {e.FarmAlarmRaisedCount}, Level: {alarmTimes.Level}");
-                    //save to db
                     Task.Run(() => TriggerAlarm(e,AlarmDeviceType.FarmLight, e.FarmId));
                     e.DateFarmAlarmRaised = Now;
                 }
@@ -756,7 +749,6 @@ public partial class Worker
                 {
                     e.FarmAlarmRaisedCount++;
                     Log.Information($"Activating farm alarm. Count: {e.FarmAlarmRaisedCount}, Level: {alarmTimes.Level}");
-                    //save to db
                     Task.Run(() => TriggerAlarm(e, AlarmDeviceType.FarmLight, e.FarmId));
                     e.DateFarmAlarmRaised = Now;
                 }
@@ -764,7 +756,6 @@ public partial class Worker
                 {
                     e.FarmAlarmRaisedCount++;
                     Log.Information($"Activating farm alarm. Count: {e.FarmAlarmRaisedCount}, Level: {alarmTimes.Level}");
-                    //save to db
                     Task.Run(() => TriggerAlarm(e, AlarmDeviceType.FarmLight, e.FarmId));
                     e.DateFarmAlarmRaised = Now;
                 }
@@ -799,7 +790,6 @@ public partial class Worker
                 {
                     e.PoultryAlarmRaisedCount = 1;
                     Log.Information($"Activating poultry light alarm. Count: {e.PoultryAlarmRaisedCount}, Level: {alarmTimes.Level}");
-                    //save to db
                     Task.Run(() => TriggerAlarm(e, AlarmDeviceType.PoultryLight));
                     e.DatePoultryAlarmRaised = Now;
                 }
@@ -807,7 +797,6 @@ public partial class Worker
                 {
                     e.PoultryAlarmRaisedCount++;
                     Log.Information($"Activating poultry light alarm. Count: {e.PoultryAlarmRaisedCount}, Level: {alarmTimes.Level}");
-                    //save to db
                     Task.Run(() => TriggerAlarm(e, AlarmDeviceType.PoultryLight));
                     e.DatePoultryAlarmRaised = Now;
                 }
@@ -815,7 +804,6 @@ public partial class Worker
                 {
                     e.PoultryAlarmRaisedCount++;
                     Log.Information($"Activating poultry light alarm. Count: {e.PoultryAlarmRaisedCount}, Level: {alarmTimes.Level}");
-                    //save to db
                     Task.Run(() => TriggerAlarm(e, AlarmDeviceType.PoultryLight));
                     e.DatePoultryAlarmRaised = Now;
                 }
@@ -826,7 +814,6 @@ public partial class Worker
                 {
                     e.PoultryAlarmRaisedCount = 1;
                     Log.Information($"Activating poultry siren alarm. Count: {e.PoultryAlarmRaisedCount}, Level: {alarmTimes.Level}");
-                    //save to db
                     Task.Run(() => TriggerAlarm(e, AlarmDeviceType.PoultrySiren));
                     e.DatePoultryAlarmRaised = Now;
                 }
@@ -834,7 +821,6 @@ public partial class Worker
                 {
                     e.PoultryAlarmRaisedCount++;
                     Log.Information($"Activating poultry siren alarm. Count: {e.PoultryAlarmRaisedCount}, Level: {alarmTimes.Level}");
-                    //save to db
                     Task.Run(() => TriggerAlarm(e, AlarmDeviceType.PoultrySiren));
                     e.DatePoultryAlarmRaised = Now;
                 }
@@ -842,7 +828,6 @@ public partial class Worker
                 {
                     e.PoultryAlarmRaisedCount++;
                     Log.Information($"Activating poultry siren alarm. Count: {e.PoultryAlarmRaisedCount}, Level: {alarmTimes.Level}");
-                    //save to db
                     Task.Run(() => TriggerAlarm(e, AlarmDeviceType.PoultrySiren));
                     e.DatePoultryAlarmRaised = Now;
                 }
@@ -860,7 +845,6 @@ public partial class Worker
             //    {
             //        e.FarmAlarmRaisedCount = 1;
             //        Log.Information($"Informing Alarm. Count: {e.FarmAlarmRaisedCount}");
-            //        //save to db
             //        Task.Run(() => TriggerAlarm(e, AlarmDeviceType.FarmLight));
             //        e.DateFarmAlarmRaised = Now;
             //    }
@@ -868,7 +852,6 @@ public partial class Worker
             //    {
             //        e.FarmAlarmRaisedCount++;
             //        Log.Information($"Informing Alarm. Count: {e.FarmAlarmRaisedCount}");
-            //        //save to db
             //        Task.Run(() => TriggerAlarm(e, AlarmDeviceType.FarmLight));
             //        e.DateFarmAlarmRaised = Now;
             //    }
@@ -876,7 +859,6 @@ public partial class Worker
             //    {
             //        e.FarmAlarmRaisedCount++;
             //        Log.Information($"Informing Alarm. Count: {e.FarmAlarmRaisedCount}");
-            //        //save to db
             //        Task.Run(() => TriggerAlarm(e, AlarmDeviceType.FarmLight));
             //        e.DateFarmAlarmRaised = Now;
             //    }
@@ -911,7 +893,6 @@ public partial class Worker
                 {
                     e.PoultryAlarmRaisedCount = 1;
                     Log.Information($"Activating poultry light alarm. Count: {e.PoultryAlarmRaisedCount}, Level: {alarmTimes.Level}");
-                    //save to db
                     Task.Run(() => TriggerAlarm(e, AlarmDeviceType.PoultryLight));
                     e.DatePoultryAlarmRaised = Now;
                 }
@@ -919,7 +900,6 @@ public partial class Worker
                 {
                     e.PoultryAlarmRaisedCount++;
                     Log.Information($"Activating poultry light alarm. Count: {e.PoultryAlarmRaisedCount}, Level: {alarmTimes.Level}");
-                    //save to db
                     Task.Run(() => TriggerAlarm(e, AlarmDeviceType.PoultryLight));
                     e.DatePoultryAlarmRaised = Now;
                 }
@@ -927,7 +907,6 @@ public partial class Worker
                 {
                     e.PoultryAlarmRaisedCount++;
                     Log.Information($"Activating poultry light alarm. Count: {e.PoultryAlarmRaisedCount}, Level: {alarmTimes.Level}");
-                    //save to db
                     Task.Run(() => TriggerAlarm(e, AlarmDeviceType.PoultryLight));
                     e.DatePoultryAlarmRaised = Now;
                 }
@@ -938,7 +917,6 @@ public partial class Worker
                 {
                     e.PoultryAlarmRaisedCount = 1;
                     Log.Information($"Activating poultry siren alarm. Count: {e.PoultryAlarmRaisedCount}, Level: {alarmTimes.Level}");
-                    //save to db
                     Task.Run(() => TriggerAlarm(e, AlarmDeviceType.PoultrySiren));
                     e.DatePoultryAlarmRaised = Now;
                 }
@@ -946,7 +924,6 @@ public partial class Worker
                 {
                     e.PoultryAlarmRaisedCount++;
                     Log.Information($"Activating poultry siren alarm. Count: {e.PoultryAlarmRaisedCount}, Level: {alarmTimes.Level}");
-                    //save to db
                     Task.Run(() => TriggerAlarm(e, AlarmDeviceType.PoultrySiren));
                     e.DatePoultryAlarmRaised = Now;
                 }
@@ -954,7 +931,6 @@ public partial class Worker
                 {
                     e.PoultryAlarmRaisedCount++;
                     Log.Information($"Activating poultry siren alarm. Count: {e.PoultryAlarmRaisedCount}, Level: {alarmTimes.Level}");
-                    //save to db
                     Task.Run(() => TriggerAlarm(e, AlarmDeviceType.PoultrySiren));
                     e.DatePoultryAlarmRaised = Now;
                 }
@@ -977,6 +953,7 @@ public partial class Worker
                         if (type != AlarmDeviceType.PoultrySiren || (type == AlarmDeviceType.PoultrySiren && !alarm.IsSnoozed) || (type == AlarmDeviceType.PoultrySiren && alarm.IsSnoozed && alarm.SnoozedTime.IsElapsed(config.system.SirenSnoozeDuration)))
                         {
                             Log.Information($"Activating/Reactivating alarm. Alarm type: {type}, Alarm location ID: {AlarmLocationId}, Error: {e.Descriptions}, Thread: {Environment.CurrentManagedThreadId}");
+                            await DbProcessor.WriteAlarmTriggerLogToDbAsync(alarm.Id, alarm.LocationId, AlarmTriggerType.On, start);
                             var result = await TurnOnOffAlarm(alarm, true);
                             if (result)
                             {
@@ -991,6 +968,7 @@ public partial class Worker
             foreach (var alarm in alarms)
             {
                 await TurnOnOffAlarm(alarm, false);
+                await DbProcessor.WriteAlarmTriggerLogToDbAsync(alarm.Id, alarm.LocationId, AlarmTriggerType.Off, start);
             }
         }
         else Log.Warning($"Alarm needs to be activated but no alarm device is found for the error. Alarm type: {type}, Alarm location ID: {AlarmLocationId}, Thread: {Environment.CurrentManagedThreadId}");

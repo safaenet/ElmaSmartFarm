@@ -189,4 +189,25 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="DeviceType" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="1f2d1e82-76a0-4448-b2a8-aec9e5ad1559" ChangeDateTime="12/22/2022 06:23:45">
+    <Property Name="ElementName" Value="[dbo].[AlarmTriggerLogs].[TriggerMode]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[AlarmTriggerLogs]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="TriggerType" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="eb355e64-3cc3-4b60-afcc-fc49c2e6e0a7" ChangeDateTime="12/22/2022 06:26:53">
+    <Property Name="ElementName" Value="[dbo].[SensorWatchLogs].[TriggerType]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[SensorWatchLogs]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Action" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="93bb2587-c442-45a9-8f6e-e9da8c47000c" ChangeDateTime="12/22/2022 06:40:01">
+    <Property Name="ElementName" Value="[dbo].[AlarmTriggerLogs].[TriggerType]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[AlarmTriggerLogs]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Action" />
+  </Operation>
 </Operations>

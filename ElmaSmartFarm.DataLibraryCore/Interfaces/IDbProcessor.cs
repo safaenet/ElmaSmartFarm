@@ -1,8 +1,8 @@
 ﻿using ElmaSmartFarm.SharedLibrary;
 using ElmaSmartFarm.SharedLibrary.Models;
+using ElmaSmartFarm.SharedLibrary.Models.Alarm;
 using ElmaSmartFarm.SharedLibrary.Models.Sensors;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace ElmaSmartFarm.DataLibraryCore.Interfaces;
@@ -14,10 +14,10 @@ public interface IDbProcessor
     Task<PoultryModel> LoadPoultryAsync();
     Task<int> WriteSensorErrorToDbAsync(SensorErrorModel error, DateTime now);
     Task<int> WriteFarmErrorToDbAsync(FarmInPeriodErrorModel error, DateTime now);
-    //Task<bool> EraseSensorErrorFromDbAsync(SensorBaseModel sensor, SensorErrorType type, DateTime eraseDate);
-    //Task<bool> EraseSensorErrorFromDbAsync(int sensorId, SensorErrorType type, DateTime eraseDate);
     Task<bool> EraseSensorErrorFromDbAsync(int sensorId, DateTime eraseDate, params SensorErrorType[] types);
     Task<bool> EraseFarmErrorFromDbAsync(int farmId, DateTime eraseDate, params FarmInPeriodErrorType[] types);
     Task<bool> ErasePoultryErrorFromDbAsync(DateTime eraseDate, params PoultryInPeriodErrorType[] types);
     Task<int> WritePoultryErrorToDbAsync(PoultryInPeriodErrorModel error, DateTime now);
+    Task<int> WriteSensorWatchLogToDbAsync(int sensorId, int locationId, SensorSection section, SensorWatchAction action, DateTime now);
+    Task<int> WriteAlarmTriggerLogToDbAsync(int alarmId, int locationId, AlarmTriggerType action, DateTime now);
 }
