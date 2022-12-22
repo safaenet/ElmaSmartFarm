@@ -14,427 +14,7 @@ public partial class Worker
         var Topic = mqtt.Topic.Replace(config.mqtt.ToServerTopic, "");
         if (Topic.StartsWith(config.mqtt.FromSensorSubTopic)) //Message from sensor.
         {
-            if (config.VerboseMode) Log.Information($"MQTT Message is from a sensor. Topic: {mqtt.Topic}, Payload: {mqtt.Payload}");
-            var SubTopics = Topic.Split("/");
-            if (SubTopics.Length < 3 || string.IsNullOrEmpty(SubTopics[2]) || int.TryParse(SubTopics[2], out var SensorId) == false)
-            {
-                AddMqttToUnknownList(mqtt);
-                return -1;
-            }
-            #region KeepAlive Message Handler
-            if (SubTopics[1] == config.mqtt.KeepAliveSubTopic) //Keep Alive message from sensor.
-            {
-                if (config.VerboseMode) Log.Information($"MQTT Message is KeepAlive from a sensor. Topic: {mqtt.Topic}, Payload: {mqtt.Payload}");
-                if (await UpdateSensorKeepAliveAsync(SensorId, Now) == 0)
-                {
-                    AddMqttToUnknownList(mqtt);
-                    return -1;
-                }
-            }
-            #endregion
-            #region IP Address Message Handler
-            else if (SubTopics[1] == config.mqtt.IPAddressSubTopic) //IP Address message from sensor.
-            {
-                if (config.VerboseMode) Log.Information($"MQTT Message is IP Address from a sensor. Topic: {mqtt.Topic}, Payload: {mqtt.Payload}");
-                await UpdateSensorIPAddressAsync(SensorId, mqtt.Payload, Now);
-            }
-            #endregion
-            #region Battery Level Message Handler
-            else if (SubTopics[1] == config.mqtt.BatteryLevelSubTopic) //Battery Level message from sensor.
-            {
-                if (config.VerboseMode) Log.Information($"MQTT Message is Battery Level from a sensor. Topic: {mqtt.Topic}, Payload: {mqtt.Payload}");
-                if (int.TryParse(mqtt.Payload, out var level))
-                    await UpdateSensorBatteryLevelAsync(SensorId, level, Now);
-                else
-                {
-                    AddMqttToUnknownList(mqtt);
-                    return -1;
-                }
-            }
-            #endregion
-            #region Scalar Value Handler.
-            else if (SubTopics[1] == config.mqtt.ScalarSubTopic) //Value from scalar sensor.
-            {
-                if (config.VerboseMode) Log.Information($"MQTT Message is value from a scalar sensor. Topic: {mqtt.Topic}, Payload: {mqtt.Payload}");
-                var sensor = FindSensorsById<ScalarSensorModel>(SensorId);
-                if (sensor == null || sensor.IsEnabled == false)
-                {
-                    AddMqttToUnknownList(mqtt);
-                    return -1;
-                }
-                await EraseSensorErrors(sensor, Now);
-                var payloads = mqtt.Payload.Split("/");
-                if (payloads == null || payloads.Length == 0) //Invalid data.
-                {
-                    await InvalidMqttPayloadHandler(mqtt, sensor, Now);
-                    return -1;
-                }
-                ScalarSensorReadModel newRead = new();
-                newRead.ReadDate = Now;
-                foreach (var p in payloads)
-                {
-                    if (p.StartsWith("T:"))
-                    {
-                        var v = p.Replace("T:", "");
-                        if (double.TryParse(v, out var value))
-                        {
-                            newRead.Temperature = value + sensor.TemperatureOffset;
-                            await EraseSensorErrors(sensor, Now, SensorErrorType.InvalidTemperatureData);
-                            if (newRead.HasValidTemp(sensor.Type))
-                            {
-                                await EraseSensorErrors(sensor, Now, SensorErrorType.InvalidTemperatureValue);
-                                if (sensor.IsFarmSensor() && sensor.IsWatched && sensor.IsInPeriod)
-                                {
-                                    var farm = FindFarmBySensorId(sensor.Id);
-                                    if (farm == null) Log.Error($"Farm for the indoor sensor not detected. Sensor ID: {sensor.Id} (System Error)");
-                                    else
-                                    {
-                                        if (newRead.Temperature < config.system.TempMinWorkingValue)
-                                            await AddkValueRangeFarmError(farm, sensor, newRead, FarmInPeriodErrorType.LowTemperature, FarmInPeriodErrorType.HighTemperature, Now);
-                                        else if (newRead.Temperature > config.system.TempMaxWorkingValue)
-                                            await AddkValueRangeFarmError(farm, sensor, newRead, FarmInPeriodErrorType.HighTemperature, FarmInPeriodErrorType.LowTemperature, Now);
-                                        else if (farm != null) await EraseFarmErrors(farm, Now, FarmInPeriodErrorType.LowTemperature, FarmInPeriodErrorType.HighTemperature);
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                newRead.Temperature = null;
-                                await InvalidSensorValueHandler(sensor, mqtt, SensorErrorType.InvalidTemperatureValue, Now);
-                            }
-                        }
-                        else await InvalidSensorValueHandler(sensor, mqtt, SensorErrorType.InvalidTemperatureData, Now); //Invalid sensor temp data.
-                        continue;
-                    }
-                    else if (p.StartsWith("H:"))
-                    {
-                        var v = p.Replace("H:", "");
-                        if (int.TryParse(v, out var value))
-                        {
-                            newRead.Humidity = value + sensor.HumidityOffset;
-                            await EraseSensorErrors(sensor, Now, SensorErrorType.InvalidHumidityData);
-                            if (newRead.HasValidHumid())
-                            {
-                                await EraseSensorErrors(sensor, Now, SensorErrorType.InvalidHumidityValue);
-                                if (sensor.IsFarmSensor() && sensor.IsWatched && sensor.IsInPeriod)
-                                {
-                                    var farm = FindFarmBySensorId(sensor.Id);
-                                    if (farm == null) Log.Error($"Farm for the indoor sensor not detected. Sensor ID: {sensor.Id} (System Error)");
-                                    else
-                                    {
-                                        if (newRead.Humidity < config.system.HumidMinWorkingValue)
-                                            await AddkValueRangeFarmError(farm, sensor, newRead, FarmInPeriodErrorType.LowHumidity, FarmInPeriodErrorType.HighHumidity, Now);
-                                        else if (newRead.Humidity > config.system.HumidMaxWorkingValue)
-                                            await AddkValueRangeFarmError(farm, sensor, newRead, FarmInPeriodErrorType.HighHumidity, FarmInPeriodErrorType.LowHumidity, Now);
-                                        else if (farm != null) await EraseFarmErrors(farm, Now, FarmInPeriodErrorType.LowHumidity, FarmInPeriodErrorType.HighHumidity);
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                newRead.Humidity = null;
-                                await InvalidSensorValueHandler(sensor, mqtt, SensorErrorType.InvalidHumidityValue, Now);
-                            }
-                        }
-                        else await InvalidSensorValueHandler(sensor, mqtt, SensorErrorType.InvalidHumidityData, Now); //Invalid sensor humid value.
-                        continue;
-                    }
-                    else if (p.StartsWith("L:"))
-                    {
-                        var v = p.Replace("L:", "");
-                        if (int.TryParse(v, out var value))
-                        {
-                            newRead.Light = value + sensor.LightOffset;
-                            await EraseSensorErrors(sensor, Now, SensorErrorType.InvalidLightData);
-                            if (newRead.HasValidLight()) await EraseSensorErrors(sensor, Now, SensorErrorType.InvalidLightValue);
-                            else
-                            {
-                                newRead.Light = null;
-                                await InvalidSensorValueHandler(sensor, mqtt, SensorErrorType.InvalidLightValue, Now);
-                            }
-                        }
-                        else await InvalidSensorValueHandler(sensor, mqtt, SensorErrorType.InvalidLightData, Now); //Invalid sensor light value.
-                        continue;
-                    }
-                    else if (p.StartsWith("A:"))
-                    {
-                        var v = p.Replace("A:", "");
-                        if (double.TryParse(v, out var value))
-                        {
-                            newRead.Ammonia = value + sensor.AmmoniaOffset;
-                            await EraseSensorErrors(sensor, Now, SensorErrorType.InvalidAmmoniaData);
-                            if (newRead.HasValidAmmonia())
-                            {
-                                await EraseSensorErrors(sensor, Now, SensorErrorType.InvalidAmmoniaValue);
-                                if (sensor.IsFarmSensor() && sensor.IsWatched && sensor.IsInPeriod)
-                                {
-                                    var farm = FindFarmBySensorId(sensor.Id);
-                                    if (farm == null) Log.Error($"Farm for the indoor sensor not detected. Sensor ID: {sensor.Id} (System Error)");
-                                    else
-                                    {
-                                        if (newRead.Ammonia > config.system.AmmoniaMaxWorkingValue)
-                                            await AddkValueRangeFarmError(farm, sensor, newRead, FarmInPeriodErrorType.HighAmmonia, null, Now);
-                                        else if (farm != null) await EraseFarmErrors(farm, Now, FarmInPeriodErrorType.HighAmmonia);
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                newRead.Ammonia = null;
-                                await InvalidSensorValueHandler(sensor, mqtt, SensorErrorType.InvalidAmmoniaValue, Now);
-                            }
-                        }
-                        else await InvalidSensorValueHandler(sensor, mqtt, SensorErrorType.InvalidAmmoniaData, Now); //Invalid sensor ammonia value.
-                        continue;
-                    }
-                    else if (p.StartsWith("C:"))
-                    {
-                        var v = p.Replace("C:", "");
-                        if (double.TryParse(v, out var value))
-                        {
-                            newRead.Co2 = value + sensor.Co2Offset;
-                            await EraseSensorErrors(sensor, Now, SensorErrorType.InvalidCo2Data);
-                            if (newRead.HasValidCo2())
-                            {
-                                await EraseSensorErrors(sensor, Now, SensorErrorType.InvalidCo2Value);
-                                if (sensor.IsFarmSensor() && sensor.IsWatched && sensor.IsInPeriod)
-                                {
-                                    var farm = FindFarmBySensorId(sensor.Id);
-                                    if (farm == null) Log.Error($"Farm for the indoor sensor not detected. Sensor ID: {sensor.Id} (System Error)");
-                                    else
-                                    {
-                                        if (newRead.Co2 > config.system.AmmoniaMaxWorkingValue)
-                                            await AddkValueRangeFarmError(farm, sensor, newRead, FarmInPeriodErrorType.HighCo2, null, Now);
-                                        else if (farm != null) await EraseFarmErrors(farm, Now, FarmInPeriodErrorType.HighCo2);
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                newRead.Co2 = null;
-                                await InvalidSensorValueHandler(sensor, mqtt, SensorErrorType.InvalidCo2Value, Now);
-                            }
-                        }
-                        else await InvalidSensorValueHandler(sensor, mqtt, SensorErrorType.InvalidCo2Data, Now); //Invalid sensor co2 value.
-                        continue;
-                    }
-                    //else await InvalidMqttPayloadHandler(mqtt, sensor, Now);
-                }
-                await EraseSensorErrors(sensor, Now, SensorErrorType.NotAlive);
-                if (newRead.HasValue == false)
-                {
-                    await InvalidMqttPayloadHandler(mqtt, sensor, Now);
-                    return -1;
-                }
-                else await EraseSensorErrors(sensor, Now, SensorErrorType.InvalidData);
-                //Sensor Valid, Values Valid.
-                if (sensor.Values == null) sensor.Values = new();
-                if ((sensor.IsWatched || config.system.WriteScalarToDbAlways) && (sensor.Values.Count == 0 || sensor.LastSavedRead == null || sensor.LastSavedRead.ReadDate.IsElapsed(config.system.WriteScalarToDbInterval))) //Writable to db.
-                {
-                    var newId = await DbProcessor.WriteScalarSensorValueToDbAsync(sensor, newRead);
-                    if (newId > 0)
-                    {
-                        newRead.IsSavedToDb = true;
-                        newRead.Id = newId;
-                    }
-                }
-                if (sensor.Values.Count >= config.system.MaxSensorReadCount) sensor.Values.RemoveOldestNotSaved(config.VerboseMode);
-                sensor.Values.Add(newRead);
-                if (config.VerboseMode) Log.Information($"Scalar sensor value done processing. Count: {sensor.Values.Count}");
-            }
-            #endregion
-            #region Commute Value Handler.
-            else if (SubTopics[1] == config.mqtt.CommuteSubTopic) //Value from commute sensor.
-            {
-                if (config.VerboseMode) Log.Information($"MQTT Message is value from a commute sensor. Topic: {mqtt.Topic}, Payload: {mqtt.Payload}");
-                var sensor = FindSensorsById<CommuteSensorModel>(SensorId);
-                if (sensor == null || sensor.IsEnabled == false)
-                {
-                    AddMqttToUnknownList(mqtt);
-                    return -1;
-                }
-                await EraseSensorErrors(sensor, Now, SensorErrorType.NotAlive);
-                if (!Enum.TryParse(mqtt.Payload, out CommuteSensorValueType Payload)) //Invalid data.
-                {
-                    await InvalidMqttPayloadHandler(mqtt, sensor, Now);
-                    return -1;
-                }
-                //Sensor found. Sensor valid, Value valid.
-                await EraseSensorErrors(sensor, Now, SensorErrorType.InvalidData);
-                if (sensor.Values == null) sensor.Values = new();
-                CommuteSensorReadModel newRead = new() { Value = Payload, ReadDate = Now };
-                if ((sensor.IsWatched || config.system.WriteCommuteToDbAlways) && (sensor.Values.Count == 0 || sensor.LastRead.Value != Payload || (Payload == CommuteSensorValueType.StepIn && sensor.LastStepInSavedRead == null) || (Payload == CommuteSensorValueType.StepOut && sensor.LastStepOutSavedRead == null))) //Writable to db.
-                {
-                    var newId = await DbProcessor.WriteSensorValueToDbAsync(sensor, (double)Payload, Now);
-                    if (newId > 0)
-                    {
-                        newRead.IsSavedToDb = true;
-                        newRead.Id = newId;
-                    }
-                }
-                if (sensor.Values.Count >= config.system.MaxSensorReadCount) sensor.Values.RemoveOldestNotSaved(config.VerboseMode);
-                sensor.Values.Add(newRead);
-                var farm = FindFarmBySensorId(sensor.Id);
-                if (farm != null) await EraseFarmErrors(farm, Now, FarmInPeriodErrorType.LongLeave);
-                if (config.VerboseMode) Log.Information($"Commute sensor value done processing: {sensor.LastRead.ReadDate}, : {sensor.LastRead.Value}, Count: {sensor.Values.Count}");
-            }
-            #endregion
-            #region PushButton Value Handler.
-            else if (SubTopics[1] == config.mqtt.PushButtonSubTopic) //Value from push button sensor.
-            {
-                if (config.VerboseMode) Log.Information($"MQTT Message is value from a push button sensor. Topic: {mqtt.Topic}, Payload: {mqtt.Payload}");
-                var sensor = FindSensorsById<PushButtonSensorModel>(SensorId);
-                if (sensor == null || sensor.IsEnabled == false)
-                {
-                    AddMqttToUnknownList(mqtt);
-                    return -1;
-                }
-                //Sensor found. Check value. Sensor Valid, Value Valid.
-                await EraseSensorErrors(sensor, Now, SensorErrorType.NotAlive);
-                if (sensor.Values == null) sensor.Values = new();
-                PushButtonSensorReadModel newRead = new() { Value = Now, ReadDate = Now };
-                if (sensor.IsWatched || (sensor.Type == SensorType.FarmFeed && config.system.WriteFeedToDbAlways) || (sensor.Type == SensorType.FarmCheckup && config.system.WriteCheckupToDbAlways)) //Writable to db.
-                {
-                    var newId = await DbProcessor.WriteSensorValueToDbAsync(sensor, 0, Now);
-                    if (newId > 0)
-                    {
-                        newRead.IsSavedToDb = true;
-                        newRead.Id = newId;
-                    }
-                }
-                if (sensor.Values.Count >= config.system.MaxSensorReadCount) sensor.Values.RemoveOldestNotSaved(config.VerboseMode);
-                sensor.Values.Add(newRead);
-                var farm = FindFarmBySensorId(sensor.Id);
-                if (farm != null)
-                {
-                    if (sensor.Type == SensorType.FarmFeed) await EraseFarmErrors(farm, Now, FarmInPeriodErrorType.LongNoFeed);
-                    else if (sensor.Type == SensorType.FarmCheckup) await EraseFarmErrors(farm, Now, FarmInPeriodErrorType.LongLeave);
-                }
-                if (config.VerboseMode) Log.Information($"PushButton sensor value done processing: {sensor.LastRead.ReadDate}, : {sensor.LastRead.Value}, Count: {sensor.Values.Count}");
-            }
-            #endregion
-            #region Binary Value Handler.
-            else if (SubTopics[1] == config.mqtt.BinarySubTopic) //Value from binary sensor.
-            {
-                if (config.VerboseMode) Log.Information($"MQTT Message is value from a binary sensor. Topic: {mqtt.Topic}, Payload: {mqtt.Payload}");
-                var sensor = FindSensorsById<BinarySensorModel>(SensorId);
-                if (sensor == null || sensor.IsEnabled == false)
-                {
-                    AddMqttToUnknownList(mqtt);
-                    return -1;
-                }
-                await EraseSensorErrors(sensor, Now, SensorErrorType.NotAlive);
-                if (!Enum.TryParse(mqtt.Payload, out BinarySensorValueType Payload)) //Invalid data.
-                {
-                    await InvalidMqttPayloadHandler(mqtt, sensor, Now);
-                    return -1;
-                }
-                //Sensor found. Check value. Sensor Valid, Value Valid.
-                await EraseSensorErrors(sensor, Now, SensorErrorType.InvalidData);
-                if (sensor.Values == null) sensor.Values = new();
-                BinarySensorReadModel newRead = new() { Value = Payload, ReadDate = Now };
-                bool WriteToDbAways = false;
-                bool WritePowerOnValueChange = false;
-                int WriteToDbInterval = 0;
-                if (sensor.Type == SensorType.FarmElectricPower)
-                {
-                    WriteToDbAways = config.system.WriteFarmPowerToDbAlways;
-                    WriteToDbInterval = config.system.WriteFarmPowerToDbInterval;
-                    WritePowerOnValueChange = config.system.WriteFarmPowerOnValueChange;
-                }
-                if (sensor.Type == SensorType.PoultryMainElectricPower)
-                {
-                    WriteToDbAways = config.system.WriteMainPowerToDbAlways;
-                    WriteToDbInterval = config.system.WriteMainPowerToDbInterval;
-                    WritePowerOnValueChange = config.system.WriteMainPowerOnValueChange;
-
-                }
-                if (sensor.Type == SensorType.PoultryBackupElectricPower)
-                {
-                    WriteToDbAways = config.system.WriteBackupPowerToDbAlways;
-                    WriteToDbInterval = config.system.WriteBackupPowerToDbInterval;
-                    WritePowerOnValueChange = config.system.WriteBackupPowerOnValueChange;
-                }
-                if ((sensor.IsWatched || WriteToDbAways) && (sensor.Values.Count == 0 || sensor.LastSavedRead == null || (WritePowerOnValueChange && sensor.LastSavedRead.Value != Payload) || sensor.LastSavedRead.ReadDate.IsElapsed(WriteToDbInterval))) //Writable to db.
-                {
-                    var newId = await DbProcessor.WriteSensorValueToDbAsync(sensor, (double)Payload, Now);
-                    if (newId > 0)
-                    {
-                        newRead.IsSavedToDb = true;
-                        newRead.Id = newId;
-                    }
-                }
-                if (sensor.Values.Count >= config.system.MaxSensorReadCount) sensor.Values.RemoveOldestNotSaved(config.VerboseMode);
-                sensor.Values.Add(newRead);
-
-                if (sensor.IsInPeriod)
-                {
-                    if (sensor.Type == SensorType.FarmElectricPower)
-                    {
-                        if (newRead.Value == BinarySensorValueType.Off)
-                        {
-                            if (config.VerboseMode) Log.Warning($"{FarmInPeriodErrorType.NoPower} detected in one of farms. sensor ID: {sensor.Id}");
-                            var farm = FindFarmBySensorId(sensor.Id);
-                            if (farm == null) Log.Error($"Farm for the indoor sensor not detected. Sensor ID: {sensor.Id} (System Error)");
-                            else
-                            {
-                                if (config.VerboseMode) Log.Warning($"{FarmInPeriodErrorType.NoPower} detected in farm ID: {farm.Id}, Name: {farm.Name}. sensor ID: {sensor.Id}");
-                                var newErr = GenerateFarmError(sensor, FarmInPeriodErrorType.NoPower, Now, farm.Period?.Id ?? 0, $"{FarmInPeriodErrorType.NoPower} on: {newRead.ReadDate}, Detected by: {sensor.Type}");
-                                if (farm.InPeriodErrors == null) farm.InPeriodErrors = new();
-                                if (farm.InPeriodErrors.AddError(newErr, FarmInPeriodErrorType.NoPower, config.system.MaxFarmErrorCount))
-                                {
-                                    var newId = await DbProcessor.WriteFarmErrorToDbAsync(newErr, Now);
-                                    if (newId > 0) newErr.Id = newId;
-                                }
-                            }
-                        }
-                        else if (newRead.Value == BinarySensorValueType.On)
-                        {
-                            var farm = FindFarmBySensorId(sensor.Id);
-                            if (farm != null) await EraseFarmErrors(farm, Now, FarmInPeriodErrorType.NoPower);
-                        }
-                    }
-                    else if (sensor.Type == SensorType.PoultryMainElectricPower)
-                    {
-                        if (newRead.Value == BinarySensorValueType.Off)
-                        {
-                            if (config.VerboseMode) Log.Warning($"{PoultryInPeriodErrorType.NoMainPower} detected in poultry. sensor ID: {sensor.Id}");
-                            var newErr = GeneratePoultryError(sensor, PoultryInPeriodErrorType.NoMainPower, Now, $"{PoultryInPeriodErrorType.NoMainPower} on: {newRead.ReadDate}, Detected by: {sensor.Type}");
-                            if (Poultry.InPeriodErrors == null) Poultry.InPeriodErrors = new();
-                            if (Poultry.InPeriodErrors.AddError(newErr, config.system.MaxPoultryErrorCount))
-                            {
-                                var newId = await DbProcessor.WritePoultryErrorToDbAsync(newErr, Now);
-                                if (newId > 0) newErr.Id = newId;
-                            }
-                        }
-                        else if (newRead.Value == BinarySensorValueType.On)
-                        {
-                            await ErasePoultryErrors(Now, PoultryInPeriodErrorType.NoMainPower);
-                        }
-                    }
-                    else if (sensor.Type == SensorType.PoultryBackupElectricPower)
-                    {
-                        if (newRead.Value == BinarySensorValueType.Off)
-                        {
-                            if (config.VerboseMode) Log.Warning($"{PoultryInPeriodErrorType.NoBackupPower} detected in poultry. sensor ID: {sensor.Id}");
-                            var newErr = GeneratePoultryError(sensor, PoultryInPeriodErrorType.NoBackupPower, Now, $"{PoultryInPeriodErrorType.NoBackupPower} on: {newRead.ReadDate}, Detected by: {sensor.Type}");
-                            if (Poultry.InPeriodErrors == null) Poultry.InPeriodErrors = new();
-                            if (Poultry.InPeriodErrors.AddError(newErr, config.system.MaxPoultryErrorCount))
-                            {
-                                var newId = await DbProcessor.WritePoultryErrorToDbAsync(newErr, Now);
-                                if (newId > 0) newErr.Id = newId;
-                            }
-                        }
-                        else if (newRead.Value == BinarySensorValueType.On)
-                        {
-                            await ErasePoultryErrors(Now, PoultryInPeriodErrorType.NoBackupPower);
-                        }
-                    }
-                }
-
-                if (config.VerboseMode) Log.Information($"Binary sensor value done processing: {sensor.LastRead.ReadDate}, : {sensor.LastRead.Value}, Count: {sensor.Values.Count}");
-            }
-            #endregion
+            await ProcessMqttFromSensor(mqtt, Topic, Now);
         }
         else //Unknown message.
         {
@@ -442,6 +22,432 @@ public partial class Worker
             return -1;
         }
         if (UnknownMqttMessages.Any(m => m.Topic == mqtt.Topic)) UnknownMqttMessages.Remove(UnknownMqttMessages.First(m => m.Topic == mqtt.Topic));
+        return 0;
+    }
+
+    private async Task<int> ProcessMqttFromSensor(MqttMessageModel mqtt, string Topic, DateTime Now)
+    {
+        if (config.VerboseMode) Log.Information($"MQTT Message is from a sensor. Topic: {mqtt.Topic}, Payload: {mqtt.Payload}");
+        var SubTopics = Topic.Split("/");
+        if (SubTopics.Length < 3 || string.IsNullOrEmpty(SubTopics[2]) || int.TryParse(SubTopics[2], out var SensorId) == false)
+        {
+            AddMqttToUnknownList(mqtt);
+            return -1;
+        }
+        #region KeepAlive Message Handler
+        if (SubTopics[1] == config.mqtt.KeepAliveSubTopic) //Keep Alive message from sensor.
+        {
+            if (config.VerboseMode) Log.Information($"MQTT Message is KeepAlive from a sensor. Topic: {mqtt.Topic}, Payload: {mqtt.Payload}");
+            if (await UpdateSensorKeepAliveAsync(SensorId, Now) == 0)
+            {
+                AddMqttToUnknownList(mqtt);
+                return -1;
+            }
+        }
+        #endregion
+        #region IP Address Message Handler
+        else if (SubTopics[1] == config.mqtt.IPAddressSubTopic) //IP Address message from sensor.
+        {
+            if (config.VerboseMode) Log.Information($"MQTT Message is IP Address from a sensor. Topic: {mqtt.Topic}, Payload: {mqtt.Payload}");
+            await UpdateSensorIPAddressAsync(SensorId, mqtt.Payload, Now);
+        }
+        #endregion
+        #region Battery Level Message Handler
+        else if (SubTopics[1] == config.mqtt.BatteryLevelSubTopic) //Battery Level message from sensor.
+        {
+            if (config.VerboseMode) Log.Information($"MQTT Message is Battery Level from a sensor. Topic: {mqtt.Topic}, Payload: {mqtt.Payload}");
+            if (int.TryParse(mqtt.Payload, out var level))
+                await UpdateSensorBatteryLevelAsync(SensorId, level, Now);
+            else
+            {
+                AddMqttToUnknownList(mqtt);
+                return -1;
+            }
+        }
+        #endregion
+        #region Scalar Value Handler.
+        else if (SubTopics[1] == config.mqtt.ScalarSubTopic) //Value from scalar sensor.
+        {
+            if (config.VerboseMode) Log.Information($"MQTT Message is value from a scalar sensor. Topic: {mqtt.Topic}, Payload: {mqtt.Payload}");
+            var sensor = FindSensorsById<ScalarSensorModel>(SensorId);
+            if (sensor == null || sensor.IsEnabled == false)
+            {
+                AddMqttToUnknownList(mqtt);
+                return -1;
+            }
+            await EraseSensorErrors(sensor, Now);
+            var payloads = mqtt.Payload.Split("/");
+            if (payloads == null || payloads.Length == 0) //Invalid data.
+            {
+                await InvalidMqttPayloadHandler(mqtt, sensor, Now);
+                return -1;
+            }
+            ScalarSensorReadModel newRead = new();
+            newRead.ReadDate = Now;
+            foreach (var p in payloads)
+            {
+                if (p.StartsWith("T:"))
+                {
+                    var v = p.Replace("T:", "");
+                    if (double.TryParse(v, out var value))
+                    {
+                        newRead.Temperature = value + sensor.TemperatureOffset;
+                        await EraseSensorErrors(sensor, Now, SensorErrorType.InvalidTemperatureData);
+                        if (newRead.HasValidTemp(sensor.Type))
+                        {
+                            await EraseSensorErrors(sensor, Now, SensorErrorType.InvalidTemperatureValue);
+                            if (sensor.IsFarmSensor() && sensor.IsWatched && sensor.IsInPeriod)
+                            {
+                                var farm = FindFarmBySensorId(sensor.Id);
+                                if (farm == null) Log.Error($"Farm for the indoor sensor not detected. Sensor ID: {sensor.Id} (System Error)");
+                                else
+                                {
+                                    if (newRead.Temperature < config.system.TempMinWorkingValue)
+                                        await AddkValueRangeFarmError(farm, sensor, newRead, FarmInPeriodErrorType.LowTemperature, FarmInPeriodErrorType.HighTemperature, Now);
+                                    else if (newRead.Temperature > config.system.TempMaxWorkingValue)
+                                        await AddkValueRangeFarmError(farm, sensor, newRead, FarmInPeriodErrorType.HighTemperature, FarmInPeriodErrorType.LowTemperature, Now);
+                                    else if (farm != null) await EraseFarmErrors(farm, Now, FarmInPeriodErrorType.LowTemperature, FarmInPeriodErrorType.HighTemperature);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            newRead.Temperature = null;
+                            await InvalidSensorValueHandler(sensor, mqtt, SensorErrorType.InvalidTemperatureValue, Now);
+                        }
+                    }
+                    else await InvalidSensorValueHandler(sensor, mqtt, SensorErrorType.InvalidTemperatureData, Now); //Invalid sensor temp data.
+                    continue;
+                }
+                else if (p.StartsWith("H:"))
+                {
+                    var v = p.Replace("H:", "");
+                    if (int.TryParse(v, out var value))
+                    {
+                        newRead.Humidity = value + sensor.HumidityOffset;
+                        await EraseSensorErrors(sensor, Now, SensorErrorType.InvalidHumidityData);
+                        if (newRead.HasValidHumid())
+                        {
+                            await EraseSensorErrors(sensor, Now, SensorErrorType.InvalidHumidityValue);
+                            if (sensor.IsFarmSensor() && sensor.IsWatched && sensor.IsInPeriod)
+                            {
+                                var farm = FindFarmBySensorId(sensor.Id);
+                                if (farm == null) Log.Error($"Farm for the indoor sensor not detected. Sensor ID: {sensor.Id} (System Error)");
+                                else
+                                {
+                                    if (newRead.Humidity < config.system.HumidMinWorkingValue)
+                                        await AddkValueRangeFarmError(farm, sensor, newRead, FarmInPeriodErrorType.LowHumidity, FarmInPeriodErrorType.HighHumidity, Now);
+                                    else if (newRead.Humidity > config.system.HumidMaxWorkingValue)
+                                        await AddkValueRangeFarmError(farm, sensor, newRead, FarmInPeriodErrorType.HighHumidity, FarmInPeriodErrorType.LowHumidity, Now);
+                                    else if (farm != null) await EraseFarmErrors(farm, Now, FarmInPeriodErrorType.LowHumidity, FarmInPeriodErrorType.HighHumidity);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            newRead.Humidity = null;
+                            await InvalidSensorValueHandler(sensor, mqtt, SensorErrorType.InvalidHumidityValue, Now);
+                        }
+                    }
+                    else await InvalidSensorValueHandler(sensor, mqtt, SensorErrorType.InvalidHumidityData, Now); //Invalid sensor humid value.
+                    continue;
+                }
+                else if (p.StartsWith("L:"))
+                {
+                    var v = p.Replace("L:", "");
+                    if (int.TryParse(v, out var value))
+                    {
+                        newRead.Light = value + sensor.LightOffset;
+                        await EraseSensorErrors(sensor, Now, SensorErrorType.InvalidLightData);
+                        if (newRead.HasValidLight()) await EraseSensorErrors(sensor, Now, SensorErrorType.InvalidLightValue);
+                        else
+                        {
+                            newRead.Light = null;
+                            await InvalidSensorValueHandler(sensor, mqtt, SensorErrorType.InvalidLightValue, Now);
+                        }
+                    }
+                    else await InvalidSensorValueHandler(sensor, mqtt, SensorErrorType.InvalidLightData, Now); //Invalid sensor light value.
+                    continue;
+                }
+                else if (p.StartsWith("A:"))
+                {
+                    var v = p.Replace("A:", "");
+                    if (double.TryParse(v, out var value))
+                    {
+                        newRead.Ammonia = value + sensor.AmmoniaOffset;
+                        await EraseSensorErrors(sensor, Now, SensorErrorType.InvalidAmmoniaData);
+                        if (newRead.HasValidAmmonia())
+                        {
+                            await EraseSensorErrors(sensor, Now, SensorErrorType.InvalidAmmoniaValue);
+                            if (sensor.IsFarmSensor() && sensor.IsWatched && sensor.IsInPeriod)
+                            {
+                                var farm = FindFarmBySensorId(sensor.Id);
+                                if (farm == null) Log.Error($"Farm for the indoor sensor not detected. Sensor ID: {sensor.Id} (System Error)");
+                                else
+                                {
+                                    if (newRead.Ammonia > config.system.AmmoniaMaxWorkingValue)
+                                        await AddkValueRangeFarmError(farm, sensor, newRead, FarmInPeriodErrorType.HighAmmonia, null, Now);
+                                    else if (farm != null) await EraseFarmErrors(farm, Now, FarmInPeriodErrorType.HighAmmonia);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            newRead.Ammonia = null;
+                            await InvalidSensorValueHandler(sensor, mqtt, SensorErrorType.InvalidAmmoniaValue, Now);
+                        }
+                    }
+                    else await InvalidSensorValueHandler(sensor, mqtt, SensorErrorType.InvalidAmmoniaData, Now); //Invalid sensor ammonia value.
+                    continue;
+                }
+                else if (p.StartsWith("C:"))
+                {
+                    var v = p.Replace("C:", "");
+                    if (double.TryParse(v, out var value))
+                    {
+                        newRead.Co2 = value + sensor.Co2Offset;
+                        await EraseSensorErrors(sensor, Now, SensorErrorType.InvalidCo2Data);
+                        if (newRead.HasValidCo2())
+                        {
+                            await EraseSensorErrors(sensor, Now, SensorErrorType.InvalidCo2Value);
+                            if (sensor.IsFarmSensor() && sensor.IsWatched && sensor.IsInPeriod)
+                            {
+                                var farm = FindFarmBySensorId(sensor.Id);
+                                if (farm == null) Log.Error($"Farm for the indoor sensor not detected. Sensor ID: {sensor.Id} (System Error)");
+                                else
+                                {
+                                    if (newRead.Co2 > config.system.AmmoniaMaxWorkingValue)
+                                        await AddkValueRangeFarmError(farm, sensor, newRead, FarmInPeriodErrorType.HighCo2, null, Now);
+                                    else if (farm != null) await EraseFarmErrors(farm, Now, FarmInPeriodErrorType.HighCo2);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            newRead.Co2 = null;
+                            await InvalidSensorValueHandler(sensor, mqtt, SensorErrorType.InvalidCo2Value, Now);
+                        }
+                    }
+                    else await InvalidSensorValueHandler(sensor, mqtt, SensorErrorType.InvalidCo2Data, Now); //Invalid sensor co2 value.
+                    continue;
+                }
+                //else await InvalidMqttPayloadHandler(mqtt, sensor, Now);
+            }
+            await EraseSensorErrors(sensor, Now, SensorErrorType.NotAlive);
+            if (newRead.HasValue == false)
+            {
+                await InvalidMqttPayloadHandler(mqtt, sensor, Now);
+                return -1;
+            }
+            else await EraseSensorErrors(sensor, Now, SensorErrorType.InvalidData);
+            //Sensor Valid, Values Valid.
+            if (sensor.Values == null) sensor.Values = new();
+            if ((sensor.IsWatched || config.system.WriteScalarToDbAlways) && (sensor.Values.Count == 0 || sensor.LastSavedRead == null || sensor.LastSavedRead.ReadDate.IsElapsed(config.system.WriteScalarToDbInterval))) //Writable to db.
+            {
+                var newId = await DbProcessor.WriteScalarSensorValueToDbAsync(sensor, newRead);
+                if (newId > 0)
+                {
+                    newRead.IsSavedToDb = true;
+                    newRead.Id = newId;
+                }
+            }
+            if (sensor.Values.Count >= config.system.MaxSensorReadCount) sensor.Values.RemoveOldestNotSaved(config.VerboseMode);
+            sensor.Values.Add(newRead);
+            if (config.VerboseMode) Log.Information($"Scalar sensor value done processing. Count: {sensor.Values.Count}");
+        }
+        #endregion
+        #region Commute Value Handler.
+        else if (SubTopics[1] == config.mqtt.CommuteSubTopic) //Value from commute sensor.
+        {
+            if (config.VerboseMode) Log.Information($"MQTT Message is value from a commute sensor. Topic: {mqtt.Topic}, Payload: {mqtt.Payload}");
+            var sensor = FindSensorsById<CommuteSensorModel>(SensorId);
+            if (sensor == null || sensor.IsEnabled == false)
+            {
+                AddMqttToUnknownList(mqtt);
+                return -1;
+            }
+            await EraseSensorErrors(sensor, Now, SensorErrorType.NotAlive);
+            if (!Enum.TryParse(mqtt.Payload, out CommuteSensorValueType Payload)) //Invalid data.
+            {
+                await InvalidMqttPayloadHandler(mqtt, sensor, Now);
+                return -1;
+            }
+            //Sensor found. Sensor valid, Value valid.
+            await EraseSensorErrors(sensor, Now, SensorErrorType.InvalidData);
+            if (sensor.Values == null) sensor.Values = new();
+            CommuteSensorReadModel newRead = new() { Value = Payload, ReadDate = Now };
+            if ((sensor.IsWatched || config.system.WriteCommuteToDbAlways) && (sensor.Values.Count == 0 || sensor.LastRead.Value != Payload || (Payload == CommuteSensorValueType.StepIn && sensor.LastStepInSavedRead == null) || (Payload == CommuteSensorValueType.StepOut && sensor.LastStepOutSavedRead == null))) //Writable to db.
+            {
+                var newId = await DbProcessor.WriteSensorValueToDbAsync(sensor, (double)Payload, Now);
+                if (newId > 0)
+                {
+                    newRead.IsSavedToDb = true;
+                    newRead.Id = newId;
+                }
+            }
+            if (sensor.Values.Count >= config.system.MaxSensorReadCount) sensor.Values.RemoveOldestNotSaved(config.VerboseMode);
+            sensor.Values.Add(newRead);
+            var farm = FindFarmBySensorId(sensor.Id);
+            if (farm != null) await EraseFarmErrors(farm, Now, FarmInPeriodErrorType.LongLeave);
+            if (config.VerboseMode) Log.Information($"Commute sensor value done processing: {sensor.LastRead.ReadDate}, : {sensor.LastRead.Value}, Count: {sensor.Values.Count}");
+        }
+        #endregion
+        #region PushButton Value Handler.
+        else if (SubTopics[1] == config.mqtt.PushButtonSubTopic) //Value from push button sensor.
+        {
+            if (config.VerboseMode) Log.Information($"MQTT Message is value from a push button sensor. Topic: {mqtt.Topic}, Payload: {mqtt.Payload}");
+            var sensor = FindSensorsById<PushButtonSensorModel>(SensorId);
+            if (sensor == null || sensor.IsEnabled == false)
+            {
+                AddMqttToUnknownList(mqtt);
+                return -1;
+            }
+            //Sensor found. Check value. Sensor Valid, Value Valid.
+            await EraseSensorErrors(sensor, Now, SensorErrorType.NotAlive);
+            if (sensor.Values == null) sensor.Values = new();
+            PushButtonSensorReadModel newRead = new() { Value = Now, ReadDate = Now };
+            if (sensor.IsWatched || (sensor.Type == SensorType.FarmFeed && config.system.WriteFeedToDbAlways) || (sensor.Type == SensorType.FarmCheckup && config.system.WriteCheckupToDbAlways)) //Writable to db.
+            {
+                var newId = await DbProcessor.WriteSensorValueToDbAsync(sensor, 0, Now);
+                if (newId > 0)
+                {
+                    newRead.IsSavedToDb = true;
+                    newRead.Id = newId;
+                }
+            }
+            if (sensor.Values.Count >= config.system.MaxSensorReadCount) sensor.Values.RemoveOldestNotSaved(config.VerboseMode);
+            sensor.Values.Add(newRead);
+            var farm = FindFarmBySensorId(sensor.Id);
+            if (farm != null)
+            {
+                if (sensor.Type == SensorType.FarmFeed) await EraseFarmErrors(farm, Now, FarmInPeriodErrorType.LongNoFeed);
+                else if (sensor.Type == SensorType.FarmCheckup) await EraseFarmErrors(farm, Now, FarmInPeriodErrorType.LongLeave);
+            }
+            if (config.VerboseMode) Log.Information($"PushButton sensor value done processing: {sensor.LastRead.ReadDate}, : {sensor.LastRead.Value}, Count: {sensor.Values.Count}");
+        }
+        #endregion
+        #region Binary Value Handler.
+        else if (SubTopics[1] == config.mqtt.BinarySubTopic) //Value from binary sensor.
+        {
+            if (config.VerboseMode) Log.Information($"MQTT Message is value from a binary sensor. Topic: {mqtt.Topic}, Payload: {mqtt.Payload}");
+            var sensor = FindSensorsById<BinarySensorModel>(SensorId);
+            if (sensor == null || sensor.IsEnabled == false)
+            {
+                AddMqttToUnknownList(mqtt);
+                return -1;
+            }
+            await EraseSensorErrors(sensor, Now, SensorErrorType.NotAlive);
+            if (!Enum.TryParse(mqtt.Payload, out BinarySensorValueType Payload)) //Invalid data.
+            {
+                await InvalidMqttPayloadHandler(mqtt, sensor, Now);
+                return -1;
+            }
+            //Sensor found. Check value. Sensor Valid, Value Valid.
+            await EraseSensorErrors(sensor, Now, SensorErrorType.InvalidData);
+            if (sensor.Values == null) sensor.Values = new();
+            BinarySensorReadModel newRead = new() { Value = Payload, ReadDate = Now };
+            bool WriteToDbAways = false;
+            bool WritePowerOnValueChange = false;
+            int WriteToDbInterval = 0;
+            if (sensor.Type == SensorType.FarmElectricPower)
+            {
+                WriteToDbAways = config.system.WriteFarmPowerToDbAlways;
+                WriteToDbInterval = config.system.WriteFarmPowerToDbInterval;
+                WritePowerOnValueChange = config.system.WriteFarmPowerOnValueChange;
+            }
+            if (sensor.Type == SensorType.PoultryMainElectricPower)
+            {
+                WriteToDbAways = config.system.WriteMainPowerToDbAlways;
+                WriteToDbInterval = config.system.WriteMainPowerToDbInterval;
+                WritePowerOnValueChange = config.system.WriteMainPowerOnValueChange;
+
+            }
+            if (sensor.Type == SensorType.PoultryBackupElectricPower)
+            {
+                WriteToDbAways = config.system.WriteBackupPowerToDbAlways;
+                WriteToDbInterval = config.system.WriteBackupPowerToDbInterval;
+                WritePowerOnValueChange = config.system.WriteBackupPowerOnValueChange;
+            }
+            if ((sensor.IsWatched || WriteToDbAways) && (sensor.Values.Count == 0 || sensor.LastSavedRead == null || (WritePowerOnValueChange && sensor.LastSavedRead.Value != Payload) || sensor.LastSavedRead.ReadDate.IsElapsed(WriteToDbInterval))) //Writable to db.
+            {
+                var newId = await DbProcessor.WriteSensorValueToDbAsync(sensor, (double)Payload, Now);
+                if (newId > 0)
+                {
+                    newRead.IsSavedToDb = true;
+                    newRead.Id = newId;
+                }
+            }
+            if (sensor.Values.Count >= config.system.MaxSensorReadCount) sensor.Values.RemoveOldestNotSaved(config.VerboseMode);
+            sensor.Values.Add(newRead);
+
+            if (sensor.IsInPeriod)
+            {
+                if (sensor.Type == SensorType.FarmElectricPower)
+                {
+                    if (newRead.Value == BinarySensorValueType.Off)
+                    {
+                        if (config.VerboseMode) Log.Warning($"{FarmInPeriodErrorType.NoPower} detected in one of farms. sensor ID: {sensor.Id}");
+                        var farm = FindFarmBySensorId(sensor.Id);
+                        if (farm == null) Log.Error($"Farm for the indoor sensor not detected. Sensor ID: {sensor.Id} (System Error)");
+                        else
+                        {
+                            if (config.VerboseMode) Log.Warning($"{FarmInPeriodErrorType.NoPower} detected in farm ID: {farm.Id}, Name: {farm.Name}. sensor ID: {sensor.Id}");
+                            var newErr = GenerateFarmError(sensor, FarmInPeriodErrorType.NoPower, Now, farm.Period?.Id ?? 0, $"{FarmInPeriodErrorType.NoPower} on: {newRead.ReadDate}, Detected by: {sensor.Type}");
+                            if (farm.InPeriodErrors == null) farm.InPeriodErrors = new();
+                            if (farm.InPeriodErrors.AddError(newErr, FarmInPeriodErrorType.NoPower, config.system.MaxFarmErrorCount))
+                            {
+                                var newId = await DbProcessor.WriteFarmErrorToDbAsync(newErr, Now);
+                                if (newId > 0) newErr.Id = newId;
+                            }
+                        }
+                    }
+                    else if (newRead.Value == BinarySensorValueType.On)
+                    {
+                        var farm = FindFarmBySensorId(sensor.Id);
+                        if (farm != null) await EraseFarmErrors(farm, Now, FarmInPeriodErrorType.NoPower);
+                    }
+                }
+                else if (sensor.Type == SensorType.PoultryMainElectricPower)
+                {
+                    if (newRead.Value == BinarySensorValueType.Off)
+                    {
+                        if (config.VerboseMode) Log.Warning($"{PoultryInPeriodErrorType.NoMainPower} detected in poultry. sensor ID: {sensor.Id}");
+                        var newErr = GeneratePoultryError(sensor, PoultryInPeriodErrorType.NoMainPower, Now, $"{PoultryInPeriodErrorType.NoMainPower} on: {newRead.ReadDate}, Detected by: {sensor.Type}");
+                        if (Poultry.InPeriodErrors == null) Poultry.InPeriodErrors = new();
+                        if (Poultry.InPeriodErrors.AddError(newErr, config.system.MaxPoultryErrorCount))
+                        {
+                            var newId = await DbProcessor.WritePoultryErrorToDbAsync(newErr, Now);
+                            if (newId > 0) newErr.Id = newId;
+                        }
+                    }
+                    else if (newRead.Value == BinarySensorValueType.On)
+                    {
+                        await ErasePoultryErrors(Now, PoultryInPeriodErrorType.NoMainPower);
+                    }
+                }
+                else if (sensor.Type == SensorType.PoultryBackupElectricPower)
+                {
+                    if (newRead.Value == BinarySensorValueType.Off)
+                    {
+                        if (config.VerboseMode) Log.Warning($"{PoultryInPeriodErrorType.NoBackupPower} detected in poultry. sensor ID: {sensor.Id}");
+                        var newErr = GeneratePoultryError(sensor, PoultryInPeriodErrorType.NoBackupPower, Now, $"{PoultryInPeriodErrorType.NoBackupPower} on: {newRead.ReadDate}, Detected by: {sensor.Type}");
+                        if (Poultry.InPeriodErrors == null) Poultry.InPeriodErrors = new();
+                        if (Poultry.InPeriodErrors.AddError(newErr, config.system.MaxPoultryErrorCount))
+                        {
+                            var newId = await DbProcessor.WritePoultryErrorToDbAsync(newErr, Now);
+                            if (newId > 0) newErr.Id = newId;
+                        }
+                    }
+                    else if (newRead.Value == BinarySensorValueType.On)
+                    {
+                        await ErasePoultryErrors(Now, PoultryInPeriodErrorType.NoBackupPower);
+                    }
+                }
+            }
+
+            if (config.VerboseMode) Log.Information($"Binary sensor value done processing: {sensor.LastRead.ReadDate}, : {sensor.LastRead.Value}, Count: {sensor.Values.Count}");
+        }
+        #endregion
         return 0;
     }
 

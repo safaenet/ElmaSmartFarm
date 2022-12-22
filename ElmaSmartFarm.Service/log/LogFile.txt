@@ -7783,3 +7783,21 @@ Error Number:208,State:1,Class:16
 2022-12-22 11:38:34.307 +03:30 [INF] Deactivating alarm. Alarm type: PoultryLight, Alarm location ID: 0, Error: Not Alive since: 12/16/2022 3:30:50 PM, Thread: 6
 2022-12-22 11:38:34.320 +03:30 [INF] Writing alarm trigger log in database. Sensor ID: 1, Action: Off
 2022-12-22 11:38:34.371 +03:30 [INF] Writing alarm trigger log in database. Sensor ID: 2, Action: Off
+2022-12-22 15:48:48.018 +03:30 [INF] Starting up the Service...
+2022-12-22 15:48:49.276 +03:30 [INF] Loading poultry...
+2022-12-22 15:48:50.839 +03:30 [INF] Poultry loaded. (1563.0098 ms)
+2022-12-22 15:48:50.850 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 6a3399d1-f0da-4d8d-8873-ec8ee644cf0d.
+2022-12-22 15:48:50.921 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 6a3399d1-f0da-4d8d-8873-ec8ee644cf0d.
+2022-12-22 15:48:50.938 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2022-12-22 15:48:50.971 +03:30 [INF] Writing sensor watch log in database. Sensor ID: 1, Action: Unwatch
+2022-12-22 15:48:51.137 +03:30 [WRN] Sensor with ID 1 has been unwatched due to persisting error. Error Type: NotAlive, Error happened date: 12/16/2022 3:31:35 PM
+2022-12-22 15:48:51.147 +03:30 [INF] Activating farm alarm. Count: 1, Level: 2
+2022-12-22 15:48:51.148 +03:30 [INF] Activating poultry light alarm. Count: 1, Level: 2
+2022-12-22 15:48:51.152 +03:30 [INF] Activating/Reactivating alarm. Alarm type: PoultryLight, Alarm location ID: 0, Error: Not Alive since: 12/16/2022 3:30:50 PM, Thread: 21
+2022-12-22 15:48:51.152 +03:30 [INF] Activating/Reactivating alarm. Alarm type: FarmLight, Alarm location ID: 1, Error: Not Alive since: 12/16/2022 3:30:50 PM, Thread: 6
+2022-12-22 15:48:51.155 +03:30 [INF] Writing alarm trigger log in database. Sensor ID: 2, Action: On
+2022-12-22 15:48:51.155 +03:30 [INF] Writing alarm trigger log in database. Sensor ID: 1, Action: On
+2022-12-22 15:48:56.153 +03:30 [INF] Deactivating alarm. Alarm type: PoultryLight, Alarm location ID: 0, Error: Not Alive since: 12/16/2022 3:30:50 PM, Thread: 23
+2022-12-22 15:48:56.153 +03:30 [INF] Deactivating alarm. Alarm type: FarmLight, Alarm location ID: 1, Error: Not Alive since: 12/16/2022 3:30:50 PM, Thread: 6
+2022-12-22 15:48:56.166 +03:30 [INF] Writing alarm trigger log in database. Sensor ID: 2, Action: Off
+2022-12-22 15:48:56.267 +03:30 [INF] Writing alarm trigger log in database. Sensor ID: 1, Action: Off
