@@ -18,6 +18,6 @@ public interface IDbProcessor
     Task<bool> EraseFarmErrorFromDbAsync(int farmId, DateTime eraseDate, params FarmInPeriodErrorType[] types);
     Task<bool> ErasePoultryErrorFromDbAsync(DateTime eraseDate, params PoultryInPeriodErrorType[] types);
     Task<int> WritePoultryErrorToDbAsync(PoultryInPeriodErrorModel error, DateTime now);
-    Task<int> WriteSensorWatchLogToDbAsync(int sensorId, int locationId, SensorSection section, SensorWatchAction action, DateTime now);
+    Task<int> WriteSensorWatchLogToDbAsync(int sensorId, int locationId, SensorSection section, SensorWatchAction action, DateTime now, string descriptions = "");
     Task<int> WriteAlarmTriggerLogToDbAsync(int alarmId, int locationId, AlarmTriggerType action, DateTime now);
 }

@@ -78,7 +78,7 @@ public class MsSqlDbProcessor : IDbProcessor
     private readonly string ErasePoultryErrorCmd = @"UPDATE PoultryErrorLogs SET DateErased = @DateErased WHERE DateErased IS NULL AND ErrorType IN {0};";
     private readonly string LoadAlarmsQuery = @"SELECT * FROM AlarmDevices;";
     private readonly string WriteSensorWatchLogCmd = @"DECLARE @newId int; SET @newId = (SELECT ISNULL(MAX([Id]), 0) FROM [SensorWatchLogs]) + 1;
-            INSERT INTO SensorWatchLogs ([Id], SensorId, LocationId, Section, Action, DateHappened) VALUES (@newId, @SensorId, @LocationId, @Section, @Action, @DateHappened); SELECT @Id = @newId;";
+            INSERT INTO SensorWatchLogs ([Id], SensorId, LocationId, Section, Action, DateHappened, Descriptions) VALUES (@newId, @SensorId, @LocationId, @Section, @Action, @DateHappened, @Descriptions); SELECT @Id = @newId;";
     private readonly string WriteAlarmTriggerLogCmd = @"DECLARE @newId int; SET @newId = (SELECT ISNULL(MAX([Id]), 0) FROM [AlarmTriggerLogs]) + 1;
             INSERT INTO AlarmTriggerLogs ([Id], AlarmId, LocationId, Action, DateHappened) VALUES (@newId, @AlarmId, @LocationId, @Action, @DateHappened); SELECT @Id = @newId;";
 
@@ -280,7 +280,7 @@ public class MsSqlDbProcessor : IDbProcessor
         return false;
     }
 
-    public async Task<int> WriteSensorWatchLogToDbAsync(int sensorId, int locationId, SensorSection section, SensorWatchAction action, DateTime now)
+    public async Task<int> WriteSensorWatchLogToDbAsync(int sensorId, int locationId, SensorSection section, SensorWatchAction action, DateTime now, string descriptions = "")
     {
         try
         {
@@ -292,6 +292,7 @@ public class MsSqlDbProcessor : IDbProcessor
             dp.Add("@Section", section);
             dp.Add("@Action", action);
             dp.Add("@DateHappened", now);
+            dp.Add("@Descriptions", descriptions);
             _ = await DataAccess.SaveDataAsync(WriteSensorWatchLogCmd, dp);
             var newId = dp.Get<int>("@Id");
             if (newId == 0) Log.Error($"Error when writing sensor watch log. Sensor ID: {sensorId}, Action: {action}. (System Error)");

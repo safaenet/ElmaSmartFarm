@@ -585,7 +585,7 @@ public partial class Worker
     {
         if (SensorWatch && UnitWatch && e.DateHappened.IsElapsed(Elapse) && (SensorIsInPeriod || config.system.ObserveAlways))
         {
-            await DbProcessor.WriteSensorWatchLogToDbAsync(e.SensorId, e.LocationId, e.Section, SensorWatchAction.Unwatch, DateTime.Now);
+            await DbProcessor.WriteSensorWatchLogToDbAsync(e.SensorId, e.LocationId, e.Section, SensorWatchAction.Unwatch, DateTime.Now, e.ErrorType.ToString());
             //inform the unwatch
             Log.Warning($"Sensor with ID {e.SensorId} has been unwatched due to persisting error. Error Type: {e.ErrorType}, Error happened date: {e.DateHappened}");
             return true;
