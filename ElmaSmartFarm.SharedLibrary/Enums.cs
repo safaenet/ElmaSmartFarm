@@ -45,7 +45,7 @@ public enum SensorErrorType
 }
 
 /// <summary>
-/// Used for "Action" in database, Table: SensorWatchLogs.
+/// Used for "Action" column in database, Table: SensorWatchLogs.
 /// </summary>
 public enum SensorWatchAction
 {
@@ -92,7 +92,7 @@ public enum AlarmLevel
 }
 
 /// <summary>
-/// Used for "Action" in database, Table: AlarmTriggerLogs.
+/// Used for "Action" column in database, Table: AlarmTriggerLogs.
 /// </summary>
 public enum AlarmTriggerType
 {
