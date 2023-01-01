@@ -1,8 +1,13 @@
 using ElmaSmartFarm.DataLibraryCore.Config;
 using ElmaSmartFarm.DataLibraryCore.Interfaces;
 using ElmaSmartFarm.DataLibraryCore.SqlServer;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Serilog;
 using Serilog.Events;
+using System;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace ElmaSmartFarm.Service;
 
@@ -10,11 +15,14 @@ public class Program
 {
     public static async Task Main(string[] args)
     {
+        var folder = "log";
+        var fileName = "Logfile.txt";
+        var path = Path.Combine(folder, fileName);
         Log.Logger = new LoggerConfiguration()
             .MinimumLevel.Debug()
             .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
             .Enrich.FromLogContext()
-            .WriteTo.File(@"log\LogFile.txt")
+            .WriteTo.File(path)
             .WriteTo.Console()
             .CreateLogger();
 

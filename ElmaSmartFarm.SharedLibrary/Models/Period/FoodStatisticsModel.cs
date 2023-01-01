@@ -1,4 +1,7 @@
-﻿namespace ElmaSmartFarm.SharedLibrary.Models
+﻿using System.Collections.Generic;
+using System.Linq;
+
+namespace ElmaSmartFarm.SharedLibrary.Models
 {
     public class FoodStatisticsModel
     {

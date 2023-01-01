@@ -3,10 +3,15 @@ using ElmaSmartFarm.DataLibraryCore.Interfaces;
 using ElmaSmartFarm.SharedLibrary.Models;
 using ElmaSmartFarm.SharedLibrary.Models.Alarm;
 using ElmaSmartFarm.SharedLibrary.Models.Sensors;
+using Microsoft.Extensions.Hosting;
 using MQTTnet;
 using MQTTnet.Client;
 using Serilog;
+using System;
+using System.Collections.Generic;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace ElmaSmartFarm.Service;
 

@@ -4,6 +4,9 @@ using ElmaSmartFarm.SharedLibrary.Models.Alarm;
 using ElmaSmartFarm.SharedLibrary.Models.Sensors;
 using MQTTnet;
 using Serilog;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace ElmaSmartFarm.Service;
 

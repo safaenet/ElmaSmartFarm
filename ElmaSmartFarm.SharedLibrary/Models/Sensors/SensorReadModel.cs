@@ -1,4 +1,6 @@
-﻿namespace ElmaSmartFarm.SharedLibrary.Models.Sensors;
+﻿using System;
+
+namespace ElmaSmartFarm.SharedLibrary.Models.Sensors;
 
 public class SensorReadModel
 {

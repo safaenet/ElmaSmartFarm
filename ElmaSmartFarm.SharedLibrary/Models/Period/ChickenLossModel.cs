@@ -1,4 +1,6 @@
-﻿namespace ElmaSmartFarm.SharedLibrary.Models
+﻿using System;
+
+namespace ElmaSmartFarm.SharedLibrary.Models
 {
     public class ChickenLossModel
     {

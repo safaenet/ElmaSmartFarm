@@ -1,15 +1,26 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
+using MQTTnet;
+using MQTTnet.Client;
 using Serilog;
 using Serilog.Events;
 using Swashbuckle.AspNetCore.Filters;
+using System;
+using System.IO;
 using System.Text;
+using System.Threading;
 
+var folder = "log";
+var fileName = "Logfile.txt";
+var path = Path.Combine(folder, fileName);
 Log.Logger = new LoggerConfiguration()
                     .MinimumLevel.Debug()
                     .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
                     .Enrich.FromLogContext()
-                    .WriteTo.File(@"log\LogFile.txt")
+                    .WriteTo.File(path)
                     .CreateLogger();
 
 try
@@ -43,8 +54,17 @@ try
         };
     });
 
-    //builder.Services
-    //                .AddScoped<IUserProcessor, SqlUserProcessor>()
+    var options = new MqttClientOptionsBuilder()
+        .WithClientId(Guid.NewGuid().ToString())
+        .WithTcpServer("192.168.1.106", 1883)
+        .WithCleanSession()
+        .Build();
+    IMqttClient mqttclient = new MqttFactory().CreateMqttClient();
+    var connection = mqttclient.ConnectAsync(options, CancellationToken.None);
+    connection.Wait();
+    var res = connection.Result;
+
+    builder.Services.AddSingleton<IMqttClient>(mqttclient);
 
     builder.Services.AddControllers();
     builder.Services.AddEndpointsApiExplorer();

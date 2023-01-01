@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
     <UserSecretsId>dotnet-ElmaSmartFarm.Service-FDEBFA49-1970-454F-8FEA-AC2758D0E94E</UserSecretsId>
   </PropertyGroup>
 

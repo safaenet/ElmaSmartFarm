@@ -1,4 +1,7 @@
-﻿namespace ElmaSmartFarm.SharedLibrary.Models.Sensors
+﻿using System.Collections.Generic;
+using System.Linq;
+
+namespace ElmaSmartFarm.SharedLibrary.Models.Sensors
 {
     public class BinarySensorModel : SensorModel
     {

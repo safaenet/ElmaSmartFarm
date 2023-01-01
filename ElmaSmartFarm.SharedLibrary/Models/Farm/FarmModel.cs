@@ -1,4 +1,7 @@
-﻿namespace ElmaSmartFarm.SharedLibrary.Models;
+﻿using System.Collections.Generic;
+using System.Linq;
+
+namespace ElmaSmartFarm.SharedLibrary.Models;
 
 public class FarmModel
 {
@@ -13,9 +16,9 @@ public class FarmModel
     public BinarySensorSetModel ElectricPowers { get; set; } = new();
     public PeriodModel Period { get; set; }
     public bool IsEnabled { get; set; }
-    public bool IsInPeriod => IsEnabled && Period != null && Period.EndDate != null;
+    public bool IsInPeriod => IsEnabled && Period != null && Period.EndDate is not null;
     public List<FarmInPeriodErrorModel> InPeriodErrors { get; set; } = new();
     public bool HasSensorError => IsEnabled && ((Scalars != null && Scalars.HasError) || (Commutes != null && Commutes.HasError) || (Checkups != null && Checkups.HasError) || (Feeds != null && Feeds.HasError) || (ElectricPowers != null && ElectricPowers.HasError));
-    public bool HasPeriodError => IsInPeriod && InPeriodErrors != null && InPeriodErrors.Any(e => e.DateErased == null);
+    public bool HasPeriodError => IsInPeriod && InPeriodErrors != null && InPeriodErrors.Any(e => e.DateErased is null);
     public string Descriptions { get; set; }
 }

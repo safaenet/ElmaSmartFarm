@@ -3,6 +3,7 @@ using Serilog;
 using Serilog.Events;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Windows;
 
@@ -18,11 +19,14 @@ public class Bootstrapper : BootstrapperBase
 
     protected override void Configure()
     {
+        var folder = "log";
+        var fileName = "Logfile.txt";
+        var path = Path.Combine(folder, fileName);
         Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Debug()
                 .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
                 .Enrich.FromLogContext()
-                .WriteTo.File(@"log\LogFile.txt")
+                .WriteTo.File(path)
                 .CreateLogger();
 
         try

@@ -1,4 +1,6 @@
-﻿namespace ElmaSmartFarm.SharedLibrary.Models.Alarm;
+﻿using System;
+
+namespace ElmaSmartFarm.SharedLibrary.Models.Alarm;
 
 public class AlarmModel : AlarmBaseModel
 {

@@ -2,6 +2,9 @@
 using ElmaSmartFarm.SharedLibrary.Models;
 using ElmaSmartFarm.SharedLibrary.Models.Sensors;
 using Serilog;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace ElmaSmartFarm.Service;
 

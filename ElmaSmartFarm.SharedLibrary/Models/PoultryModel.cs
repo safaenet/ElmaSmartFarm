@@ -1,5 +1,7 @@
 ﻿using ElmaSmartFarm.SharedLibrary.Models.Alarm;
 using ElmaSmartFarm.SharedLibrary.Models.Sensors;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace ElmaSmartFarm.SharedLibrary.Models;
 

@@ -1,4 +1,8 @@
-﻿namespace ElmaSmartFarm.SharedLibrary.Models.Sensors
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace ElmaSmartFarm.SharedLibrary.Models.Sensors
 {
     public class CommuteSensorModel : SensorModel
     {

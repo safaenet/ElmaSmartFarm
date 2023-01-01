@@ -1,7 +1,10 @@
 ﻿using ElmaSmartFarm.SharedLibrary.Models;
 using ElmaSmartFarm.SharedLibrary.Models.Sensors;
 using Serilog;
+using System;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 
 namespace ElmaSmartFarm.SharedLibrary
 {
