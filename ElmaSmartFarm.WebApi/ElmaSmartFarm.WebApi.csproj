@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ElmaSmartFarm.SharedLibrary\ElmaSmartFarm.SharedLibrary.csproj" />
+    <ProjectReference Include="..\ElmaSmartFarm.DataLibraryCore\ElmaSmartFarm.DataLibraryCore.csproj" />
   </ItemGroup>
 
 </Project>
