@@ -1,4 +1,4 @@
-﻿namespace ElmaSmartFarm.SharedLibrary.Config;
+﻿namespace ElmaSmartFarm.DataLibraryCore.Config;
 
 public class Config
 {
@@ -197,7 +197,7 @@ public class System
         ScalarReadInterval = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("scalar_general:read_interval").Value ?? "30");
         WriteScalarToDbInterval = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("scalar_general:write_to_db_interval").Value ?? "30");
         WriteScalarToDbAlways = bool.Parse(SettingsDataAccess.AppConfiguration().GetSection("scalar_general:write_to_db_always").Value ?? "false");
-        ScalarNotAliveWatchTimeout= int.Parse(SettingsDataAccess.AppConfiguration().GetSection("scalar_general:not_alive_watch_timeout").Value ?? "300");
+        ScalarNotAliveWatchTimeout = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("scalar_general:not_alive_watch_timeout").Value ?? "300");
 
         FarmTempMinValue = double.Parse(SettingsDataAccess.AppConfiguration().GetSection("temperature:farm_min_value").Value ?? "20");
         FarmTempMaxValue = double.Parse(SettingsDataAccess.AppConfiguration().GetSection("temperature:farm_max_value").Value ?? "35");
@@ -209,15 +209,15 @@ public class System
         TempInvalidValueWatchTimeout = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("temperature:invalid_value_watch_timeout").Value ?? "300");
 
 
-        HumidMinValue = double.Parse(SettingsDataAccess.AppConfiguration().GetSection("humidity:min_value").Value ?? "20");
-        HumidMaxValue = double.Parse(SettingsDataAccess.AppConfiguration().GetSection("humidity:max_value").Value ?? "35");
-        HumidMinWorkingValue = double.Parse(SettingsDataAccess.AppConfiguration().GetSection("humidity:min_working_value").Value ?? "30");
-        HumidMaxWorkingValue = double.Parse(SettingsDataAccess.AppConfiguration().GetSection("humidity:max_working_value").Value ?? "60");
+        HumidMinValue = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("humidity:min_value").Value ?? "20");
+        HumidMaxValue = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("humidity:max_value").Value ?? "35");
+        HumidMinWorkingValue = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("humidity:min_working_value").Value ?? "30");
+        HumidMaxWorkingValue = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("humidity:max_working_value").Value ?? "60");
         HumidInvalidDataWatchTimeout = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("humidity:invalid_data_watch_timeout").Value ?? "300");
         HumidInvalidValueWatchTimeout = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("humidity:invalid_value_watch_timeout").Value ?? "300");
 
-        AmbientLightMinValue = double.Parse(SettingsDataAccess.AppConfiguration().GetSection("ambient_light:min_value").Value ?? "20");
-        AmbientLightMaxValue = double.Parse(SettingsDataAccess.AppConfiguration().GetSection("ambient_light:max_value").Value ?? "35");
+        AmbientLightMinValue = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("ambient_light:min_value").Value ?? "20");
+        AmbientLightMaxValue = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("ambient_light:max_value").Value ?? "35");
         AmbientLightInvalidDataWatchTimeout = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("ambient_light:invalid_data_watch_timeout").Value ?? "300");
         AmbientLightInvalidValueWatchTimeout = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("ambient_light:invalid_value_watch_timeout").Value ?? "300");
 
@@ -244,25 +244,25 @@ public class System
         WriteCheckupToDbAlways = bool.Parse(SettingsDataAccess.AppConfiguration().GetSection("checkup:write_to_db_always").Value ?? "false");
         CheckupNotAliveWatchTimeout = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("checkup:not_alive_watch_timeout").Value ?? "300");
 
-        FarmPowerReadInterval=int.Parse(SettingsDataAccess.AppConfiguration().GetSection("farm_power:read_interval").Value ?? "60");
-        WriteFarmPowerOnValueChange= bool.Parse(SettingsDataAccess.AppConfiguration().GetSection("farm_power:write_on_value_change").Value ?? "true");
-        WriteFarmPowerToDbInterval=int.Parse(SettingsDataAccess.AppConfiguration().GetSection("farm_power:write_to_db_interval").Value ?? "60");
+        FarmPowerReadInterval = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("farm_power:read_interval").Value ?? "60");
+        WriteFarmPowerOnValueChange = bool.Parse(SettingsDataAccess.AppConfiguration().GetSection("farm_power:write_on_value_change").Value ?? "true");
+        WriteFarmPowerToDbInterval = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("farm_power:write_to_db_interval").Value ?? "60");
         WriteFarmPowerToDbAlways = bool.Parse(SettingsDataAccess.AppConfiguration().GetSection("farm_power:write_to_db_always").Value ?? "false");
         FarmPowerNotAliveWatchTimeout = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("farm_power:not_alive_watch_timeout").Value ?? "300");
         FarmPowerInvalidDataWatchTimeout = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("farm_power:invalid_data_watch_timeout").Value ?? "300");
         FarmPowerNoPowerTimeout = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("farm_power:no_power_timeout").Value ?? "60");
 
-        MainPowerReadInterval=int.Parse(SettingsDataAccess.AppConfiguration().GetSection("main_power:read_interval").Value ?? "60");
-        WriteMainPowerOnValueChange= bool.Parse(SettingsDataAccess.AppConfiguration().GetSection("main_power:write_on_value_change").Value ?? "true");
-        WriteMainPowerToDbInterval=int.Parse(SettingsDataAccess.AppConfiguration().GetSection("main_power:write_to_db_interval").Value ?? "60");
+        MainPowerReadInterval = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("main_power:read_interval").Value ?? "60");
+        WriteMainPowerOnValueChange = bool.Parse(SettingsDataAccess.AppConfiguration().GetSection("main_power:write_on_value_change").Value ?? "true");
+        WriteMainPowerToDbInterval = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("main_power:write_to_db_interval").Value ?? "60");
         WriteMainPowerToDbAlways = bool.Parse(SettingsDataAccess.AppConfiguration().GetSection("main_power:write_to_db_always").Value ?? "false");
         MainPowerNotAliveWatchTimeout = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("main_power:not_alive_watch_timeout").Value ?? "300");
         MainPowerInvalidDataWatchTimeout = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("main_power:invalid_data_watch_timeout").Value ?? "300");
         MainPowerNoPowerTimeout = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("main_power:no_power_timeout").Value ?? "60");
 
-        BackupPowerReadInterval =int.Parse(SettingsDataAccess.AppConfiguration().GetSection("backup_power:read_interval").Value ?? "60");
-        WriteBackupPowerOnValueChange= bool.Parse(SettingsDataAccess.AppConfiguration().GetSection("backup_power:write_on_value_change").Value ?? "true");
-        WriteBackupPowerToDbInterval=int.Parse(SettingsDataAccess.AppConfiguration().GetSection("backup_power:write_to_db_interval").Value ?? "60");
+        BackupPowerReadInterval = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("backup_power:read_interval").Value ?? "60");
+        WriteBackupPowerOnValueChange = bool.Parse(SettingsDataAccess.AppConfiguration().GetSection("backup_power:write_on_value_change").Value ?? "true");
+        WriteBackupPowerToDbInterval = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("backup_power:write_to_db_interval").Value ?? "60");
         WriteBackupPowerToDbAlways = bool.Parse(SettingsDataAccess.AppConfiguration().GetSection("backup_power:write_to_db_always").Value ?? "false");
         BackupPowerNotAliveWatchTimeout = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("backup_power:not_alive_watch_timeout").Value ?? "300");
         BackupPowerInvalidDataWatchTimeout = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("backup_power:invalid_data_watch_timeout").Value ?? "300");
@@ -418,17 +418,17 @@ public class System
     #endregion
 
     #region Humidity Settings
-    public double HumidMinValue { get; set; }
-    public double HumidMaxValue { get; set; }
-    public double HumidMinWorkingValue { get; set; }
-    public double HumidMaxWorkingValue { get; set; }
+    public int HumidMinValue { get; set; }
+    public int HumidMaxValue { get; set; }
+    public int HumidMinWorkingValue { get; set; }
+    public int HumidMaxWorkingValue { get; set; }
     public int HumidInvalidDataWatchTimeout { get; set; }
     public int HumidInvalidValueWatchTimeout { get; set; }
     #endregion
 
     #region Ambient Light Settings
-    public double AmbientLightMinValue { get; set; }
-    public double AmbientLightMaxValue { get; set; }
+    public int AmbientLightMinValue { get; set; }
+    public int AmbientLightMaxValue { get; set; }
     public int AmbientLightInvalidDataWatchTimeout { get; set; }
     public int AmbientLightInvalidValueWatchTimeout { get; set; }
     #endregion

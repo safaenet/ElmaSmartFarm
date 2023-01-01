@@ -1,6 +1,6 @@
+using ElmaSmartFarm.DataLibraryCore.Config;
 using ElmaSmartFarm.DataLibraryCore.Interfaces;
 using ElmaSmartFarm.DataLibraryCore.SqlServer;
-using ElmaSmartFarm.SharedLibrary.Config;
 using Serilog;
 using Serilog.Events;
 

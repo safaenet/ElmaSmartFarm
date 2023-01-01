@@ -193,40 +193,35 @@ namespace ElmaSmartFarm.SharedLibrary
             return t != null && t.Value.AddSeconds(Seconds) < DateTime.Now;
         }
 
-        public static bool HasValidTemp(this ScalarSensorReadModel r, SensorType sensorType)
+        public static bool HasValidTemp(this ScalarSensorReadModel r, SensorType sensorType, double FarmTempMinValue, double FarmTempMaxValue, double OutdoorTempMinValue, double OutdoorTempMaxValue)
         {
-            Config.Config config = new();
             if (r.Temperature.HasValue == false) return false;
-            if (sensorType == SensorType.FarmScalar && (r.Temperature.Value < config.system.FarmTempMinValue || r.Temperature.Value > config.system.FarmTempMaxValue)) return false;
-            if (sensorType == SensorType.OutdoorScalar && (r.Temperature.Value < config.system.OutdoorTempMinValue || r.Temperature.Value > config.system.OutdoorTempMaxValue)) return false;
+            if (sensorType == SensorType.FarmScalar && (r.Temperature.Value < FarmTempMinValue || r.Temperature.Value > FarmTempMaxValue)) return false;
+            if (sensorType == SensorType.OutdoorScalar && (r.Temperature.Value < OutdoorTempMinValue || r.Temperature.Value > OutdoorTempMaxValue)) return false;
             return true;
         }
 
-        public static bool HasValidHumid(this ScalarSensorReadModel r)
+        public static bool HasValidHumid(this ScalarSensorReadModel r, int HumidMinValue, int HumidMaxValue)
         {
-            Config.Config config = new();
-            if (r.Humidity.HasValue == false || r.Humidity.Value < config.system.HumidMinValue || r.Humidity.Value > config.system.HumidMaxValue) return false;
+            if (r.Humidity.HasValue == false || r.Humidity.Value < HumidMinValue || r.Humidity.Value > HumidMaxValue) return false;
             return true;
         }
 
-        public static bool HasValidLight(this ScalarSensorReadModel r)
+        public static bool HasValidLight(this ScalarSensorReadModel r, int AmbientLightMinValue, int AmbientLightMaxValue)
         {
-            Config.Config config = new();
-            if (r.Light.HasValue == false || r.Light.Value < config.system.AmbientLightMinValue || r.Light.Value > config.system.AmbientLightMaxValue) return false;
+            if (r.Light.HasValue == false || r.Light.Value < AmbientLightMinValue || r.Light.Value > AmbientLightMaxValue) return false;
             return true;
         }
 
-        public static bool HasValidAmmonia(this ScalarSensorReadModel r)
+        public static bool HasValidAmmonia(this ScalarSensorReadModel r, double AmmoniaMinValue, double AmmoniaMaxValue)
         {
-            Config.Config config = new();
-            if (r.Ammonia.HasValue == false || r.Ammonia.Value < config.system.AmmoniaMinValue || r.Ammonia.Value > config.system.AmmoniaMaxValue) return false;
+            if (r.Ammonia.HasValue == false || r.Ammonia.Value < AmmoniaMinValue || r.Ammonia.Value > AmmoniaMaxValue) return false;
             return true;
         }
 
-        public static bool HasValidCo2(this ScalarSensorReadModel r)
+        public static bool HasValidCo2(this ScalarSensorReadModel r, double Co2MinValue, double Co2MaxValue)
         {
-            Config.Config config = new();
-            if (r.Co2.HasValue == false || r.Co2.Value < config.system.Co2MinValue || r.Co2.Value > config.system.Co2MaxValue) return false;
+            if (r.Co2.HasValue == false || r.Co2.Value < Co2MinValue || r.Co2.Value > Co2MaxValue) return false;
             return true;
         }
 

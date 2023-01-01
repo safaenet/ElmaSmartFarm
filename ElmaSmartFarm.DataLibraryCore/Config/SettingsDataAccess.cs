@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
+using System.IO;
 
-namespace ElmaSmartFarm.SharedLibrary.Config;
+namespace ElmaSmartFarm.DataLibraryCore.Config;
 
 public static class SettingsDataAccess
 {

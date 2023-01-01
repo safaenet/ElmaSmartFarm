@@ -1,5 +1,5 @@
+using ElmaSmartFarm.DataLibraryCore.Config;
 using ElmaSmartFarm.DataLibraryCore.Interfaces;
-using ElmaSmartFarm.SharedLibrary.Config;
 using ElmaSmartFarm.SharedLibrary.Models;
 using ElmaSmartFarm.SharedLibrary.Models.Alarm;
 using ElmaSmartFarm.SharedLibrary.Models.Sensors;

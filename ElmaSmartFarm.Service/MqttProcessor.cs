@@ -93,7 +93,7 @@ public partial class Worker
                     {
                         newRead.Temperature = value + sensor.TemperatureOffset;
                         await EraseSensorErrors(sensor, Now, SensorErrorType.InvalidTemperatureData);
-                        if (newRead.HasValidTemp(sensor.Type))
+                        if (newRead.HasValidTemp(sensor.Type, config.system.FarmTempMinValue, config.system.FarmTempMaxValue, config.system.OutdoorTempMinValue, config.system.OutdoorTempMaxValue))
                         {
                             await EraseSensorErrors(sensor, Now, SensorErrorType.InvalidTemperatureValue);
                             if (sensor.IsFarmSensor() && sensor.IsWatched && sensor.IsInPeriod)
@@ -126,7 +126,7 @@ public partial class Worker
                     {
                         newRead.Humidity = value + sensor.HumidityOffset;
                         await EraseSensorErrors(sensor, Now, SensorErrorType.InvalidHumidityData);
-                        if (newRead.HasValidHumid())
+                        if (newRead.HasValidHumid(config.system.HumidMinValue, config.system.HumidMaxValue))
                         {
                             await EraseSensorErrors(sensor, Now, SensorErrorType.InvalidHumidityValue);
                             if (sensor.IsFarmSensor() && sensor.IsWatched && sensor.IsInPeriod)
@@ -159,7 +159,7 @@ public partial class Worker
                     {
                         newRead.Light = value + sensor.LightOffset;
                         await EraseSensorErrors(sensor, Now, SensorErrorType.InvalidLightData);
-                        if (newRead.HasValidLight()) await EraseSensorErrors(sensor, Now, SensorErrorType.InvalidLightValue);
+                        if (newRead.HasValidLight(config.system.AmbientLightMinValue, config.system.AmbientLightMaxValue)) await EraseSensorErrors(sensor, Now, SensorErrorType.InvalidLightValue);
                         else
                         {
                             newRead.Light = null;
@@ -176,7 +176,7 @@ public partial class Worker
                     {
                         newRead.Ammonia = value + sensor.AmmoniaOffset;
                         await EraseSensorErrors(sensor, Now, SensorErrorType.InvalidAmmoniaData);
-                        if (newRead.HasValidAmmonia())
+                        if (newRead.HasValidAmmonia(config.system.AmmoniaMinValue, config.system.AmmoniaMaxValue))
                         {
                             await EraseSensorErrors(sensor, Now, SensorErrorType.InvalidAmmoniaValue);
                             if (sensor.IsFarmSensor() && sensor.IsWatched && sensor.IsInPeriod)
@@ -207,7 +207,7 @@ public partial class Worker
                     {
                         newRead.Co2 = value + sensor.Co2Offset;
                         await EraseSensorErrors(sensor, Now, SensorErrorType.InvalidCo2Data);
-                        if (newRead.HasValidCo2())
+                        if (newRead.HasValidCo2(config.system.Co2MinValue, config.system.Co2MaxValue))
                         {
                             await EraseSensorErrors(sensor, Now, SensorErrorType.InvalidCo2Value);
                             if (sensor.IsFarmSensor() && sensor.IsWatched && sensor.IsInPeriod)

@@ -1,7 +1,6 @@
 ﻿using Dapper;
 using ElmaSmartFarm.DataLibraryCore.Interfaces;
 using ElmaSmartFarm.SharedLibrary;
-using ElmaSmartFarm.SharedLibrary.Config;
 using ElmaSmartFarm.SharedLibrary.Models;
 using ElmaSmartFarm.SharedLibrary.Models.Alarm;
 using ElmaSmartFarm.SharedLibrary.Models.Sensors;
@@ -16,14 +15,14 @@ namespace ElmaSmartFarm.DataLibraryCore.SqlServer;
 
 public class MsSqlDbProcessor : IDbProcessor
 {
-    public MsSqlDbProcessor(IDataAccess dataAccess, Config cfg)
+    public MsSqlDbProcessor(IDataAccess dataAccess, Config.Config cfg)
     {
         DataAccess = dataAccess;
         config = cfg;
     }
 
     private readonly IDataAccess DataAccess;
-    private readonly Config config;
+    private readonly Config.Config config;
     private readonly string LoadFarmsQuery = $@"SELECT * FROM Farms;";
     private const string LoadScalarSensorsQuery = @"SELECT s.*, ssd.*, s.Section FROM dbo.ScalarSensorDetails ssd LEFT JOIN dbo.Sensors s ON ssd.Id = s.Id WHERE s.[Type] = {0};";
     private const string LoadNonScalarSensorsQuery = @"SELECT s.* FROM dbo.Sensors s WHERE s.[Type] = {0};";

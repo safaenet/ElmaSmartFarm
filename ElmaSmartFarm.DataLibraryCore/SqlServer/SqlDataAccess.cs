@@ -1,6 +1,6 @@
 ﻿using Dapper;
+using ElmaSmartFarm.DataLibraryCore.Config;
 using ElmaSmartFarm.DataLibraryCore.Interfaces;
-using ElmaSmartFarm.SharedLibrary.Config;
 using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using System.Data;
