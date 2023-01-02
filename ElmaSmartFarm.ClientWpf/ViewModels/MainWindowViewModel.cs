@@ -8,7 +8,7 @@ public class MainWindowViewModel : ViewAware
 {
     public MainWindowViewModel()
     {
-        var x = Config.GetPoultriesCount();
-        MessageBox.Show(x.ToString());
+        var x = Config.GetPoultrySettings(0);
+        MessageBox.Show(x.name);
     }
 }

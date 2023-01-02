@@ -1,4 +1,5 @@
-﻿using Serilog;
+﻿using Microsoft.Extensions.Configuration;
+using Serilog;
 
 namespace ElmaSmartFarm.ApiClient.Config;
 
@@ -27,19 +28,9 @@ public static class Config
     {
         try
         {
-            var result = new PoultrySettingsModel()
-            {
-                name = SettingsDataAccess.GetSection($"poultries:{index}:name").Value,
-                api_url = SettingsDataAccess.GetSection($"poultries:{index}:api_url").Value,
-                api_username = SettingsDataAccess.GetSection($"poultries:{index}:api_username").Value,
-                api_password = SettingsDataAccess.GetSection($"poultries:{index}:api_password").Value,
-                mqtt_address = SettingsDataAccess.GetSection($"poultries:{index}:mqtt_address").Value,
-                mqtt_port = int.Parse(SettingsDataAccess.GetSection($"poultries:{index}:mqtt_port").Value),
-                mqtt_authentication = bool.Parse(SettingsDataAccess.GetSection($"poultries:{index}:mqtt_authentication").Value),
-                mqtt_username = SettingsDataAccess.GetSection($"poultries:{index}:mqtt_username").Value,
-                mqtt_password = SettingsDataAccess.GetSection($"poultries:{index}:mqtt_password").Value
-            };
-            return result;
+            var section = SettingsDataAccess.GetSection($"poultries:{index}");
+            var settings = section.Get<PoultrySettingsModel>();
+            return settings;
         }
         catch (System.Exception ex)
         {
