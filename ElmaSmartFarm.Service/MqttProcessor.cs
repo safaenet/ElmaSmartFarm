@@ -106,9 +106,9 @@ public partial class Worker
                                 else
                                 {
                                     if (newRead.Temperature < config.system.TempMinWorkingValue)
-                                        await AddkValueRangeFarmError(farm, sensor, newRead, FarmInPeriodErrorType.LowTemperature, FarmInPeriodErrorType.HighTemperature, Now);
+                                        await AddValueRangeFarmError(farm, sensor, newRead, FarmInPeriodErrorType.LowTemperature, FarmInPeriodErrorType.HighTemperature, Now);
                                     else if (newRead.Temperature > config.system.TempMaxWorkingValue)
-                                        await AddkValueRangeFarmError(farm, sensor, newRead, FarmInPeriodErrorType.HighTemperature, FarmInPeriodErrorType.LowTemperature, Now);
+                                        await AddValueRangeFarmError(farm, sensor, newRead, FarmInPeriodErrorType.HighTemperature, FarmInPeriodErrorType.LowTemperature, Now);
                                     else if (farm != null) await EraseFarmErrors(farm, Now, FarmInPeriodErrorType.LowTemperature, FarmInPeriodErrorType.HighTemperature);
                                 }
                             }
@@ -139,9 +139,9 @@ public partial class Worker
                                 else
                                 {
                                     if (newRead.Humidity < config.system.HumidMinWorkingValue)
-                                        await AddkValueRangeFarmError(farm, sensor, newRead, FarmInPeriodErrorType.LowHumidity, FarmInPeriodErrorType.HighHumidity, Now);
+                                        await AddValueRangeFarmError(farm, sensor, newRead, FarmInPeriodErrorType.LowHumidity, FarmInPeriodErrorType.HighHumidity, Now);
                                     else if (newRead.Humidity > config.system.HumidMaxWorkingValue)
-                                        await AddkValueRangeFarmError(farm, sensor, newRead, FarmInPeriodErrorType.HighHumidity, FarmInPeriodErrorType.LowHumidity, Now);
+                                        await AddValueRangeFarmError(farm, sensor, newRead, FarmInPeriodErrorType.HighHumidity, FarmInPeriodErrorType.LowHumidity, Now);
                                     else if (farm != null) await EraseFarmErrors(farm, Now, FarmInPeriodErrorType.LowHumidity, FarmInPeriodErrorType.HighHumidity);
                                 }
                             }
@@ -189,7 +189,7 @@ public partial class Worker
                                 else
                                 {
                                     if (newRead.Ammonia > config.system.AmmoniaMaxWorkingValue)
-                                        await AddkValueRangeFarmError(farm, sensor, newRead, FarmInPeriodErrorType.HighAmmonia, null, Now);
+                                        await AddValueRangeFarmError(farm, sensor, newRead, FarmInPeriodErrorType.HighAmmonia, null, Now);
                                     else if (farm != null) await EraseFarmErrors(farm, Now, FarmInPeriodErrorType.HighAmmonia);
                                 }
                             }
@@ -220,7 +220,7 @@ public partial class Worker
                                 else
                                 {
                                     if (newRead.Co2 > config.system.AmmoniaMaxWorkingValue)
-                                        await AddkValueRangeFarmError(farm, sensor, newRead, FarmInPeriodErrorType.HighCo2, null, Now);
+                                        await AddValueRangeFarmError(farm, sensor, newRead, FarmInPeriodErrorType.HighCo2, null, Now);
                                     else if (farm != null) await EraseFarmErrors(farm, Now, FarmInPeriodErrorType.HighCo2);
                                 }
                             }
@@ -454,7 +454,7 @@ public partial class Worker
         return 0;
     }
 
-    private async Task AddkValueRangeFarmError(FarmModel farm, SensorModel sensor, ScalarSensorReadModel newRead, FarmInPeriodErrorType ErrorToAdd, FarmInPeriodErrorType? ErrorToErase, DateTime Now)
+    private async Task AddValueRangeFarmError(FarmModel farm, SensorModel sensor, ScalarSensorReadModel newRead, FarmInPeriodErrorType ErrorToAdd, FarmInPeriodErrorType? ErrorToErase, DateTime Now)
     {
         await AddFarmError(farm, sensor, newRead.ReadDate, ErrorToAdd, Now);
         if (ErrorToErase.HasValue) await EraseFarmErrors(farm, Now, ErrorToErase.Value);
@@ -623,30 +623,30 @@ public partial class Worker
     /// <summary>
     /// Looks for the sensors in all sensors of the Poultries.
     /// </summary>
-    private T? FindSensorsById<T>(int id) where T : SensorModel
+    private T FindSensorsById<T>(int id) where T : SensorModel
     {
         if (Poultry == null) return null;
-        T? sensor = null;
+        T sensor = null;
         if (typeof(T) == typeof(ScalarSensorModel))
         {
             var x = (from s in Poultry.Farms?.SelectMany(f => f.Scalars.Sensors) where s != null && s.Id == id select s).FirstOrDefault();
             if (x == null) x = Poultry.Scalar?.Id == id ? Poultry.Scalar : null;
-            if (x != null) sensor = (T?)Convert.ChangeType(x, typeof(T));
+            if (x != null) sensor = (T)Convert.ChangeType(x, typeof(T));
         }
         else if (typeof(T) == typeof(CommuteSensorModel))
-            sensor = (T?)Convert.ChangeType((from s in Poultry.Farms.SelectMany(f => f.Commutes.Sensors) where s != null && s.Id == id select s).FirstOrDefault(), typeof(T));
+            sensor = (T)Convert.ChangeType((from s in Poultry.Farms.SelectMany(f => f.Commutes.Sensors) where s != null && s.Id == id select s).FirstOrDefault(), typeof(T));
         else if (typeof(T) == typeof(PushButtonSensorModel))
         {
             var x = (from s in Poultry.Farms?.SelectMany(f => f.Checkups.Sensors) where s != null && s.Id == id select s).FirstOrDefault();
             if (x == null) x = (from s in Poultry.Farms?.SelectMany(f => f.Feeds.Sensors) where s != null && s.Id == id select s).FirstOrDefault();
-            if (x != null) sensor = (T?)Convert.ChangeType(x, typeof(T));
+            if (x != null) sensor = (T)Convert.ChangeType(x, typeof(T));
         }
         else if (typeof(T) == typeof(BinarySensorModel))
         {
             var x = (from s in Poultry.Farms?.SelectMany(f => f.ElectricPowers.Sensors) where s != null && s.Id == id select s).FirstOrDefault();
             if (x == null) x = Poultry.MainElectricPower?.Id == id ? Poultry.MainElectricPower : null;
             if (x == null) x = Poultry.BackupElectricPower?.Id == id ? Poultry.BackupElectricPower : null;
-            if (x != null) sensor = (T?)Convert.ChangeType(x, typeof(T));
+            if (x != null) sensor = (T)Convert.ChangeType(x, typeof(T));
         }
         //else if (typeof(T) == typeof(SensorModel))
         //{
@@ -676,10 +676,10 @@ public partial class Worker
     /// <summary>
     /// Looks for the sensors in all sensors of the Poultries.
     /// </summary>
-    private SensorModel? FindSensorsById(int id)
+    private SensorModel FindSensorsById(int id)
     {
         if (Poultry == null) return null;
-        SensorModel? sensor = null;
+        SensorModel sensor = null;
         sensor = (from s in Poultry.Farms.SelectMany(f => f.Scalars.Sensors) where s != null && s.Id == id select s).FirstOrDefault();
         if (sensor == null) sensor = Poultry.Scalar.Id == id ? Poultry.Scalar : null;
         if (sensor == null) sensor = (from s in Poultry.Farms.SelectMany(f => f.Commutes.Sensors) where s != null && s.Id == id select s).FirstOrDefault();

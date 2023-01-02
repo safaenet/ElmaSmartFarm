@@ -12,7 +12,7 @@ namespace ElmaSmartFarm.Service;
 
 public partial class Worker
 {
-    private async Task<string?> ObservePoultryAsync()
+    private async Task<string> ObservePoultryAsync()
     {
         var Now = DateTime.Now;
 
@@ -556,7 +556,7 @@ public partial class Worker
         return a;
     }
 
-    private FarmModel? FindFarmBySensorId(int Id)
+    private FarmModel FindFarmBySensorId(int Id)
     {
         return (from f in Poultry.Farms where Poultry.Farms.Select(pf => pf.Scalars).SelectMany(sc => sc.ActiveSensors).Any(As => As.Id == Id) select f).FirstOrDefault();
     }
