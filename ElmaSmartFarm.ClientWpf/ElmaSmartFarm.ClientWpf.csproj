@@ -10,22 +10,11 @@
   <ItemGroup>
     <PackageReference Include="Caliburn.Micro" Version="4.0.173" />
     <PackageReference Include="Caliburn.Micro.Core" Version="4.0.173" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="7.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Options" Version="7.0.0" />
     <PackageReference Include="Microsoft.VisualStudio.Utilities" Version="17.4.33103.184" />
-    <PackageReference Include="MQTTnet" Version="4.1.4.563" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
-    <PackageReference Include="System.Configuration.ConfigurationManager" Version="7.0.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ViewModels\" />
-    <Folder Include="Views\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\ElmaSmartFarm.SharedLibrary\ElmaSmartFarm.SharedLibrary.csproj" />
+    <ProjectReference Include="..\ElmaSmartFarm.ApiClient\ElmaSmartFarm.ApiClient.csproj" />
   </ItemGroup>
 
 </Project>

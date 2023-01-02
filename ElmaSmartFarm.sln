@@ -19,7 +19,9 @@ Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "ElmaSmartFarm.Database", "E
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ElmaSmartFarm.WebApi", "ElmaSmartFarm.WebApi\ElmaSmartFarm.WebApi.csproj", "{BF3D0E80-D6E9-4F6F-BE73-5A1B0F66BBC9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElmaSmartFarm.ClientWpf", "ElmaSmartFarm.ClientWpf\ElmaSmartFarm.ClientWpf.csproj", "{8A901748-389B-4F3D-B6A1-7E201BCE3C33}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ElmaSmartFarm.ClientWpf", "ElmaSmartFarm.ClientWpf\ElmaSmartFarm.ClientWpf.csproj", "{8A901748-389B-4F3D-B6A1-7E201BCE3C33}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElmaSmartFarm.ApiClient", "ElmaSmartFarm.ApiClient\ElmaSmartFarm.ApiClient.csproj", "{93817DF9-0532-4628-A067-DA6ECB1B56AD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,6 +55,10 @@ Global
 		{8A901748-389B-4F3D-B6A1-7E201BCE3C33}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8A901748-389B-4F3D-B6A1-7E201BCE3C33}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8A901748-389B-4F3D-B6A1-7E201BCE3C33}.Release|Any CPU.Build.0 = Release|Any CPU
+		{93817DF9-0532-4628-A067-DA6ECB1B56AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93817DF9-0532-4628-A067-DA6ECB1B56AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93817DF9-0532-4628-A067-DA6ECB1B56AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93817DF9-0532-4628-A067-DA6ECB1B56AD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
