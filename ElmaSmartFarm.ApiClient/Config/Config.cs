@@ -5,9 +5,9 @@ namespace ElmaSmartFarm.ApiClient.Config;
 
 public static class Config
 {
-    public static bool verbose_mode => SettingsDataAccess.GetValue<bool>("verbose_mode");
-    public static int mqtt_retry_interval => SettingsDataAccess.GetValue<int>("mqtt_retry_interval");
-    public static int mqtt_retry_times => SettingsDataAccess.GetValue<int>("mqtt_retry_times");
+    public static bool verbose_mode => SettingsDataAccess.GetValue<bool>(nameof(verbose_mode));
+    public static int mqtt_retry_interval => SettingsDataAccess.GetValue<int>(nameof(mqtt_retry_interval));
+    public static int mqtt_retry_times => SettingsDataAccess.GetValue<int>(nameof(mqtt_retry_times));
 
     public static int GetPoultriesCount()
     {
