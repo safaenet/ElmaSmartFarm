@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using ElmaSmartFarm.ApiClient.Models;
+using Microsoft.Extensions.Configuration;
 using Serilog;
 
 namespace ElmaSmartFarm.ApiClient.Config;

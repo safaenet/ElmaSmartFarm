@@ -6,10 +6,8 @@ namespace ElmaSmartFarm.ApiClient.Config;
 
 public static class SettingsDataAccess
 {
-    const string relativePath = @"../ElmaSmartFarm.ApiClient/Config";
     public static IConfiguration AppConfiguration()
     {
-        var absolutePath = Path.GetFullPath(relativePath);
         IConfiguration conf;
         var builder = new ConfigurationBuilder()
             .SetBasePath(Environment.CurrentDirectory)

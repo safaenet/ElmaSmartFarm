@@ -1,4 +1,4 @@
-﻿namespace ElmaSmartFarm.ApiClient.Config;
+﻿namespace ElmaSmartFarm.ApiClient.Models;
 
 public class PoultrySettingsModel
 {
