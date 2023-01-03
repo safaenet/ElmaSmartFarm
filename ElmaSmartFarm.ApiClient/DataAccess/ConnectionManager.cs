@@ -41,37 +41,20 @@ public class ConnectionManager
         return result;
     }
 
-    public static async Task<bool> ConnectToMqttBroker(IMqttClient mqttClient, MqttClientOptions options)
+    public static IMqttClient CreateMqttClient(Func<MqttApplicationMessageReceivedEventArgs, Task> received, Func<MqttClientConnectingEventArgs, Task> connecting, Func<MqttClientConnectedEventArgs, Task> connected, Func<MqttClientDisconnectedEventArgs, Task> disconnected)
     {
-        if (mqttClient.IsConnected) return true;
-        try
-        {
-            _ = await mqttClient.ConnectAsync(options);
-            return mqttClient.IsConnected;
-        }
-        catch(Exception ex)
-        {
-            Log.Error(ex, "Error in ConnectionManager");
-        }
-        return false;
-    }
-
-    public static async Task<IMqttClient> CreateMqttClient(int index)
-    {
-        MqttFactory mqttFactory =new();
+        MqttFactory mqttFactory = new();
         IMqttClient client;
         client = mqttFactory.CreateMqttClient();
-        var settings = Config.Config.GetPoultrySettings(index);
-        var options = BuildMqttClientOptions(settings.mqtt_address, settings.mqtt_port, settings.mqtt_authentication, settings.mqtt_username, settings.mqtt_password);
-        var result = await ConnectToMqttBroker(client, options);
-        if (result) return client;
-        Log.Error("Couldn't create Mqtt Client");
-        return null;
+        client.ApplicationMessageReceivedAsync += received;
+        client.ConnectingAsync += connecting;
+        client.ConnectedAsync += connected;
+        client.DisconnectedAsync += disconnected;
+        return client;
     }
 
-    public static HttpClient CreateHttpClient(int index)
+    public static HttpClient CreateHttpClient(PoultrySettingsModel settings)
     {
-        var settings = Config.Config.GetPoultrySettings(index);
         HttpClient client = new();
         client.BaseAddress = new Uri(settings.api_url);
         client.DefaultRequestHeaders.Accept.Clear();
