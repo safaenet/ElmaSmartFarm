@@ -1,4 +1,5 @@
 ﻿using ElmaSmartFarm.ApiClient.Models;
+using ElmaSmartFarm.SharedLibrary.Models;
 using MQTTnet;
 using MQTTnet.Client;
 using Serilog;
@@ -63,74 +64,78 @@ public class ConnectionManager
         return client;
     }
 
-    public static async Task<HttpResponseModel<T>> GetAsync<T>(HttpClient httpClient, string Key) where T : class
+    public static async Task<T> GetAsync<T>(HttpClient httpClient, string Key) where T : class
     {
         try
         {
             var Url = $"{Key}";
             var response = await httpClient.GetAsync(Url);
-            HttpResponseModel<T> result = new();
-            result.StatusCode = (int)response.StatusCode;
-            result.Payload = response.IsSuccessStatusCode ? await response.Content.ReadAsAsync<T>() : null;
-            return result;
+            return await ReadResponse<T>(response);
         }
         catch (Exception ex)
         {
             Log.Error(ex, "Error in ConnectionManager");
         }
-        return new() { StatusCode = 400 };
+        return null;
     }
 
-    public static async Task<HttpResponseModel<U>> PostAsync<T, U>(HttpClient httpClient, string Key, T model) where U : class
+    public static async Task<U> PostAsync<T, U>(HttpClient httpClient, string Key, T model) where U : class
     {
         try
         {
             var Url = $"{Key}";
             var response = await httpClient.PostAsJsonAsync(Url, model);
-            HttpResponseModel<U> result = new();
-            result.StatusCode = (int)response.StatusCode;
-            result.Payload = response.IsSuccessStatusCode ? await response.Content.ReadAsAsync<U>() : null;
-            return result;
+            return await ReadResponse<U>(response);
         }
         catch (Exception ex)
         {
             Log.Error(ex, "Error in ConnectionManager");
         }
-        return new() { StatusCode = 400 };
+        return null;
     }
 
-    public static async Task<HttpResponseModel<U>> PutAsync<T, U>(HttpClient httpClient, string Key, T model) where U : class
+    public static async Task<U> PutAsync<T, U>(HttpClient httpClient, string Key, T model) where U : class
     {
         try
         {
             var Url = $"{Key}";
             var response = await httpClient.PutAsJsonAsync(Url, model);
-            HttpResponseModel<U> result = new();
-            result.StatusCode = (int)response.StatusCode;
-            result.Payload = response.IsSuccessStatusCode ? await response.Content.ReadAsAsync<U>() : null;
-            return result;
+            return await ReadResponse<U>(response);
         }
         catch (Exception ex)
         {
             Log.Error(ex, "Error in ConnectionManager");
         }
-        return new() { StatusCode = 400 };
+        return null;
     }
 
-    public static async Task<HttpResponseBaseModel> DeleteAsync(HttpClient httpClient, string Key)
+    public static async Task<bool> DeleteAsync(HttpClient httpClient, string Key)
     {
         try
         {
             var Url = $"{Key}";
             var response = await httpClient.DeleteAsync(Url);
-            HttpResponseBaseModel result = new();
-            result.StatusCode= (int)response.StatusCode;
-            return result;
+            if (!response.IsSuccessStatusCode)
+            {
+                Log.Error($"Request returned with status code {(int)response.StatusCode}:{response.StatusCode}");
+                return false;
+            }
+            return true;
         }
         catch (Exception ex)
         {
             Log.Error(ex, "Error in ConnectionManager");
         }
-        return new() { StatusCode = 400 };
+        return false;
+    }
+
+    private static async Task<T> ReadResponse<T>(HttpResponseMessage response)
+    {
+        if (!response.IsSuccessStatusCode)
+        {
+            Log.Error($"Request returned with status code {(int)response.StatusCode}:{response.StatusCode}");
+            return default;
+        }
+        return await response.Content.ReadAsAsync<T>();
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace ElmaSmartFarm.ApiClient.Models;
+﻿namespace ElmaSmartFarm.SharedLibrary.Models;
 
 public class HttpResponseBaseModel
 {

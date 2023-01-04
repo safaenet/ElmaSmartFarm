@@ -17,13 +17,14 @@ public class PoultryManager
         GetMqttConnectionSettings().ConfigureAwait(true);
     }
 
-    private int Index;
+    private readonly int Index;
     private PoultrySettingsModel PoultrySettings;
     private MqttConnectionSettingsModel MqttConnectionSettings;
     private MqttClientOptions mqttOptions;
     private HttpClient httpClient;
     private IMqttClient mqttClient;
     private bool IsRunning;
+    private bool IsInitialized;
     public PoultryModel Poultry { get; set; }
 
     private async Task MqttClient_ApplicationMessageReceivedAsync(MqttApplicationMessageReceivedEventArgs arg)

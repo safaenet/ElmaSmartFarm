@@ -9,12 +9,13 @@ public class HttpProcessor
 {
     public static async Task<MqttConnectionSettingsModel> GetMqttConnectionSettings(HttpClient client)
     {
-        var mqtt = await ConnectionManager.GetAsync<MqttConnectionSettingsModel>(client, "Mqtt/GetMqttSettings");
-        if (mqtt.IsSuccess) return mqtt.Payload;
-        else
-        {
-            Log.Error("Request to get mqtt settings returned with error.");
-        }
-        return null;
+        var response = await ConnectionManager.GetAsync<MqttConnectionSettingsModel>(client, "Mqtt/GetMqttSettings");
+        return response;
+    }
+
+    public static async Task<PoultryModel> RequestPoultry(HttpClient client)
+    {
+        var response = await ConnectionManager.GetAsync<PoultryModel>(client, "Poultry/Instance");
+        return response;
     }
 }
