@@ -76,7 +76,7 @@ public class ConnectionManager
         }
         catch (Exception ex)
         {
-            Log.Error(ex, "Error in ConnectionManager");
+            Log.Error(ex, $"Error in {System.Reflection.MethodBase.GetCurrentMethod().DeclaringType}");
         }
         return;
     }
@@ -100,7 +100,7 @@ public class ConnectionManager
         }
         catch (Exception ex)
         {
-            Log.Error(ex, "Error in ConnectionManager");
+            Log.Error(ex, $"Error in {System.Reflection.MethodBase.GetCurrentMethod().DeclaringType}");
         }
         return;
     }
@@ -118,17 +118,17 @@ public class ConnectionManager
                 var connectResult = await TryReconnectToMqttAsync(mqttClient, mqttClient.Options);
                 if (!connectResult)
                 {
-                    Log.Error("Send mqtt message failed because client is not connected to broker.");
+                    Log.Error($"Send mqtt message failed because client is not connected to broker. Topic: {Topic}, Payload: {Payload}, QoS: {QoS}");
                     return false;
                 }
             }
             result = await mqttClient.PublishAsync(message);
-            if (!result.IsSuccess) Log.Warning("Mqtt message failed to be sent.");
+            if (!result.IsSuccess) Log.Warning($"Mqtt message failed to be sent. Topic: {Topic}, Payload: {Payload}, QoS: {QoS}");
             return result.IsSuccess;
         }
         catch (Exception ex)
         {
-            Log.Error(ex, "Error in MqttProcessor");
+            Log.Error(ex, $"Error in {System.Reflection.MethodBase.GetCurrentMethod().DeclaringType}");
         }
         return false;
     }
@@ -153,7 +153,7 @@ public class ConnectionManager
         }
         catch (Exception ex)
         {
-            Log.Error(ex, "Error in ConnectionManager");
+            Log.Error(ex, $"Error in {System.Reflection.MethodBase.GetCurrentMethod().DeclaringType}");
         }
         return null;
     }
@@ -168,7 +168,7 @@ public class ConnectionManager
         }
         catch (Exception ex)
         {
-            Log.Error(ex, "Error in ConnectionManager");
+            Log.Error(ex, $"Error in {System.Reflection.MethodBase.GetCurrentMethod().DeclaringType}");
         }
         return null;
     }
@@ -183,7 +183,7 @@ public class ConnectionManager
         }
         catch (Exception ex)
         {
-            Log.Error(ex, "Error in ConnectionManager");
+            Log.Error(ex, $"Error in {System.Reflection.MethodBase.GetCurrentMethod().DeclaringType}");
         }
         return null;
     }
@@ -203,7 +203,7 @@ public class ConnectionManager
         }
         catch (Exception ex)
         {
-            Log.Error(ex, "Error in ConnectionManager");
+            Log.Error(ex, $"Error in {System.Reflection.MethodBase.GetCurrentMethod().DeclaringType}");
         }
         return false;
     }

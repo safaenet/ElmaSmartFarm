@@ -16,7 +16,7 @@ public class HttpProcessor
         }
         catch (Exception ex)
         {
-            Log.Error(ex, "Error in HttpProcessor");
+            Log.Error(ex, $"Error in {System.Reflection.MethodBase.GetCurrentMethod().DeclaringType}");
         }
         return null;
     }
@@ -35,7 +35,7 @@ public class HttpProcessor
         }
         catch (Exception ex)
         {
-            Log.Error(ex, "Error in HttpProcessor");
+            Log.Error(ex, $"Error in {System.Reflection.MethodBase.GetCurrentMethod().DeclaringType}");
         }
         return null;
     }

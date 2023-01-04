@@ -1,7 +1,6 @@
 using ElmaSmartFarm.DataLibraryCore.Config;
 using ElmaSmartFarm.DataLibraryCore.Interfaces;
 using ElmaSmartFarm.SharedLibrary.Models;
-using ElmaSmartFarm.SharedLibrary.Models.Alarm;
 using ElmaSmartFarm.SharedLibrary.Models.Sensors;
 using Microsoft.Extensions.Hosting;
 using MQTTnet;
@@ -26,7 +25,6 @@ public partial class Worker : BackgroundService
 
     private Config config;
     private readonly IDbProcessor DbProcessor;
-    private MqttFactory mqttFactory;
     private IMqttClient mqttClient;
     private MqttClientOptions options;
     private PoultryModel Poultry;
@@ -40,7 +38,7 @@ public partial class Worker : BackgroundService
     public override async Task<Task> StartAsync(CancellationToken cancellationToken)
     {
         config = new();
-        mqttFactory = new();
+        MqttFactory mqttFactory = new();
         mqttClient = mqttFactory.CreateMqttClient();
         options = new MqttClientOptionsBuilder()
                .WithClientId(Guid.NewGuid().ToString())

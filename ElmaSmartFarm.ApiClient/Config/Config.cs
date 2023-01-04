@@ -35,7 +35,7 @@ public static class Config
         }
         catch (System.Exception ex)
         {
-            Log.Error(ex, "Error in Config");
+            Log.Error(ex, $"Error in {System.Reflection.MethodBase.GetCurrentMethod().DeclaringType}");
         }
         return null;
     }

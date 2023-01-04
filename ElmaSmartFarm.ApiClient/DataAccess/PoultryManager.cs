@@ -57,26 +57,32 @@ public class PoultryManager
     public async Task ConnectAsync()
     {
         httpClient = ConnectionManager.CreateHttpClient(PoultrySettings);
-        var poultry = await HttpProcessor.RequestPoultry(httpClient);
-        if (poultry == null)
-        {
-            await DisconnectAsync();
-            IsInitialized = false;
-            return;
-        }
-        Poultry = poultry;
+        //var poultry = await HttpProcessor.RequestPoultry(httpClient);
+        //if (poultry == null)
+        //{
+        //    await DisconnectAsync();
+        //    IsInitialized = false;
+        //    return;
+        //}
+        //Poultry = poultry;
         mqttClient = ConnectionManager.CreateMqttClient(MqttClient_ApplicationMessageReceivedAsync, MqttClient_ConnectingAsync, MqttClient_ConnectedAsync, MqttClient_DisconnectedAsync);
         if (!await ConnectionManager.TryReconnectToMqttAsync(mqttClient, mqttOptions))
         {
             await DisconnectAsync();
+            IsRunning = false;
             IsInitialized = false;
             Poultry = null;
             Log.Error("Failed to connect to server.");
             return;
         }
         await ConnectionManager.SubscribeToMqttTopic(mqttClient, MqttConnectionSettings.mqtt_subscribe_topic);
-        IsInitialized = true;
-        IsRunning = true;
+        if (!await ConnectionManager.SendMqttMessage(mqttClient, MqttConnectionSettings.mqtt_request_poultry_topic, "1"))
+        {
+            Log.Error($"Failed to publish mqtt message. Topic: {MqttConnectionSettings.mqtt_request_poultry_topic}, Payload: 1");
+            IsRunning = false;
+            IsInitialized = false;
+        }
+        else IsRunning = true;
     }
 
     public async Task DisconnectAsync()
