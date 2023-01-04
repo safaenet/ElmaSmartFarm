@@ -57,6 +57,82 @@ public class ConnectionManager
         return false;
     }
 
+    public static async Task SubscribeToMqttTopic(IMqttClient mqttClient, string topic)
+    {
+        try
+        {
+            if (!mqttClient.IsConnected)
+            {
+                var connectResult = await TryReconnectToMqttAsync(mqttClient, mqttClient.Options);
+                if (!connectResult)
+                {
+                    Log.Error("Subscribe to mqtt topic failed because client is not connected to broker.");
+                    return;
+                }
+            }
+            var mqttTopicFilterBuilder = new MqttTopicFilterBuilder().WithTopic(topic).Build();
+            _ = await mqttClient.SubscribeAsync(mqttTopicFilterBuilder);
+            Log.Information("Subscribed to MQTT topic {topic}.", topic);
+        }
+        catch (Exception ex)
+        {
+            Log.Error(ex, "Error in ConnectionManager");
+        }
+        return;
+    }
+
+    public static async Task UnsubscribeFromMqttTopic(IMqttClient mqttClient, string topic)
+    {
+        try
+        {
+            if (!mqttClient.IsConnected)
+            {
+                var connectResult = await TryReconnectToMqttAsync(mqttClient, mqttClient.Options);
+                if (!connectResult)
+                {
+                    Log.Error("Unsubscribe from mqtt topic failed because client is not connected to broker.");
+                    return;
+                }
+            }
+            var mqttTopicFilterBuilder = new MqttTopicFilterBuilder().WithTopic(topic).Build();
+            _ = await mqttClient.UnsubscribeAsync(topic);
+            Log.Information("Unsubscribed from MQTT topic {topic}.", topic);
+        }
+        catch (Exception ex)
+        {
+            Log.Error(ex, "Error in ConnectionManager");
+        }
+        return;
+    }
+
+    public static async Task<bool> SendMqttMessage(IMqttClient mqttClient, string Topic, string Payload, int QoS = 2)
+    {
+        try
+        {
+            if (string.IsNullOrEmpty(Topic) || string.IsNullOrEmpty(Payload)) return false;
+            if (QoS > 2) QoS = 2; else if (QoS < 0) QoS = 0;
+            var message = new MqttApplicationMessageBuilder().WithTopic(Topic).WithPayload(Payload).WithQualityOfServiceLevel((MQTTnet.Protocol.MqttQualityOfServiceLevel)QoS).Build();
+            MqttClientPublishResult result = new();
+            if (!mqttClient.IsConnected)
+            {
+                var connectResult = await TryReconnectToMqttAsync(mqttClient, mqttClient.Options);
+                if (!connectResult)
+                {
+                    Log.Error("Send mqtt message failed because client is not connected to broker.");
+                    return false;
+                }
+            }
+            result = await mqttClient.PublishAsync(message);
+            if (!result.IsSuccess) Log.Warning("Mqtt message failed to be sent.");
+            return result.IsSuccess;
+        }
+        catch (Exception ex)
+        {
+            Log.Error(ex, "Error in MqttProcessor");
+        }
+        return false;
+    }
+
     public static HttpClient CreateHttpClient(PoultrySettingsModel settings)
     {
         HttpClient client = new();

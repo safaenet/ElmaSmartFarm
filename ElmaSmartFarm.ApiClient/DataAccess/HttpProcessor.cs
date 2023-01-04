@@ -1,5 +1,4 @@
-﻿using ElmaSmartFarm.ApiClient.Models;
-using ElmaSmartFarm.SharedLibrary.Models;
+﻿using ElmaSmartFarm.SharedLibrary.Models;
 using Serilog;
 using System;
 using System.Net.Http;
@@ -27,6 +26,11 @@ public class HttpProcessor
         try
         {
             var response = await ConnectionManager.GetAsync<PoultryModel>(client, "Poultry/Instance");
+            if (response == null)
+            {
+                Log.Error("Poultry instance request returned NULL response.");
+                return null;
+            }
             return response;
         }
         catch (Exception ex)

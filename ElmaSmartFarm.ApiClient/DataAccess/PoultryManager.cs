@@ -1,9 +1,7 @@
 ﻿using ElmaSmartFarm.ApiClient.Models;
 using ElmaSmartFarm.SharedLibrary.Models;
-using MQTTnet;
 using MQTTnet.Client;
 using Serilog;
-using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -59,22 +57,36 @@ public class PoultryManager
     public async Task ConnectAsync()
     {
         httpClient = ConnectionManager.CreateHttpClient(PoultrySettings);
-        mqttClient = ConnectionManager.CreateMqttClient(MqttClient_ApplicationMessageReceivedAsync, MqttClient_ConnectingAsync, MqttClient_ConnectedAsync, MqttClient_DisconnectedAsync);
-        if (await ConnectionManager.TryReconnectToMqttAsync(mqttClient, mqttOptions))
+        var poultry = await HttpProcessor.RequestPoultry(httpClient);
+        if (poultry == null)
         {
-            var mqttTopicFilterBuilder = new MqttTopicFilterBuilder().WithTopic(MqttConnectionSettings.mqtt_subscribe_topic).Build();
-            _ = await mqttClient.SubscribeAsync(mqttTopicFilterBuilder);
-            IsRunning = true;
-            Log.Information("Subscribed to MQTT topic {topic}.", MqttConnectionSettings.mqtt_subscribe_topic);
+            await DisconnectAsync();
+            IsInitialized = false;
+            return;
         }
-        else IsRunning = false;
+        Poultry = poultry;
+        mqttClient = ConnectionManager.CreateMqttClient(MqttClient_ApplicationMessageReceivedAsync, MqttClient_ConnectingAsync, MqttClient_ConnectedAsync, MqttClient_DisconnectedAsync);
+        if (!await ConnectionManager.TryReconnectToMqttAsync(mqttClient, mqttOptions))
+        {
+            await DisconnectAsync();
+            IsInitialized = false;
+            Poultry = null;
+            Log.Error("Failed to connect to server.");
+            return;
+        }
+        await ConnectionManager.SubscribeToMqttTopic(mqttClient, MqttConnectionSettings.mqtt_subscribe_topic);
+        IsInitialized = true;
+        IsRunning = true;
     }
 
     public async Task DisconnectAsync()
     {
         IsRunning = false;
+        IsInitialized = false;
         httpClient?.Dispose();
+        await ConnectionManager.UnsubscribeFromMqttTopic(mqttClient, MqttConnectionSettings.mqtt_subscribe_topic);
         if (mqttClient != null && mqttClient.IsConnected) await mqttClient.DisconnectAsync();
         mqttClient?.Dispose();
+        Poultry = null;
     }
 }
