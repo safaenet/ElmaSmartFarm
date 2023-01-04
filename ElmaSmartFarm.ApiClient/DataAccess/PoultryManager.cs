@@ -60,7 +60,14 @@ public class PoultryManager
     {
         httpClient = ConnectionManager.CreateHttpClient(PoultrySettings);
         mqttClient = ConnectionManager.CreateMqttClient(MqttClient_ApplicationMessageReceivedAsync, MqttClient_ConnectingAsync, MqttClient_ConnectedAsync, MqttClient_DisconnectedAsync);
-        await TryReconnectToMqttAsync();
+        if (await ConnectionManager.TryReconnectToMqttAsync(mqttClient, mqttOptions))
+        {
+            var mqttTopicFilterBuilder = new MqttTopicFilterBuilder().WithTopic(MqttConnectionSettings.mqtt_subscribe_topic).Build();
+            _ = await mqttClient.SubscribeAsync(mqttTopicFilterBuilder);
+            IsRunning = true;
+            Log.Information("Subscribed to MQTT topic {topic}.", MqttConnectionSettings.mqtt_subscribe_topic);
+        }
+        else IsRunning = false;
     }
 
     public async Task DisconnectAsync()
@@ -69,36 +76,5 @@ public class PoultryManager
         httpClient?.Dispose();
         if (mqttClient != null && mqttClient.IsConnected) await mqttClient.DisconnectAsync();
         mqttClient?.Dispose();
-    }
-
-    private async Task TryReconnectToMqttAsync()
-    {
-        if (mqttClient.IsConnected)
-        {
-            IsRunning = true;
-            return;
-        }
-        int retryCount = 1;
-        while (!mqttClient.IsConnected && retryCount <= Config.Config.mqtt_retry_times)
-        {
-            try
-            {
-                _ = await mqttClient.ConnectAsync(mqttOptions);
-
-                var mqttTopicFilterBuilder = new MqttTopicFilterBuilder().WithTopic(MqttConnectionSettings.mqtt_subscribe_topic).Build();
-                await mqttClient.SubscribeAsync(mqttTopicFilterBuilder);
-                IsRunning = true;
-                Log.Information("Subscribed to MQTT topic {topic}.", MqttConnectionSettings.mqtt_subscribe_topic);
-            }
-            catch(Exception ex)
-            {
-                IsRunning = false;
-                Log.Error(ex, $"Attemp {retryCount}: Error connecting to MQTT Broker. retrying in {Config.Config.mqtt_retry_interval} seconds for {Config.Config.mqtt_retry_times} times...");
-                retryCount++;
-                Task.Delay(Config.Config.mqtt_retry_interval * 1000).Wait();
-            }
-        }
-        IsRunning = false;
-        Log.Error($"Failed to connect to Mqtt broker after {Config.Config.mqtt_retry_times} attemps");
     }
 }

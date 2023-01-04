@@ -12,25 +12,6 @@ namespace ElmaSmartFarm.ApiClient.DataAccess;
 
 public class ConnectionManager
 {
-    public static async Task<bool> SendMqttMessage(IMqttClient mqttClient, string Topic, string Payload = "1", int QoS = 2)
-    {
-        try
-        {
-            if (string.IsNullOrEmpty(Topic) || string.IsNullOrEmpty(Payload)) return false;
-            if (QoS > 2) QoS = 2; else if (QoS < 0) QoS = 0;
-            var message = new MqttApplicationMessageBuilder().WithTopic(Topic).WithPayload(Payload).WithQualityOfServiceLevel((MQTTnet.Protocol.MqttQualityOfServiceLevel)QoS).Build();
-            MqttClientPublishResult result = new();
-            if (mqttClient.IsConnected) result = await mqttClient.PublishAsync(message);
-            if (!result.IsSuccess) Log.Warning("Mqtt message failed to be sent.");
-            return result.IsSuccess;
-        }
-        catch (Exception ex)
-        {
-            Log.Error(ex, "Error in ConnectionManager");
-        }
-        return false;
-    }
-
     public static MqttClientOptions BuildMqttClientOptions(string address, int port, bool authenticated, string username, string password)
     {
         var options = new MqttClientOptionsBuilder()
@@ -52,6 +33,28 @@ public class ConnectionManager
         client.ConnectedAsync += connected;
         client.DisconnectedAsync += disconnected;
         return client;
+    }
+
+    public static async Task<bool> TryReconnectToMqttAsync(IMqttClient mqttClient, MqttClientOptions mqttOptions)
+    {
+        if (mqttClient.IsConnected) return true;
+        int retryCount = 1;
+        while (!mqttClient.IsConnected && retryCount <= Config.Config.mqtt_retry_times)
+        {
+            try
+            {
+                _ = await mqttClient.ConnectAsync(mqttOptions);
+                if (mqttClient.IsConnected) return true;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, $"Attemp {retryCount}: Error connecting to MQTT Broker. retrying in {Config.Config.mqtt_retry_interval} seconds for {Config.Config.mqtt_retry_times} times...");
+                retryCount++;
+                Task.Delay(Config.Config.mqtt_retry_interval * 1000).Wait();
+            }
+        }
+        Log.Error($"Failed to connect to Mqtt broker after {Config.Config.mqtt_retry_times} attemps");
+        return false;
     }
 
     public static HttpClient CreateHttpClient(PoultrySettingsModel settings)
