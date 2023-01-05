@@ -11,6 +11,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace ElmaSmartFarm.ApiClient.DataAccess;
+
 public class PoultryManager
 {
     public PoultryManager(int poultryIndex)
