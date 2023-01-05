@@ -1,8 +1,13 @@
 ﻿using ElmaSmartFarm.ApiClient.Models;
 using ElmaSmartFarm.SharedLibrary.Models;
+using ElmaSmartFarm.SharedLibrary.Models.Sensors;
 using MQTTnet.Client;
 using Serilog;
+using System;
+using System.Collections.Generic;
 using System.Net.Http;
+using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace ElmaSmartFarm.ApiClient.DataAccess;
@@ -23,11 +28,35 @@ public class PoultryManager
     private IMqttClient mqttClient;
     private bool IsRunning;
     private bool IsInitialized;
-    public PoultryModel Poultry { get; set; }
+    public PoultryModel Poultry { get; private set; }
+    public List<MqttMessageModel> UnknownMqttMessages { get; private set; }
+    public List<SensorErrorModel> AlarmableSensorErrors { get; private set; }
+    public List<FarmInPeriodErrorModel> AlarmableFarmPeriodErrors { get; private set; }
+    public List<PoultryInPeriodErrorModel> AlarmablePoultryPeriodErrors { get; private set; }
+    public DateTime SystemUpTime { get; private set; }
 
     private async Task MqttClient_ApplicationMessageReceivedAsync(MqttApplicationMessageReceivedEventArgs arg)
     {
-        
+        var ticks = DateTime.Now.Ticks;
+        try
+        {
+            var Payload = Encoding.UTF8.GetString(arg.ApplicationMessage.Payload);
+            var poultryDto = JsonSerializer.Deserialize<PoultryDtoModel>(Payload);
+            Poultry = poultryDto.Poultry;
+            UnknownMqttMessages = poultryDto.UnknownMqttMessages;
+            AlarmableSensorErrors = poultryDto.AlarmableSensorErrors;
+            AlarmableFarmPeriodErrors = poultryDto.AlarmableFarmPeriodErrors;
+            AlarmablePoultryPeriodErrors = poultryDto.AlarmablePoultryPeriodErrors;
+            if (!IsInitialized) IsInitialized = true;
+        }
+        catch (Exception ex)
+        {
+            Log.Error(ex, $"Error in {System.Reflection.MethodBase.GetCurrentMethod().DeclaringType}");
+        }
+        finally
+        {
+            if (Config.Config.verbose_mode) Log.Information($"===============  End of mqtt process {TimeSpan.FromTicks(DateTime.Now.Ticks - ticks).TotalMilliseconds} ms) ===============");
+        }
     }
 
     private Task MqttClient_DisconnectedAsync(MqttClientDisconnectedEventArgs arg)
