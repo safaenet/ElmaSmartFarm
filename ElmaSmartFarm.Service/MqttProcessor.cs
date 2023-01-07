@@ -4,6 +4,7 @@ using ElmaSmartFarm.SharedLibrary.Models.Sensors;
 using Serilog;
 using System;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace ElmaSmartFarm.Service;
@@ -18,6 +19,10 @@ public partial class Worker
         if (Topic.StartsWith(config.mqtt.FromSensorSubTopic)) //Message from sensor.
         {
             await ProcessMqttFromSensor(mqtt, Topic, Now);
+        }
+        else if (Topic.StartsWith(config.mqtt.FromClientSubTopic)) //Message from client.
+        {
+            await ProcessMqttFromClient(mqtt, Topic, Now);
         }
         else //Unknown message.
         {
@@ -452,6 +457,33 @@ public partial class Worker
         }
         #endregion
         return 0;
+    }
+
+    private async Task<int> ProcessMqttFromClient(MqttMessageModel mqtt, string Topic, DateTime Now)
+    {
+        if (config.VerboseMode) Log.Information($"MQTT Message is from a client. Topic: {mqtt.Topic}, Payload: {mqtt.Payload}");
+        var SubTopics = Topic.Split("/");
+        //if (SubTopics.Length < 3 || string.IsNullOrEmpty(SubTopics[2]) || int.TryParse(SubTopics[2], out var SensorId) == false)
+        //{
+        //    AddMqttToUnknownList(mqtt);
+        //    return -1;
+        //}
+        if (SubTopics[1] == "Initialize")
+        {
+            PoultryDtoModel model = new()
+            {
+                Poultry = Poultry,
+                UnknownMqttMessages = UnknownMqttMessages,
+                AlarmableSensorErrors = AlarmableSensorErrors,
+                AlarmableFarmPeriodErrors = AlarmableFarmPeriodErrors,
+                AlarmablePoultryPeriodErrors = AlarmablePoultryPeriodErrors,
+                SystemUpTime = SystemUpTime
+            };
+            var poultryDto = JsonSerializer.Serialize(model);
+            await SendMqttMessage("Elma/ToClient/FromServer/Initial", poultryDto);
+            return 0;
+        }
+        return -1;
     }
 
     private async Task AddValueRangeFarmError(FarmModel farm, SensorModel sensor, ScalarSensorReadModel newRead, FarmInPeriodErrorType ErrorToAdd, FarmInPeriodErrorType? ErrorToErase, DateTime Now)

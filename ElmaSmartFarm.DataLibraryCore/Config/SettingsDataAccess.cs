@@ -5,7 +5,7 @@ namespace ElmaSmartFarm.DataLibraryCore.Config;
 
 public static class SettingsDataAccess
 {
-    const string relativePath = @"../ElmaSmartFarm.SharedLibrary/Config";
+    const string relativePath = @"../ElmaSmartFarm.DataLibraryCore/Config";
     public static IConfiguration AppConfiguration()
     {
         var absolutePath = Path.GetFullPath(relativePath);

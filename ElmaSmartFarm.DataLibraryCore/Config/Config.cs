@@ -34,6 +34,7 @@ public class MQTT
         ToAlarmTopic = SettingsDataAccess.AppConfiguration().GetSection("mqtt:to_alarm_topic").Value ?? "Elma/ToAlarm/";
         FromSensorSubTopic = SettingsDataAccess.AppConfiguration().GetSection("mqtt:from_sensor_sub_topic").Value ?? "FromSensor/";
         FromServerSubTopic = SettingsDataAccess.AppConfiguration().GetSection("mqtt:from_server_sub_topic").Value ?? "FromServer/";
+        FromClientSubTopic = SettingsDataAccess.AppConfiguration().GetSection("mqtt:from_client_sub_topic").Value ?? "FromClient/";
         ScalarSubTopic = SettingsDataAccess.AppConfiguration().GetSection("mqtt:scalar_sub_topic").Value ?? "Scalar/";
         PushButtonSubTopic = SettingsDataAccess.AppConfiguration().GetSection("mqtt:push_button_sub_topic").Value ?? "PushButton/";
         CommuteSubTopic = SettingsDataAccess.AppConfiguration().GetSection("mqtt:commute_sub_topic").Value ?? "Commute/";
@@ -54,6 +55,7 @@ public class MQTT
     public string ToAlarmTopic { get; set; }
     public string FromSensorSubTopic { get; init; }
     public string FromServerSubTopic { get; init; }
+    public string FromClientSubTopic { get; init; }
     public string ScalarSubTopic { get; init; }
     public string PushButtonSubTopic { get; init; }
     public string CommuteSubTopic { get; init; }

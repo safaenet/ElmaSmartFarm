@@ -17,4 +17,13 @@
     <ProjectReference Include="..\ElmaSmartFarm.SharedLibrary\ElmaSmartFarm.SharedLibrary.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Config\appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Config\syssettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
