@@ -25,66 +25,68 @@ Log.Logger = new LoggerConfiguration()
 
 try
 {
-    var builder = WebApplication.CreateBuilder(args);
+    //var builder = WebApplication.CreateBuilder(args);
 
-    builder.Services.AddSwaggerGen(options =>
-    {
-        options.AddSecurityDefinition("oauth2", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
-        {
-            Description = "Standard authorization",
-            In = Microsoft.OpenApi.Models.ParameterLocation.Header,
-            Name = "Authorization",
-            Type = Microsoft.OpenApi.Models.SecuritySchemeType.ApiKey
-        });
-        options.OperationFilter<SecurityRequirementsOperationFilter>();
-    });
+    //builder.Services.AddSwaggerGen(options =>
+    //{
+    //    options.AddSecurityDefinition("oauth2", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+    //    {
+    //        Description = "Standard authorization",
+    //        In = Microsoft.OpenApi.Models.ParameterLocation.Header,
+    //        Name = "Authorization",
+    //        Type = Microsoft.OpenApi.Models.SecuritySchemeType.ApiKey
+    //    });
+    //    options.OperationFilter<SecurityRequirementsOperationFilter>();
+    //});
 
-    builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
-    {
-        options.TokenValidationParameters = new()
-        {
-            ValidateLifetime = true,
-            ValidateIssuer = false,
-            ValidateAudience = false,
-            //ValidateLifetime = true,
-            ValidateIssuerSigningKey = true,
-            //ValidIssuer = builder.Configuration["Jwt:Issuer"],
-            //ValidAudience = builder.Configuration["Jwt:Audience"],
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
-        };
-    });
+    //builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+    //{
+    //    options.TokenValidationParameters = new()
+    //    {
+    //        ValidateLifetime = true,
+    //        ValidateIssuer = false,
+    //        ValidateAudience = false,
+    //        //ValidateLifetime = true,
+    //        ValidateIssuerSigningKey = true,
+    //        //ValidIssuer = builder.Configuration["Jwt:Issuer"],
+    //        //ValidAudience = builder.Configuration["Jwt:Audience"],
+    //        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+    //    };
+    //});
 
-    var options = new MqttClientOptionsBuilder()
-        .WithClientId(Guid.NewGuid().ToString())
-        .WithTcpServer("192.168.1.106", 1883)
-        .WithCleanSession()
-        .Build();
-    IMqttClient mqttclient = new MqttFactory().CreateMqttClient();
-    var connection = mqttclient.ConnectAsync(options, CancellationToken.None);
-    connection.Wait();
-    var res = connection.Result;
+    //var options = new MqttClientOptionsBuilder()
+    //    .WithClientId(Guid.NewGuid().ToString())
+    //    .WithTcpServer("192.168.1.106", 1883)
+    //    .WithCleanSession()
+    //    .Build();
+    //IMqttClient mqttclient = new MqttFactory().CreateMqttClient();
+    //var connection = mqttclient.ConnectAsync(options, CancellationToken.None);
+    //connection.Wait();
+    //var res = connection.Result;
 
-    builder.Services.AddSingleton<IMqttClient>(mqttclient);
+    //builder.Services.AddSingleton<IMqttClient>(mqttclient);
 
-    builder.Services.AddControllers();
-    builder.Services.AddEndpointsApiExplorer();
+    //builder.Services.AddControllers();
+    //builder.Services.AddEndpointsApiExplorer();
     
-    var app = builder.Build();
+    //var app = builder.Build();
 
-    if (app.Environment.IsDevelopment())
-    {
-        app.UseSwagger();
-        app.UseSwaggerUI();
-    }
+    //if (app.Environment.IsDevelopment())
+    //{
+    //    app.UseSwagger();
+    //    app.UseSwaggerUI();
+    //}
 
-    app.UseHttpsRedirection();
+    //app.UseHttpsRedirection();
 
-    app.UseAuthentication();
-    app.UseAuthorization();
+    //app.UseAuthentication();
+    //app.UseAuthorization();
 
-    app.MapControllers();
+    //app.MapControllers();
 
-    app.Run();
+    //app.MapGet("/", () => $"Hello Safa!. Time: {DateTime.Now}");
+
+    //app.Run("http://localhost:8083");
 }
 catch (Exception ex)
 {

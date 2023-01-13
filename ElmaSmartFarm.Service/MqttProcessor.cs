@@ -29,7 +29,7 @@ public partial class Worker
             AddMqttToUnknownList(mqtt);
             return -1;
         }
-        if (UnknownMqttMessages.Any(m => m.Topic == mqtt.Topic)) UnknownMqttMessages.Remove(UnknownMqttMessages.First(m => m.Topic == mqtt.Topic));
+        if (poultryEntities.UnknownMqttMessages.Any(m => m.Topic == mqtt.Topic)) poultryEntities.UnknownMqttMessages.Remove(poultryEntities.UnknownMqttMessages.First(m => m.Topic == mqtt.Topic));
         return 0;
     }
 
@@ -421,8 +421,8 @@ public partial class Worker
                     {
                         if (config.VerboseMode) Log.Warning($"{PoultryInPeriodErrorType.NoMainPower} detected in poultry. sensor ID: {sensor.Id}");
                         var newErr = GeneratePoultryError(sensor, PoultryInPeriodErrorType.NoMainPower, Now, $"{PoultryInPeriodErrorType.NoMainPower} on: {newRead.ReadDate}, Detected by: {sensor.Type}");
-                        if (Poultry.InPeriodErrors == null) Poultry.InPeriodErrors = new();
-                        if (Poultry.InPeriodErrors.AddError(newErr, config.system.MaxPoultryErrorCount))
+                        if (poultryEntities.Poultry.InPeriodErrors == null) poultryEntities.Poultry.InPeriodErrors = new();
+                        if (poultryEntities.Poultry.InPeriodErrors.AddError(newErr, config.system.MaxPoultryErrorCount))
                         {
                             var newId = await DbProcessor.WritePoultryErrorToDbAsync(newErr, Now);
                             if (newId > 0) newErr.Id = newId;
@@ -439,8 +439,8 @@ public partial class Worker
                     {
                         if (config.VerboseMode) Log.Warning($"{PoultryInPeriodErrorType.NoBackupPower} detected in poultry. sensor ID: {sensor.Id}");
                         var newErr = GeneratePoultryError(sensor, PoultryInPeriodErrorType.NoBackupPower, Now, $"{PoultryInPeriodErrorType.NoBackupPower} on: {newRead.ReadDate}, Detected by: {sensor.Type}");
-                        if (Poultry.InPeriodErrors == null) Poultry.InPeriodErrors = new();
-                        if (Poultry.InPeriodErrors.AddError(newErr, config.system.MaxPoultryErrorCount))
+                        if (poultryEntities.Poultry.InPeriodErrors == null) poultryEntities.Poultry.InPeriodErrors = new();
+                        if (poultryEntities.Poultry.InPeriodErrors.AddError(newErr, config.system.MaxPoultryErrorCount))
                         {
                             var newId = await DbProcessor.WritePoultryErrorToDbAsync(newErr, Now);
                             if (newId > 0) newErr.Id = newId;
@@ -472,12 +472,12 @@ public partial class Worker
         {
             PoultryDtoModel model = new()
             {
-                Poultry = Poultry,
-                UnknownMqttMessages = UnknownMqttMessages,
-                AlarmableSensorErrors = AlarmableSensorErrors,
-                AlarmableFarmPeriodErrors = AlarmableFarmPeriodErrors,
-                AlarmablePoultryPeriodErrors = AlarmablePoultryPeriodErrors,
-                SystemUpTime = SystemUpTime
+                Poultry = poultryEntities.Poultry,
+                UnknownMqttMessages = poultryEntities.UnknownMqttMessages,
+                AlarmableSensorErrors = poultryEntities.AlarmableSensorErrors,
+                AlarmableFarmPeriodErrors = poultryEntities.AlarmableFarmPeriodErrors,
+                AlarmablePoultryPeriodErrors = poultryEntities.AlarmablePoultryPeriodErrors,
+                SystemUpTime = poultryEntities.SystemUpTime
             };
             var poultryDto = JsonSerializer.Serialize(model);
             await SendMqttMessage("Elma/ToClient/FromServer/Initial", poultryDto);
@@ -519,7 +519,7 @@ public partial class Worker
         if (types == null || types.Length == 0) return;
         foreach (var e in types)
         {
-            Poultry.InPeriodErrors.EraseError(e, Now);
+            poultryEntities.Poultry.InPeriodErrors.EraseError(e, Now);
         }
         await DbProcessor.ErasePoultryErrorFromDbAsync(Now, types);
     }
@@ -553,7 +553,7 @@ public partial class Worker
 
     private async Task<int> UpdateSensorBatteryLevelAsync(int sensorId, int battery, DateTime now)
     {
-        if (Poultry == null) return 0;
+        if (poultryEntities.Poultry == null) return 0;
         var sensor = FindSensorsById(sensorId);
         if (sensor != null && sensor.IsEnabled)
         {
@@ -578,7 +578,7 @@ public partial class Worker
 
     private async Task<int> UpdateSensorIPAddressAsync(int sensorId, string ip, DateTime now)
     {
-        if (Poultry == null) return 0;
+        if (poultryEntities.Poultry == null) return 0;
         var sensor = FindSensorsById(sensorId);
         if (sensor != null && sensor.IsEnabled)
         {
@@ -591,7 +591,7 @@ public partial class Worker
 
     private async Task<int> UpdateSensorKeepAliveAsync(int sensorId, DateTime now)
     {
-        if (Poultry == null) return 0;
+        if (poultryEntities.Poultry == null) return 0;
         if (config.system.IsKeepAliveEnabled == false)
         {
             Log.Warning($"KeepAlive is disabled but sensor a is sending KeepAlive message. Sensor ID: {sensorId}");
@@ -611,9 +611,9 @@ public partial class Worker
     private void AddMqttToUnknownList(MqttMessageModel mqtt)
     {
         Log.Warning($"A sensor sends invalid data/value or sensor is unknown. adding to unknown mqtt list. Topic: {mqtt.Topic} , Payload: {mqtt.Payload}");
-        if (UnknownMqttMessages.Any(m => m.Topic == mqtt.Topic)) UnknownMqttMessages.Remove(UnknownMqttMessages.First(m => m.Topic == mqtt.Topic));
-        UnknownMqttMessages.Add(mqtt);
-        if (UnknownMqttMessages != null && UnknownMqttMessages.Count > config.mqtt.MaxUnknownMqttCount) UnknownMqttMessages.Remove(UnknownMqttMessages.First());
+        if (poultryEntities.UnknownMqttMessages.Any(m => m.Topic == mqtt.Topic)) poultryEntities.UnknownMqttMessages.Remove(poultryEntities.UnknownMqttMessages.First(m => m.Topic == mqtt.Topic));
+        poultryEntities.UnknownMqttMessages.Add(mqtt);
+        if (poultryEntities.UnknownMqttMessages != null && poultryEntities.UnknownMqttMessages.Count > config.mqtt.MaxUnknownMqttCount) poultryEntities.UnknownMqttMessages.Remove(poultryEntities.UnknownMqttMessages.First());
     }
 
     private static SensorErrorModel GenerateSensorError(SensorBaseModel sensor, SensorErrorType type, DateTime Now, string description = "")
@@ -657,27 +657,27 @@ public partial class Worker
     /// </summary>
     private T FindSensorsById<T>(int id) where T : SensorModel
     {
-        if (Poultry == null) return null;
+        if (poultryEntities.Poultry == null) return null;
         T sensor = null;
         if (typeof(T) == typeof(ScalarSensorModel))
         {
-            var x = (from s in Poultry.Farms?.SelectMany(f => f.Scalars.Sensors) where s != null && s.Id == id select s).FirstOrDefault();
-            if (x == null) x = Poultry.Scalar?.Id == id ? Poultry.Scalar : null;
+            var x = (from s in poultryEntities.Poultry.Farms?.SelectMany(f => f.Scalars.Sensors) where s != null && s.Id == id select s).FirstOrDefault();
+            if (x == null) x = poultryEntities.Poultry.Scalar?.Id == id ? poultryEntities.Poultry.Scalar : null;
             if (x != null) sensor = (T)Convert.ChangeType(x, typeof(T));
         }
         else if (typeof(T) == typeof(CommuteSensorModel))
-            sensor = (T)Convert.ChangeType((from s in Poultry.Farms.SelectMany(f => f.Commutes.Sensors) where s != null && s.Id == id select s).FirstOrDefault(), typeof(T));
+            sensor = (T)Convert.ChangeType((from s in poultryEntities.Poultry.Farms.SelectMany(f => f.Commutes.Sensors) where s != null && s.Id == id select s).FirstOrDefault(), typeof(T));
         else if (typeof(T) == typeof(PushButtonSensorModel))
         {
-            var x = (from s in Poultry.Farms?.SelectMany(f => f.Checkups.Sensors) where s != null && s.Id == id select s).FirstOrDefault();
-            if (x == null) x = (from s in Poultry.Farms?.SelectMany(f => f.Feeds.Sensors) where s != null && s.Id == id select s).FirstOrDefault();
+            var x = (from s in poultryEntities.Poultry.Farms?.SelectMany(f => f.Checkups.Sensors) where s != null && s.Id == id select s).FirstOrDefault();
+            if (x == null) x = (from s in poultryEntities.Poultry.Farms?.SelectMany(f => f.Feeds.Sensors) where s != null && s.Id == id select s).FirstOrDefault();
             if (x != null) sensor = (T)Convert.ChangeType(x, typeof(T));
         }
         else if (typeof(T) == typeof(BinarySensorModel))
         {
-            var x = (from s in Poultry.Farms?.SelectMany(f => f.ElectricPowers.Sensors) where s != null && s.Id == id select s).FirstOrDefault();
-            if (x == null) x = Poultry.MainElectricPower?.Id == id ? Poultry.MainElectricPower : null;
-            if (x == null) x = Poultry.BackupElectricPower?.Id == id ? Poultry.BackupElectricPower : null;
+            var x = (from s in poultryEntities.Poultry.Farms?.SelectMany(f => f.ElectricPowers.Sensors) where s != null && s.Id == id select s).FirstOrDefault();
+            if (x == null) x = poultryEntities.Poultry.MainElectricPower?.Id == id ? poultryEntities.Poultry.MainElectricPower : null;
+            if (x == null) x = poultryEntities.Poultry.BackupElectricPower?.Id == id ? poultryEntities.Poultry.BackupElectricPower : null;
             if (x != null) sensor = (T)Convert.ChangeType(x, typeof(T));
         }
         //else if (typeof(T) == typeof(SensorModel))
@@ -710,16 +710,16 @@ public partial class Worker
     /// </summary>
     private SensorModel FindSensorsById(int id)
     {
-        if (Poultry == null) return null;
+        if (poultryEntities.Poultry == null) return null;
         SensorModel sensor = null;
-        sensor = (from s in Poultry.Farms.SelectMany(f => f.Scalars.Sensors) where s != null && s.Id == id select s).FirstOrDefault();
-        if (sensor == null) sensor = Poultry.Scalar.Id == id ? Poultry.Scalar : null;
-        if (sensor == null) sensor = (from s in Poultry.Farms.SelectMany(f => f.Commutes.Sensors) where s != null && s.Id == id select s).FirstOrDefault();
-        if (sensor == null) sensor = (from s in Poultry.Farms.SelectMany(f => f.Checkups.Sensors) where s != null && s.Id == id select s).FirstOrDefault();
-        if (sensor == null) sensor = (from s in Poultry.Farms.SelectMany(f => f.Feeds.Sensors) where s != null && s.Id == id select s).FirstOrDefault();
-        if (sensor == null) sensor = (from s in Poultry.Farms.SelectMany(f => f.ElectricPowers.Sensors) where s != null && s.Id == id select s).FirstOrDefault();
-        if (sensor == null) sensor = Poultry.MainElectricPower.Id == id ? Poultry.MainElectricPower : null;
-        if (sensor == null) sensor = Poultry.BackupElectricPower.Id == id ? Poultry.BackupElectricPower : null;
+        sensor = (from s in poultryEntities.Poultry.Farms.SelectMany(f => f.Scalars.Sensors) where s != null && s.Id == id select s).FirstOrDefault();
+        if (sensor == null) sensor = poultryEntities.Poultry.Scalar.Id == id ? poultryEntities.Poultry.Scalar : null;
+        if (sensor == null) sensor = (from s in poultryEntities.Poultry.Farms.SelectMany(f => f.Commutes.Sensors) where s != null && s.Id == id select s).FirstOrDefault();
+        if (sensor == null) sensor = (from s in poultryEntities.Poultry.Farms.SelectMany(f => f.Checkups.Sensors) where s != null && s.Id == id select s).FirstOrDefault();
+        if (sensor == null) sensor = (from s in poultryEntities.Poultry.Farms.SelectMany(f => f.Feeds.Sensors) where s != null && s.Id == id select s).FirstOrDefault();
+        if (sensor == null) sensor = (from s in poultryEntities.Poultry.Farms.SelectMany(f => f.ElectricPowers.Sensors) where s != null && s.Id == id select s).FirstOrDefault();
+        if (sensor == null) sensor = poultryEntities.Poultry.MainElectricPower.Id == id ? poultryEntities.Poultry.MainElectricPower : null;
+        if (sensor == null) sensor = poultryEntities.Poultry.BackupElectricPower.Id == id ? poultryEntities.Poultry.BackupElectricPower : null;
         return sensor;
     }
 }

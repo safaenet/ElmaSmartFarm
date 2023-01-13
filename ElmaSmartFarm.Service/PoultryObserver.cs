@@ -17,7 +17,7 @@ public partial class Worker
         var Now = DateTime.Now;
 
         #region Observe Farm Scalar Sensors.
-        var FarmScalarSets = Poultry.Farms.Select(f => f.Scalars);
+        var FarmScalarSets = poultryEntities.Poultry.Farms.Select(f => f.Scalars);
         if (FarmScalarSets != null)
             foreach (var set in FarmScalarSets)
             {
@@ -33,62 +33,62 @@ public partial class Worker
                                 var alarmTimes = GetAlarmTimings(e.ErrorType);
                                 if (e.ErrorType == SensorErrorType.InvalidTemperatureData)
                                 {
-                                    if (alarmTimes.Enable && (sensor.WatchTemperature) && e.DateHappened.IsElapsed(alarmTimes.RaiseTime) && !AlarmableSensorErrors.Contains(e)) AlarmableSensorErrors.Add(e);
+                                    if (alarmTimes.Enable && (sensor.WatchTemperature) && e.DateHappened.IsElapsed(alarmTimes.RaiseTime) && !poultryEntities.AlarmableSensorErrors.Contains(e)) poultryEntities.AlarmableSensorErrors.Add(e);
                                     if (sensor.WatchTemperature) sensor.WatchTemperature = !await CheckToUnWatch(e, sensor.IsWatched, sensor.WatchTemperature, sensor.IsInPeriod, config.system.TempInvalidDataWatchTimeout);
                                 }
                                 else if (e.ErrorType == SensorErrorType.InvalidTemperatureValue)
                                 {
-                                    if (alarmTimes.Enable && (sensor.WatchTemperature) && e.DateHappened.IsElapsed(alarmTimes.RaiseTime) && !AlarmableSensorErrors.Contains(e)) AlarmableSensorErrors.Add(e);
+                                    if (alarmTimes.Enable && (sensor.WatchTemperature) && e.DateHappened.IsElapsed(alarmTimes.RaiseTime) && !poultryEntities.AlarmableSensorErrors.Contains(e)) poultryEntities.AlarmableSensorErrors.Add(e);
                                     if (sensor.WatchTemperature) sensor.WatchTemperature = !await CheckToUnWatch(e, sensor.IsWatched, sensor.WatchTemperature, sensor.IsInPeriod, config.system.TempInvalidValueWatchTimeout);
                                 }
                                 else if (e.ErrorType == SensorErrorType.InvalidHumidityData)
                                 {
-                                    if (alarmTimes.Enable && (sensor.WatchHumidity) && e.DateHappened.IsElapsed(alarmTimes.RaiseTime) && !AlarmableSensorErrors.Contains(e)) AlarmableSensorErrors.Add(e);
+                                    if (alarmTimes.Enable && (sensor.WatchHumidity) && e.DateHappened.IsElapsed(alarmTimes.RaiseTime) && !poultryEntities.AlarmableSensorErrors.Contains(e)) poultryEntities.AlarmableSensorErrors.Add(e);
                                     if (sensor.WatchHumidity) sensor.WatchHumidity = !await CheckToUnWatch(e, sensor.IsWatched, sensor.WatchHumidity, sensor.IsInPeriod, config.system.HumidInvalidDataWatchTimeout);
                                 }
                                 else if (e.ErrorType == SensorErrorType.InvalidHumidityValue)
                                 {
-                                    if (alarmTimes.Enable && (sensor.WatchHumidity) && e.DateHappened.IsElapsed(alarmTimes.RaiseTime) && !AlarmableSensorErrors.Contains(e)) AlarmableSensorErrors.Add(e);
+                                    if (alarmTimes.Enable && (sensor.WatchHumidity) && e.DateHappened.IsElapsed(alarmTimes.RaiseTime) && !poultryEntities.AlarmableSensorErrors.Contains(e)) poultryEntities.AlarmableSensorErrors.Add(e);
                                     if (sensor.WatchHumidity) sensor.WatchHumidity = !await CheckToUnWatch(e, sensor.IsWatched, sensor.WatchHumidity, sensor.IsInPeriod, config.system.HumidInvalidValueWatchTimeout);
                                 }
                                 else if (e.ErrorType == SensorErrorType.InvalidLightData)
                                 {
-                                    if (alarmTimes.Enable && (sensor.WatchLight) && e.DateHappened.IsElapsed(alarmTimes.RaiseTime) && !AlarmableSensorErrors.Contains(e)) AlarmableSensorErrors.Add(e);
+                                    if (alarmTimes.Enable && (sensor.WatchLight) && e.DateHappened.IsElapsed(alarmTimes.RaiseTime) && !poultryEntities.AlarmableSensorErrors.Contains(e)) poultryEntities.AlarmableSensorErrors.Add(e);
                                     if (sensor.WatchLight) sensor.WatchLight = !await CheckToUnWatch(e, sensor.IsWatched, sensor.WatchLight, sensor.IsInPeriod, config.system.AmbientLightInvalidDataWatchTimeout);
                                 }
                                 else if (e.ErrorType == SensorErrorType.InvalidLightValue)
                                 {
-                                    if (alarmTimes.Enable && (sensor.WatchLight) && e.DateHappened.IsElapsed(alarmTimes.RaiseTime) && !AlarmableSensorErrors.Contains(e)) AlarmableSensorErrors.Add(e);
+                                    if (alarmTimes.Enable && (sensor.WatchLight) && e.DateHappened.IsElapsed(alarmTimes.RaiseTime) && !poultryEntities.AlarmableSensorErrors.Contains(e)) poultryEntities.AlarmableSensorErrors.Add(e);
                                     if (sensor.WatchLight) sensor.WatchLight = !await CheckToUnWatch(e, sensor.IsWatched, sensor.WatchLight, sensor.IsInPeriod, config.system.AmbientLightInvalidValueWatchTimeout);
                                 }
                                 else if (e.ErrorType == SensorErrorType.InvalidAmmoniaData)
                                 {
-                                    if (alarmTimes.Enable && (sensor.WatchAmmonia) && e.DateHappened.IsElapsed(alarmTimes.RaiseTime) && !AlarmableSensorErrors.Contains(e)) AlarmableSensorErrors.Add(e);
+                                    if (alarmTimes.Enable && (sensor.WatchAmmonia) && e.DateHappened.IsElapsed(alarmTimes.RaiseTime) && !poultryEntities.AlarmableSensorErrors.Contains(e)) poultryEntities.AlarmableSensorErrors.Add(e);
                                     if (sensor.WatchAmmonia) sensor.WatchAmmonia = !await CheckToUnWatch(e, sensor.IsWatched, sensor.WatchAmmonia, sensor.IsInPeriod, config.system.AmmoniaInvalidDataWatchTimeout);
                                 }
                                 else if (e.ErrorType == SensorErrorType.InvalidAmmoniaValue)
                                 {
-                                    if (alarmTimes.Enable && (sensor.WatchAmmonia) && e.DateHappened.IsElapsed(alarmTimes.RaiseTime) && !AlarmableSensorErrors.Contains(e)) AlarmableSensorErrors.Add(e);
+                                    if (alarmTimes.Enable && (sensor.WatchAmmonia) && e.DateHappened.IsElapsed(alarmTimes.RaiseTime) && !poultryEntities.AlarmableSensorErrors.Contains(e)) poultryEntities.AlarmableSensorErrors.Add(e);
                                     if (sensor.WatchAmmonia) sensor.WatchAmmonia = !await CheckToUnWatch(e, sensor.IsWatched, sensor.WatchAmmonia, sensor.IsInPeriod, config.system.AmmoniaInvalidValueWatchTimeout);
                                 }
                                 else if (e.ErrorType == SensorErrorType.InvalidCo2Data)
                                 {
-                                    if (alarmTimes.Enable && (sensor.WatchCo2) && e.DateHappened.IsElapsed(alarmTimes.RaiseTime) && !AlarmableSensorErrors.Contains(e)) AlarmableSensorErrors.Add(e);
+                                    if (alarmTimes.Enable && (sensor.WatchCo2) && e.DateHappened.IsElapsed(alarmTimes.RaiseTime) && !poultryEntities.AlarmableSensorErrors.Contains(e)) poultryEntities.AlarmableSensorErrors.Add(e);
                                     if (sensor.WatchCo2) sensor.WatchCo2 = !await CheckToUnWatch(e, sensor.IsWatched, sensor.WatchCo2, sensor.IsInPeriod, config.system.Co2InvalidDataWatchTimeout);
                                 }
                                 else if (e.ErrorType == SensorErrorType.InvalidCo2Value)
                                 {
-                                    if (alarmTimes.Enable && (sensor.WatchCo2) && e.DateHappened.IsElapsed(alarmTimes.RaiseTime) && !AlarmableSensorErrors.Contains(e)) AlarmableSensorErrors.Add(e);
+                                    if (alarmTimes.Enable && (sensor.WatchCo2) && e.DateHappened.IsElapsed(alarmTimes.RaiseTime) && !poultryEntities.AlarmableSensorErrors.Contains(e)) poultryEntities.AlarmableSensorErrors.Add(e);
                                     if (sensor.WatchCo2) sensor.WatchCo2 = !await CheckToUnWatch(e, sensor.IsWatched, sensor.WatchCo2, sensor.IsInPeriod, config.system.Co2InvalidValueWatchTimeout);
                                 }
                                 else if (e.ErrorType == SensorErrorType.NotAlive)
                                 {
-                                    if (alarmTimes.Enable && (sensor.IsWatched) && e.DateHappened.IsElapsed(alarmTimes.RaiseTime) && !AlarmableSensorErrors.Contains(e)) AlarmableSensorErrors.Add(e);
+                                    if (alarmTimes.Enable && (sensor.IsWatched) && e.DateHappened.IsElapsed(alarmTimes.RaiseTime) && !poultryEntities.AlarmableSensorErrors.Contains(e)) poultryEntities.AlarmableSensorErrors.Add(e);
                                     if (sensor.IsWatched) sensor.IsWatched = !await CheckToUnWatch(e, sensor.IsWatched, sensor.IsWatched, sensor.IsInPeriod, config.system.ScalarNotAliveWatchTimeout);
                                 }
                                 else if (sensor.IsWatched && e.ErrorType == SensorErrorType.LowBattery)
                                 {
-                                    if (alarmTimes.Enable && (sensor.IsWatched) && e.DateHappened.IsElapsed(alarmTimes.RaiseTime) && !AlarmableSensorErrors.Contains(e)) AlarmableSensorErrors.Add(e);
+                                    if (alarmTimes.Enable && (sensor.IsWatched) && e.DateHappened.IsElapsed(alarmTimes.RaiseTime) && !poultryEntities.AlarmableSensorErrors.Contains(e)) poultryEntities.AlarmableSensorErrors.Add(e);
                                 }
                             }
                             if (sensor.IsWatched && !sensor.WatchTemperature && !sensor.WatchHumidity && !sensor.WatchLight && !sensor.WatchAmmonia && !sensor.WatchCo2) //Sensor is fully damaged.
@@ -98,7 +98,7 @@ public partial class Worker
                                 //inform, save to db
                             }
                         }
-                        var startDate = Poultry.Farms.Where(f => f.IsInPeriod && f.Scalars.Sensors.Any(s => s.Id == sensor.Id)).FirstOrDefault()?.Period.StartDate;
+                        var startDate = poultryEntities.Poultry.Farms.Where(f => f.IsInPeriod && f.Scalars.Sensors.Any(s => s.Id == sensor.Id)).FirstOrDefault()?.Period.StartDate;
                         if (!sensor.WatchTemperature && sensor.ActiveErrors.Any(e => e.ErrorType == SensorErrorType.InvalidTemperatureData || e.ErrorType == SensorErrorType.InvalidTemperatureValue) == false) //Temp sensor is healthy.
                             sensor.WatchTemperature = await CheckToReWatchSensor(sensor, startDate);
                         if (!sensor.WatchHumidity && sensor.ActiveErrors.Any(e => e.ErrorType == SensorErrorType.InvalidHumidityData || e.ErrorType == SensorErrorType.InvalidHumidityValue) == false) //Humidity sensor is healthy.
@@ -118,7 +118,7 @@ public partial class Worker
         FarmScalarSets = null;
         #endregion
         #region Observe Commute Sensors.
-        var CommuteSets = Poultry.Farms.Select(f => f.Commutes);
+        var CommuteSets = poultryEntities.Poultry.Farms.Select(f => f.Commutes);
         if (CommuteSets != null)
             foreach (var set in CommuteSets)
             {
@@ -134,37 +134,37 @@ public partial class Worker
                                 var alarmTimes = GetAlarmTimings(e.ErrorType);
                                 if (e.ErrorType == SensorErrorType.InvalidData)
                                 {
-                                    if (alarmTimes.Enable && (sensor.IsWatched) && e.DateHappened.IsElapsed(alarmTimes.RaiseTime) && !AlarmableSensorErrors.Contains(e)) AlarmableSensorErrors.Add(e);
+                                    if (alarmTimes.Enable && (sensor.IsWatched) && e.DateHappened.IsElapsed(alarmTimes.RaiseTime) && !poultryEntities.AlarmableSensorErrors.Contains(e)) poultryEntities.AlarmableSensorErrors.Add(e);
                                     if (sensor.IsWatched) sensor.IsWatched = !await CheckToUnWatch(e, sensor.IsWatched, sensor.IsWatched, sensor.IsInPeriod, config.system.CommuteInvalidDataWatchTimeout);
                                 }
                                 else if (e.ErrorType == SensorErrorType.InvalidValue)
                                 {
-                                    if (alarmTimes.Enable && (sensor.IsWatched) && e.DateHappened.IsElapsed(alarmTimes.RaiseTime) && !AlarmableSensorErrors.Contains(e)) AlarmableSensorErrors.Add(e);
+                                    if (alarmTimes.Enable && (sensor.IsWatched) && e.DateHappened.IsElapsed(alarmTimes.RaiseTime) && !poultryEntities.AlarmableSensorErrors.Contains(e)) poultryEntities.AlarmableSensorErrors.Add(e);
                                     if (sensor.IsWatched) sensor.IsWatched = !await CheckToUnWatch(e, sensor.IsWatched, sensor.IsWatched, sensor.IsInPeriod, config.system.CommuteInvalidValueWatchTimeout);
                                 }
                                 else if (e.ErrorType == SensorErrorType.NotAlive)
                                 {
-                                    if (alarmTimes.Enable && (sensor.IsWatched) && e.DateHappened.IsElapsed(alarmTimes.RaiseTime) && !AlarmableSensorErrors.Contains(e)) AlarmableSensorErrors.Add(e);
+                                    if (alarmTimes.Enable && (sensor.IsWatched) && e.DateHappened.IsElapsed(alarmTimes.RaiseTime) && !poultryEntities.AlarmableSensorErrors.Contains(e)) poultryEntities.AlarmableSensorErrors.Add(e);
                                     if (sensor.IsWatched) sensor.IsWatched = !await CheckToUnWatch(e, sensor.IsWatched, sensor.IsWatched, sensor.IsInPeriod, config.system.CommuteNotAliveWatchTimeout);
                                 }
                                 else if (sensor.IsWatched && e.ErrorType == SensorErrorType.LowBattery)
                                 {
-                                    if (alarmTimes.Enable && (sensor.IsWatched) && e.DateHappened.IsElapsed(alarmTimes.RaiseTime) && !AlarmableSensorErrors.Contains(e)) AlarmableSensorErrors.Add(e);
+                                    if (alarmTimes.Enable && (sensor.IsWatched) && e.DateHappened.IsElapsed(alarmTimes.RaiseTime) && !poultryEntities.AlarmableSensorErrors.Contains(e)) poultryEntities.AlarmableSensorErrors.Add(e);
                                 }
                             }
                         }
 
-                        var startDate = Poultry.Farms.Where(f => f.IsInPeriod && f.Commutes.Sensors.Any(s => s.Id == sensor.Id)).FirstOrDefault()?.Period.StartDate;
+                        var startDate = poultryEntities.Poultry.Farms.Where(f => f.IsInPeriod && f.Commutes.Sensors.Any(s => s.Id == sensor.Id)).FirstOrDefault()?.Period.StartDate;
                         if (!sensor.IsWatched && sensor.ActiveErrors.Any(e => e.ErrorType == SensorErrorType.InvalidData || e.ErrorType == SensorErrorType.InvalidValue || e.ErrorType == SensorErrorType.NotAlive) == false) //Sensor is healthy.
                             sensor.IsWatched = await CheckToReWatchSensor(sensor, startDate);
 
                         //Remove expired reads
 
-                        if (sensor.IsInPeriod && ((sensor.LastCommuteDate == null && SystemUpTime.IsElapsed(config.system.FarmCheckupInterval)) || (sensor.LastCommuteDate != null && sensor.LastCommuteDate.IsElapsed(config.system.FarmCheckupInterval))))
+                        if (sensor.IsInPeriod && ((sensor.LastCommuteDate == null && poultryEntities.SystemUpTime.IsElapsed(config.system.FarmCheckupInterval)) || (sensor.LastCommuteDate != null && sensor.LastCommuteDate.IsElapsed(config.system.FarmCheckupInterval))))
                         {
                             var farm = FindFarmBySensorId(sensor.Id);
                             if (farm == null) Log.Error($"Farm for the indoor sensor not detected. Sensor ID: {sensor.Id} (System Error)");
-                            else await AddFarmError(farm, sensor, sensor.LastRead == null ? SystemUpTime : sensor.LastRead.ReadDate, FarmInPeriodErrorType.LongLeave, Now);
+                            else await AddFarmError(farm, sensor, sensor.LastRead == null ? poultryEntities.SystemUpTime : sensor.LastRead.ReadDate, FarmInPeriodErrorType.LongLeave, Now);
                         }
                     }
                 }
@@ -172,8 +172,8 @@ public partial class Worker
         CommuteSets = null;
         #endregion
         #region Observe PushButton Sensors.
-        var CheckupSets = Poultry.Farms.Select(f => f.Checkups);
-        var FeedSets = Poultry.Farms.Select(f => f.Feeds);
+        var CheckupSets = poultryEntities.Poultry.Farms.Select(f => f.Checkups);
+        var FeedSets = poultryEntities.Poultry.Farms.Select(f => f.Feeds);
         var PushButtonSets = CheckupSets.Concat(FeedSets);
         if (PushButtonSets != null)
             foreach (var set in PushButtonSets)
@@ -193,18 +193,18 @@ public partial class Worker
                                     int PushButtonNotAliveWatchTimeout = 0;
                                     if (sensor.Type == SensorType.FarmFeed) PushButtonNotAliveWatchTimeout = config.system.FeedNotAliveWatchTimeout;
                                     else if (sensor.Type == SensorType.FarmCheckup) PushButtonNotAliveWatchTimeout = config.system.CheckupNotAliveWatchTimeout;
-                                    if (alarmTimes.Enable && (sensor.IsWatched) && e.DateHappened.IsElapsed(alarmTimes.RaiseTime) && !AlarmableSensorErrors.Contains(e)) AlarmableSensorErrors.Add(e);
+                                    if (alarmTimes.Enable && (sensor.IsWatched) && e.DateHappened.IsElapsed(alarmTimes.RaiseTime) && !poultryEntities.AlarmableSensorErrors.Contains(e)) poultryEntities.AlarmableSensorErrors.Add(e);
                                     if (sensor.IsWatched) sensor.IsWatched = !await CheckToUnWatch(e, sensor.IsWatched, sensor.IsWatched, sensor.IsInPeriod, PushButtonNotAliveWatchTimeout);
                                 }
                                 else if (sensor.IsWatched && e.ErrorType == SensorErrorType.LowBattery)
                                 {
-                                    if (alarmTimes.Enable && (sensor.IsWatched) && e.DateHappened.IsElapsed(alarmTimes.RaiseTime) && !AlarmableSensorErrors.Contains(e)) AlarmableSensorErrors.Add(e);
+                                    if (alarmTimes.Enable && (sensor.IsWatched) && e.DateHappened.IsElapsed(alarmTimes.RaiseTime) && !poultryEntities.AlarmableSensorErrors.Contains(e)) poultryEntities.AlarmableSensorErrors.Add(e);
                                 }
                             }
                         }
 
-                        var startDate = Poultry.Farms.Where(f => f.IsInPeriod && f.Checkups.Sensors.Any(s => s.Id == sensor.Id)).FirstOrDefault()?.Period.StartDate;
-                        if (startDate == null) startDate = Poultry.Farms.Where(f => f.IsInPeriod && f.Feeds.Sensors.Any(s => s.Id == sensor.Id)).FirstOrDefault()?.Period.StartDate;
+                        var startDate = poultryEntities.Poultry.Farms.Where(f => f.IsInPeriod && f.Checkups.Sensors.Any(s => s.Id == sensor.Id)).FirstOrDefault()?.Period.StartDate;
+                        if (startDate == null) startDate = poultryEntities.Poultry.Farms.Where(f => f.IsInPeriod && f.Feeds.Sensors.Any(s => s.Id == sensor.Id)).FirstOrDefault()?.Period.StartDate;
                         if (!sensor.IsWatched && sensor.ActiveErrors.Any(e => e.ErrorType == SensorErrorType.NotAlive) == false) //Sensor is healthy.
                             sensor.IsWatched = await CheckToReWatchSensor(sensor, startDate);
 
@@ -214,20 +214,20 @@ public partial class Worker
                         {
                             if (sensor.Type == SensorType.FarmFeed)
                             {
-                                if ((sensor.LastRead == null && SystemUpTime.IsElapsed(config.system.FeedInterval)) || (sensor.LastRead != null && sensor.LastRead.ReadDate.IsElapsed(config.system.FeedInterval)))
+                                if ((sensor.LastRead == null && poultryEntities.SystemUpTime.IsElapsed(config.system.FeedInterval)) || (sensor.LastRead != null && sensor.LastRead.ReadDate.IsElapsed(config.system.FeedInterval)))
                                 {
                                     var farm = FindFarmBySensorId(sensor.Id);
                                     if (farm == null) Log.Error($"Farm for the indoor sensor not detected. Sensor ID: {sensor.Id} (System Error)");
-                                    else await AddFarmError(farm, sensor, sensor.LastRead == null ? SystemUpTime : sensor.LastRead.ReadDate, FarmInPeriodErrorType.LongNoFeed, Now);
+                                    else await AddFarmError(farm, sensor, sensor.LastRead == null ? poultryEntities.SystemUpTime : sensor.LastRead.ReadDate, FarmInPeriodErrorType.LongNoFeed, Now);
                                 }
                             }
                             else if (sensor.Type == SensorType.FarmCheckup)
                             {
-                                if ((sensor.LastRead == null && SystemUpTime.IsElapsed(config.system.FarmCheckupInterval)) || (sensor.LastRead != null && sensor.LastRead.ReadDate.IsElapsed(config.system.FarmCheckupInterval)))
+                                if ((sensor.LastRead == null && poultryEntities.SystemUpTime.IsElapsed(config.system.FarmCheckupInterval)) || (sensor.LastRead != null && sensor.LastRead.ReadDate.IsElapsed(config.system.FarmCheckupInterval)))
                                 {
                                     var farm = FindFarmBySensorId(sensor.Id);
                                     if (farm == null) Log.Error($"Farm for the indoor sensor not detected. Sensor ID: {sensor.Id} (System Error)");
-                                    else await AddFarmError(farm, sensor, sensor.LastRead == null ? SystemUpTime : sensor.LastRead.ReadDate, FarmInPeriodErrorType.LongLeave, Now);
+                                    else await AddFarmError(farm, sensor, sensor.LastRead == null ? poultryEntities.SystemUpTime : sensor.LastRead.ReadDate, FarmInPeriodErrorType.LongLeave, Now);
                                 }
                             }
                         }
@@ -239,7 +239,7 @@ public partial class Worker
         PushButtonSets = null;
         #endregion
         #region Observe Binary Sensors.
-        var BinarySets = Poultry.Farms.Select(f => f.ElectricPowers);
+        var BinarySets = poultryEntities.Poultry.Farms.Select(f => f.ElectricPowers);
         if (BinarySets != null)
             foreach (var set in BinarySets)
             {
@@ -268,7 +268,7 @@ public partial class Worker
                                     {
                                         BinaryInvalidDataWatchTimeout = config.system.BackupPowerInvalidDataWatchTimeout;
                                     }
-                                    if (alarmTimes.Enable && (sensor.IsWatched) && e.DateHappened.IsElapsed(alarmTimes.RaiseTime) && !AlarmableSensorErrors.Contains(e)) AlarmableSensorErrors.Add(e);
+                                    if (alarmTimes.Enable && (sensor.IsWatched) && e.DateHappened.IsElapsed(alarmTimes.RaiseTime) && !poultryEntities.AlarmableSensorErrors.Contains(e)) poultryEntities.AlarmableSensorErrors.Add(e);
                                     if (sensor.IsWatched) sensor.IsWatched = !await CheckToUnWatch(e, sensor.IsWatched, sensor.IsWatched, sensor.IsInPeriod, BinaryInvalidDataWatchTimeout);
                                 }
                                 else if (e.ErrorType == SensorErrorType.NotAlive)
@@ -286,18 +286,18 @@ public partial class Worker
                                     {
                                         BinaryNotAliveWatchTimeout = config.system.BackupPowerInvalidDataWatchTimeout;
                                     }
-                                    if (alarmTimes.Enable && (sensor.IsWatched) && e.DateHappened.IsElapsed(alarmTimes.RaiseTime) && !AlarmableSensorErrors.Contains(e)) AlarmableSensorErrors.Add(e);
+                                    if (alarmTimes.Enable && (sensor.IsWatched) && e.DateHappened.IsElapsed(alarmTimes.RaiseTime) && !poultryEntities.AlarmableSensorErrors.Contains(e)) poultryEntities.AlarmableSensorErrors.Add(e);
                                     if (sensor.IsWatched) sensor.IsWatched = !await CheckToUnWatch(e, sensor.IsWatched, sensor.IsWatched, sensor.IsInPeriod, BinaryNotAliveWatchTimeout);
                                 }
                                 else if (sensor.IsWatched && e.ErrorType == SensorErrorType.LowBattery)
                                 {
-                                    if (alarmTimes.Enable && (sensor.IsWatched) && e.DateHappened.IsElapsed(alarmTimes.RaiseTime) && !AlarmableSensorErrors.Contains(e)) AlarmableSensorErrors.Add(e);
+                                    if (alarmTimes.Enable && (sensor.IsWatched) && e.DateHappened.IsElapsed(alarmTimes.RaiseTime) && !poultryEntities.AlarmableSensorErrors.Contains(e)) poultryEntities.AlarmableSensorErrors.Add(e);
                                 }
                             }
                         }
 
-                        var startDate = Poultry.Farms.Where(f => f.IsInPeriod && f.Checkups.Sensors.Any(s => s.Id == sensor.Id)).FirstOrDefault()?.Period.StartDate;
-                        if (startDate == null) startDate = Poultry.Farms.Where(f => f.IsInPeriod && f.Feeds.Sensors.Any(s => s.Id == sensor.Id)).FirstOrDefault()?.Period.StartDate;
+                        var startDate = poultryEntities.Poultry.Farms.Where(f => f.IsInPeriod && f.Checkups.Sensors.Any(s => s.Id == sensor.Id)).FirstOrDefault()?.Period.StartDate;
+                        if (startDate == null) startDate = poultryEntities.Poultry.Farms.Where(f => f.IsInPeriod && f.Feeds.Sensors.Any(s => s.Id == sensor.Id)).FirstOrDefault()?.Period.StartDate;
                         if (!sensor.IsWatched && sensor.ActiveErrors.Any(e => e.ErrorType == SensorErrorType.NotAlive) == false) sensor.IsWatched = await CheckToReWatchSensor(sensor, startDate);//Sensor is healthy.
 
                         //Remove expired reads
@@ -309,17 +309,17 @@ public partial class Worker
         #endregion
 
         #region Check for Alarmable Poultry/Farm Errors
-        if (Poultry.IsInPeriod)
+        if (poultryEntities.Poultry.IsInPeriod)
         {
-            foreach (var error in Poultry.Farms.Where(f => f.HasPeriodError).SelectMany(f => f.InPeriodErrors).Where(e => e.DateErased == null))
+            foreach (var error in poultryEntities.Poultry.Farms.Where(f => f.HasPeriodError).SelectMany(f => f.InPeriodErrors).Where(e => e.DateErased == null))
             {
                 var errorTimings = GetAlarmTimings(error.ErrorType);
-                if (errorTimings.Enable && error.DateHappened.IsElapsed(errorTimings.RaiseTime) && !AlarmableFarmPeriodErrors.Contains(error)) AlarmableFarmPeriodErrors.Add(error);
+                if (errorTimings.Enable && error.DateHappened.IsElapsed(errorTimings.RaiseTime) && !poultryEntities.AlarmableFarmPeriodErrors.Contains(error)) poultryEntities.AlarmableFarmPeriodErrors.Add(error);
             }
-            foreach (var error in Poultry.InPeriodErrors.Where(e => e.DateErased == null))
+            foreach (var error in poultryEntities.Poultry.InPeriodErrors.Where(e => e.DateErased == null))
             {
                 var errorTimings = GetAlarmTimings(error.ErrorType);
-                if (errorTimings.Enable && error.DateHappened.IsElapsed(errorTimings.RaiseTime) && !AlarmablePoultryPeriodErrors.Contains(error)) AlarmablePoultryPeriodErrors.Add(error);
+                if (errorTimings.Enable && error.DateHappened.IsElapsed(errorTimings.RaiseTime) && !poultryEntities.AlarmablePoultryPeriodErrors.Contains(error)) poultryEntities.AlarmablePoultryPeriodErrors.Add(error);
             }
         }
         #endregion
@@ -334,7 +334,7 @@ public partial class Worker
         if (farm != null)
         {
             if (config.VerboseMode) Log.Warning($"{ErrorType} detected in farm ID: {farm.Id}, Name: {farm.Name}. sensor ID: {sensor.Id}");
-            var newErr = GenerateFarmError(sensor, ErrorType, Now, farm.Period?.Id ?? 0, $"{ErrorType} since: {(ReadDate == null ? SystemUpTime : ReadDate)}, Detected by: {sensor.Type}");
+            var newErr = GenerateFarmError(sensor, ErrorType, Now, farm.Period?.Id ?? 0, $"{ErrorType} since: {(ReadDate == null ? poultryEntities.SystemUpTime : ReadDate)}, Detected by: {sensor.Type}");
             if (farm.InPeriodErrors == null) farm.InPeriodErrors = new();
             if (farm.InPeriodErrors.AddError(newErr, ErrorType, config.system.MaxFarmErrorCount))
             {
@@ -558,7 +558,7 @@ public partial class Worker
 
     private FarmModel FindFarmBySensorId(int Id)
     {
-        return (from f in Poultry.Farms where Poultry.Farms.Select(pf => pf.Scalars).SelectMany(sc => sc.ActiveSensors).Any(As => As.Id == Id) select f).FirstOrDefault();
+        return (from f in poultryEntities.Poultry.Farms where poultryEntities.Poultry.Farms.Select(pf => pf.Scalars).SelectMany(sc => sc.ActiveSensors).Any(As => As.Id == Id) select f).FirstOrDefault();
     }
 
     private async Task CheckKeepAliveMessageDate(SensorModel sensor, int keepAliveTimeout, DateTime Now)
@@ -598,33 +598,33 @@ public partial class Worker
 
     private void ProcessAlarmableErrors(DateTime Now)
     {
-        foreach (var e in AlarmableSensorErrors.ToList())
+        foreach (var e in poultryEntities.AlarmableSensorErrors.ToList())
         {
             if (e.DateErased.HasValue)
             {
-                AlarmableSensorErrors.Remove(e);
+                poultryEntities.AlarmableSensorErrors.Remove(e);
                 continue;
             }
             var alarmTimes = GetAlarmTimings(e.ErrorType);
             ProcessAlarms(alarmTimes, e, Now);
         }
 
-        foreach (var e in AlarmableFarmPeriodErrors.ToList())
+        foreach (var e in poultryEntities.AlarmableFarmPeriodErrors.ToList())
         {
             if (e.DateErased.HasValue)
             {
-                AlarmableFarmPeriodErrors.Remove(e);
+                poultryEntities.AlarmableFarmPeriodErrors.Remove(e);
                 continue;
             }
             var alarmTimes = GetAlarmTimings(e.ErrorType);
             ProcessAlarms(alarmTimes, e, Now);
         }
 
-        foreach (var e in AlarmablePoultryPeriodErrors.ToList())
+        foreach (var e in poultryEntities.AlarmablePoultryPeriodErrors.ToList())
         {
             if (e.DateErased.HasValue)
             {
-                AlarmablePoultryPeriodErrors.Remove(e);
+                poultryEntities.AlarmablePoultryPeriodErrors.Remove(e);
                 continue;
             }
             var alarmTimes = GetAlarmTimings(e.ErrorType);
@@ -943,7 +943,7 @@ public partial class Worker
 
     private async Task TriggerAlarm(ErrorModel e, AlarmDeviceType type, int AlarmLocationId = 0)
     {
-        var alarms = Poultry.AlarmDevices?.Where(a => a.IsEnabled && a.Type == type && a.LocationId == AlarmLocationId);
+        var alarms = poultryEntities.Poultry.AlarmDevices?.Where(a => a.IsEnabled && a.Type == type && a.LocationId == AlarmLocationId);
         if (alarms != null)
         {
             var start = DateTime.Now;
@@ -979,7 +979,7 @@ public partial class Worker
 
     private async Task SnoozeSirens()
     {
-        var alarms = Poultry.AlarmDevices?.Where(a => a.IsEnabled && a.Type == AlarmDeviceType.PoultrySiren);
+        var alarms = poultryEntities.Poultry.AlarmDevices?.Where(a => a.IsEnabled && a.Type == AlarmDeviceType.PoultrySiren);
         if (alarms != null && alarms.Any())
             foreach (var alarm in alarms)
             {
@@ -1021,7 +1021,7 @@ public partial class Worker
                 //if (config.VerboseMode) Log.Information($"===============  Start observation process ===============");
                 try
                 {
-                    if (Poultry != null && (Poultry.IsInPeriod || config.system.ObserveAlways))
+                    if (poultryEntities.Poultry != null && (poultryEntities.Poultry.IsInPeriod || config.system.ObserveAlways))
                     {
                         var result = await ObservePoultryAsync();
                         if (!string.IsNullOrEmpty(result))

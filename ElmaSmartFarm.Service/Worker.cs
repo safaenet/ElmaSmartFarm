@@ -1,3 +1,4 @@
+using ElmaSmartFarm.DataLibraryCore;
 using ElmaSmartFarm.DataLibraryCore.Config;
 using ElmaSmartFarm.DataLibraryCore.Interfaces;
 using ElmaSmartFarm.SharedLibrary.Models;
@@ -16,24 +17,20 @@ namespace ElmaSmartFarm.Service;
 
 public partial class Worker : BackgroundService
 {
-    public Worker(IDbProcessor dbProcessor, Config cfg)
+    public Worker(IDbProcessor dbProcessor, Config cfg, PoultryEntities poultryEntities)
     {
         DbProcessor = dbProcessor;
         config = cfg;
+        this.poultryEntities = poultryEntities;
         Task.Run(() => RunObserverTimerAsync());
     }
 
     private Config config;
+    private readonly PoultryEntities poultryEntities;
     private readonly IDbProcessor DbProcessor;
     private IMqttClient mqttClient;
     private MqttClientOptions options;
-    private PoultryModel Poultry;
-    private readonly List<MqttMessageModel> UnknownMqttMessages = new();
-    private readonly List<SensorErrorModel> AlarmableSensorErrors = new();
-    private readonly List<FarmInPeriodErrorModel> AlarmableFarmPeriodErrors = new();
-    private readonly List<PoultryInPeriodErrorModel> AlarmablePoultryPeriodErrors = new();
     private bool CanRunObserver;
-    private DateTime SystemUpTime;
 
     public override async Task<Task> StartAsync(CancellationToken cancellationToken)
     {
@@ -50,9 +47,9 @@ public partial class Worker : BackgroundService
         mqttClient.ConnectedAsync += MqttClient_ConnectedAsync;
         mqttClient.DisconnectedAsync += MqttClient_DisconnectedAsync;
 
-        Poultry = await DbProcessor.LoadPoultryAsync();
+        poultryEntities.Poultry = await DbProcessor.LoadPoultryAsync();
         await TryReconnectAsync();
-        SystemUpTime = DateTime.Now;
+        poultryEntities.SystemUpTime = DateTime.Now;
         CanRunObserver = true;
         return base.StartAsync(cancellationToken);
     }

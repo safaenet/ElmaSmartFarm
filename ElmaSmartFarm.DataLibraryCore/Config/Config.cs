@@ -8,15 +8,18 @@ public class Config
         BaseUrl = SettingsDataAccess.AppConfiguration().GetSection("BaseUrl").Value;
         PoultryName = SettingsDataAccess.AppConfiguration().GetSection("verbose_mode").Value ?? "Elma Smart Poultry";
         VerboseMode = bool.Parse(SettingsDataAccess.AppConfiguration().GetSection("verbose_mode").Value ?? "true");
+        JwtKey = SettingsDataAccess.AppConfiguration().GetSection("Jwt:Key").Value ?? "3nVKapeR4m2SN_8Z9DceUx6ISjRbUdT8kw0Gg6HBdc4";
         mqtt = new();
         system = new();
     }
+
     public string DefaultConnectionString { get; set; }
     public MQTT mqtt { get; init; }
     public System system { get; set; }
     public string BaseUrl { get; init; }
     public string PoultryName { get; set; }
     public bool VerboseMode { get; set; }
+    public string JwtKey { get; set; }
 }
 
 public class MQTT
