@@ -49,7 +49,7 @@ public partial class Worker : BackgroundService
 
         poultryEntities.Poultry = await DbProcessor.LoadPoultryAsync();
         await TryReconnectAsync();
-        poultryEntities.SystemUpTime = DateTime.Now;
+        poultryEntities.SystemStartUpTime = DateTime.Now;
         CanRunObserver = true;
         return base.StartAsync(cancellationToken);
     }

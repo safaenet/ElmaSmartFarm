@@ -160,11 +160,11 @@ public partial class Worker
 
                         //Remove expired reads
 
-                        if (sensor.IsInPeriod && ((sensor.LastCommuteDate == null && poultryEntities.SystemUpTime.IsElapsed(config.system.FarmCheckupInterval)) || (sensor.LastCommuteDate != null && sensor.LastCommuteDate.IsElapsed(config.system.FarmCheckupInterval))))
+                        if (sensor.IsInPeriod && ((sensor.LastCommuteDate == null && poultryEntities.SystemStartUpTime.IsElapsed(config.system.FarmCheckupInterval)) || (sensor.LastCommuteDate != null && sensor.LastCommuteDate.IsElapsed(config.system.FarmCheckupInterval))))
                         {
                             var farm = FindFarmBySensorId(sensor.Id);
                             if (farm == null) Log.Error($"Farm for the indoor sensor not detected. Sensor ID: {sensor.Id} (System Error)");
-                            else await AddFarmError(farm, sensor, sensor.LastRead == null ? poultryEntities.SystemUpTime : sensor.LastRead.ReadDate, FarmInPeriodErrorType.LongLeave, Now);
+                            else await AddFarmError(farm, sensor, sensor.LastRead == null ? poultryEntities.SystemStartUpTime : sensor.LastRead.ReadDate, FarmInPeriodErrorType.LongLeave, Now);
                         }
                     }
                 }
@@ -214,20 +214,20 @@ public partial class Worker
                         {
                             if (sensor.Type == SensorType.FarmFeed)
                             {
-                                if ((sensor.LastRead == null && poultryEntities.SystemUpTime.IsElapsed(config.system.FeedInterval)) || (sensor.LastRead != null && sensor.LastRead.ReadDate.IsElapsed(config.system.FeedInterval)))
+                                if ((sensor.LastRead == null && poultryEntities.SystemStartUpTime.IsElapsed(config.system.FeedInterval)) || (sensor.LastRead != null && sensor.LastRead.ReadDate.IsElapsed(config.system.FeedInterval)))
                                 {
                                     var farm = FindFarmBySensorId(sensor.Id);
                                     if (farm == null) Log.Error($"Farm for the indoor sensor not detected. Sensor ID: {sensor.Id} (System Error)");
-                                    else await AddFarmError(farm, sensor, sensor.LastRead == null ? poultryEntities.SystemUpTime : sensor.LastRead.ReadDate, FarmInPeriodErrorType.LongNoFeed, Now);
+                                    else await AddFarmError(farm, sensor, sensor.LastRead == null ? poultryEntities.SystemStartUpTime : sensor.LastRead.ReadDate, FarmInPeriodErrorType.LongNoFeed, Now);
                                 }
                             }
                             else if (sensor.Type == SensorType.FarmCheckup)
                             {
-                                if ((sensor.LastRead == null && poultryEntities.SystemUpTime.IsElapsed(config.system.FarmCheckupInterval)) || (sensor.LastRead != null && sensor.LastRead.ReadDate.IsElapsed(config.system.FarmCheckupInterval)))
+                                if ((sensor.LastRead == null && poultryEntities.SystemStartUpTime.IsElapsed(config.system.FarmCheckupInterval)) || (sensor.LastRead != null && sensor.LastRead.ReadDate.IsElapsed(config.system.FarmCheckupInterval)))
                                 {
                                     var farm = FindFarmBySensorId(sensor.Id);
                                     if (farm == null) Log.Error($"Farm for the indoor sensor not detected. Sensor ID: {sensor.Id} (System Error)");
-                                    else await AddFarmError(farm, sensor, sensor.LastRead == null ? poultryEntities.SystemUpTime : sensor.LastRead.ReadDate, FarmInPeriodErrorType.LongLeave, Now);
+                                    else await AddFarmError(farm, sensor, sensor.LastRead == null ? poultryEntities.SystemStartUpTime : sensor.LastRead.ReadDate, FarmInPeriodErrorType.LongLeave, Now);
                                 }
                             }
                         }
@@ -334,7 +334,7 @@ public partial class Worker
         if (farm != null)
         {
             if (config.VerboseMode) Log.Warning($"{ErrorType} detected in farm ID: {farm.Id}, Name: {farm.Name}. sensor ID: {sensor.Id}");
-            var newErr = GenerateFarmError(sensor, ErrorType, Now, farm.Period?.Id ?? 0, $"{ErrorType} since: {(ReadDate == null ? poultryEntities.SystemUpTime : ReadDate)}, Detected by: {sensor.Type}");
+            var newErr = GenerateFarmError(sensor, ErrorType, Now, farm.Period?.Id ?? 0, $"{ErrorType} since: {(ReadDate == null ? poultryEntities.SystemStartUpTime : ReadDate)}, Detected by: {sensor.Type}");
             if (farm.InPeriodErrors == null) farm.InPeriodErrors = new();
             if (farm.InPeriodErrors.AddError(newErr, ErrorType, config.system.MaxFarmErrorCount))
             {
