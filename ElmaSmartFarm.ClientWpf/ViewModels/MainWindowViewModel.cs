@@ -1,6 +1,6 @@
 ﻿using Caliburn.Micro;
-using ElmaSmartFarm.ApiClient.Config;
-using System.Windows;
+using ElmaSmartFarm.ApiClient.DataAccess;
+using System.Threading.Tasks;
 
 namespace ElmaSmartFarm.ClientWpf.ViewModels;
 
@@ -8,7 +8,13 @@ public class MainWindowViewModel : ViewAware
 {
     public MainWindowViewModel()
     {
-        var x = Config.GetPoultrySettings(0);
-        MessageBox.Show(x.api_url);
+
+    }
+
+    public async Task ViewLiveValuesAsync()
+    {
+        LiveValuesViewModel liveValuesViewModel = new(0);
+        WindowManager wm = new();
+        await wm.ShowWindowAsync(liveValuesViewModel);
     }
 }

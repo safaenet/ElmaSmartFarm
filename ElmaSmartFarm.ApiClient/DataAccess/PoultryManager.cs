@@ -18,7 +18,6 @@ public class PoultryManager
     {
         Index = poultryIndex;
         PoultrySettings = Config.Config.GetPoultrySettings(poultryIndex);
-        GetMqttConnectionSettings().ConfigureAwait(true);
     }
 
     private readonly int Index;
@@ -80,13 +79,21 @@ public class PoultryManager
 
     private async Task GetMqttConnectionSettings()
     {
-        MqttConnectionSettings = await HttpProcessor.GetMqttConnectionSettings(httpClient);
-        mqttOptions = ConnectionManager.BuildMqttClientOptions(MqttConnectionSettings.mqtt_address, MqttConnectionSettings.mqtt_port, MqttConnectionSettings.mqtt_authentication, MqttConnectionSettings.mqtt_username, MqttConnectionSettings.mqtt_password);
+        try
+        {
+            MqttConnectionSettings = await HttpProcessor.GetMqttConnectionSettings(httpClient);
+            mqttOptions = ConnectionManager.BuildMqttClientOptions(MqttConnectionSettings.mqtt_address, MqttConnectionSettings.mqtt_port, MqttConnectionSettings.mqtt_authentication, MqttConnectionSettings.mqtt_username, MqttConnectionSettings.mqtt_password);
+        }
+        catch (Exception ex)
+        {
+            Log.Error(ex, $"Error in {System.Reflection.MethodBase.GetCurrentMethod().DeclaringType}");
+        }
     }
 
     public async Task ConnectAsync()
     {
         httpClient = ConnectionManager.CreateHttpClient(PoultrySettings);
+        await GetMqttConnectionSettings();
         //var poultry = await HttpProcessor.RequestPoultry(httpClient);
         //if (poultry == null)
         //{
