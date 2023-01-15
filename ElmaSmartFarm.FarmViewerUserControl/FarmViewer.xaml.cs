@@ -1,17 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using ElmaSmartFarm.SharedLibrary.Models;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace ElmaSmartFarm.UserControls
 {
@@ -24,5 +13,17 @@ namespace ElmaSmartFarm.UserControls
         {
             InitializeComponent();
         }
+
+        public FarmModel Farm
+        {
+            get { return (FarmModel)GetValue(FarmProperty); }
+            set { SetValue(FarmProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for Farm.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty FarmProperty =
+            DependencyProperty.Register("Farm", typeof(FarmModel), typeof(FarmViewer), new PropertyMetadata(null));
+
+
     }
 }
