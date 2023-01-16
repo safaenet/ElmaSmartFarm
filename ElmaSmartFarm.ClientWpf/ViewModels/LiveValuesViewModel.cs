@@ -24,6 +24,15 @@ public class LiveValuesViewModel : ViewAware
         //MessageBox.Show(PoultryManager.Poultry.Farms[0].Scalars.Sensors[0].LastRead.Temperature.ToString());
     }
 
+    private string statuss;
+
+    public string Statuss
+    {
+        get { return statuss; }
+        set { statuss = value; NotifyOfPropertyChange(() => Statuss); }
+    }
+
+
     private PoultryManager poultryManager;
     private string ticks;
 
@@ -59,12 +68,13 @@ public class LiveValuesViewModel : ViewAware
 
     public async Task ConnectAsync()
     {
-        if (PoultryManager != null && !PoultryManager.IsRunning) await PoultryManager.ConnectAsync();
-        await PoultryManager.RequestPoultryOverHttp();
-        Ticks = (DateTime.Now - PoultryManager.SystemStartupTime).ToString();
+        //if (PoultryManager != null && !PoultryManager.IsRunning) await PoultryManager.ConnectAsync();
+        //await PoultryManager.RequestPoultryOverHttp();
+        //Ticks = (DateTime.Now - PoultryManager.SystemStartupTime).ToString();
 
-        NotifyOfPropertyChange(() => PoultryManager);
-        NotifyOfPropertyChange(() => scalar);
+        //NotifyOfPropertyChange(() => PoultryManager);
+        //NotifyOfPropertyChange(() => scalar);
+        Statuss = DateTime.Now.ToString();
     }
 
     public async Task DisconnectAsync()

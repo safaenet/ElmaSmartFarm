@@ -10308,3 +10308,15 @@ MQTTnet.Client.MqttClientDisconnectedException: The MQTT client is disconnected.
 2023-01-16 18:57:06.069 +03:30 [INF] Writing sensor value in database. Sensor ID: 1, LocationID: 1, Section: FarmLeftTop
 2023-01-16 18:57:06.112 +03:30 [INF] Scalar sensor value done processing. Count: 2
 2023-01-16 18:57:06.114 +03:30 [INF] ===============  End of mqtt process 178.5131 ms) ===============
+2023-01-16 20:40:24.069 +03:30 [INF] Starting up the Service...
+2023-01-16 20:40:30.990 +03:30 [INF] Loading poultry...
+2023-01-16 20:40:32.610 +03:30 [INF] Poultry loaded. (1619.5742 ms)
+2023-01-16 20:40:32.636 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 7e8e07a5-3c46-45d3-a138-5cbe7f26e104.
+2023-01-16 20:40:32.855 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 7e8e07a5-3c46-45d3-a138-5cbe7f26e104.
+2023-01-16 20:40:32.897 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2023-01-16 20:47:07.650 +03:30 [INF] Starting up the Service...
+2023-01-16 20:47:12.927 +03:30 [INF] Loading poultry...
+2023-01-16 20:47:14.791 +03:30 [INF] Poultry loaded. (1863.9144 ms)
+2023-01-16 20:47:14.815 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 5db5a365-9306-4681-9d2c-89adf13b4682.
+2023-01-16 20:47:14.990 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 5db5a365-9306-4681-9d2c-89adf13b4682.
+2023-01-16 20:47:15.030 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.

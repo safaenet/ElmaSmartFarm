@@ -78,6 +78,6 @@
                 <TextBlock Grid.Row="1" Text="{Binding ScalarSensor.LastRead.Co2, RelativeSource={RelativeSource AncestorType={x:Type local:AllInOneSensorViewer}}, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Foreground="AliceBlue" FontSize="12" Margin="0,0,0,1" VerticalAlignment="Bottom" HorizontalAlignment="Center" Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}},Path=ActualWidth-1}" Height="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}},Path=ActualHeight-1}"/>
             </Grid>
         </Grid>
-        <!--<TextBlock Grid.Row="2" Text="{Binding Status, RelativeSource={RelativeSource AncestorType={x:Type local:AllInOneSensorViewer}}, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>-->
+        <TextBlock Grid.Row="2" FontSize="24" Foreground="Gray" Text="{Binding Status, RelativeSource={RelativeSource AncestorType={x:Type local:AllInOneSensorViewer}}, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
     </Grid>
 </UserControl>
