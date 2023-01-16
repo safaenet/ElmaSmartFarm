@@ -477,7 +477,7 @@ public partial class Worker
                 AlarmableSensorErrors = poultryEntities.AlarmableSensorErrors,
                 AlarmableFarmPeriodErrors = poultryEntities.AlarmableFarmPeriodErrors,
                 AlarmablePoultryPeriodErrors = poultryEntities.AlarmablePoultryPeriodErrors,
-                SystemUpTime = poultryEntities.SystemStartUpTime
+                SystemStartupTime = poultryEntities.SystemStartUpTime
             };
             var poultryDto = JsonSerializer.Serialize(model);
             await SendMqttMessage("Elma/ToClient/FromServer/Initial", poultryDto);

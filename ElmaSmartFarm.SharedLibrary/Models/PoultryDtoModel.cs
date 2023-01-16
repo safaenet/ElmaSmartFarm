@@ -11,5 +11,5 @@ public class PoultryDtoModel
     public List<SensorErrorModel> AlarmableSensorErrors { get; set; }
     public List<FarmInPeriodErrorModel> AlarmableFarmPeriodErrors { get; set; }
     public List<PoultryInPeriodErrorModel> AlarmablePoultryPeriodErrors { get; set; }
-    public DateTime SystemUpTime { get; set; }
+    public DateTime SystemStartupTime { get; set; }
 }

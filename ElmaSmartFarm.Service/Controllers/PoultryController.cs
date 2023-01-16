@@ -30,7 +30,7 @@ public class PoultryController : ControllerBase
                 AlarmableSensorErrors = poultryEntities.AlarmableSensorErrors,
                 AlarmableFarmPeriodErrors = poultryEntities.AlarmableFarmPeriodErrors,
                 AlarmablePoultryPeriodErrors = poultryEntities.AlarmablePoultryPeriodErrors,
-                SystemUpTime = poultryEntities.SystemStartUpTime
+                SystemStartupTime = poultryEntities.SystemStartUpTime
             };
         });
         return res;

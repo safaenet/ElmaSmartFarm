@@ -26,14 +26,14 @@ public class PoultryManager
     private MqttClientOptions mqttOptions;
     private HttpClient httpClient;
     private IMqttClient mqttClient;
-    private bool IsRunning;
     private bool IsInitialized;
-    public PoultryModel Poultry { get; private set; }
-    public List<MqttMessageModel> UnknownMqttMessages { get; private set; }
-    public List<SensorErrorModel> AlarmableSensorErrors { get; private set; }
-    public List<FarmInPeriodErrorModel> AlarmableFarmPeriodErrors { get; private set; }
-    public List<PoultryInPeriodErrorModel> AlarmablePoultryPeriodErrors { get; private set; }
-    public DateTime SystemUpTime { get; private set; }
+    public bool IsRunning { get; set; }
+    public PoultryModel Poultry { get; set; }
+    public List<MqttMessageModel> UnknownMqttMessages { get; set; }
+    public List<SensorErrorModel> AlarmableSensorErrors { get; set; }
+    public List<FarmInPeriodErrorModel> AlarmableFarmPeriodErrors { get; set; }
+    public List<PoultryInPeriodErrorModel> AlarmablePoultryPeriodErrors { get; set; }
+    public DateTime SystemStartupTime { get; set; }
 
     private async Task MqttClient_ApplicationMessageReceivedAsync(MqttApplicationMessageReceivedEventArgs arg)
     {
@@ -90,10 +90,20 @@ public class PoultryManager
         }
     }
 
+    public async Task RequestPoultryOverHttp()
+    {
+        var p = await HttpProcessor.RequestPoultry(httpClient);
+        Poultry = p.Poultry;
+        UnknownMqttMessages = p.UnknownMqttMessages;
+        AlarmableSensorErrors = p.AlarmableSensorErrors;
+        AlarmableFarmPeriodErrors = p.AlarmableFarmPeriodErrors;
+        AlarmablePoultryPeriodErrors = p.AlarmablePoultryPeriodErrors;
+        SystemStartupTime = p.SystemStartupTime;
+    }
+
     public async Task ConnectAsync()
     {
         httpClient = ConnectionManager.CreateHttpClient(PoultrySettings);
-        var str = await HttpProcessor.RequestPoultry(httpClient);
         await GetMqttConnectionSettings();
         //var poultry = await HttpProcessor.RequestPoultry(httpClient);
         //if (poultry == null)
