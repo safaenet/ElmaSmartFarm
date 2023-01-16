@@ -468,7 +468,7 @@ public partial class Worker
         //    AddMqttToUnknownList(mqtt);
         //    return -1;
         //}
-        if (SubTopics[1] == "Initialize")
+        if (SubTopics[1] == "GetInstance")
         {
             PoultryDtoModel model = new()
             {
@@ -480,7 +480,7 @@ public partial class Worker
                 SystemStartupTime = poultryEntities.SystemStartUpTime
             };
             var poultryDto = JsonSerializer.Serialize(model);
-            await SendMqttMessage("Elma/ToClient/FromServer/Initial", poultryDto);
+            await SendMqttMessage("Elma/ToClient/FromServer/Instance", poultryDto);
             return 0;
         }
         return -1;

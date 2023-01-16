@@ -10,12 +10,12 @@
   <ItemGroup>
     <PackageReference Include="Caliburn.Micro" Version="4.0.173" />
     <PackageReference Include="Caliburn.Micro.Core" Version="4.0.173" />
-    <PackageReference Include="MaterialDesignThemes" Version="4.6.1" />
     <PackageReference Include="Microsoft.VisualStudio.Utilities" Version="17.4.33103.184" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\ElmaSmartFarm.ApiClient\ElmaSmartFarm.ApiClient.csproj" />
+    <ProjectReference Include="..\ElmaSmartFarm.FarmViewerUserControl\ElmaSmartFarm.UserControls.csproj" />
   </ItemGroup>
 
 </Project>

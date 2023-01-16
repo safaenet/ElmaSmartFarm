@@ -18,6 +18,7 @@ public class PoultryManager
     {
         Index = poultryIndex;
         PoultrySettings = Config.Config.GetPoultrySettings(poultryIndex);
+        httpClient = ConnectionManager.CreateHttpClient(PoultrySettings);
     }
 
     private readonly int Index;
@@ -27,13 +28,70 @@ public class PoultryManager
     private HttpClient httpClient;
     private IMqttClient mqttClient;
     private bool IsInitialized;
+    private PoultryModel poultry;
+    private List<MqttMessageModel> unknownMqttMessages;
+    private List<SensorErrorModel> alarmableSensorErrors;
+    private List<FarmInPeriodErrorModel> alarmableFarmPeriodErrors;
+    private List<PoultryInPeriodErrorModel> alarmablePoultryPeriodErrors;
+    private DateTime systemStartupTime;
+
+    public event EventHandler OnDataChanged;
+    public event EventHandler OnMqttReceived;
     public bool IsRunning { get; set; }
-    public PoultryModel Poultry { get; set; }
-    public List<MqttMessageModel> UnknownMqttMessages { get; set; }
-    public List<SensorErrorModel> AlarmableSensorErrors { get; set; }
-    public List<FarmInPeriodErrorModel> AlarmableFarmPeriodErrors { get; set; }
-    public List<PoultryInPeriodErrorModel> AlarmablePoultryPeriodErrors { get; set; }
-    public DateTime SystemStartupTime { get; set; }
+
+    public PoultryModel Poultry
+    {
+        get => poultry; set
+        {
+            poultry = value;
+            OnDataChanged?.Invoke(this, EventArgs.Empty);
+        }
+    }
+
+    public List<MqttMessageModel> UnknownMqttMessages
+    {
+        get => unknownMqttMessages; set
+        {
+            unknownMqttMessages = value;
+            OnDataChanged?.Invoke(this, EventArgs.Empty);
+        }
+    }
+
+    public List<SensorErrorModel> AlarmableSensorErrors
+    {
+        get => alarmableSensorErrors; set
+        {
+            alarmableSensorErrors = value;
+            OnDataChanged?.Invoke(this, EventArgs.Empty);
+        }
+    }
+
+    public List<FarmInPeriodErrorModel> AlarmableFarmPeriodErrors
+    {
+        get => alarmableFarmPeriodErrors; set
+        {
+            alarmableFarmPeriodErrors = value;
+            OnDataChanged?.Invoke(this, EventArgs.Empty);
+        }
+    }
+
+    public List<PoultryInPeriodErrorModel> AlarmablePoultryPeriodErrors
+    {
+        get => alarmablePoultryPeriodErrors; set
+        {
+            alarmablePoultryPeriodErrors = value;
+            OnDataChanged?.Invoke(this, EventArgs.Empty);
+        }
+    }
+
+    public DateTime SystemStartupTime
+    {
+        get => systemStartupTime; set
+        {
+            systemStartupTime = value;
+            OnDataChanged?.Invoke(this, EventArgs.Empty);
+        }
+    }
 
     private async Task MqttClient_ApplicationMessageReceivedAsync(MqttApplicationMessageReceivedEventArgs arg)
     {
@@ -55,6 +113,7 @@ public class PoultryManager
         }
         finally
         {
+            OnMqttReceived?.Invoke(this, EventArgs.Empty);
             if (Config.Config.verbose_mode) Log.Information($"===============  End of mqtt process {TimeSpan.FromTicks(DateTime.Now.Ticks - ticks).TotalMilliseconds} ms) ===============");
         }
     }
@@ -103,7 +162,6 @@ public class PoultryManager
 
     public async Task ConnectAsync()
     {
-        httpClient = ConnectionManager.CreateHttpClient(PoultrySettings);
         await GetMqttConnectionSettings();
         //var poultry = await HttpProcessor.RequestPoultry(httpClient);
         //if (poultry == null)
@@ -137,7 +195,7 @@ public class PoultryManager
     {
         IsRunning = false;
         IsInitialized = false;
-        httpClient?.Dispose();
+        //httpClient?.Dispose();
         //await ConnectionManager.UnsubscribeFromMqttTopic(mqttClient, MqttConnectionSettings.mqtt_subscribe_topic);
         if (mqttClient != null && mqttClient.IsConnected) await mqttClient.DisconnectAsync();
         mqttClient?.Dispose();

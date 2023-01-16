@@ -1,4 +1,5 @@
 using ElmaSmartFarm.SharedLibrary.Models;
+using ElmaSmartFarm.SharedLibrary.Models.Sensors;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -12,6 +13,7 @@ namespace ElmaSmartFarm.UserControls
         public FarmViewer()
         {
             InitializeComponent();
+            DataContext = this;
         }
 
         public FarmModel Farm
@@ -24,6 +26,6 @@ namespace ElmaSmartFarm.UserControls
         public static readonly DependencyProperty FarmProperty =
             DependencyProperty.Register("Farm", typeof(FarmModel), typeof(FarmViewer), new PropertyMetadata(null));
 
-
+        public ScalarSensorModel? Scalar => Farm?.Scalars?.Sensors[0];
     }
 }

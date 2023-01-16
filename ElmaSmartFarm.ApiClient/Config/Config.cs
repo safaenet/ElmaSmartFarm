@@ -23,6 +23,7 @@ public static class Config
         if (count > 0) return count;
         else return 0;
     }
+
     public static bool PoultriesExist() => GetPoultriesCount() > 0;
 
     public static PoultrySettingsModel GetPoultrySettings(int index)
