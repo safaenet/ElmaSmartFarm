@@ -7,7 +7,7 @@
         xmlns:viewmodels="clr-namespace:ElmaSmartFarm.ClientWpf.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:LiveValuesViewModel}"
         xmlns:usercontrols="clr-namespace:ElmaSmartFarm.UserControls;assembly=ElmaSmartFarm.UserControls"
         mc:Ignorable="d"
-        Title="LiveValuesView" Height="450" Width="800" Background="Yellow">
+        Title="LiveValuesView" Height="450" Width="800" Background="White">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="25"/>
