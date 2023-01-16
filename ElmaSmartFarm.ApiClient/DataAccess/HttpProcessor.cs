@@ -11,7 +11,7 @@ public class HttpProcessor
     {
         try
         {
-            var response = await ConnectionManager.GetAsync<MqttConnectionSettingsModel>(client, "Mqtt/GetMqttSettings");
+            var response = await ConnectionManager.GetAsync<MqttConnectionSettingsModel>(client, "Poultry/MqttSettings");
             return response;
         }
         catch (Exception ex)
@@ -21,11 +21,11 @@ public class HttpProcessor
         return null;
     }
 
-    public static async Task<PoultryModel> RequestPoultry(HttpClient client)
+    public static async Task<PoultryDtoModel> RequestPoultry(HttpClient client)
     {
         try
         {
-            var response = await ConnectionManager.GetAsync<PoultryModel>(client, "Poultry/Instance");
+            var response = await ConnectionManager.GetAsync<PoultryDtoModel>(client, "Poultry");
             if (response == null)
             {
                 Log.Error("Poultry instance request returned NULL response.");

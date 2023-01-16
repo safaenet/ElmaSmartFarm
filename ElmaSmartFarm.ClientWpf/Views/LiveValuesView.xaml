@@ -4,9 +4,23 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ElmaSmartFarm.ClientWpf.Views"
+        xmlns:viewmodels="clr-namespace:ElmaSmartFarm.ClientWpf.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:LiveValuesViewModel}"
         mc:Ignorable="d"
         Title="LiveValuesView" Height="450" Width="800">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Button x:Name="ConnectAsync" Content="Connect"/>
+        <ItemsControl Grid.Row="1" ItemsSource="{Binding PoultryManager.Poultry.Farms}" BorderThickness="2">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Name}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
     </Grid>
 </Window>

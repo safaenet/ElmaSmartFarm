@@ -34,6 +34,7 @@ public class MQTT
         RetryInterval = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("mqtt:retry_seconds").Value ?? "2");
         ToServerTopic = SettingsDataAccess.AppConfiguration().GetSection("mqtt:to_server_topic").Value ?? "Elma/ToServer/"; //e.g:Elma/ToServer/FromSensor/Scalar/{Id} Payload={Value}
         ToSensorTopic = SettingsDataAccess.AppConfiguration().GetSection("mqtt:to_sensor_topic").Value ?? "Elma/ToSensor/"; //e.g:Elma/ToSensor/{Id}/Interval Payload={Interval}
+        ToClientTopic = SettingsDataAccess.AppConfiguration().GetSection("mqtt:to_client_topic").Value ?? "Elma/ToClient/";
         ToAlarmTopic = SettingsDataAccess.AppConfiguration().GetSection("mqtt:to_alarm_topic").Value ?? "Elma/ToAlarm/";
         FromSensorSubTopic = SettingsDataAccess.AppConfiguration().GetSection("mqtt:from_sensor_sub_topic").Value ?? "FromSensor/";
         FromServerSubTopic = SettingsDataAccess.AppConfiguration().GetSection("mqtt:from_server_sub_topic").Value ?? "FromServer/";
@@ -46,6 +47,7 @@ public class MQTT
         IPAddressSubTopic = SettingsDataAccess.AppConfiguration().GetSection("mqtt:ip_addsess_sub_topic").Value ?? "IP/";
         BatteryLevelSubTopic = SettingsDataAccess.AppConfiguration().GetSection("mqtt:battery_level_sub_topic").Value ?? "Battery/";
         MaxUnknownMqttCount = int.Parse(SettingsDataAccess.AppConfiguration().GetSection("mqtt:max_unknown_mqtt_count").Value ?? "100");
+        GetPoultryInstanceSubTopic = SettingsDataAccess.AppConfiguration().GetSection("mqtt:get_poultry_instance_request_sub_topic").Value ?? "GetInstance";
     }
     public string Broker { get; init; }
     public int Port { get; init; }
@@ -55,6 +57,7 @@ public class MQTT
     public int RetryInterval { get; init; }
     public string ToServerTopic { get; init; }
     public string ToSensorTopic { get; init; }
+    public string ToClientTopic { get; init; }
     public string ToAlarmTopic { get; set; }
     public string FromSensorSubTopic { get; init; }
     public string FromServerSubTopic { get; init; }
@@ -67,6 +70,8 @@ public class MQTT
     public string IPAddressSubTopic { get; init; }
     public string BatteryLevelSubTopic { get; init; }
     public int MaxUnknownMqttCount { get; init; }
+    public string GetPoultryInstanceSubTopic { get; init; }
+    public string GetPoultryInstanceFullTopic => ToServerTopic + FromClientSubTopic + "/" + GetPoultryInstanceSubTopic;
 }
 
 public class System

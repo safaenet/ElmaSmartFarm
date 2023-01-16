@@ -1,4 +1,5 @@
 ﻿using ElmaSmartFarm.DataLibraryCore;
+using ElmaSmartFarm.DataLibraryCore.Config;
 using ElmaSmartFarm.SharedLibrary.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
@@ -44,5 +45,21 @@ public class PoultryController : ControllerBase
             return poultryEntities.Poultry.Farms.Where(f => f.FarmNumber == FarmNumber).FirstOrDefault();
         });
         return res;
+    }
+
+    [HttpGet("MqttSettings")]
+    public async Task<ActionResult<MqttConnectionSettingsModel>> GetMqttSettingsAsync()
+    {
+        var config = Program.ServiceHost.Services.GetService<Config>();
+        return new MqttConnectionSettingsModel()
+        {
+            mqtt_address = config.mqtt.Broker,
+            mqtt_port = config.mqtt.Port,
+            mqtt_username = config.mqtt.Username,
+            mqtt_password = config.mqtt.Password,
+            mqtt_authentication = config.mqtt.AuthenticationEnabled,
+            mqtt_subscribe_topic = config.mqtt.ToClientTopic + "#",
+            mqtt_request_poultry_topic = config.mqtt.GetPoultryInstanceFullTopic
+        };
     }
 }

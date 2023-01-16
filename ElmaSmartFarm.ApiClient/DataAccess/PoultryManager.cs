@@ -93,6 +93,7 @@ public class PoultryManager
     public async Task ConnectAsync()
     {
         httpClient = ConnectionManager.CreateHttpClient(PoultrySettings);
+        var str = await HttpProcessor.RequestPoultry(httpClient);
         await GetMqttConnectionSettings();
         //var poultry = await HttpProcessor.RequestPoultry(httpClient);
         //if (poultry == null)
@@ -127,7 +128,7 @@ public class PoultryManager
         IsRunning = false;
         IsInitialized = false;
         httpClient?.Dispose();
-        await ConnectionManager.UnsubscribeFromMqttTopic(mqttClient, MqttConnectionSettings.mqtt_subscribe_topic);
+        //await ConnectionManager.UnsubscribeFromMqttTopic(mqttClient, MqttConnectionSettings.mqtt_subscribe_topic);
         if (mqttClient != null && mqttClient.IsConnected) await mqttClient.DisconnectAsync();
         mqttClient?.Dispose();
         Poultry = null;

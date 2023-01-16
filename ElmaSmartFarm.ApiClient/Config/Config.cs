@@ -31,6 +31,7 @@ public static class Config
         {
             var section = SettingsDataAccess.GetSection($"poultries:{index}");
             var settings = section.Get<PoultrySettingsModel>();
+            //settings.api_url += "/";
             return settings;
         }
         catch (System.Exception ex)

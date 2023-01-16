@@ -52,45 +52,45 @@ public class Program
             #region WebApi
             var builder = WebApplication.CreateBuilder(args);
 
-            builder.Services.AddSwaggerGen(options =>
-            {
-                options.AddSecurityDefinition("oauth2", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
-                {
-                    Description = "Standard authorization",
-                    In = Microsoft.OpenApi.Models.ParameterLocation.Header,
-                    Name = "Authorization",
-                    Type = Microsoft.OpenApi.Models.SecuritySchemeType.ApiKey
-                });
-                options.OperationFilter<SecurityRequirementsOperationFilter>();
-            });
+            //builder.Services.AddSwaggerGen(options =>
+            //{
+            //    options.AddSecurityDefinition("oauth2", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+            //    {
+            //        Description = "Standard authorization",
+            //        In = Microsoft.OpenApi.Models.ParameterLocation.Header,
+            //        Name = "Authorization",
+            //        Type = Microsoft.OpenApi.Models.SecuritySchemeType.ApiKey
+            //    });
+            //    options.OperationFilter<SecurityRequirementsOperationFilter>();
+            //});
 
-            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
-            {
-                options.TokenValidationParameters = new()
-                {
-                    ValidateLifetime = true,
-                    ValidateIssuer = false,
-                    ValidateAudience = false,
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(new Config().JwtKey))
-                };
-            });
+            //builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+            //{
+            //    options.TokenValidationParameters = new()
+            //    {
+            //        ValidateLifetime = true,
+            //        ValidateIssuer = false,
+            //        ValidateAudience = false,
+            //        ValidateIssuerSigningKey = true,
+            //        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(new Config().JwtKey))
+            //    };
+            //});
             //builder.Services.AddSingleton<PoultryEntities, PoultryEntities>();
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
 
             var app = builder.Build();
 
-            if (app.Environment.IsDevelopment())
-            {
-                app.UseSwagger();
-                app.UseSwaggerUI();
-            }
+            //if (app.Environment.IsDevelopment())
+            //{
+            //    app.UseSwagger();
+            //    app.UseSwaggerUI();
+            //}
 
             app.UseHttpsRedirection();
 
             app.UseAuthentication();
-            app.UseAuthorization();
+            //app.UseAuthorization();
 
             app.MapControllers();
 
