@@ -1,4 +1,5 @@
 ﻿using ElmaSmartFarm.SharedLibrary.Models.Sensors;
+using ElmaSmartFarm.UserControls.Models;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -12,30 +13,32 @@ public partial class AllInOneSensorViewer : UserControl
     public AllInOneSensorViewer()
     {
         InitializeComponent();
-        DataContext = Status;
+        DataContext = MyDataContext;
     }
-
-    //public string? Status => ScalarSensor.HasError ? "Has Error" : "No Error";
 
     public ScalarSensorModel ScalarSensor
     {
-        get { return (ScalarSensorModel)GetValue(ScalarSensorProperty); }
-        set { SetValue(ScalarSensorProperty, value); }
+        get { return MyDataContext.Scalar; }
+        set { MyDataContext.Scalar = value; }
     }
 
-    // Using a DependencyProperty as the backing store for MyProperty.  This enables animation, styling, binding, etc...
     public static readonly DependencyProperty ScalarSensorProperty =
         DependencyProperty.Register("ScalarSensor", typeof(ScalarSensorModel), typeof(AllInOneSensorViewer), new PropertyMetadata(null));
 
-    public string Status
+    //public string Status
+    //{
+    //    get { return (string)GetValue(StatusProperty); }
+    //    set { SetValue(StatusProperty, value); }
+    //}
+
+    //public static readonly DependencyProperty StatusProperty =
+    //    DependencyProperty.Register("Status", typeof(string), typeof(AllInOneSensorViewer), new PropertyMetadata("Safa"));
+
+    private AllInOneSensorDataContext myDataContext;
+
+    public AllInOneSensorDataContext MyDataContext
     {
-        get { return (string)GetValue(StatusProperty); }
-        set { SetValue(StatusProperty, value); }
+        get { return myDataContext; }
+        set { myDataContext = value; }
     }
-
-    // Using a DependencyProperty as the backing store for Status.  This enables animation, styling, binding, etc...
-    public static readonly DependencyProperty StatusProperty =
-        DependencyProperty.Register("Status", typeof(string), typeof(AllInOneSensorViewer), new PropertyMetadata("Safa"));
-
-
 }

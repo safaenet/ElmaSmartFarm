@@ -23,7 +23,7 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <local:AllInOneSensorViewer Width="150" Height="75" ScalarSensor="{Binding Scalar, RelativeSource={RelativeSource AncestorType={x:Type local:FarmViewer}}, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+            <!--<local:AllInOneSensorViewer Width="150" Height="75" ScalarSensor="{Binding Scalar, RelativeSource={RelativeSource AncestorType={x:Type local:FarmViewer}}, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>-->
         </Grid>
         
         <Grid Grid.Row="1">

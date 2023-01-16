@@ -2,6 +2,7 @@
 using ElmaSmartFarm.ApiClient.DataAccess;
 using ElmaSmartFarm.SharedLibrary.Models;
 using ElmaSmartFarm.SharedLibrary.Models.Sensors;
+using ElmaSmartFarm.UserControls.Models;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -65,6 +66,7 @@ public class LiveValuesViewModel : ViewAware
         get => PoultryManager.Poultry.Farms[0].Scalars.Sensors[0];
         set { PoultryManager.Poultry.Farms[0].Scalars.Sensors[0] = value; NotifyOfPropertyChange(() => scalar); NotifyOfPropertyChange(() => PoultryManager); }
     }
+
 
     public async Task ConnectAsync()
     {
