@@ -5,26 +5,21 @@ namespace ElmaSmartFarm.ClientWpf.ViewModels;
 
 public class ScalarSensorPresenterViewModel : Screen
 {
-    public ScalarSensorPresenterViewModel()
+    public ScalarSensorPresenterViewModel(ScalarSensorModel _scalarSensor)
     {
-        //ScalarSensor = _scalarSensor;
-        
-        //Status = "Safa";
+        ScalarSensor = _scalarSensor;
     }
 
-    //private ScalarSensorModel scalarSensor;
+    private ScalarSensorModel scalarSensor;
 
-    //public ScalarSensorModel ScalarSensor
-    //{
-    //    get { return scalarSensor; }
-    //    set { scalarSensor = value; NotifyOfPropertyChange(() => ScalarSensor); }
-    //}
-
-    private string statuss;
-
-    public string Statuss
+    public ScalarSensorModel ScalarSensor
     {
-        get { return statuss; }
-        set { statuss = value; NotifyOfPropertyChange(() => Statuss); }
+        get { return scalarSensor; }
+        set { scalarSensor = value; NotifyOfPropertyChange(() => ScalarSensor); }
+    }
+
+    public void RefreshView()
+    {
+        NotifyOfPropertyChange(() => ScalarSensor);
     }
 }

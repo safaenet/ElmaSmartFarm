@@ -14,9 +14,9 @@ public class LiveValuesViewModel : ViewAware
 {
     public LiveValuesViewModel(int index)
     {
-        //Scalar = new();
-        //Scalar.Values = new();
-        ScalarSensorPresenterViewModel = new();
+        ScalarSensor = new();
+        ScalarSensor.Values = new();
+        ScalarSensorPresenterViewModel = new(ScalarSensor);
         //PoultryManager = new(index);
         //PoultryManager.OnDataChanged += PoultryManager_OnDataChanged;
     }
@@ -66,11 +66,11 @@ public class LiveValuesViewModel : ViewAware
         }
     }
 
-    private ScalarSensorModel scalar;
-    public ScalarSensorModel Scalar
+    private ScalarSensorModel scalarSensor;
+    public ScalarSensorModel ScalarSensor
     {
-        get => scalar;
-        set { scalar = value; NotifyOfPropertyChange(() => Scalar); NotifyOfPropertyChange(() => PoultryManager); }
+        get => scalarSensor;
+        set { scalarSensor = value; NotifyOfPropertyChange(() => ScalarSensor); NotifyOfPropertyChange(() => PoultryManager); }
     }
 
     public async Task ConnectAsync()
@@ -81,7 +81,9 @@ public class LiveValuesViewModel : ViewAware
 
         //NotifyOfPropertyChange(() => PoultryManager);
         //NotifyOfPropertyChange(() => scalar);
-        ScalarSensorPresenterViewModel.Statuss = "DANA";
+
+        ScalarSensor.Values.Add(new() { Temperature = new Random().NextDouble(), ReadDate = DateTime.Now });
+        ScalarSensorPresenterViewModel.RefreshView();
     }
 
     public async Task DisconnectAsync()
