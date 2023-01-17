@@ -14,7 +14,7 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Button x:Name="ConnectAsync" Content="Connect"/>
-        <usercontrols:AllInOneSensorViewer Grid.Row="1" ScalarSensor="{Binding Scalar, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Width="150" Height="100"/>
+        <ContentControl Grid.Row="1" x:Name="ScalarSensorPresenterViewModel"/>
         <!--<TextBox Grid.Row="1" Text="{Binding Ticks, Mode=OneWay}"/>-->
         <!--<ItemsControl Grid.Row="1" ItemsSource="{Binding PoultryManager.Poultry.Farms}" BorderThickness="2">
             <ItemsControl.ItemTemplate>

@@ -16,9 +16,12 @@ public class LiveValuesViewModel : ViewAware
     {
         Scalar = new();
         Scalar.Values = new();
+        this.ScalarSensorPresenterViewModel = new();
         //PoultryManager = new(index);
         //PoultryManager.OnDataChanged += PoultryManager_OnDataChanged;
     }
+
+    public ScalarSensorPresenterViewModel ScalarSensorPresenterViewModel { get; set; }
 
     private void PoultryManager_OnDataChanged(object sender, EventArgs e)
     {
