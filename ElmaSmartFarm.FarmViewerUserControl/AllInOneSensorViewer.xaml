@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             xmlns:local="clr-namespace:ElmaSmartFarm.UserControls" xmlns:models="clr-namespace:ElmaSmartFarm.UserControls.Models" d:DataContext="{d:DesignInstance Type=models:AllInOneSensorDataContext}"
+             xmlns:local="clr-namespace:ElmaSmartFarm.UserControls" xmlns:models="clr-namespace:ElmaSmartFarm.UserControls.Models" d:DataContext="{d:DesignInstance Type=local:AllInOneSensorViewer}"
              mc:Ignorable="d" 
              d:DesignHeight="100" d:DesignWidth="150">
     <Grid>
@@ -26,7 +26,7 @@
                 <Grid>
                     <materialDesign:PackIcon Kind="Temperature" Foreground="DarkCyan" Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}},Path=ActualWidth}" Height="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}},Path=ActualHeight}" Margin="0,0,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                 </Grid>
-                <TextBlock Grid.Row="1" Text="{Binding ScalarSensor.LastRead.Temperature, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Foreground="Red" FontSize="24" Margin="0,0,0,1" VerticalAlignment="Bottom" HorizontalAlignment="Center" Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}},Path=ActualWidth-1}" Height="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}},Path=ActualHeight-1}"/>
+                <TextBlock Grid.Row="1" Text="{Binding Temp, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Foreground="Red" FontSize="24" Margin="0,0,0,1" VerticalAlignment="Bottom" HorizontalAlignment="Center" Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}},Path=ActualWidth-1}" Height="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}},Path=ActualHeight-1}"/>
             </Grid>
 
             <Grid Grid.Column="1">

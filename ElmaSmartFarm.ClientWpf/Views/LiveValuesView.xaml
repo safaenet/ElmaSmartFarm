@@ -7,14 +7,14 @@
         xmlns:viewmodels="clr-namespace:ElmaSmartFarm.ClientWpf.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:LiveValuesViewModel}"
         xmlns:usercontrols="clr-namespace:ElmaSmartFarm.UserControls;assembly=ElmaSmartFarm.UserControls"
         mc:Ignorable="d"
-        Title="LiveValuesView" Height="450" Width="800" Background="White">
+        Title="LiveValuesView" Height="450" Width="800">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="25"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Button x:Name="ConnectAsync" Content="Connect"/>
-        <usercontrols:AllInOneSensorViewer Grid.Row="1" ScalarSensor="{Binding scalar, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+        <usercontrols:AllInOneSensorViewer Grid.Row="1" ScalarSensor="{Binding Scalar, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Width="150" Height="100"/>
         <!--<TextBox Grid.Row="1" Text="{Binding Ticks, Mode=OneWay}"/>-->
         <!--<ItemsControl Grid.Row="1" ItemsSource="{Binding PoultryManager.Poultry.Farms}" BorderThickness="2">
             <ItemsControl.ItemTemplate>

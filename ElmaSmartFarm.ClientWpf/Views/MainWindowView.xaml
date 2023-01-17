@@ -10,8 +10,8 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:viewmodels="clr-namespace:ElmaSmartFarm.ClientWpf.ViewModels"
         d:DataContext="{d:DesignInstance Type=viewmodels:MainWindowViewModel}"
-        Title="{Binding User.GeneralSettings.CompanyName}" FontFamily="Tahoma" Height="545" Width="350"
-        cal:Message.Attach="[Event Closed] = [Window_Closed()]">
+        Title="Elma" FontFamily="Tahoma" Height="545" Width="350"
+        >
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="b2v"/>
     </Window.Resources>
