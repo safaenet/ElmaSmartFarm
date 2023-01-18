@@ -77,7 +77,7 @@
                 <Grid>
                     <materialDesign:PackIcon Kind="PeriodicTableCarbonDioxide" Foreground="DarkCyan" Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}},Path=ActualWidth}" Height="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}},Path=ActualHeight}" Margin="0,0,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                 </Grid>
-                <TextBlock Grid.Row="1" Text="{Binding ScalarSensor.LastRead.Co2, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Foreground="AliceBlue" FontSize="12" Margin="0,0,0,1" VerticalAlignment="Bottom" HorizontalAlignment="Center" Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}},Path=ActualWidth-1}" Height="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}},Path=ActualHeight-1}"/>
+                <TextBlock Grid.Row="1" Text="{Binding ScalarSensor.LastRead.Co2, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Foreground="Red" FontSize="12" Margin="0,0,0,1" VerticalAlignment="Bottom" HorizontalAlignment="Center" Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}},Path=ActualWidth-1}" Height="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}},Path=ActualHeight-1}"/>
             </Grid>
         </Grid>
         <!--<TextBlock Grid.Row="2" FontSize="24" Foreground="Gray" Text="{Binding Status, RelativeSource={RelativeSource AncestorType={x:Type local:AllInOneSensorViewer}}, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>-->

@@ -11251,3 +11251,226 @@ MQTTnet.Client.MqttClientDisconnectedException: The MQTT client is disconnected.
 2023-01-18 14:50:43.874 +03:30 [INF] MQTT Message received. Topic: Elma/ToServer/FromClient/GetInstance, Payload: T:32.1
 2023-01-18 14:50:43.876 +03:30 [INF] MQTT Message is from a client. Topic: Elma/ToServer/FromClient/GetInstance, Payload: T:32.1
 2023-01-18 14:50:43.906 +03:30 [INF] ===============  End of mqtt process 32.9797 ms) ===============
+2023-01-18 14:59:19.517 +03:30 [INF] Starting up the Service...
+2023-01-18 14:59:23.757 +03:30 [INF] Loading poultry...
+2023-01-18 14:59:25.085 +03:30 [INF] Poultry loaded. (1328.3425 ms)
+2023-01-18 14:59:25.109 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: f2f34497-ef0f-4059-9e77-a23e3cc7fcd8.
+2023-01-18 14:59:25.256 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: f2f34497-ef0f-4059-9e77-a23e3cc7fcd8.
+2023-01-18 14:59:25.292 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2023-01-18 14:59:32.787 +03:30 [INF] ===============  Begin mqtt process  ===============
+2023-01-18 14:59:32.790 +03:30 [INF] MQTT Message received. Topic: Elma/ToServer/FromClient/GetInstance, Payload: 1
+2023-01-18 14:59:32.831 +03:30 [INF] MQTT Message is from a client. Topic: Elma/ToServer/FromClient/GetInstance, Payload: 1
+2023-01-18 14:59:33.171 +03:30 [INF] ===============  End of mqtt process 383.8004 ms) ===============
+2023-01-18 14:59:42.466 +03:30 [INF] ===============  Begin mqtt process  ===============
+2023-01-18 14:59:42.467 +03:30 [INF] MQTT Message received. Topic: Elma/ToServer/FromSensor/Scalar/1, Payload: T:32.2
+2023-01-18 14:59:42.492 +03:30 [INF] MQTT Message is from a sensor. Topic: Elma/ToServer/FromSensor/Scalar/1, Payload: T:32.2
+2023-01-18 14:59:42.494 +03:30 [INF] MQTT Message is value from a scalar sensor. Topic: Elma/ToServer/FromSensor/Scalar/1, Payload: T:32.2
+2023-01-18 14:59:42.504 +03:30 [INF] Sensor is valid; Value is valid. Type: FarmScalar, LocationID: 1, Section: FarmLeftTop
+2023-01-18 14:59:42.509 +03:30 [INF] Updating sensor error in database, if existed. Sensor ID: 1, Error Types: InvalidTemperatureData...
+2023-01-18 14:59:42.668 +03:30 [INF] Sensor is valid; Value is valid. Type: FarmScalar, LocationID: 1, Section: FarmLeftTop
+2023-01-18 14:59:42.669 +03:30 [INF] Updating sensor error in database, if existed. Sensor ID: 1, Error Types: InvalidTemperatureValue...
+2023-01-18 14:59:42.705 +03:30 [INF] Updating farm error in database, if existed. Farm ID: 1, Error Types: LowTemperature...
+2023-01-18 14:59:42.742 +03:30 [INF] Sensor is valid; Value is valid. Type: FarmScalar, LocationID: 1, Section: FarmLeftTop
+2023-01-18 14:59:42.744 +03:30 [INF] Updating sensor error in database, if existed. Sensor ID: 1, Error Types: NotAlive...
+2023-01-18 14:59:42.771 +03:30 [INF] Sensor is valid; Value is valid. Type: FarmScalar, LocationID: 1, Section: FarmLeftTop
+2023-01-18 14:59:42.771 +03:30 [INF] Updating sensor error in database, if existed. Sensor ID: 1, Error Types: InvalidData...
+2023-01-18 14:59:42.802 +03:30 [INF] Writing sensor value in database. Sensor ID: 1, LocationID: 1, Section: FarmLeftTop
+2023-01-18 14:59:42.840 +03:30 [INF] Scalar sensor value done processing. Count: 1
+2023-01-18 14:59:42.841 +03:30 [INF] ===============  End of mqtt process 374.5461 ms) ===============
+2023-01-18 14:59:45.172 +03:30 [INF] ===============  Begin mqtt process  ===============
+2023-01-18 14:59:45.176 +03:30 [INF] MQTT Message received. Topic: Elma/ToServer/FromClient/GetInstance, Payload: T:32.1
+2023-01-18 14:59:45.177 +03:30 [INF] MQTT Message is from a client. Topic: Elma/ToServer/FromClient/GetInstance, Payload: T:32.1
+2023-01-18 14:59:45.303 +03:30 [INF] ===============  End of mqtt process 131.3823 ms) ===============
+2023-01-18 15:00:14.689 +03:30 [INF] ===============  Begin mqtt process  ===============
+2023-01-18 15:00:14.690 +03:30 [INF] MQTT Message received. Topic: Elma/ToServer/FromSensor/Scalar/1, Payload: T:32.2/C:21
+2023-01-18 15:00:14.691 +03:30 [INF] MQTT Message is from a sensor. Topic: Elma/ToServer/FromSensor/Scalar/1, Payload: T:32.2/C:21
+2023-01-18 15:00:14.692 +03:30 [INF] MQTT Message is value from a scalar sensor. Topic: Elma/ToServer/FromSensor/Scalar/1, Payload: T:32.2/C:21
+2023-01-18 15:00:14.695 +03:30 [INF] Sensor is valid; Value is valid. Type: FarmScalar, LocationID: 1, Section: FarmLeftTop
+2023-01-18 15:00:14.696 +03:30 [INF] Updating sensor error in database, if existed. Sensor ID: 1, Error Types: InvalidTemperatureData...
+2023-01-18 15:00:14.717 +03:30 [INF] Sensor is valid; Value is valid. Type: FarmScalar, LocationID: 1, Section: FarmLeftTop
+2023-01-18 15:00:14.718 +03:30 [INF] Updating sensor error in database, if existed. Sensor ID: 1, Error Types: InvalidTemperatureValue...
+2023-01-18 15:00:14.744 +03:30 [INF] Updating farm error in database, if existed. Farm ID: 1, Error Types: LowTemperature...
+2023-01-18 15:00:14.774 +03:30 [INF] Sensor is valid; Value is valid. Type: FarmScalar, LocationID: 1, Section: FarmLeftTop
+2023-01-18 15:00:14.775 +03:30 [INF] Updating sensor error in database, if existed. Sensor ID: 1, Error Types: InvalidCo2Data...
+2023-01-18 15:00:14.807 +03:30 [INF] Sensor is valid; Value is valid. Type: FarmScalar, LocationID: 1, Section: FarmLeftTop
+2023-01-18 15:00:14.808 +03:30 [INF] Updating sensor error in database, if existed. Sensor ID: 1, Error Types: InvalidCo2Value...
+2023-01-18 15:00:14.840 +03:30 [INF] Updating farm error in database, if existed. Farm ID: 1, Error Types: HighCo2...
+2023-01-18 15:00:14.874 +03:30 [INF] Sensor is valid; Value is valid. Type: FarmScalar, LocationID: 1, Section: FarmLeftTop
+2023-01-18 15:00:14.875 +03:30 [INF] Updating sensor error in database, if existed. Sensor ID: 1, Error Types: NotAlive...
+2023-01-18 15:00:14.902 +03:30 [INF] Sensor is valid; Value is valid. Type: FarmScalar, LocationID: 1, Section: FarmLeftTop
+2023-01-18 15:00:14.903 +03:30 [INF] Updating sensor error in database, if existed. Sensor ID: 1, Error Types: InvalidData...
+2023-01-18 15:00:14.930 +03:30 [INF] Writing sensor value in database. Sensor ID: 1, LocationID: 1, Section: FarmLeftTop
+2023-01-18 15:00:14.989 +03:30 [INF] Scalar sensor value done processing. Count: 2
+2023-01-18 15:00:14.990 +03:30 [INF] ===============  End of mqtt process 301.526 ms) ===============
+2023-01-18 15:01:00.373 +03:30 [WRN] Sensor with ID: 1 is not sending KeepAlive message since 1/18/2023 3:00:14 PM. Location: 1, Section: FarmLeftTop
+2023-01-18 15:01:00.385 +03:30 [INF] Writing sensor error in database. Sensor ID: 1, LocationID: 1, Section: FarmLeftTop, Error Type: NotAlive
+2023-01-18 15:01:10.600 +03:30 [INF] Activating farm alarm. Count: 1, Level: 2
+2023-01-18 15:01:10.602 +03:30 [INF] Activating poultry light alarm. Count: 1, Level: 2
+2023-01-18 15:01:10.606 +03:30 [INF] Activating/Reactivating alarm. Alarm type: FarmLight, Alarm location ID: 1, Error: Not Alive since: 1/18/2023 3:00:14 PM, Thread: 18
+2023-01-18 15:01:10.607 +03:30 [INF] Activating/Reactivating alarm. Alarm type: PoultryLight, Alarm location ID: 0, Error: Not Alive since: 1/18/2023 3:00:14 PM, Thread: 12
+2023-01-18 15:01:10.610 +03:30 [INF] Writing alarm trigger log in database. Sensor ID: 2, Action: On
+2023-01-18 15:01:10.610 +03:30 [INF] Writing alarm trigger log in database. Sensor ID: 1, Action: On
+2023-01-18 15:01:15.605 +03:30 [INF] Deactivating alarm. Alarm type: FarmLight, Alarm location ID: 1, Error: Not Alive since: 1/18/2023 3:00:14 PM, Thread: 18
+2023-01-18 15:01:15.607 +03:30 [INF] Deactivating alarm. Alarm type: PoultryLight, Alarm location ID: 0, Error: Not Alive since: 1/18/2023 3:00:14 PM, Thread: 23
+2023-01-18 15:01:15.611 +03:30 [INF] Writing alarm trigger log in database. Sensor ID: 1, Action: Off
+2023-01-18 15:01:15.654 +03:30 [INF] Writing alarm trigger log in database. Sensor ID: 2, Action: Off
+2023-01-18 15:01:19.190 +03:30 [INF] ===============  Begin mqtt process  ===============
+2023-01-18 15:01:19.192 +03:30 [INF] MQTT Message received. Topic: Elma/ToServer/FromClient/GetInstance, Payload: T:32.1
+2023-01-18 15:01:19.193 +03:30 [INF] MQTT Message is from a client. Topic: Elma/ToServer/FromClient/GetInstance, Payload: T:32.1
+2023-01-18 15:01:19.214 +03:30 [INF] ===============  End of mqtt process 24.3975 ms) ===============
+2023-01-18 15:01:25.821 +03:30 [INF] Activating farm alarm. Count: 2, Level: 2
+2023-01-18 15:01:25.822 +03:30 [INF] Activating poultry light alarm. Count: 2, Level: 2
+2023-01-18 15:01:25.822 +03:30 [INF] Activating/Reactivating alarm. Alarm type: FarmLight, Alarm location ID: 1, Error: Not Alive since: 1/18/2023 3:00:14 PM, Thread: 18
+2023-01-18 15:01:25.823 +03:30 [INF] Activating/Reactivating alarm. Alarm type: PoultryLight, Alarm location ID: 0, Error: Not Alive since: 1/18/2023 3:00:14 PM, Thread: 12
+2023-01-18 15:01:25.825 +03:30 [INF] Writing alarm trigger log in database. Sensor ID: 1, Action: On
+2023-01-18 15:01:25.826 +03:30 [INF] Writing alarm trigger log in database. Sensor ID: 2, Action: On
+2023-01-18 15:01:30.829 +03:30 [INF] Deactivating alarm. Alarm type: PoultryLight, Alarm location ID: 0, Error: Not Alive since: 1/18/2023 3:00:14 PM, Thread: 23
+2023-01-18 15:01:30.829 +03:30 [INF] Deactivating alarm. Alarm type: FarmLight, Alarm location ID: 1, Error: Not Alive since: 1/18/2023 3:00:14 PM, Thread: 6
+2023-01-18 15:01:30.833 +03:30 [INF] Writing alarm trigger log in database. Sensor ID: 2, Action: Off
+2023-01-18 15:01:30.861 +03:30 [INF] Writing alarm trigger log in database. Sensor ID: 1, Action: Off
+2023-01-18 15:01:40.976 +03:30 [INF] Activating farm alarm. Count: 3, Level: 2
+2023-01-18 15:01:40.977 +03:30 [INF] Activating poultry light alarm. Count: 3, Level: 2
+2023-01-18 15:01:40.977 +03:30 [INF] Activating/Reactivating alarm. Alarm type: FarmLight, Alarm location ID: 1, Error: Not Alive since: 1/18/2023 3:00:14 PM, Thread: 22
+2023-01-18 15:01:40.979 +03:30 [INF] Activating/Reactivating alarm. Alarm type: PoultryLight, Alarm location ID: 0, Error: Not Alive since: 1/18/2023 3:00:14 PM, Thread: 18
+2023-01-18 15:01:40.980 +03:30 [INF] Writing alarm trigger log in database. Sensor ID: 1, Action: On
+2023-01-18 15:01:40.985 +03:30 [INF] Writing alarm trigger log in database. Sensor ID: 2, Action: On
+2023-01-18 15:01:45.993 +03:30 [INF] Deactivating alarm. Alarm type: FarmLight, Alarm location ID: 1, Error: Not Alive since: 1/18/2023 3:00:14 PM, Thread: 18
+2023-01-18 15:01:45.993 +03:30 [INF] Deactivating alarm. Alarm type: PoultryLight, Alarm location ID: 0, Error: Not Alive since: 1/18/2023 3:00:14 PM, Thread: 9
+2023-01-18 15:01:45.998 +03:30 [INF] Writing alarm trigger log in database. Sensor ID: 1, Action: Off
+2023-01-18 15:01:46.040 +03:30 [INF] Writing alarm trigger log in database. Sensor ID: 2, Action: Off
+2023-01-18 15:02:17.388 +03:30 [INF] ===============  Begin mqtt process  ===============
+2023-01-18 15:02:17.393 +03:30 [INF] MQTT Message received. Topic: Elma/ToServer/FromSensor/Scalar/1, Payload: T:32.2/C:21.0
+2023-01-18 15:02:17.395 +03:30 [INF] MQTT Message is from a sensor. Topic: Elma/ToServer/FromSensor/Scalar/1, Payload: T:32.2/C:21.0
+2023-01-18 15:02:17.396 +03:30 [INF] MQTT Message is value from a scalar sensor. Topic: Elma/ToServer/FromSensor/Scalar/1, Payload: T:32.2/C:21.0
+2023-01-18 15:02:17.398 +03:30 [INF] Sensor is valid; Value is valid. Type: FarmScalar, LocationID: 1, Section: FarmLeftTop
+2023-01-18 15:02:17.401 +03:30 [INF] Updating sensor error in database, if existed. Sensor ID: 1, Error Types: InvalidTemperatureData...
+2023-01-18 15:02:17.424 +03:30 [INF] Sensor is valid; Value is valid. Type: FarmScalar, LocationID: 1, Section: FarmLeftTop
+2023-01-18 15:02:17.425 +03:30 [INF] Updating sensor error in database, if existed. Sensor ID: 1, Error Types: InvalidTemperatureValue...
+2023-01-18 15:02:17.451 +03:30 [INF] Updating farm error in database, if existed. Farm ID: 1, Error Types: LowTemperature...
+2023-01-18 15:02:17.476 +03:30 [INF] Sensor is valid; Value is valid. Type: FarmScalar, LocationID: 1, Section: FarmLeftTop
+2023-01-18 15:02:17.477 +03:30 [INF] Updating sensor error in database, if existed. Sensor ID: 1, Error Types: InvalidCo2Data...
+2023-01-18 15:02:17.503 +03:30 [INF] Sensor is valid; Value is valid. Type: FarmScalar, LocationID: 1, Section: FarmLeftTop
+2023-01-18 15:02:17.518 +03:30 [INF] Updating sensor error in database, if existed. Sensor ID: 1, Error Types: InvalidCo2Value...
+2023-01-18 15:02:17.544 +03:30 [INF] Updating farm error in database, if existed. Farm ID: 1, Error Types: HighCo2...
+2023-01-18 15:02:17.569 +03:30 [INF] Sensor is valid; Value is valid. Type: FarmScalar, LocationID: 1, Section: FarmLeftTop
+2023-01-18 15:02:17.570 +03:30 [INF] Updating sensor error in database, if existed. Sensor ID: 1, Error Types: NotAlive...
+2023-01-18 15:02:17.601 +03:30 [INF] Sensor is valid; Value is valid. Type: FarmScalar, LocationID: 1, Section: FarmLeftTop
+2023-01-18 15:02:17.603 +03:30 [INF] Updating sensor error in database, if existed. Sensor ID: 1, Error Types: InvalidData...
+2023-01-18 15:02:17.646 +03:30 [INF] Writing sensor value in database. Sensor ID: 1, LocationID: 1, Section: FarmLeftTop
+2023-01-18 15:02:17.680 +03:30 [INF] Scalar sensor value done processing. Count: 3
+2023-01-18 15:02:17.681 +03:30 [INF] ===============  End of mqtt process 293.0078 ms) ===============
+2023-01-18 15:02:31.619 +03:30 [INF] ===============  Begin mqtt process  ===============
+2023-01-18 15:02:31.620 +03:30 [INF] MQTT Message received. Topic: Elma/ToServer/FromSensor/Scalar/1, Payload: T:32.2/C:21.0
+2023-01-18 15:02:31.621 +03:30 [INF] MQTT Message is from a sensor. Topic: Elma/ToServer/FromSensor/Scalar/1, Payload: T:32.2/C:21.0
+2023-01-18 15:02:31.622 +03:30 [INF] MQTT Message is value from a scalar sensor. Topic: Elma/ToServer/FromSensor/Scalar/1, Payload: T:32.2/C:21.0
+2023-01-18 15:02:31.624 +03:30 [INF] Sensor is valid; Value is valid. Type: FarmScalar, LocationID: 1, Section: FarmLeftTop
+2023-01-18 15:02:31.628 +03:30 [INF] Updating sensor error in database, if existed. Sensor ID: 1, Error Types: InvalidTemperatureData...
+2023-01-18 15:02:31.648 +03:30 [INF] Sensor is valid; Value is valid. Type: FarmScalar, LocationID: 1, Section: FarmLeftTop
+2023-01-18 15:02:31.649 +03:30 [INF] Updating sensor error in database, if existed. Sensor ID: 1, Error Types: InvalidTemperatureValue...
+2023-01-18 15:02:31.675 +03:30 [INF] Updating farm error in database, if existed. Farm ID: 1, Error Types: LowTemperature...
+2023-01-18 15:02:35.050 +03:30 [INF] Sensor is valid; Value is valid. Type: FarmScalar, LocationID: 1, Section: FarmLeftTop
+2023-01-18 15:02:35.063 +03:30 [INF] Updating sensor error in database, if existed. Sensor ID: 1, Error Types: InvalidCo2Data...
+2023-01-18 15:02:35.089 +03:30 [INF] Sensor is valid; Value is valid. Type: FarmScalar, LocationID: 1, Section: FarmLeftTop
+2023-01-18 15:02:35.090 +03:30 [INF] Updating sensor error in database, if existed. Sensor ID: 1, Error Types: InvalidCo2Value...
+2023-01-18 15:02:35.114 +03:30 [INF] Updating farm error in database, if existed. Farm ID: 1, Error Types: HighCo2...
+2023-01-18 15:02:35.142 +03:30 [INF] Sensor is valid; Value is valid. Type: FarmScalar, LocationID: 1, Section: FarmLeftTop
+2023-01-18 15:02:35.144 +03:30 [INF] Updating sensor error in database, if existed. Sensor ID: 1, Error Types: NotAlive...
+2023-01-18 15:02:35.168 +03:30 [INF] Sensor is valid; Value is valid. Type: FarmScalar, LocationID: 1, Section: FarmLeftTop
+2023-01-18 15:02:35.169 +03:30 [INF] Updating sensor error in database, if existed. Sensor ID: 1, Error Types: InvalidData...
+2023-01-18 15:02:35.193 +03:30 [INF] Writing sensor value in database. Sensor ID: 1, LocationID: 1, Section: FarmLeftTop
+2023-01-18 15:02:35.222 +03:30 [INF] Scalar sensor value done processing. Count: 4
+2023-01-18 15:02:35.225 +03:30 [INF] ===============  End of mqtt process 3605.5104 ms) ===============
+2023-01-18 15:03:17.574 +03:30 [WRN] Sensor with ID: 1 is not sending KeepAlive message since 1/18/2023 3:02:31 PM. Location: 1, Section: FarmLeftTop
+2023-01-18 15:03:17.576 +03:30 [INF] Writing sensor error in database. Sensor ID: 1, LocationID: 1, Section: FarmLeftTop, Error Type: NotAlive
+2023-01-18 15:03:27.704 +03:30 [INF] Activating farm alarm. Count: 1, Level: 2
+2023-01-18 15:03:27.705 +03:30 [INF] Activating poultry light alarm. Count: 1, Level: 2
+2023-01-18 15:03:27.706 +03:30 [INF] Activating/Reactivating alarm. Alarm type: FarmLight, Alarm location ID: 1, Error: Not Alive since: 1/18/2023 3:02:31 PM, Thread: 6
+2023-01-18 15:03:27.707 +03:30 [INF] Activating/Reactivating alarm. Alarm type: PoultryLight, Alarm location ID: 0, Error: Not Alive since: 1/18/2023 3:02:31 PM, Thread: 21
+2023-01-18 15:03:27.708 +03:30 [INF] Writing alarm trigger log in database. Sensor ID: 1, Action: On
+2023-01-18 15:03:27.710 +03:30 [INF] Writing alarm trigger log in database. Sensor ID: 2, Action: On
+2023-01-18 15:03:32.707 +03:30 [INF] Deactivating alarm. Alarm type: FarmLight, Alarm location ID: 1, Error: Not Alive since: 1/18/2023 3:02:31 PM, Thread: 27
+2023-01-18 15:03:32.707 +03:30 [INF] Deactivating alarm. Alarm type: PoultryLight, Alarm location ID: 0, Error: Not Alive since: 1/18/2023 3:02:31 PM, Thread: 31
+2023-01-18 15:03:32.723 +03:30 [INF] Writing alarm trigger log in database. Sensor ID: 1, Action: Off
+2023-01-18 15:03:32.724 +03:30 [INF] Writing alarm trigger log in database. Sensor ID: 2, Action: Off
+2023-01-18 15:03:42.314 +03:30 [INF] ===============  Begin mqtt process  ===============
+2023-01-18 15:03:42.315 +03:30 [INF] MQTT Message received. Topic: Elma/ToServer/FromClient/GetInstance, Payload: T:32.1
+2023-01-18 15:03:42.318 +03:30 [INF] MQTT Message is from a client. Topic: Elma/ToServer/FromClient/GetInstance, Payload: T:32.1
+2023-01-18 15:03:42.324 +03:30 [INF] ===============  End of mqtt process 9.7719 ms) ===============
+2023-01-18 15:04:05.194 +03:30 [INF] Activating farm alarm. Count: 2, Level: 2
+2023-01-18 15:04:05.202 +03:30 [INF] Activating poultry light alarm. Count: 2, Level: 2
+2023-01-18 15:04:05.204 +03:30 [INF] Activating/Reactivating alarm. Alarm type: PoultryLight, Alarm location ID: 0, Error: Not Alive since: 1/18/2023 3:02:31 PM, Thread: 19
+2023-01-18 15:04:05.208 +03:30 [INF] Writing alarm trigger log in database. Sensor ID: 2, Action: On
+2023-01-18 15:04:05.211 +03:30 [INF] Activating/Reactivating alarm. Alarm type: FarmLight, Alarm location ID: 1, Error: Not Alive since: 1/18/2023 3:02:31 PM, Thread: 20
+2023-01-18 15:04:05.259 +03:30 [INF] Writing alarm trigger log in database. Sensor ID: 1, Action: On
+2023-01-18 15:04:10.204 +03:30 [INF] Deactivating alarm. Alarm type: PoultryLight, Alarm location ID: 0, Error: Not Alive since: 1/18/2023 3:02:31 PM, Thread: 18
+2023-01-18 15:04:10.209 +03:30 [INF] Writing alarm trigger log in database. Sensor ID: 2, Action: Off
+2023-01-18 15:04:10.211 +03:30 [INF] Deactivating alarm. Alarm type: FarmLight, Alarm location ID: 1, Error: Not Alive since: 1/18/2023 3:02:31 PM, Thread: 20
+2023-01-18 15:04:10.235 +03:30 [INF] Writing alarm trigger log in database. Sensor ID: 1, Action: Off
+2023-01-18 15:04:52.537 +03:30 [INF] Starting up the Service...
+2023-01-18 15:04:56.352 +03:30 [INF] Loading poultry...
+2023-01-18 15:04:58.634 +03:30 [INF] Poultry loaded. (2282.417 ms)
+2023-01-18 15:04:58.664 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 81ae0ae8-e8df-4ae3-a6c9-249ffae57087.
+2023-01-18 15:04:58.843 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 81ae0ae8-e8df-4ae3-a6c9-249ffae57087.
+2023-01-18 15:04:58.873 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2023-01-18 15:04:58.927 +03:30 [INF] Writing sensor watch log in database. Sensor ID: 1, Action: Unwatch
+2023-01-18 15:04:59.142 +03:30 [WRN] Sensor with ID 1 has been unwatched due to persisting error. Error Type: NotAlive, Error happened date: 1/18/2023 3:03:17 PM
+2023-01-18 15:04:59.152 +03:30 [INF] Activating farm alarm. Count: 1, Level: 2
+2023-01-18 15:04:59.154 +03:30 [INF] Activating poultry light alarm. Count: 1, Level: 2
+2023-01-18 15:04:59.161 +03:30 [INF] Activating/Reactivating alarm. Alarm type: FarmLight, Alarm location ID: 1, Error: Not Alive since: 1/18/2023 3:02:31 PM, Thread: 12
+2023-01-18 15:04:59.169 +03:30 [INF] Activating/Reactivating alarm. Alarm type: PoultryLight, Alarm location ID: 0, Error: Not Alive since: 1/18/2023 3:02:31 PM, Thread: 19
+2023-01-18 15:04:59.172 +03:30 [INF] Writing alarm trigger log in database. Sensor ID: 2, Action: On
+2023-01-18 15:04:59.172 +03:30 [INF] Writing alarm trigger log in database. Sensor ID: 1, Action: On
+2023-01-18 15:05:00.291 +03:30 [INF] ===============  Begin mqtt process  ===============
+2023-01-18 15:05:00.314 +03:30 [INF] MQTT Message received. Topic: Elma/ToServer/FromSensor/Scalar/1, Payload: T:32.2/C:21.0
+2023-01-18 15:05:00.346 +03:30 [INF] MQTT Message is from a sensor. Topic: Elma/ToServer/FromSensor/Scalar/1, Payload: T:32.2/C:21.0
+2023-01-18 15:05:00.365 +03:30 [INF] MQTT Message is value from a scalar sensor. Topic: Elma/ToServer/FromSensor/Scalar/1, Payload: T:32.2/C:21.0
+2023-01-18 15:05:00.426 +03:30 [INF] Sensor is valid; Value is valid. Type: FarmScalar, LocationID: 1, Section: FarmLeftTop
+2023-01-18 15:05:00.475 +03:30 [INF] Updating sensor error in database, if existed. Sensor ID: 1, Error Types: InvalidTemperatureData...
+2023-01-18 15:05:00.711 +03:30 [INF] Sensor is valid; Value is valid. Type: FarmScalar, LocationID: 1, Section: FarmLeftTop
+2023-01-18 15:05:00.728 +03:30 [INF] Updating sensor error in database, if existed. Sensor ID: 1, Error Types: InvalidTemperatureValue...
+2023-01-18 15:05:00.786 +03:30 [INF] Sensor is valid; Value is valid. Type: FarmScalar, LocationID: 1, Section: FarmLeftTop
+2023-01-18 15:05:00.811 +03:30 [INF] Updating sensor error in database, if existed. Sensor ID: 1, Error Types: InvalidCo2Data...
+2023-01-18 15:05:00.870 +03:30 [INF] Sensor is valid; Value is valid. Type: FarmScalar, LocationID: 1, Section: FarmLeftTop
+2023-01-18 15:05:00.892 +03:30 [INF] Updating sensor error in database, if existed. Sensor ID: 1, Error Types: InvalidCo2Value...
+2023-01-18 15:05:00.982 +03:30 [INF] Sensor is valid; Value is valid. Type: FarmScalar, LocationID: 1, Section: FarmLeftTop
+2023-01-18 15:05:00.991 +03:30 [INF] Deactivating alarm. Alarm type: PoultryLight, Alarm location ID: 0, Error: Not Alive since: 1/18/2023 3:02:31 PM, Thread: 3
+2023-01-18 15:05:00.991 +03:30 [INF] Deactivating alarm. Alarm type: FarmLight, Alarm location ID: 1, Error: Not Alive since: 1/18/2023 3:02:31 PM, Thread: 12
+2023-01-18 15:05:00.991 +03:30 [INF] Updating sensor error in database, if existed. Sensor ID: 1, Error Types: NotAlive...
+2023-01-18 15:05:00.996 +03:30 [INF] Writing alarm trigger log in database. Sensor ID: 2, Action: Off
+2023-01-18 15:05:01.041 +03:30 [INF] Writing alarm trigger log in database. Sensor ID: 1, Action: Off
+2023-01-18 15:05:01.043 +03:30 [INF] Sensor is valid; Value is valid. Type: FarmScalar, LocationID: 1, Section: FarmLeftTop
+2023-01-18 15:05:01.090 +03:30 [INF] Updating sensor error in database, if existed. Sensor ID: 1, Error Types: InvalidData...
+2023-01-18 15:05:01.178 +03:30 [INF] Writing sensor value in database. Sensor ID: 1, LocationID: 1, Section: FarmLeftTop
+2023-01-18 15:05:01.222 +03:30 [INF] Sensor unit is back online. ID: 1, Location: 1, Section: FarmLeftTop
+2023-01-18 15:05:01.224 +03:30 [INF] Writing sensor watch log in database. Sensor ID: 1, Action: Watch
+2023-01-18 15:05:01.225 +03:30 [INF] Scalar sensor value done processing. Count: 1
+2023-01-18 15:05:01.228 +03:30 [INF] ===============  End of mqtt process 937.33 ms) ===============
+2023-01-18 15:05:07.838 +03:30 [INF] ===============  Begin mqtt process  ===============
+2023-01-18 15:05:07.839 +03:30 [INF] MQTT Message received. Topic: Elma/ToServer/FromClient/GetInstance, Payload: 1
+2023-01-18 15:05:07.844 +03:30 [INF] MQTT Message is from a client. Topic: Elma/ToServer/FromClient/GetInstance, Payload: 1
+2023-01-18 15:05:08.202 +03:30 [INF] ===============  End of mqtt process 364.084 ms) ===============
+2023-01-18 15:05:22.715 +03:30 [INF] ===============  Begin mqtt process  ===============
+2023-01-18 15:05:22.716 +03:30 [INF] MQTT Message received. Topic: Elma/ToServer/FromSensor/Scalar/1, Payload: T:32.2/C:31.0
+2023-01-18 15:05:22.721 +03:30 [INF] MQTT Message is from a sensor. Topic: Elma/ToServer/FromSensor/Scalar/1, Payload: T:32.2/C:31.0
+2023-01-18 15:05:22.722 +03:30 [INF] MQTT Message is value from a scalar sensor. Topic: Elma/ToServer/FromSensor/Scalar/1, Payload: T:32.2/C:31.0
+2023-01-18 15:05:22.723 +03:30 [INF] Sensor is valid; Value is valid. Type: FarmScalar, LocationID: 1, Section: FarmLeftTop
+2023-01-18 15:05:22.724 +03:30 [INF] Updating sensor error in database, if existed. Sensor ID: 1, Error Types: InvalidTemperatureData...
+2023-01-18 15:05:22.751 +03:30 [INF] Sensor is valid; Value is valid. Type: FarmScalar, LocationID: 1, Section: FarmLeftTop
+2023-01-18 15:05:22.754 +03:30 [INF] Updating sensor error in database, if existed. Sensor ID: 1, Error Types: InvalidTemperatureValue...
+2023-01-18 15:05:22.783 +03:30 [INF] Updating farm error in database, if existed. Farm ID: 1, Error Types: LowTemperature...
+2023-01-18 15:05:22.818 +03:30 [INF] Sensor is valid; Value is valid. Type: FarmScalar, LocationID: 1, Section: FarmLeftTop
+2023-01-18 15:05:22.819 +03:30 [INF] Updating sensor error in database, if existed. Sensor ID: 1, Error Types: InvalidCo2Data...
+2023-01-18 15:05:22.850 +03:30 [INF] Sensor is valid; Value is valid. Type: FarmScalar, LocationID: 1, Section: FarmLeftTop
+2023-01-18 15:05:22.851 +03:30 [INF] Updating sensor error in database, if existed. Sensor ID: 1, Error Types: InvalidCo2Value...
+2023-01-18 15:05:22.880 +03:30 [INF] Updating farm error in database, if existed. Farm ID: 1, Error Types: HighCo2...
+2023-01-18 15:05:22.906 +03:30 [INF] Sensor is valid; Value is valid. Type: FarmScalar, LocationID: 1, Section: FarmLeftTop
+2023-01-18 15:05:22.907 +03:30 [INF] Updating sensor error in database, if existed. Sensor ID: 1, Error Types: NotAlive...
+2023-01-18 15:05:22.933 +03:30 [INF] Sensor is valid; Value is valid. Type: FarmScalar, LocationID: 1, Section: FarmLeftTop
+2023-01-18 15:05:22.934 +03:30 [INF] Updating sensor error in database, if existed. Sensor ID: 1, Error Types: InvalidData...
+2023-01-18 15:05:22.960 +03:30 [INF] Writing sensor value in database. Sensor ID: 1, LocationID: 1, Section: FarmLeftTop
+2023-01-18 15:05:22.986 +03:30 [INF] Scalar sensor value done processing. Count: 2
+2023-01-18 15:05:22.987 +03:30 [INF] ===============  End of mqtt process 272.8443 ms) ===============
+2023-01-18 15:05:27.930 +03:30 [INF] ===============  Begin mqtt process  ===============
+2023-01-18 15:05:27.931 +03:30 [INF] MQTT Message received. Topic: Elma/ToServer/FromClient/GetInstance, Payload: T:32.1
+2023-01-18 15:05:27.933 +03:30 [INF] MQTT Message is from a client. Topic: Elma/ToServer/FromClient/GetInstance, Payload: T:32.1
+2023-01-18 15:05:27.938 +03:30 [INF] ===============  End of mqtt process 8.1264 ms) ===============
