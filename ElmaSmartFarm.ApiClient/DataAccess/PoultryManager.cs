@@ -16,12 +16,10 @@ public class PoultryManager
 {
     public PoultryManager(int poultryIndex)
     {
-        Index = poultryIndex;
         PoultrySettings = Config.Config.GetPoultrySettings(poultryIndex);
         httpClient = ConnectionManager.CreateHttpClient(PoultrySettings);
     }
 
-    private readonly int Index;
     private PoultrySettingsModel PoultrySettings;
     private MqttConnectionSettingsModel MqttConnectionSettings;
     private MqttClientOptions mqttOptions;
@@ -37,6 +35,7 @@ public class PoultryManager
 
     public event EventHandler OnDataChanged;
     public event EventHandler OnMqttReceived;
+    public event EventHandler OnHttpReceived;
     public bool IsRunning { get; set; }
 
     public PoultryModel Poultry
@@ -44,7 +43,6 @@ public class PoultryManager
         get => poultry; set
         {
             poultry = value;
-            OnDataChanged?.Invoke(this, EventArgs.Empty);
         }
     }
 
@@ -53,7 +51,6 @@ public class PoultryManager
         get => unknownMqttMessages; set
         {
             unknownMqttMessages = value;
-            OnDataChanged?.Invoke(this, EventArgs.Empty);
         }
     }
 
@@ -62,7 +59,6 @@ public class PoultryManager
         get => alarmableSensorErrors; set
         {
             alarmableSensorErrors = value;
-            OnDataChanged?.Invoke(this, EventArgs.Empty);
         }
     }
 
@@ -71,7 +67,6 @@ public class PoultryManager
         get => alarmableFarmPeriodErrors; set
         {
             alarmableFarmPeriodErrors = value;
-            OnDataChanged?.Invoke(this, EventArgs.Empty);
         }
     }
 
@@ -80,7 +75,6 @@ public class PoultryManager
         get => alarmablePoultryPeriodErrors; set
         {
             alarmablePoultryPeriodErrors = value;
-            OnDataChanged?.Invoke(this, EventArgs.Empty);
         }
     }
 
@@ -89,7 +83,6 @@ public class PoultryManager
         get => systemStartupTime; set
         {
             systemStartupTime = value;
-            OnDataChanged?.Invoke(this, EventArgs.Empty);
         }
     }
 
@@ -159,6 +152,8 @@ public class PoultryManager
         AlarmableFarmPeriodErrors = p.AlarmableFarmPeriodErrors;
         AlarmablePoultryPeriodErrors = p.AlarmablePoultryPeriodErrors;
         SystemStartupTime = p.SystemStartupTime;
+        OnHttpReceived?.Invoke(this, EventArgs.Empty);
+        OnDataChanged?.Invoke(this, EventArgs.Empty);
     }
 
     public async Task ConnectAsync()

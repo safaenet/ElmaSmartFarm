@@ -10,14 +10,6 @@ public class ScalarSensorViewerViewModel : Screen
 
     }
 
-    private double? temperature;
-
-    public double? Temperature
-    {
-        get { return temperature; }
-        set { temperature = value; NotifyOfPropertyChange(() => Temperature); }
-    }
-
     private ScalarSensorModel scalarSensor;
 
     public ScalarSensorModel ScalarSensor

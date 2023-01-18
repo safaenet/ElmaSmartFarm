@@ -27,7 +27,7 @@ public class LiveValuesViewModel : ViewAware
     {
         Ticks = (DateTime.Now - PoultryManager.SystemStartupTime).ToString();
         NotifyOfPropertyChange(() => PoultryManager);
-        if (PoultryManager?.Poultry?.Farms[0]?.Scalars?.Sensors[0] != null)
+        //if (PoultryManager?.Poultry?.Farms[0]?.Scalars?.Sensors[0] != null)
             ScalarSensorPresenterViewModel.ScalarSensor = PoultryManager.Poultry.Farms[0].Scalars.Sensors[0];
         ScalarSensorPresenterViewModel.RefreshView();
         //MessageBox.Show(PoultryManager.Poultry.Farms[0].Scalars.Sensors[0].LastRead.Temperature.ToString());
@@ -49,7 +49,6 @@ public class LiveValuesViewModel : ViewAware
         get { return ticks; }
         set { ticks = value; NotifyOfPropertyChange(() => Ticks); }
     }
-
 
     public PoultryManager PoultryManager
     {
