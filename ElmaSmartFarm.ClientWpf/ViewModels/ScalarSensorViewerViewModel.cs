@@ -3,18 +3,26 @@ using ElmaSmartFarm.SharedLibrary.Models.Sensors;
 
 namespace ElmaSmartFarm.ClientWpf.ViewModels;
 
-public class ScalarSensorPresenterViewModel : Screen
+public class ScalarSensorViewerViewModel : Screen
 {
-    public ScalarSensorPresenterViewModel(ScalarSensorModel _scalarSensor)
+    public ScalarSensorViewerViewModel()
     {
-        ScalarSensor = _scalarSensor;
+
+    }
+
+    private double? temperature;
+
+    public double? Temperature
+    {
+        get { return temperature; }
+        set { temperature = value; NotifyOfPropertyChange(() => Temperature); }
     }
 
     private ScalarSensorModel scalarSensor;
 
     public ScalarSensorModel ScalarSensor
     {
-        get { return scalarSensor; }
+        get => scalarSensor;
         set { scalarSensor = value; NotifyOfPropertyChange(() => ScalarSensor); }
     }
 

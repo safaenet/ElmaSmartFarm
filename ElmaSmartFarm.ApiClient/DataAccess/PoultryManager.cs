@@ -114,6 +114,7 @@ public class PoultryManager
         finally
         {
             OnMqttReceived?.Invoke(this, EventArgs.Empty);
+            OnDataChanged?.Invoke(this, EventArgs.Empty);
             if (Config.Config.verbose_mode) Log.Information($"===============  End of mqtt process {TimeSpan.FromTicks(DateTime.Now.Ticks - ticks).TotalMilliseconds} ms) ===============");
         }
     }
