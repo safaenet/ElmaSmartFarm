@@ -28,8 +28,8 @@ public class LiveValuesViewModel : ViewAware
         Ticks = (DateTime.Now - PoultryManager.SystemStartupTime).ToString();
         NotifyOfPropertyChange(() => PoultryManager);
         //if (PoultryManager?.Poultry?.Farms[0]?.Scalars?.Sensors[0] != null)
-            ScalarSensorPresenterViewModel.ScalarSensor = PoultryManager.Poultry.Farms[0].Scalars.Sensors[0];
-        ScalarSensorPresenterViewModel.RefreshView();
+        ScalarSensorPresenterViewModel.ScalarSensor = PoultryManager.Poultry.Farms[0].Scalars.Sensors[0];
+        //ScalarSensorPresenterViewModel.RefreshView();
         //MessageBox.Show(PoultryManager.Poultry.Farms[0].Scalars.Sensors[0].LastRead.Temperature.ToString());
     }
 
@@ -66,10 +66,10 @@ public class LiveValuesViewModel : ViewAware
         //NotifyOfPropertyChange(() => PoultryManager);
         //NotifyOfPropertyChange(() => scalar);
 
-        //ScalarSensor.LastRead.Temperature = new Random().NextDouble();
-        //if (PoultryManager.Poultry.Farms[0].Scalars.Sensors[0].Values == null) PoultryManager.Poultry.Farms[0].Scalars.Sensors[0].Values = new();
-        //PoultryManager.Poultry.Farms[0].Scalars.Sensors[0].Values.Add(new() { Temperature = new Random().NextDouble(), ReadDate=DateTime.Now });
-        //ScalarSensorPresenterViewModel.RefreshView();
+        if (PoultryManager.Poultry.Farms[0].Scalars.Sensors[0].Values == null) PoultryManager.Poultry.Farms[0].Scalars.Sensors[0].Values = new();
+        //PoultryManager.Poultry.Farms[0].Scalars.Sensors[0].Values.Add(new() { Temperature = new Random().NextDouble(), ReadDate = DateTime.Now });
+        PoultryManager.Poultry.Farms[0].Scalars.Sensors[0].Values.Add(new() { Temperature = 32.5, ReadDate = DateTime.Now });
+        ScalarSensorPresenterViewModel.ScalarSensor = PoultryManager.Poultry.Farms[0].Scalars.Sensors[0];
     }
 
     public async Task DisconnectAsync()

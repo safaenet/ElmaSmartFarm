@@ -20,10 +20,10 @@ public class PoultryManager
         httpClient = ConnectionManager.CreateHttpClient(PoultrySettings);
     }
 
-    private PoultrySettingsModel PoultrySettings;
+    private readonly PoultrySettingsModel PoultrySettings;
     private MqttConnectionSettingsModel MqttConnectionSettings;
     private MqttClientOptions mqttOptions;
-    private HttpClient httpClient;
+    private readonly HttpClient httpClient;
     private IMqttClient mqttClient;
     private bool IsInitialized;
     private PoultryModel poultry;

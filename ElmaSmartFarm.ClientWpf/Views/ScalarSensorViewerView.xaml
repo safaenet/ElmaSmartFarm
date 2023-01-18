@@ -28,7 +28,9 @@
                 <Grid>
                     <materialDesign:PackIcon Kind="Temperature" Foreground="DarkCyan" Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}},Path=ActualWidth}" Height="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}},Path=ActualHeight}" Margin="0,0,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                 </Grid>
-                <TextBlock Grid.Row="1" Text="{Binding ScalarSensor.LastRead.Temperature}" Foreground="Red" FontSize="12" Margin="0,0,0,1" VerticalAlignment="Bottom" HorizontalAlignment="Center" Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}},Path=ActualWidth-1}" Height="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}},Path=ActualHeight-1}"/>
+                <Viewbox Grid.Row="1" HorizontalAlignment="Center">
+                    <TextBlock Text="{Binding ScalarSensor.LastRead.Temperature}" Foreground="DarkCyan" Margin="0,0,0,1" VerticalAlignment="Bottom" HorizontalAlignment="Center" Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}},Path=ActualWidth-1}" Height="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}},Path=ActualHeight-1}"/>
+                </Viewbox>
             </Grid>
 
             <Grid Grid.Column="1">
@@ -39,7 +41,9 @@
                 <Grid>
                     <materialDesign:PackIcon Kind="Humidity" Foreground="DarkCyan" Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}},Path=ActualWidth}" Height="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}},Path=ActualHeight}" Margin="0,0,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                 </Grid>
-                <TextBlock Grid.Row="1" Text="{Binding ScalarSensor.LastRead.Humidity, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Foreground="AliceBlue" FontSize="12" Margin="0,0,0,1" VerticalAlignment="Bottom" HorizontalAlignment="Center" Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}},Path=ActualWidth-1}" Height="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}},Path=ActualHeight-1}"/>
+                <Viewbox Grid.Row="1" HorizontalAlignment="Center">
+                    <TextBlock Text="{Binding ScalarSensor.LastRead.Humidity, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Foreground="DarkCyan" Margin="0,0,0,1" VerticalAlignment="Bottom" HorizontalAlignment="Center" Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}},Path=ActualWidth-1}" Height="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}},Path=ActualHeight-1}"/>
+                </Viewbox>
             </Grid>
         </Grid>
 
@@ -57,7 +61,9 @@
                 <Grid>
                     <materialDesign:PackIcon Kind="Lightbulb" Foreground="DarkCyan" Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}},Path=ActualWidth}" Height="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}},Path=ActualHeight}" Margin="0,0,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                 </Grid>
-                <TextBlock Grid.Row="1" Text="{Binding ScalarSensor.LastRead.Light, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Foreground="AliceBlue" FontSize="12" Margin="0,0,0,1" VerticalAlignment="Bottom" HorizontalAlignment="Center" Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}},Path=ActualWidth-1}" Height="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}},Path=ActualHeight-1}"/>
+                <Viewbox Grid.Row="1" HorizontalAlignment="Center">
+                    <TextBlock Text="{Binding ScalarSensor.LastRead.Light, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Foreground="DarkCyan" Margin="0,0,0,1" VerticalAlignment="Bottom" HorizontalAlignment="Center" Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}},Path=ActualWidth-1}" Height="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}},Path=ActualHeight-1}"/>
+                </Viewbox>
             </Grid>
             <Grid Grid.Column="1">
                 <Grid.RowDefinitions>
@@ -67,7 +73,9 @@
                 <Grid>
                     <materialDesign:PackIcon Kind="LetterABox" Foreground="DarkCyan" Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}},Path=ActualWidth}" Height="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}},Path=ActualHeight}" Margin="0,0,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                 </Grid>
-                <TextBlock Grid.Row="1" Text="{Binding ScalarSensor.LastRead.Ammonia, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Foreground="AliceBlue" FontSize="12" Margin="0,0,0,1" VerticalAlignment="Bottom" HorizontalAlignment="Center" Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}},Path=ActualWidth-1}" Height="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}},Path=ActualHeight-1}"/>
+                <Viewbox Grid.Row="1" HorizontalAlignment="Center">
+                    <TextBlock Text="{Binding ScalarSensor.LastRead.Ammonia, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Foreground="DarkCyan" Margin="0,0,0,1" VerticalAlignment="Bottom" HorizontalAlignment="Center" Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}},Path=ActualWidth-1}" Height="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}},Path=ActualHeight-1}"/>
+                </Viewbox>
             </Grid>
             <Grid Grid.Column="2">
                 <Grid.RowDefinitions>
@@ -77,9 +85,11 @@
                 <Grid>
                     <materialDesign:PackIcon Kind="PeriodicTableCarbonDioxide" Foreground="DarkCyan" Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}},Path=ActualWidth}" Height="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}},Path=ActualHeight}" Margin="0,0,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                 </Grid>
-                <TextBlock Grid.Row="1" Text="{Binding ScalarSensor.LastRead.Co2, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Foreground="Red" FontSize="12" Margin="0,0,0,1" VerticalAlignment="Bottom" HorizontalAlignment="Center" Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}},Path=ActualWidth-1}" Height="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}},Path=ActualHeight-1}"/>
+                <Viewbox Grid.Row="1" HorizontalAlignment="Center">
+                    <TextBlock Text="{Binding ScalarSensor.LastRead.Co2, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Foreground="DarkCyan" Margin="0,0,0,1" VerticalAlignment="Bottom" HorizontalAlignment="Center" Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}},Path=ActualWidth-1}" Height="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}},Path=ActualHeight-1}"/>
+                </Viewbox>
             </Grid>
         </Grid>
-        <!--<TextBlock Grid.Row="2" FontSize="24" Foreground="Gray" Text="{Binding Status, RelativeSource={RelativeSource AncestorType={x:Type local:AllInOneSensorViewer}}, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>-->
+        <TextBlock Grid.Row="2" FontSize="24" Foreground="DarkCyan" Text="{Binding Status, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
     </Grid>
 </UserControl>
