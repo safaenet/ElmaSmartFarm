@@ -46,11 +46,11 @@ public partial class AllInOneSensorViewer : UserControl, INotifyPropertyChanged
         var c = sender as AllInOneSensorViewer;
         if (c != null)
         {
-            c.OnCustomerChanged();
+            c.OnStatusChanged();
         }
     }
 
-    protected virtual void OnCustomerChanged()
+    protected virtual void OnStatusChanged()
     {
         // Grab related data.
         // Raises INotifyPropertyChanged.PropertyChanged
