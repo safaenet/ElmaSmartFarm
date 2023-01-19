@@ -14,21 +14,21 @@ public class LiveValuesViewModel : ViewAware
 {
     public LiveValuesViewModel(int index)
     {
-        //ScalarSensor = new();
-        //ScalarSensor.Values = new();
-        ScalarSensorPresenterViewModel = new();
+        ScalarSensor = new();
+        ScalarSensor.Values = new();
+        //ScalarSensorPresenterViewModel = new();
         PoultryManager = new(index);
         PoultryManager.OnDataChanged += PoultryManager_OnDataChanged;
+        Statuss = "ctor";
     }
 
     public ScalarSensorViewerViewModel ScalarSensorPresenterViewModel { get; set; }
 
     private void PoultryManager_OnDataChanged(object sender, EventArgs e)
     {
-        Ticks = (DateTime.Now - PoultryManager.SystemStartupTime).ToString();
         NotifyOfPropertyChange(() => PoultryManager);
         //if (PoultryManager?.Poultry?.Farms[0]?.Scalars?.Sensors[0] != null)
-        ScalarSensorPresenterViewModel.ScalarSensor = PoultryManager.Poultry.Farms[0].Scalars.Sensors[0];
+        //ScalarSensorPresenterViewModel.ScalarSensor = PoultryManager.Poultry.Farms[0].Scalars.Sensors[0];
         //ScalarSensorPresenterViewModel.RefreshView();
         //MessageBox.Show(PoultryManager.Poultry.Farms[0].Scalars.Sensors[0].LastRead.Temperature.ToString());
     }
@@ -42,13 +42,6 @@ public class LiveValuesViewModel : ViewAware
     }
 
     private PoultryManager poultryManager;
-    private string ticks;
-
-    public string Ticks
-    {
-        get { return ticks; }
-        set { ticks = value; NotifyOfPropertyChange(() => Ticks); }
-    }
 
     public PoultryManager PoultryManager
     {
@@ -56,20 +49,36 @@ public class LiveValuesViewModel : ViewAware
         set { poultryManager = value; NotifyOfPropertyChange(() => PoultryManager); }
     }
 
+    private ScalarSensorModel scalarSensor;
+
+    public ScalarSensorModel ScalarSensor
+    {
+        get { return scalarSensor; }
+        set { scalarSensor = value; NotifyOfPropertyChange(() => ScalarSensor); }
+    }
+
+    private double? myVar;
+
+    public double? Temperature
+    {
+        get { return myVar; }
+        set { myVar = value; }
+    }
+
+
     public async Task ConnectAsync()
     {
-        if (PoultryManager != null && !PoultryManager.IsRunning) await PoultryManager.ConnectAsync();
-        await PoultryManager.RequestPoultryOverHttp();
-        if(ScalarSensorPresenterViewModel.ScalarSensor == null) ScalarSensorPresenterViewModel.ScalarSensor = PoultryManager.Poultry.Farms[0].Scalars.Sensors[0];
-        //Ticks = (DateTime.Now - PoultryManager.SystemStartupTime).ToString();
+        Statuss = DateTime.Now.ToString();
+        //if (PoultryManager != null && !PoultryManager.IsRunning) await PoultryManager.ConnectAsync();
+        //await PoultryManager.RequestPoultryOverHttp();
+        //if(ScalarSensorPresenterViewModel.ScalarSensor == null) ScalarSensorPresenterViewModel.ScalarSensor = PoultryManager.Poultry.Farms[0].Scalars.Sensors[0];
 
-        //NotifyOfPropertyChange(() => PoultryManager);
-        //NotifyOfPropertyChange(() => scalar);
-
-        if (PoultryManager.Poultry.Farms[0].Scalars.Sensors[0].Values == null) PoultryManager.Poultry.Farms[0].Scalars.Sensors[0].Values = new();
-        //PoultryManager.Poultry.Farms[0].Scalars.Sensors[0].Values.Add(new() { Temperature = new Random().NextDouble(), ReadDate = DateTime.Now });
-        PoultryManager.Poultry.Farms[0].Scalars.Sensors[0].Values.Add(new() { Temperature = 32.5, ReadDate = DateTime.Now });
-        ScalarSensorPresenterViewModel.ScalarSensor = PoultryManager.Poultry.Farms[0].Scalars.Sensors[0];
+        //if (PoultryManager.Poultry.Farms[0].Scalars.Sensors[0].Values == null) PoultryManager.Poultry.Farms[0].Scalars.Sensors[0].Values = new();
+        ////PoultryManager.Poultry.Farms[0].Scalars.Sensors[0].Values.Add(new() { Temperature = new Random().NextDouble(), ReadDate = DateTime.Now });
+        ScalarSensor.Values.Add(new() { Temperature = 32.5, Humidity = 22, ReadDate = DateTime.Now });
+        NotifyOfPropertyChange(() => ScalarSensor);
+        
+        //ScalarSensorPresenterViewModel.ScalarSensor = PoultryManager.Poultry.Farms[0].Scalars.Sensors[0];
     }
 
     public async Task DisconnectAsync()

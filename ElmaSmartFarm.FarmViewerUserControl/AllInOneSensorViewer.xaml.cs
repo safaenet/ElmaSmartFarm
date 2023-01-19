@@ -13,44 +13,62 @@ public partial class AllInOneSensorViewer : UserControl, INotifyPropertyChanged
 {
     public AllInOneSensorViewer()
     {
-        this.DataContext = this;
         InitializeComponent();
     }
 
     public event PropertyChangedEventHandler? PropertyChanged;
     public void OnPropertyChanged(string prop)
     {
-        PropertyChangedEventHandler handler = PropertyChanged;
-
-        if (handler != null)
-        {
-            PropertyChanged(this, new PropertyChangedEventArgs(prop));
-        }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
     }
 
     public ScalarSensorModel ScalarSensor
     {
         get { return (ScalarSensorModel)GetValue(ScalarSensorProperty); }
-        set { SetValue(ScalarSensorProperty, value); OnPropertyChanged("ScalarSensor"); }
+        set { SetValue(ScalarSensorProperty, value); }
     }
 
-    // Using a DependencyProperty as the backing store for Scalar.  This enables animation, styling, binding, etc...
     public static readonly DependencyProperty ScalarSensorProperty =
         DependencyProperty.Register("ScalarSensor", typeof(ScalarSensorModel), typeof(AllInOneSensorViewer), new PropertyMetadata(null));
 
-    //private ScalarSensorModel scalarSensor;
-
-    //public ScalarSensorModel ScalarSensor
-    //{
-    //    get { return scalarSensor; }
-    //    set { scalarSensor = value; OnPropertyChanged("ScalarSensor"); }
-    //}
-
-
-    public double? Temp
+    public string StatusText
     {
-        get { return ScalarSensor?.LastRead?.Temperature; }
-        set { ScalarSensor.LastRead.Temperature = value; OnPropertyChanged("Temp"); }
+        get { return (string)GetValue(StatusTextProperty); }
+        set { SetValue(StatusTextProperty, value); }
     }
 
+    public static readonly DependencyProperty StatusTextProperty =
+        DependencyProperty.Register("StatusText", typeof(string), typeof(AllInOneSensorViewer), new PropertyMetadata("SafaSeed", OnStatusChangedCallBack));
+
+    private static void OnStatusChangedCallBack(
+        DependencyObject sender, DependencyPropertyChangedEventArgs e)
+    {
+        var c = sender as AllInOneSensorViewer;
+        if (c != null)
+        {
+            c.OnCustomerChanged();
+        }
+    }
+
+    protected virtual void OnCustomerChanged()
+    {
+        // Grab related data.
+        // Raises INotifyPropertyChanged.PropertyChanged
+        Temperature = new Random().NextDouble();
+        //OnPropertyChanged("Temperature");
+    }
+
+    private double? temperature = 20;
+    public double? Temperature
+    {
+        get {
+            return temperature; 
+        }
+        set { temperature = value; OnPropertyChanged(nameof(Temperature)); }
+    }
+
+    private void PackIcon_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+    {
+        MessageBox.Show(Temperature.ToString());
+    }
 }

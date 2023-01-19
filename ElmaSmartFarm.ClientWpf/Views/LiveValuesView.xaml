@@ -16,15 +16,16 @@
         <Button x:Name="ConnectAsync" Content="Connect"/>
         <!--<ContentControl Grid.Row="1" x:Name="ScalarSensorPresenterViewModel"/>-->
         <!--<TextBox Grid.Row="1" Text="{Binding Ticks, Mode=OneWay}"/>-->
-        <ItemsControl Grid.Row="1" ItemsSource="{Binding PoultryManager.Poultry.Farms}" BorderThickness="2">
+        <usercontrols:AllInOneSensorViewer Grid.Row="1" ScalarSensor="{Binding ScalarSensor, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" StatusText="{Binding Statuss, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+        <!--<ItemsControl Grid.Row="1" ItemsSource="{Binding PoultryManager.Poultry.Farms}" BorderThickness="2">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
-                        <!--<TextBlock Text="{Binding}"/>-->
+                        --><!--<TextBlock Text="{Binding}"/>--><!--
                         <ContentControl x:Name="ScalarSensorPresenterViewModel"/>
                     </StackPanel>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
-        </ItemsControl>
+        </ItemsControl>-->
     </Grid>
 </Window>
