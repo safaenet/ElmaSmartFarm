@@ -12025,3 +12025,18 @@ MQTTnet.Client.MqttClientDisconnectedException: The MQTT client is disconnected.
 2023-01-20 15:02:24.877 +03:30 [INF] Deactivating alarm. Alarm type: PoultryLight, Alarm location ID: 0, Error: Not Alive since: 1/18/2023 11:37:15 PM, Thread: 16
 2023-01-20 15:02:24.877 +03:30 [INF] Writing alarm trigger log in database. Sensor ID: 1, Action: Off
 2023-01-20 15:02:24.880 +03:30 [INF] Writing alarm trigger log in database. Sensor ID: 2, Action: Off
+2023-01-20 15:03:33.189 +03:30 [INF] Starting up the Service...
+2023-01-20 15:03:53.054 +03:30 [INF] Starting up the Service...
+2023-01-20 15:03:57.609 +03:30 [INF] Loading poultry...
+2023-01-20 15:03:59.238 +03:30 [INF] Poultry loaded. (1629.5052 ms)
+2023-01-20 15:03:59.261 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: ab43f08f-2ab4-49ab-bf69-a894de810ef4.
+2023-01-20 15:03:59.426 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: ab43f08f-2ab4-49ab-bf69-a894de810ef4.
+2023-01-20 15:03:59.457 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2023-01-20 15:03:59.510 +03:30 [INF] Writing sensor watch log in database. Sensor ID: 1, Action: Unwatch
+2023-01-20 15:03:59.751 +03:30 [WRN] Sensor with ID 1 has been unwatched due to persisting error. Error Type: NotAlive, Error happened date: 1/18/2023 11:38:00 PM
+2023-01-20 15:03:59.760 +03:30 [INF] Activating farm alarm. Count: 1, Level: 2
+2023-01-20 15:03:59.761 +03:30 [INF] Activating poultry light alarm. Count: 1, Level: 2
+2023-01-20 15:03:59.766 +03:30 [INF] Activating/Reactivating alarm. Alarm type: FarmLight, Alarm location ID: 1, Error: Not Alive since: 1/18/2023 11:37:15 PM, Thread: 11
+2023-01-20 15:03:59.766 +03:30 [INF] Activating/Reactivating alarm. Alarm type: PoultryLight, Alarm location ID: 0, Error: Not Alive since: 1/18/2023 11:37:15 PM, Thread: 6
+2023-01-20 15:03:59.769 +03:30 [INF] Writing alarm trigger log in database. Sensor ID: 1, Action: On
+2023-01-20 15:03:59.810 +03:30 [INF] Writing alarm trigger log in database. Sensor ID: 2, Action: On
