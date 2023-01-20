@@ -76,7 +76,10 @@ public class LiveValuesViewModel : ViewAware
         ////PoultryManager.Poultry.Farms[0].Scalars.Sensors[0].Values.Add(new() { Temperature = new Random().NextDouble(), ReadDate = DateTime.Now });
         ScalarSensor.Values.Add(new() { Temperature = new Random().NextDouble() * 10, Humidity = new Random().Next(), ReadDate = DateTime.Now });
         NotifyOfPropertyChange(() => ScalarSensor);
-        
+        var x = ScalarSensor;
+        ScalarSensor = null;
+        ScalarSensor = x;
+
         //ScalarSensorPresenterViewModel.ScalarSensor = PoultryManager.Poultry.Farms[0].Scalars.Sensors[0];
     }
 

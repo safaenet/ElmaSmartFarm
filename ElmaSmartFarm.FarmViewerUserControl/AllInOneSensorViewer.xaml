@@ -27,7 +27,8 @@
                     <materialDesign:PackIcon Kind="Temperature" Foreground="DarkCyan" Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}},Path=ActualWidth}" Height="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}},Path=ActualHeight}" Margin="0,0,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                 </Grid>
                 <Viewbox Grid.Row="1" HorizontalAlignment="Center">
-                    <TextBlock Text="{Binding Temperature, RelativeSource={RelativeSource AncestorType={x:Type local:AllInOneSensorViewer}}}" Foreground="DarkCyan" Margin="0,0,0,1" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
+                    <TextBlock Text="{Binding ScalarSensor.LastRead.Temperature}" Foreground="DarkCyan" Margin="0,0,0,1" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
+                    <!--<TextBlock Text="{Binding Temperature, RelativeSource={RelativeSource AncestorType={x:Type local:AllInOneSensorViewer}}}" Foreground="DarkCyan" Margin="0,0,0,1" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>-->
                 </Viewbox>
             </Grid>
 

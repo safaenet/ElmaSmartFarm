@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ElmaSmartFarm.ClientWpf.Views"
-        xmlns:viewmodels="clr-namespace:ElmaSmartFarm.ClientWpf.ViewModels" xmlns:usercontrols="clr-namespace:ElmaSmartFarm.UserControls;assembly=ElmaSmartFarm.UserControls"
+        xmlns:viewmodels="clr-namespace:ElmaSmartFarm.ClientWpf.ViewModels" xmlns:usercontrols="clr-namespace:ElmaSmartFarm.UserControls;assembly=ElmaSmartFarm.UserControls" d:DataContext="{d:DesignInstance Type=viewmodels:LiveValuesViewModel}"
         mc:Ignorable="d"
         Title="LiveValuesView" Height="450" Width="800">
     <Grid>
@@ -15,7 +15,7 @@
         <Button x:Name="ConnectAsync" Content="Connect"/>
         <!--<ContentControl Grid.Row="1" x:Name="ScalarSensorPresenterViewModel"/>-->
         <!--<TextBox Grid.Row="1" Text="{Binding Ticks, Mode=OneWay}"/>-->
-        <usercontrols:AllInOneSensorViewer Grid.Row="1" ScalarSensor="{Binding ScalarSensor, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+        <usercontrols:AllInOneSensorViewer Grid.Row="1" Sensor="{Binding ScalarSensor, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
         <!--<ItemsControl Grid.Row="1" ItemsSource="{Binding PoultryManager.Poultry.Farms}" BorderThickness="2">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>

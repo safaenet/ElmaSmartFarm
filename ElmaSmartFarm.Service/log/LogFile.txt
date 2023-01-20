@@ -12040,3 +12040,113 @@ MQTTnet.Client.MqttClientDisconnectedException: The MQTT client is disconnected.
 2023-01-20 15:03:59.766 +03:30 [INF] Activating/Reactivating alarm. Alarm type: PoultryLight, Alarm location ID: 0, Error: Not Alive since: 1/18/2023 11:37:15 PM, Thread: 6
 2023-01-20 15:03:59.769 +03:30 [INF] Writing alarm trigger log in database. Sensor ID: 1, Action: On
 2023-01-20 15:03:59.810 +03:30 [INF] Writing alarm trigger log in database. Sensor ID: 2, Action: On
+2023-01-20 18:59:20.736 +03:30 [INF] Starting up the Service...
+2023-01-20 18:59:25.958 +03:30 [INF] Loading poultry...
+2023-01-20 18:59:27.708 +03:30 [INF] Poultry loaded. (1749.4385 ms)
+2023-01-20 18:59:27.733 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 50d9dd1e-f5e5-44b8-9b45-265aabb769b1.
+2023-01-20 18:59:27.858 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 50d9dd1e-f5e5-44b8-9b45-265aabb769b1.
+2023-01-20 18:59:27.881 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2023-01-20 18:59:27.945 +03:30 [INF] Writing sensor watch log in database. Sensor ID: 1, Action: Unwatch
+2023-01-20 18:59:28.212 +03:30 [WRN] Sensor with ID 1 has been unwatched due to persisting error. Error Type: NotAlive, Error happened date: 1/18/2023 11:38:00 PM
+2023-01-20 18:59:28.221 +03:30 [INF] Activating farm alarm. Count: 1, Level: 2
+2023-01-20 18:59:28.223 +03:30 [INF] Activating poultry light alarm. Count: 1, Level: 2
+2023-01-20 18:59:28.227 +03:30 [INF] Activating/Reactivating alarm. Alarm type: PoultryLight, Alarm location ID: 0, Error: Not Alive since: 1/18/2023 11:37:15 PM, Thread: 11
+2023-01-20 18:59:28.227 +03:30 [INF] Activating/Reactivating alarm. Alarm type: FarmLight, Alarm location ID: 1, Error: Not Alive since: 1/18/2023 11:37:15 PM, Thread: 6
+2023-01-20 18:59:28.231 +03:30 [INF] Writing alarm trigger log in database. Sensor ID: 1, Action: On
+2023-01-20 18:59:28.231 +03:30 [INF] Writing alarm trigger log in database. Sensor ID: 2, Action: On
+2023-01-20 18:59:33.226 +03:30 [INF] Deactivating alarm. Alarm type: FarmLight, Alarm location ID: 1, Error: Not Alive since: 1/18/2023 11:37:15 PM, Thread: 18
+2023-01-20 18:59:33.226 +03:30 [INF] Deactivating alarm. Alarm type: PoultryLight, Alarm location ID: 0, Error: Not Alive since: 1/18/2023 11:37:15 PM, Thread: 20
+2023-01-20 18:59:33.229 +03:30 [INF] Writing alarm trigger log in database. Sensor ID: 1, Action: Off
+2023-01-20 18:59:33.290 +03:30 [INF] Writing alarm trigger log in database. Sensor ID: 2, Action: Off
+2023-01-20 19:00:18.945 +03:30 [INF] Starting up the Service...
+2023-01-20 19:00:22.170 +03:30 [INF] Loading poultry...
+2023-01-20 19:00:23.661 +03:30 [INF] Poultry loaded. (1490.424 ms)
+2023-01-20 19:00:23.686 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 0a3521d1-79d6-4a7b-bcf8-27734d02c97c.
+2023-01-20 19:00:23.835 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 0a3521d1-79d6-4a7b-bcf8-27734d02c97c.
+2023-01-20 19:00:23.873 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2023-01-20 19:00:23.951 +03:30 [INF] Writing sensor watch log in database. Sensor ID: 1, Action: Unwatch
+2023-01-20 19:00:24.194 +03:30 [WRN] Sensor with ID 1 has been unwatched due to persisting error. Error Type: NotAlive, Error happened date: 1/18/2023 11:38:00 PM
+2023-01-20 19:00:24.250 +03:30 [INF] Activating farm alarm. Count: 1, Level: 2
+2023-01-20 19:00:24.323 +03:30 [INF] Activating poultry light alarm. Count: 1, Level: 2
+2023-01-20 19:00:24.341 +03:30 [INF] Activating/Reactivating alarm. Alarm type: FarmLight, Alarm location ID: 1, Error: Not Alive since: 1/18/2023 11:37:15 PM, Thread: 6
+2023-01-20 19:00:24.399 +03:30 [INF] Activating/Reactivating alarm. Alarm type: PoultryLight, Alarm location ID: 0, Error: Not Alive since: 1/18/2023 11:37:15 PM, Thread: 17
+2023-01-20 19:00:24.402 +03:30 [INF] Writing alarm trigger log in database. Sensor ID: 1, Action: On
+2023-01-20 19:00:24.404 +03:30 [INF] Writing alarm trigger log in database. Sensor ID: 2, Action: On
+2023-01-20 19:00:29.335 +03:30 [INF] Deactivating alarm. Alarm type: FarmLight, Alarm location ID: 1, Error: Not Alive since: 1/18/2023 11:37:15 PM, Thread: 6
+2023-01-20 19:00:29.340 +03:30 [INF] Writing alarm trigger log in database. Sensor ID: 1, Action: Off
+2023-01-20 19:00:29.511 +03:30 [INF] Deactivating alarm. Alarm type: PoultryLight, Alarm location ID: 0, Error: Not Alive since: 1/18/2023 11:37:15 PM, Thread: 17
+2023-01-20 19:00:29.516 +03:30 [INF] Writing alarm trigger log in database. Sensor ID: 2, Action: Off
+2023-01-20 19:01:21.577 +03:30 [INF] Starting up the Service...
+2023-01-20 19:01:25.469 +03:30 [INF] Loading poultry...
+2023-01-20 19:01:26.991 +03:30 [INF] Poultry loaded. (1521.7717 ms)
+2023-01-20 19:01:27.016 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: e0a14a09-5912-40a9-bd81-9c78ec6c5f20.
+2023-01-20 19:01:27.165 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: e0a14a09-5912-40a9-bd81-9c78ec6c5f20.
+2023-01-20 19:01:27.197 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2023-01-20 19:01:27.261 +03:30 [INF] Writing sensor watch log in database. Sensor ID: 1, Action: Unwatch
+2023-01-20 19:01:27.530 +03:30 [WRN] Sensor with ID 1 has been unwatched due to persisting error. Error Type: NotAlive, Error happened date: 1/18/2023 11:38:00 PM
+2023-01-20 19:01:27.539 +03:30 [INF] Activating farm alarm. Count: 1, Level: 2
+2023-01-20 19:01:27.541 +03:30 [INF] Activating poultry light alarm. Count: 1, Level: 2
+2023-01-20 19:01:27.545 +03:30 [INF] Activating/Reactivating alarm. Alarm type: FarmLight, Alarm location ID: 1, Error: Not Alive since: 1/18/2023 11:37:15 PM, Thread: 17
+2023-01-20 19:01:27.545 +03:30 [INF] Activating/Reactivating alarm. Alarm type: PoultryLight, Alarm location ID: 0, Error: Not Alive since: 1/18/2023 11:37:15 PM, Thread: 6
+2023-01-20 19:01:27.549 +03:30 [INF] Writing alarm trigger log in database. Sensor ID: 1, Action: On
+2023-01-20 19:01:27.549 +03:30 [INF] Writing alarm trigger log in database. Sensor ID: 2, Action: On
+2023-01-20 19:03:16.927 +03:30 [INF] Starting up the Service...
+2023-01-20 19:03:20.907 +03:30 [INF] Loading poultry...
+2023-01-20 19:03:22.382 +03:30 [INF] Poultry loaded. (1475.3639 ms)
+2023-01-20 19:03:22.418 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 03f8872a-5f70-4b41-b5ad-3d28de358ba5.
+2023-01-20 19:03:22.570 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 03f8872a-5f70-4b41-b5ad-3d28de358ba5.
+2023-01-20 19:03:22.606 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2023-01-20 19:03:22.657 +03:30 [INF] Writing sensor watch log in database. Sensor ID: 1, Action: Unwatch
+2023-01-20 19:03:22.899 +03:30 [WRN] Sensor with ID 1 has been unwatched due to persisting error. Error Type: NotAlive, Error happened date: 1/18/2023 11:38:00 PM
+2023-01-20 19:03:22.906 +03:30 [INF] Activating farm alarm. Count: 1, Level: 2
+2023-01-20 19:03:22.907 +03:30 [INF] Activating poultry light alarm. Count: 1, Level: 2
+2023-01-20 19:03:22.912 +03:30 [INF] Activating/Reactivating alarm. Alarm type: FarmLight, Alarm location ID: 1, Error: Not Alive since: 1/18/2023 11:37:15 PM, Thread: 6
+2023-01-20 19:03:22.914 +03:30 [INF] Activating/Reactivating alarm. Alarm type: PoultryLight, Alarm location ID: 0, Error: Not Alive since: 1/18/2023 11:37:15 PM, Thread: 11
+2023-01-20 19:03:22.917 +03:30 [INF] Writing alarm trigger log in database. Sensor ID: 1, Action: On
+2023-01-20 19:03:22.918 +03:30 [INF] Writing alarm trigger log in database. Sensor ID: 2, Action: On
+2023-01-20 19:06:15.847 +03:30 [INF] Starting up the Service...
+2023-01-20 19:06:19.746 +03:30 [INF] Loading poultry...
+2023-01-20 19:06:21.312 +03:30 [INF] Poultry loaded. (1566.5012 ms)
+2023-01-20 19:06:21.335 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 2461e795-d65a-4947-a60b-6abe71488b54.
+2023-01-20 19:06:21.474 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 2461e795-d65a-4947-a60b-6abe71488b54.
+2023-01-20 19:06:21.526 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2023-01-20 19:06:21.577 +03:30 [INF] Writing sensor watch log in database. Sensor ID: 1, Action: Unwatch
+2023-01-20 19:06:21.815 +03:30 [WRN] Sensor with ID 1 has been unwatched due to persisting error. Error Type: NotAlive, Error happened date: 1/18/2023 11:38:00 PM
+2023-01-20 19:06:21.832 +03:30 [INF] Activating farm alarm. Count: 1, Level: 2
+2023-01-20 19:06:21.834 +03:30 [INF] Activating poultry light alarm. Count: 1, Level: 2
+2023-01-20 19:06:21.838 +03:30 [INF] Activating/Reactivating alarm. Alarm type: FarmLight, Alarm location ID: 1, Error: Not Alive since: 1/18/2023 11:37:15 PM, Thread: 6
+2023-01-20 19:06:21.838 +03:30 [INF] Activating/Reactivating alarm. Alarm type: PoultryLight, Alarm location ID: 0, Error: Not Alive since: 1/18/2023 11:37:15 PM, Thread: 11
+2023-01-20 19:06:21.842 +03:30 [INF] Writing alarm trigger log in database. Sensor ID: 2, Action: On
+2023-01-20 19:06:21.842 +03:30 [INF] Writing alarm trigger log in database. Sensor ID: 1, Action: On
+2023-01-20 19:12:40.930 +03:30 [INF] Starting up the Service...
+2023-01-20 19:12:44.590 +03:30 [INF] Loading poultry...
+2023-01-20 19:12:46.295 +03:30 [INF] Poultry loaded. (1705.0146 ms)
+2023-01-20 19:12:46.321 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 1c35f21b-b809-44ad-af77-18586c9f6321.
+2023-01-20 19:12:46.491 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 1c35f21b-b809-44ad-af77-18586c9f6321.
+2023-01-20 19:12:46.521 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2023-01-20 19:12:46.569 +03:30 [INF] Writing sensor watch log in database. Sensor ID: 1, Action: Unwatch
+2023-01-20 19:12:46.808 +03:30 [WRN] Sensor with ID 1 has been unwatched due to persisting error. Error Type: NotAlive, Error happened date: 1/18/2023 11:38:00 PM
+2023-01-20 19:12:46.818 +03:30 [INF] Activating farm alarm. Count: 1, Level: 2
+2023-01-20 19:12:46.820 +03:30 [INF] Activating poultry light alarm. Count: 1, Level: 2
+2023-01-20 19:12:46.826 +03:30 [INF] Activating/Reactivating alarm. Alarm type: FarmLight, Alarm location ID: 1, Error: Not Alive since: 1/18/2023 11:37:15 PM, Thread: 3
+2023-01-20 19:12:46.827 +03:30 [INF] Activating/Reactivating alarm. Alarm type: PoultryLight, Alarm location ID: 0, Error: Not Alive since: 1/18/2023 11:37:15 PM, Thread: 12
+2023-01-20 19:12:46.831 +03:30 [INF] Writing alarm trigger log in database. Sensor ID: 1, Action: On
+2023-01-20 19:12:46.831 +03:30 [INF] Writing alarm trigger log in database. Sensor ID: 2, Action: On
+2023-01-20 19:13:37.946 +03:30 [INF] Starting up the Service...
+2023-01-20 19:13:41.709 +03:30 [INF] Loading poultry...
+2023-01-20 19:13:43.159 +03:30 [INF] Poultry loaded. (1448.8965 ms)
+2023-01-20 19:13:43.181 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 4c8551f1-f146-4a6f-8531-8ea6e5996cb0.
+2023-01-20 19:13:43.340 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 4c8551f1-f146-4a6f-8531-8ea6e5996cb0.
+2023-01-20 19:13:43.429 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2023-01-20 19:13:43.479 +03:30 [INF] Writing sensor watch log in database. Sensor ID: 1, Action: Unwatch
+2023-01-20 19:13:43.730 +03:30 [WRN] Sensor with ID 1 has been unwatched due to persisting error. Error Type: NotAlive, Error happened date: 1/18/2023 11:38:00 PM
+2023-01-20 19:13:43.740 +03:30 [INF] Activating farm alarm. Count: 1, Level: 2
+2023-01-20 19:13:43.743 +03:30 [INF] Activating poultry light alarm. Count: 1, Level: 2
+2023-01-20 19:13:43.748 +03:30 [INF] Activating/Reactivating alarm. Alarm type: FarmLight, Alarm location ID: 1, Error: Not Alive since: 1/18/2023 11:37:15 PM, Thread: 12
+2023-01-20 19:13:43.760 +03:30 [INF] Activating/Reactivating alarm. Alarm type: PoultryLight, Alarm location ID: 0, Error: Not Alive since: 1/18/2023 11:37:15 PM, Thread: 6
+2023-01-20 19:13:43.771 +03:30 [INF] Writing alarm trigger log in database. Sensor ID: 1, Action: On
+2023-01-20 19:13:43.771 +03:30 [INF] Writing alarm trigger log in database. Sensor ID: 2, Action: On
+2023-01-20 19:13:48.746 +03:30 [INF] Deactivating alarm. Alarm type: FarmLight, Alarm location ID: 1, Error: Not Alive since: 1/18/2023 11:37:15 PM, Thread: 19
+2023-01-20 19:13:48.760 +03:30 [INF] Deactivating alarm. Alarm type: PoultryLight, Alarm location ID: 0, Error: Not Alive since: 1/18/2023 11:37:15 PM, Thread: 17
+2023-01-20 19:13:48.764 +03:30 [INF] Writing alarm trigger log in database. Sensor ID: 1, Action: Off
+2023-01-20 19:13:48.770 +03:30 [INF] Writing alarm trigger log in database. Sensor ID: 2, Action: Off
