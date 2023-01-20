@@ -2,7 +2,6 @@
 using ElmaSmartFarm.ApiClient.DataAccess;
 using ElmaSmartFarm.SharedLibrary.Models;
 using ElmaSmartFarm.SharedLibrary.Models.Sensors;
-using ElmaSmartFarm.UserControls.Models;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -75,7 +74,7 @@ public class LiveValuesViewModel : ViewAware
 
         //if (PoultryManager.Poultry.Farms[0].Scalars.Sensors[0].Values == null) PoultryManager.Poultry.Farms[0].Scalars.Sensors[0].Values = new();
         ////PoultryManager.Poultry.Farms[0].Scalars.Sensors[0].Values.Add(new() { Temperature = new Random().NextDouble(), ReadDate = DateTime.Now });
-        ScalarSensor.Values.Add(new() { Temperature = 32.5, Humidity = 22, ReadDate = DateTime.Now });
+        ScalarSensor.Values.Add(new() { Temperature = new Random().NextDouble() * 10, Humidity = new Random().Next(), ReadDate = DateTime.Now });
         NotifyOfPropertyChange(() => ScalarSensor);
         
         //ScalarSensorPresenterViewModel.ScalarSensor = PoultryManager.Poultry.Farms[0].Scalars.Sensors[0];

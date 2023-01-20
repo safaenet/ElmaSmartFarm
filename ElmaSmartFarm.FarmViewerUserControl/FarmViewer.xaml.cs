@@ -26,6 +26,6 @@ namespace ElmaSmartFarm.UserControls
         public static readonly DependencyProperty FarmProperty =
             DependencyProperty.Register("Farm", typeof(FarmModel), typeof(FarmViewer), new PropertyMetadata(null));
 
-        public ScalarSensorModel? Scalar => Farm?.Scalars?.Sensors[0];
+        public ScalarSensorModel Scalar => Farm?.Scalars?.Sensors[0];
     }
 }

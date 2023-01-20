@@ -4,8 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ElmaSmartFarm.ClientWpf.Views"
-        xmlns:viewmodels="clr-namespace:ElmaSmartFarm.ClientWpf.ViewModels"
-        xmlns:usercontrols="clr-namespace:ElmaSmartFarm.UserControls;assembly=ElmaSmartFarm.UserControls" d:DataContext="{d:DesignInstance Type=viewmodels:LiveValuesViewModel}"
+        xmlns:viewmodels="clr-namespace:ElmaSmartFarm.ClientWpf.ViewModels" xmlns:usercontrols="clr-namespace:ElmaSmartFarm.UserControls;assembly=ElmaSmartFarm.UserControls"
         mc:Ignorable="d"
         Title="LiveValuesView" Height="450" Width="800">
     <Grid>

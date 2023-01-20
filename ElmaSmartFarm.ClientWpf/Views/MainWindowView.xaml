@@ -9,7 +9,6 @@
         xmlns:local="clr-namespace:ElmaSmartFarm.ClientWpf.Views" mc:Ignorable="d"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:viewmodels="clr-namespace:ElmaSmartFarm.ClientWpf.ViewModels"
-        d:DataContext="{d:DesignInstance Type=viewmodels:MainWindowViewModel}"
         Title="Elma" FontFamily="Tahoma" Height="545" Width="350"
         >
     <Window.Resources>

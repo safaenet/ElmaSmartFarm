@@ -1,5 +1,4 @@
 ﻿using ElmaSmartFarm.SharedLibrary.Models.Sensors;
-using ElmaSmartFarm.UserControls.Models;
 using System;
 using System.ComponentModel;
 using System.Windows;
@@ -16,8 +15,8 @@ public partial class AllInOneSensorViewer : UserControl, INotifyPropertyChanged
         InitializeComponent();
     }
 
-    public event PropertyChangedEventHandler? PropertyChanged;
-    public void OnPropertyChanged(string prop)
+    public event PropertyChangedEventHandler PropertyChanged;
+    public void OnPropertyChanged([System.Runtime.CompilerServices.CallerMemberName] string prop = "")
     {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
     }
@@ -29,7 +28,7 @@ public partial class AllInOneSensorViewer : UserControl, INotifyPropertyChanged
     }
 
     public static readonly DependencyProperty ScalarSensorProperty =
-        DependencyProperty.Register("ScalarSensor", typeof(ScalarSensorModel), typeof(AllInOneSensorViewer), new PropertyMetadata(null));
+        DependencyProperty.Register(nameof(ScalarSensor), typeof(ScalarSensorModel), typeof(AllInOneSensorViewer), new PropertyMetadata(null));
 
     public string StatusText
     {
@@ -38,13 +37,11 @@ public partial class AllInOneSensorViewer : UserControl, INotifyPropertyChanged
     }
 
     public static readonly DependencyProperty StatusTextProperty =
-        DependencyProperty.Register("StatusText", typeof(string), typeof(AllInOneSensorViewer), new PropertyMetadata("SafaSeed", OnStatusChangedCallBack));
+        DependencyProperty.Register(nameof(StatusText), typeof(string), typeof(AllInOneSensorViewer), new PropertyMetadata("SafaSeed", OnStatusChangedCallBack));
 
-    private static void OnStatusChangedCallBack(
-        DependencyObject sender, DependencyPropertyChangedEventArgs e)
+    private static void OnStatusChangedCallBack(DependencyObject sender, DependencyPropertyChangedEventArgs e)
     {
-        var c = sender as AllInOneSensorViewer;
-        if (c != null)
+        if (sender is AllInOneSensorViewer c)
         {
             c.OnStatusChanged();
         }
@@ -64,11 +61,6 @@ public partial class AllInOneSensorViewer : UserControl, INotifyPropertyChanged
         get {
             return temperature; 
         }
-        set { temperature = value; OnPropertyChanged(nameof(Temperature)); }
-    }
-
-    private void PackIcon_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
-    {
-        MessageBox.Show(Temperature.ToString());
+        set { temperature = value; OnPropertyChanged(); }
     }
 }
