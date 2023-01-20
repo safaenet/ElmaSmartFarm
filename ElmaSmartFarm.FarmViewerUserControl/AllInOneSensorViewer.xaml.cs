@@ -28,30 +28,13 @@ public partial class AllInOneSensorViewer : UserControl, INotifyPropertyChanged
     }
 
     public static readonly DependencyProperty ScalarSensorProperty =
-        DependencyProperty.Register(nameof(ScalarSensor), typeof(ScalarSensorModel), typeof(AllInOneSensorViewer), new PropertyMetadata(null));
-
-    public string StatusText
-    {
-        get { return (string)GetValue(StatusTextProperty); }
-        set { SetValue(StatusTextProperty, value); }
-    }
-
-    public static readonly DependencyProperty StatusTextProperty =
-        DependencyProperty.Register(nameof(StatusText), typeof(string), typeof(AllInOneSensorViewer), new PropertyMetadata("SafaSeed", OnStatusChangedCallBack));
-
-    private static void OnStatusChangedCallBack(DependencyObject sender, DependencyPropertyChangedEventArgs e)
-    {
-        if (sender is AllInOneSensorViewer c)
-        {
-            c.OnStatusChanged();
-        }
-    }
+        DependencyProperty.Register(nameof(ScalarSensor), typeof(ScalarSensorModel), typeof(AllInOneSensorViewer), new PropertyMetadata(null, (s, e) => { if (s is AllInOneSensorViewer c) { c.OnStatusChanged(); } }));
 
     protected virtual void OnStatusChanged()
     {
         // Grab related data.
         // Raises INotifyPropertyChanged.PropertyChanged
-        Temperature = new Random().NextDouble();
+        Temperature = new Random().NextDouble()*10;
         //OnPropertyChanged("Temperature");
     }
 
