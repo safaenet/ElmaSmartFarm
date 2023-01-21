@@ -19,7 +19,8 @@ public class ScalarSensorSettings
     public string HighCo2Color { get; set; } = "#ff02546b";
     public string NormalValueColor { get; set; } = "#ff378c6b";
     public string UnwatchColor { get; set; } = "#ff98a39f";
-    public string StatusTextColor { get; set; } = "#ff378c6b";
+    public string StatusTextOkColor { get; set; } = "#ff378c6b";
+    public string StatusTextErrorColor { get; set; } = "#ff991a1a";
     public string StatusIconOkColor { get; set; } = "#ff1a991e";
     public string StatusIconErrorColor { get; set; } = "#ff991a1a";
 }

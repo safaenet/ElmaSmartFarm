@@ -16,10 +16,7 @@ public partial class AllInOneSensorViewer : UserControl, INotifyPropertyChanged
     }
 
     public event PropertyChangedEventHandler PropertyChanged;
-    public void OnPropertyChanged([System.Runtime.CompilerServices.CallerMemberName] string prop = "")
-    {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
-    }
+    public void OnPropertyChanged([System.Runtime.CompilerServices.CallerMemberName] string prop = "") => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
 
     public ScalarSensorModel Sensor
     {
@@ -35,11 +32,17 @@ public partial class AllInOneSensorViewer : UserControl, INotifyPropertyChanged
         set { SetValue(SettingsProperty, value); }
     }
 
-    public static readonly DependencyProperty SettingsProperty = DependencyProperty.Register(nameof(Settings), typeof(ScalarSensorSettings), typeof(AllInOneSensorViewer), new PropertyMetadata(new ScalarSensorSettings()));
+    public static readonly DependencyProperty SettingsProperty = DependencyProperty.Register(nameof(Settings), typeof(ScalarSensorSettings), typeof(AllInOneSensorViewer), new PropertyMetadata(new ScalarSensorSettings(), (s, e) => { if (s is AllInOneSensorViewer c) c.OnSensorChanged(); }));
 
     protected virtual void OnSensorChanged()
     {
         RefreshColors();
+        if (Sensor == null) Status = "عدم اتصال";
+        else
+        {
+            if (Sensor.HasError) Status = "خطا وجود دارد";
+            else Status = "وضعیت پایدار";
+        }
     }
 
     private void RefreshColors()
@@ -71,6 +74,17 @@ public partial class AllInOneSensorViewer : UserControl, INotifyPropertyChanged
 
             if (Sensor.LastRead.Co2 >= Settings.HighCo2Threshold) Co2Color = Settings.HighCo2Color.ToSolidBrush();
             else Co2Color = Settings.NormalValueColor.ToSolidBrush();
+
+            if (Sensor.HasError)
+            {
+                StatusTextColor = Settings.StatusTextErrorColor.ToSolidBrush();
+                StatusIconColor = Settings.StatusIconErrorColor.ToSolidBrush();
+            }
+            else
+            {
+                StatusTextColor = Settings.StatusTextOkColor.ToSolidBrush();
+                StatusIconColor = Settings.StatusIconOkColor.ToSolidBrush();
+            }
         }
     }
 

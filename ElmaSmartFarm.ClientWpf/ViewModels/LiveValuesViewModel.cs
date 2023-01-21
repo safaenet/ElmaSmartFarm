@@ -13,10 +13,9 @@ public class LiveValuesViewModel : ViewAware
 {
     public LiveValuesViewModel(int index)
     {
+        PoultryManager = new(index);
         ScalarSensor2 = new();
         ScalarSensor2.Values = new();
-        //ScalarSensorPresenterViewModel = new();
-        PoultryManager = new(index);
         PoultryManager.OnDataChanged += PoultryManager_OnDataChanged;
         Statuss = "ctor";
     }
@@ -41,7 +40,6 @@ public class LiveValuesViewModel : ViewAware
     }
 
     private PoultryManager poultryManager;
-
     public PoultryManager PoultryManager
     {
         get => poultryManager;
@@ -49,21 +47,11 @@ public class LiveValuesViewModel : ViewAware
     }
 
     private ScalarSensorModel scalarSensor2;
-
     public ScalarSensorModel ScalarSensor2
     {
         get { return scalarSensor2; }
         set { scalarSensor2 = value; NotifyOfPropertyChange(() => ScalarSensor2); }
     }
-
-    private double? myVar;
-
-    public double? Temperature
-    {
-        get { return myVar; }
-        set { myVar = value; }
-    }
-
 
     public async Task ConnectAsync()
     {
@@ -75,16 +63,20 @@ public class LiveValuesViewModel : ViewAware
         //if (PoultryManager.Poultry.Farms[0].Scalars.Sensors[0].Values == null) PoultryManager.Poultry.Farms[0].Scalars.Sensors[0].Values = new();
         ////PoultryManager.Poultry.Farms[0].Scalars.Sensors[0].Values.Add(new() { Temperature = new Random().NextDouble(), ReadDate = DateTime.Now });
         ScalarSensor2.Values.Add(new() { Temperature = 80, Humidity = new Random().Next(), ReadDate = DateTime.Now });
-        NotifyOfPropertyChange(() => ScalarSensor2);
-        var x = ScalarSensor2;
-        ScalarSensor2 = null;
-        ScalarSensor2 = x;
-
+        //NotifyOfPropertyChange(() => ScalarSensor2);
+        RefreshBindings();
         //ScalarSensorPresenterViewModel.ScalarSensor = PoultryManager.Poultry.Farms[0].Scalars.Sensors[0];
     }
 
     public async Task DisconnectAsync()
     {
         await PoultryManager.DisconnectAsync();
+    }
+
+    private void RefreshBindings()
+    {
+        var x = ScalarSensor2;
+        ScalarSensor2 = null;
+        ScalarSensor2 = x;
     }
 }

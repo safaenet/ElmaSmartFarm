@@ -13,18 +13,24 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Button x:Name="ConnectAsync" Content="Connect"/>
-        <!--<ContentControl Grid.Row="1" x:Name="ScalarSensorPresenterViewModel"/>-->
-        <!--<TextBox Grid.Row="1" Text="{Binding Ticks, Mode=OneWay}"/>-->
-        <usercontrols:AllInOneSensorViewer Grid.Row="1" Sensor="{Binding ScalarSensor2, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
-        <!--<ItemsControl Grid.Row="1" ItemsSource="{Binding PoultryManager.Poultry.Farms}" BorderThickness="2">
+        <!--<usercontrols:AllInOneSensorViewer Grid.Row="1" Sensor="{Binding ScalarSensor2, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>-->
+        <ItemsControl Grid.Row="1" ItemsSource="{Binding PoultryManager.Poultry.Farms}" BorderThickness="2">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
-                        --><!--<TextBlock Text="{Binding}"/>--><!--
-                        <ContentControl x:Name="ScalarSensorPresenterViewModel"/>
+                        <!--<usercontrols:AllInOneSensorViewer Grid.Row="1" Sensor="{Binding Scalars., Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>-->
+                        <ItemsControl Grid.Row="1" ItemsSource="{Binding Scalars.Sensors}" BorderThickness="2">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal" Width="150" Height="100">
+                                        <usercontrols:AllInOneSensorViewer Grid.Row="1" Sensor="{Binding}"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
                     </StackPanel>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
-        </ItemsControl>-->
+        </ItemsControl>
     </Grid>
 </Window>
