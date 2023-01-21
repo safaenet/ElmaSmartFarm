@@ -1,13 +1,13 @@
 ﻿using ElmaSmartFarm.SharedLibrary.Models.Sensors;
+using ElmaSmartFarm.SharedLibrary.Models.UISettings;
 using System;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace ElmaSmartFarm.UserControls;
-/// <summary>
-/// Interaction logic for AllInOneSensorViewer.xaml
-/// </summary>
+
 public partial class AllInOneSensorViewer : UserControl, INotifyPropertyChanged
 {
     public AllInOneSensorViewer()
@@ -27,26 +27,106 @@ public partial class AllInOneSensorViewer : UserControl, INotifyPropertyChanged
         set { SetValue(SensorProperty, value); }
     }
 
-    public static readonly DependencyProperty SensorProperty =
-        DependencyProperty.Register(nameof(Sensor), typeof(ScalarSensorModel), typeof(AllInOneSensorViewer), new PropertyMetadata(null, (s, e) => { if (s is AllInOneSensorViewer c) c.OnSensorChanged(); }));
+    public static readonly DependencyProperty SensorProperty = DependencyProperty.Register(nameof(Sensor), typeof(ScalarSensorModel), typeof(AllInOneSensorViewer), new PropertyMetadata(null, (s, e) => { if (s is AllInOneSensorViewer c) c.OnSensorChanged(); }));
+
+    public ScalarSensorSettings Settings
+    {
+        get { return (ScalarSensorSettings)GetValue(SettingsProperty); }
+        set { SetValue(SettingsProperty, value); }
+    }
+
+    public static readonly DependencyProperty SettingsProperty = DependencyProperty.Register(nameof(Settings), typeof(ScalarSensorSettings), typeof(AllInOneSensorViewer), new PropertyMetadata(new ScalarSensorSettings()));
 
     protected virtual void OnSensorChanged()
     {
-        Temperature = new Random().NextDouble();
+        RefreshColors();
     }
 
-    private double? temperature = 20;
-    public double? Temperature
+    private void RefreshColors()
     {
-        get {
-            return temperature; 
+        if (Sensor == null || Sensor.LastRead == null)
+        {
+            TemperatureColor = Settings.NormalValueColor.ToSolidBrush();
+            HumidityColor = Settings.NormalValueColor.ToSolidBrush();
+            LightColor = Settings.NormalValueColor.ToSolidBrush();
+            AmmoniaColor = Settings.NormalValueColor.ToSolidBrush();
+            Co2Color = Settings.NormalValueColor.ToSolidBrush();
         }
-        set { temperature = value; OnPropertyChanged(); }
+        else
+        {
+            if (Sensor.LastRead.Temperature <= Settings.LowTemperatureThreshold) TemperatureColor = Settings.LowTemperatureColor.ToSolidBrush();
+            else if (Sensor.LastRead.Temperature >= Settings.HighTemperatureThreshold) TemperatureColor = Settings.HighTemperatureColor.ToSolidBrush();
+            else TemperatureColor = Settings.NormalValueColor.ToSolidBrush();
+
+            if (Sensor.LastRead.Humidity <= Settings.LowHumidityThreshold) HumidityColor = Settings.LowHumidityColor.ToSolidBrush();
+            else if (Sensor.LastRead.Humidity >= Settings.HighHumidityThreshold) HumidityColor = Settings.HighHumidityColor.ToSolidBrush();
+            else HumidityColor = Settings.NormalValueColor.ToSolidBrush();
+
+            if (Sensor.LastRead.Light <= Settings.LightThreshold) LightColor = Settings.DarkLightColor.ToSolidBrush();
+            else LightColor = Settings.BrightLightColor.ToSolidBrush();
+
+            if (Sensor == null || Sensor.LastRead == null) AmmoniaColor = Settings.NormalValueColor.ToSolidBrush();
+            else if (Sensor.LastRead.Ammonia >= Settings.HighTemperatureThreshold) AmmoniaColor = Settings.HighAmmoniaColor.ToSolidBrush();
+            else AmmoniaColor = Settings.NormalValueColor.ToSolidBrush();
+
+            if (Sensor.LastRead.Co2 >= Settings.HighCo2Threshold) Co2Color = Settings.HighCo2Color.ToSolidBrush();
+            else Co2Color = Settings.NormalValueColor.ToSolidBrush();
+        }
     }
 
-    public double? Temperature2
+    private SolidColorBrush temperatureColor = new(Colors.Black);
+    public SolidColorBrush TemperatureColor
     {
-        get { return Sensor.LastRead.Temperature; }
-        set { Sensor.LastRead.Temperature = value; OnPropertyChanged(); }
+        get { return temperatureColor; }
+        set { temperatureColor = value; OnPropertyChanged(); }
+    }
+
+    private SolidColorBrush humidityColor = new(Colors.Black);
+    public SolidColorBrush HumidityColor
+    {
+        get { return humidityColor; }
+        set { humidityColor = value; OnPropertyChanged(); }
+    }
+
+    private SolidColorBrush lightColor = new(Colors.Black);
+    public SolidColorBrush LightColor
+    {
+        get { return lightColor; }
+        set { lightColor = value; OnPropertyChanged(); }
+    }
+
+    private SolidColorBrush ammoniaColor = new(Colors.Black);
+    public SolidColorBrush AmmoniaColor
+    {
+        get { return ammoniaColor; }
+        set { ammoniaColor = value; OnPropertyChanged(); }
+    }
+
+    private SolidColorBrush co2Color = new(Colors.Black);
+    public SolidColorBrush Co2Color
+    {
+        get { return co2Color; }
+        set { co2Color = value; OnPropertyChanged(); }
+    }
+
+    private SolidColorBrush statusTextColor = new(Colors.Black);
+    public SolidColorBrush StatusTextColor
+    {
+        get { return statusTextColor; }
+        set { statusTextColor = value; OnPropertyChanged(); }
+    }
+
+    private SolidColorBrush statusIconColor = new(Colors.Black);
+    public SolidColorBrush StatusIconColor
+    {
+        get { return statusIconColor; }
+        set { statusIconColor = value; OnPropertyChanged(); }
+    }
+
+    private string status = "Ok";
+    public string Status
+    {
+        get { return status; }
+        set { status = value; OnPropertyChanged(); }
     }
 }

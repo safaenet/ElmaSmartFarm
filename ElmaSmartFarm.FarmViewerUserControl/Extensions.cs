@@ -2,7 +2,8 @@
 using System.Windows.Media;
 using System;
 
-namespace ElmaSmartFarm.ClientWpf;
+namespace ElmaSmartFarm.UserControls;
+
 public static class Extensions
 {
     public static string ToHex(this Color c) => $"#{c.A:X2}{c.R:X2}{c.G:X2}{c.B:X2}";

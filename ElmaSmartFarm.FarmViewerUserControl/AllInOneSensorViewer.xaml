@@ -7,6 +7,9 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" d:DataContext="{d:DesignInstance Type=local:AllInOneSensorViewer}"
              mc:Ignorable="d" 
              d:DesignHeight="100" d:DesignWidth="150">
+    <UserControl.Resources>
+        
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
@@ -24,10 +27,10 @@
                     <RowDefinition Height="0.5*"/>
                 </Grid.RowDefinitions>
                 <Grid>
-                    <materialDesign:PackIcon Kind="Temperature" Foreground="DarkCyan" Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}},Path=ActualWidth}" Height="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}},Path=ActualHeight}" Margin="0,0,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                    <materialDesign:PackIcon Kind="Temperature" Foreground="{Binding TemperatureColor, RelativeSource={RelativeSource AncestorType={x:Type local:AllInOneSensorViewer}}}" Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}},Path=ActualWidth}" Height="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}},Path=ActualHeight}" Margin="0,0,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                 </Grid>
                 <Viewbox Grid.Row="1" HorizontalAlignment="Center">
-                    <TextBlock Text="{Binding Sensor.LastRead.Temperature, RelativeSource={RelativeSource AncestorType={x:Type local:AllInOneSensorViewer}}}" Foreground="DarkCyan" Margin="0,0,0,1" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
+                    <TextBlock Text="{Binding Sensor.LastRead.Temperature, RelativeSource={RelativeSource AncestorType={x:Type local:AllInOneSensorViewer}}}" Foreground="{Binding TemperatureColor, RelativeSource={RelativeSource AncestorType={x:Type local:AllInOneSensorViewer}}}" Margin="0,0,0,1" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
                 </Viewbox>
             </Grid>
 
@@ -37,10 +40,10 @@
                     <RowDefinition Height="0.5*"/>
                 </Grid.RowDefinitions>
                 <Grid>
-                    <materialDesign:PackIcon Kind="Humidity" Foreground="DarkCyan" Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}},Path=ActualWidth}" Height="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}},Path=ActualHeight}" Margin="0,0,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                    <materialDesign:PackIcon Kind="Humidity" Foreground="{Binding HumidityColor, RelativeSource={RelativeSource AncestorType={x:Type local:AllInOneSensorViewer}}}" Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}},Path=ActualWidth}" Height="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}},Path=ActualHeight}" Margin="0,0,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                 </Grid>
                 <Viewbox Grid.Row="1" HorizontalAlignment="Center">
-                    <TextBlock Text="{Binding Sensor.LastRead.Humidity, RelativeSource={RelativeSource AncestorType={x:Type local:AllInOneSensorViewer}}}" Foreground="DarkCyan" Margin="0,0,0,1" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
+                    <TextBlock Text="{Binding Sensor.LastRead.Humidity, RelativeSource={RelativeSource AncestorType={x:Type local:AllInOneSensorViewer}}}" Foreground="{Binding HumidityColor, RelativeSource={RelativeSource AncestorType={x:Type local:AllInOneSensorViewer}}}" Margin="0,0,0,1" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
                 </Viewbox>
             </Grid>
         </Grid>
@@ -57,10 +60,10 @@
                     <RowDefinition Height="0.5*"/>
                 </Grid.RowDefinitions>
                 <Grid>
-                    <materialDesign:PackIcon Kind="Lightbulb" Foreground="DarkCyan" Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}},Path=ActualWidth}" Height="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}},Path=ActualHeight}" Margin="0,0,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                    <materialDesign:PackIcon Kind="Lightbulb" Foreground="{Binding LightColor, RelativeSource={RelativeSource AncestorType={x:Type local:AllInOneSensorViewer}}}" Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}},Path=ActualWidth}" Height="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}},Path=ActualHeight}" Margin="0,0,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                 </Grid>
                 <Viewbox Grid.Row="1" HorizontalAlignment="Center">
-                    <TextBlock Text="{Binding ScalarSensor.LastRead.Light, RelativeSource={RelativeSource AncestorType={x:Type local:AllInOneSensorViewer}}}" Foreground="DarkCyan" Margin="0,0,0,1" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
+                    <TextBlock Text="{Binding Sensor.LastRead.Light, RelativeSource={RelativeSource AncestorType={x:Type local:AllInOneSensorViewer}}}" Foreground="{Binding LightColor, RelativeSource={RelativeSource AncestorType={x:Type local:AllInOneSensorViewer}}}" Margin="0,0,0,1" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
                 </Viewbox>
             </Grid>
             <Grid Grid.Column="1">
@@ -69,10 +72,10 @@
                     <RowDefinition Height="0.5*"/>
                 </Grid.RowDefinitions>
                 <Grid>
-                    <materialDesign:PackIcon Kind="LetterABox" Foreground="DarkCyan" Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}},Path=ActualWidth}" Height="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}},Path=ActualHeight}" Margin="0,0,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                    <materialDesign:PackIcon Kind="LetterABox" Foreground="{Binding AmmoniaColor, RelativeSource={RelativeSource AncestorType={x:Type local:AllInOneSensorViewer}}}" Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}},Path=ActualWidth}" Height="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}},Path=ActualHeight}" Margin="0,0,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                 </Grid>
                 <Viewbox Grid.Row="1" HorizontalAlignment="Center">
-                    <TextBlock Text="{Binding Sensor.LastRead.Ammonia, RelativeSource={RelativeSource AncestorType={x:Type local:AllInOneSensorViewer}}}" Foreground="DarkCyan" Margin="0,0,0,1" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
+                    <TextBlock Text="{Binding Sensor.LastRead.Ammonia, RelativeSource={RelativeSource AncestorType={x:Type local:AllInOneSensorViewer}}}" Foreground="{Binding AmmoniaColor, RelativeSource={RelativeSource AncestorType={x:Type local:AllInOneSensorViewer}}}" Margin="0,0,0,1" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
                 </Viewbox>
             </Grid>
             <Grid Grid.Column="2">
@@ -81,15 +84,15 @@
                     <RowDefinition Height="0.5*"/>
                 </Grid.RowDefinitions>
                 <Grid>
-                    <materialDesign:PackIcon Kind="PeriodicTableCarbonDioxide" Foreground="DarkCyan" Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}},Path=ActualWidth}" Height="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}},Path=ActualHeight}" Margin="0,0,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                    <materialDesign:PackIcon Kind="PeriodicTableCarbonDioxide" Foreground="{Binding Co2Color, RelativeSource={RelativeSource AncestorType={x:Type local:AllInOneSensorViewer}}}" Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}},Path=ActualWidth}" Height="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}},Path=ActualHeight}" Margin="0,0,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                 </Grid>
                 <Viewbox Grid.Row="1" HorizontalAlignment="Center">
-                    <TextBlock Text="{Binding Sensor.LastRead.Co2, RelativeSource={RelativeSource AncestorType={x:Type local:AllInOneSensorViewer}}}" Foreground="DarkCyan" Margin="0,0,0,1" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
+                    <TextBlock Text="{Binding Sensor.LastRead.Co2, RelativeSource={RelativeSource AncestorType={x:Type local:AllInOneSensorViewer}}}" Foreground="{Binding Co2Color, RelativeSource={RelativeSource AncestorType={x:Type local:AllInOneSensorViewer}}}" Margin="0,0,0,1" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
                 </Viewbox>
             </Grid>
         </Grid>
         <Viewbox Grid.Row="2" HorizontalAlignment="Center">
-            <TextBlock Foreground="DarkCyan" Text="{Binding StatusText, RelativeSource={RelativeSource AncestorType={x:Type local:AllInOneSensorViewer}}}"/>
+            <TextBlock Foreground="{Binding StatusTextColor, RelativeSource={RelativeSource AncestorType={x:Type local:AllInOneSensorViewer}}}" Text="{Binding Status, RelativeSource={RelativeSource AncestorType={x:Type local:AllInOneSensorViewer}}}"/>
         </Viewbox>
     </Grid>
 </UserControl>
