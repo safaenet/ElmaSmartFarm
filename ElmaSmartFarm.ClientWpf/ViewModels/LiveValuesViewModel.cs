@@ -14,8 +14,6 @@ public class LiveValuesViewModel : ViewAware
     public LiveValuesViewModel(int index)
     {
         PoultryManager = new(index);
-        ScalarSensor2 = new();
-        ScalarSensor2.Values = new();
         PoultryManager.OnDataChanged += PoultryManager_OnDataChanged;
     }
 
@@ -34,13 +32,6 @@ public class LiveValuesViewModel : ViewAware
     {
         get => poultryManager;
         set { poultryManager = value; NotifyOfPropertyChange(() => PoultryManager); }
-    }
-
-    private ScalarSensorModel scalarSensor2;
-    public ScalarSensorModel ScalarSensor2
-    {
-        get { return scalarSensor2; }
-        set { scalarSensor2 = value; NotifyOfPropertyChange(() => ScalarSensor2); }
     }
 
     public async Task ConnectAsync()
@@ -62,9 +53,6 @@ public class LiveValuesViewModel : ViewAware
 
     private void RefreshBindings()
     {
-        var x = ScalarSensor2;
-        ScalarSensor2 = null;
-        ScalarSensor2 = x;
         NotifyOfPropertyChange(() => PoultryManager);
         NotifyOfPropertyChange(() => PoultryManager.Poultry);
         NotifyOfPropertyChange(() => PoultryManager.Poultry.Farms);

@@ -15,13 +15,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="FarmAverageViewer.xaml.cs">
+    <Compile Update="FarmBriefViewer.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
 
   <ItemGroup>
-    <Page Update="FarmAverageViewer.xaml">
+    <Page Update="FarmBriefViewer.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>

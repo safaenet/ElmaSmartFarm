@@ -1,6 +1,5 @@
 ﻿using ElmaSmartFarm.SharedLibrary.Models.Sensors;
 using ElmaSmartFarm.SharedLibrary.Models.UISettings;
-using System;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -24,7 +23,7 @@ public partial class ScalarSensorViewer : UserControl, INotifyPropertyChanged
         set { SetValue(SensorProperty, value); }
     }
 
-    public static readonly DependencyProperty SensorProperty = DependencyProperty.Register(nameof(Sensor), typeof(ScalarSensorModel), typeof(ScalarSensorViewer), new PropertyMetadata(null, (s, e) => { if (s is ScalarSensorViewer c) c.OnSensorChanged(); }));
+    public static readonly DependencyProperty SensorProperty = DependencyProperty.Register(nameof(Sensor), typeof(ScalarSensorModel), typeof(ScalarSensorViewer), new PropertyMetadata(null, (s, e) => { if (s is ScalarSensorViewer c) c.OnDataChanged(); }));
 
     public ScalarSensorSettings Settings
     {
@@ -32,9 +31,9 @@ public partial class ScalarSensorViewer : UserControl, INotifyPropertyChanged
         set { SetValue(SettingsProperty, value); }
     }
 
-    public static readonly DependencyProperty SettingsProperty = DependencyProperty.Register(nameof(Settings), typeof(ScalarSensorSettings), typeof(ScalarSensorViewer), new PropertyMetadata(new ScalarSensorSettings(), (s, e) => { if (s is ScalarSensorViewer c) c.OnSensorChanged(); }));
+    public static readonly DependencyProperty SettingsProperty = DependencyProperty.Register(nameof(Settings), typeof(ScalarSensorSettings), typeof(ScalarSensorViewer), new PropertyMetadata(new ScalarSensorSettings(), (s, e) => { if (s is ScalarSensorViewer c) c.OnDataChanged(); }));
 
-    protected virtual void OnSensorChanged()
+    protected virtual void OnDataChanged()
     {
         RefreshColors();
         if (Sensor == null) Status = "عدم اتصال";
@@ -68,8 +67,7 @@ public partial class ScalarSensorViewer : UserControl, INotifyPropertyChanged
             if (Sensor.LastRead.Light <= Settings.LightThreshold) LightColor = Settings.DarkLightColor.ToSolidBrush();
             else LightColor = Settings.BrightLightColor.ToSolidBrush();
 
-            if (Sensor == null || Sensor.LastRead == null) AmmoniaColor = Settings.NormalValueColor.ToSolidBrush();
-            else if (Sensor.LastRead.Ammonia >= Settings.HighTemperatureThreshold) AmmoniaColor = Settings.HighAmmoniaColor.ToSolidBrush();
+            if (Sensor.LastRead.Ammonia >= Settings.HighTemperatureThreshold) AmmoniaColor = Settings.HighAmmoniaColor.ToSolidBrush();
             else AmmoniaColor = Settings.NormalValueColor.ToSolidBrush();
 
             if (Sensor.LastRead.Co2 >= Settings.HighCo2Threshold) Co2Color = Settings.HighCo2Color.ToSolidBrush();
