@@ -468,7 +468,7 @@ public partial class Worker
         //    AddMqttToUnknownList(mqtt);
         //    return -1;
         //}
-        if (SubTopics[1] == "GetInstance")
+        if (SubTopics[1] == config.mqtt.GetPoultryInstanceSubTopic)
         {
             PoultryDtoModel model = new()
             {

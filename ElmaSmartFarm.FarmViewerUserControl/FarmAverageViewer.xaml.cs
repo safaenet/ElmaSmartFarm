@@ -8,9 +8,9 @@ using System.Windows.Media;
 
 namespace ElmaSmartFarm.UserControls;
 
-public partial class AllInOneSensorViewer : UserControl, INotifyPropertyChanged
+public partial class FarmAverageViewer : UserControl, INotifyPropertyChanged
 {
-    public AllInOneSensorViewer()
+    public FarmAverageViewer()
     {
         InitializeComponent();
     }
@@ -24,7 +24,7 @@ public partial class AllInOneSensorViewer : UserControl, INotifyPropertyChanged
         set { SetValue(SensorProperty, value); }
     }
 
-    public static readonly DependencyProperty SensorProperty = DependencyProperty.Register(nameof(Sensor), typeof(ScalarSensorModel), typeof(AllInOneSensorViewer), new PropertyMetadata(null, (s, e) => { if (s is AllInOneSensorViewer c) c.OnSensorChanged(); }));
+    public static readonly DependencyProperty SensorProperty = DependencyProperty.Register(nameof(Sensor), typeof(ScalarSensorModel), typeof(FarmAverageViewer), new PropertyMetadata(null, (s, e) => { if (s is FarmAverageViewer c) c.OnSensorChanged(); }));
 
     public ScalarSensorSettings Settings
     {
@@ -32,7 +32,7 @@ public partial class AllInOneSensorViewer : UserControl, INotifyPropertyChanged
         set { SetValue(SettingsProperty, value); }
     }
 
-    public static readonly DependencyProperty SettingsProperty = DependencyProperty.Register(nameof(Settings), typeof(ScalarSensorSettings), typeof(AllInOneSensorViewer), new PropertyMetadata(new ScalarSensorSettings(), (s, e) => { if (s is AllInOneSensorViewer c) c.OnSensorChanged(); }));
+    public static readonly DependencyProperty SettingsProperty = DependencyProperty.Register(nameof(Settings), typeof(ScalarSensorSettings), typeof(FarmAverageViewer), new PropertyMetadata(new ScalarSensorSettings(), (s, e) => { if (s is FarmAverageViewer c) c.OnSensorChanged(); }));
 
     protected virtual void OnSensorChanged()
     {

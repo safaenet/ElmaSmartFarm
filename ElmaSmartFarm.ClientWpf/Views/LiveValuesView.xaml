@@ -14,17 +14,19 @@
         </Grid.RowDefinitions>
         <Button x:Name="ConnectAsync" Content="Connect"/>
         <!--<usercontrols:AllInOneSensorViewer Grid.Row="1" Sensor="{Binding ScalarSensor2, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>-->
-        <ItemsControl Grid.Row="1" ItemsSource="{Binding PoultryManager.Poultry.Farms}" BorderThickness="2">
+        <ItemsControl Grid.Row="1" ItemsSource="{Binding PoultryManager.Poultry.Farms}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Columns="3"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
-                        <!--<usercontrols:AllInOneSensorViewer Grid.Row="1" Sensor="{Binding Scalars., Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>-->
-                        <ItemsControl Grid.Row="1" ItemsSource="{Binding Scalars.Sensors}" BorderThickness="2">
+                        <ItemsControl Grid.Row="1" ItemsSource="{Binding Scalars.Sensors}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <StackPanel Orientation="Horizontal" Width="150" Height="100">
-                                        <usercontrols:AllInOneSensorViewer Grid.Row="1" Sensor="{Binding}"/>
-                                    </StackPanel>
+                                    <usercontrols:ScalarSensorViewer Grid.Row="1" Sensor="{Binding}" Width="175" Height="100" BorderThickness="2"/>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
