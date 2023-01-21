@@ -13,8 +13,8 @@ public class LiveValuesViewModel : ViewAware
 {
     public LiveValuesViewModel(int index)
     {
-        ScalarSensor = new();
-        ScalarSensor.Values = new();
+        ScalarSensor2 = new();
+        ScalarSensor2.Values = new();
         //ScalarSensorPresenterViewModel = new();
         PoultryManager = new(index);
         PoultryManager.OnDataChanged += PoultryManager_OnDataChanged;
@@ -48,12 +48,12 @@ public class LiveValuesViewModel : ViewAware
         set { poultryManager = value; NotifyOfPropertyChange(() => PoultryManager); }
     }
 
-    private ScalarSensorModel scalarSensor;
+    private ScalarSensorModel scalarSensor2;
 
-    public ScalarSensorModel ScalarSensor
+    public ScalarSensorModel ScalarSensor2
     {
-        get { return scalarSensor; }
-        set { scalarSensor = value; NotifyOfPropertyChange(() => ScalarSensor); }
+        get { return scalarSensor2; }
+        set { scalarSensor2 = value; NotifyOfPropertyChange(() => ScalarSensor2); }
     }
 
     private double? myVar;
@@ -74,11 +74,11 @@ public class LiveValuesViewModel : ViewAware
 
         //if (PoultryManager.Poultry.Farms[0].Scalars.Sensors[0].Values == null) PoultryManager.Poultry.Farms[0].Scalars.Sensors[0].Values = new();
         ////PoultryManager.Poultry.Farms[0].Scalars.Sensors[0].Values.Add(new() { Temperature = new Random().NextDouble(), ReadDate = DateTime.Now });
-        ScalarSensor.Values.Add(new() { Temperature = new Random().NextDouble() * 10, Humidity = new Random().Next(), ReadDate = DateTime.Now });
-        NotifyOfPropertyChange(() => ScalarSensor);
-        var x = ScalarSensor;
-        ScalarSensor = null;
-        ScalarSensor = x;
+        ScalarSensor2.Values.Add(new() { Temperature = new Random().NextDouble() * 10, Humidity = new Random().Next(), ReadDate = DateTime.Now });
+        NotifyOfPropertyChange(() => ScalarSensor2);
+        var x = ScalarSensor2;
+        ScalarSensor2 = null;
+        ScalarSensor2 = x;
 
         //ScalarSensorPresenterViewModel.ScalarSensor = PoultryManager.Poultry.Farms[0].Scalars.Sensors[0];
     }

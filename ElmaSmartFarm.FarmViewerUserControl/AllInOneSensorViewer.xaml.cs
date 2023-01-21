@@ -43,4 +43,10 @@ public partial class AllInOneSensorViewer : UserControl, INotifyPropertyChanged
         }
         set { temperature = value; OnPropertyChanged(); }
     }
+
+    public double? Temperature2
+    {
+        get { return Sensor.LastRead.Temperature; }
+        set { Sensor.LastRead.Temperature = value; OnPropertyChanged(); }
+    }
 }
