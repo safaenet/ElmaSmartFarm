@@ -145,5 +145,14 @@ public partial class FarmBriefViewer : UserControl, INotifyPropertyChanged
 
     public string PeriodStatus => Farm == null || Farm.Period == null ? "دوره تعریف نشده" : Farm.HasPeriodError ? Farm.InPeriodErrors.MaxBy(e=>e.DateHappened).ErrorType.ToString() : "وضعیت پایدار";
 
-
+    public bool HasTemperatureSensor => Farm?.Scalars?.ActiveSensors?.Any(s => s.HasTemperature) ?? false;
+    public bool HasHumiditySensor => Farm?.Scalars?.ActiveSensors?.Any(s => s.HasHumidity) ?? false;
+    public bool HasLightSensor => Farm?.Scalars?.ActiveSensors?.Any(s => s.HasLight) ?? false;
+    public bool HasAmmoniaSensor => Farm?.Scalars?.ActiveSensors?.Any(s => s.HasAmmonia) ?? false;
+    public bool HasCo2Sensor => Farm?.Scalars?.ActiveSensors?.Any(s => s.HasCo2) ?? false;
+    public bool HasScalarSensor => Farm?.Scalars?.ActiveSensors?.Any() ?? false;
+    public bool HasCommuteSensor => Farm?.Commutes?.ActiveSensors?.Any() ?? false;
+    public bool HasCheckupSensor => Farm?.Checkups?.ActiveSensors?.Any() ?? false;
+    public bool HasFeedSensor => Farm?.Feeds?.ActiveSensors?.Any() ?? false;
+    public bool HasElectricPowerSensor => Farm?.ElectricPowers?.ActiveSensors?.Any() ?? false;
 }

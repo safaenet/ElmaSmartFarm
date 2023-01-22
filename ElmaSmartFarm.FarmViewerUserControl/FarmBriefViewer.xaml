@@ -7,11 +7,13 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" d:DataContext="{d:DesignInstance Type=local:FarmBriefViewer}"
              FontFamily="Tahoma"
              mc:Ignorable="d" 
-             d:DesignHeight="407" d:DesignWidth="200" Background="AliceBlue">
+             d:DesignWidth="200" Background="AliceBlue">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="b2v"/>
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="100"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
@@ -25,7 +27,7 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="0.3*"/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -40,107 +42,67 @@
             <TextBlock Grid.Column="1" Text="{Binding Farm.FarmNumber, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}}" HorizontalAlignment="Left" Margin="3,3,0,0"/>
             <TextBlock Grid.Column="2" Text=":فارم" HorizontalAlignment="Right" Margin="0,3,3,3"/>
         </Grid>
-        <Grid Grid.Row="1">
-            <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition Height="0.3*"/>
-            </Grid.RowDefinitions>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <Grid ToolTip="دمای هوا">
-                    <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition Height="0.5*"/>
-                    </Grid.RowDefinitions>
-                    <Grid>
-                        <materialDesign:PackIcon Kind="Temperature" Foreground="{Binding TemperatureColor, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}}" Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}},Path=ActualWidth}" Height="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}},Path=ActualHeight}" Margin="0,0,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-                    </Grid>
-                    <Viewbox Grid.Row="1" HorizontalAlignment="Center">
-                        <TextBlock Text="{Binding Farm.Scalars.AverageTemperatureValue, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}}" Foreground="{Binding TemperatureColor, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}}" Margin="0,0,0,1" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
-                    </Viewbox>
-                </Grid>
-
-                <Grid Grid.Column="1" ToolTip="رطوبت هوا">
-                    <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition Height="0.5*"/>
-                    </Grid.RowDefinitions>
-                    <Grid>
-                        <materialDesign:PackIcon Kind="Humidity" Foreground="{Binding HumidityColor, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}}" Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}},Path=ActualWidth}" Height="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}},Path=ActualHeight}" Margin="0,0,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-                    </Grid>
-                    <Viewbox Grid.Row="1" HorizontalAlignment="Center">
-                        <TextBlock Text="{Binding Farm.Scalars.AverageHumidityValue, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}}" Foreground="{Binding HumidityColor, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}}" Margin="0,0,0,1" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
-                    </Viewbox>
-                </Grid>
+        <Separator Grid.Row="1" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}"/>
+        <ItemsControl Grid.Row="2">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Columns="3"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <Grid ToolTip="دمای هوا" Visibility="{Binding HasTemperatureSensor, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}, Converter={StaticResource b2v}}">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <materialDesign:PackIcon Kind="Temperature" Foreground="{Binding TemperatureColor, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}}" Width="30" Height="30" Margin="0,0,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                <TextBlock Grid.Row="1" Text="{Binding Farm.Scalars.AverageTemperatureValue, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}}" FontSize="14" Foreground="{Binding TemperatureColor, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}}" Margin="0,0,0,1" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
             </Grid>
-
-            <Grid Grid.Row="1">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <Grid Grid.Column="0" ToolTip="میزان نور محیط">
-                    <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition Height="0.5*"/>
-                    </Grid.RowDefinitions>
-                    <Grid>
-                        <materialDesign:PackIcon Kind="Lightbulb" Foreground="{Binding LightColor, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}}" Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}},Path=ActualWidth}" Height="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}},Path=ActualHeight}" Margin="0,0,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-                    </Grid>
-                    <Viewbox Grid.Row="1" HorizontalAlignment="Center">
-                        <TextBlock Text="{Binding Farm.Scalars.AverageLightValue, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}}" Foreground="{Binding LightColor, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}}" Margin="0,0,0,1" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
-                    </Viewbox>
-                </Grid>
-                <Grid Grid.Column="1" ToolTip="میزان آمونیاک">
-                    <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition Height="0.5*"/>
-                    </Grid.RowDefinitions>
-                    <Grid>
-                        <materialDesign:PackIcon Kind="LetterABox" Foreground="{Binding AmmoniaColor, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}}" Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}},Path=ActualWidth}" Height="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}},Path=ActualHeight}" Margin="0,0,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-                    </Grid>
-                    <Viewbox Grid.Row="1" HorizontalAlignment="Center">
-                        <TextBlock Text="{Binding Farm.Scalars.AverageAmmoniaValue, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}}" Foreground="{Binding AmmoniaColor, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}}" Margin="0,0,0,1" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
-                    </Viewbox>
-                </Grid>
-                <Grid Grid.Column="2" ToolTip="میزان دی اکسید کربن">
-                    <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition Height="0.5*"/>
-                    </Grid.RowDefinitions>
-                    <Grid>
-                        <materialDesign:PackIcon Kind="PeriodicTableCarbonDioxide" Foreground="{Binding Co2Color, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}}" Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}},Path=ActualWidth}" Height="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}},Path=ActualHeight}" Margin="0,0,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-                    </Grid>
-                    <Viewbox Grid.Row="1" HorizontalAlignment="Center">
-                        <TextBlock Text="{Binding Farm.Scalars.AverageCo2Value, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}}" Foreground="{Binding Co2Color, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}}" Margin="0,0,0,1" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
-                    </Viewbox>
-                </Grid>
+            <Grid ToolTip="رطوبت هوا" Visibility="{Binding HasHumiditySensor, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}, Converter={StaticResource b2v}}">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <materialDesign:PackIcon Kind="Humidity" Foreground="{Binding HumidityColor, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}}" Width="30" Height="30" Margin="0,0,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                <TextBlock Grid.Row="1" Text="{Binding Farm.Scalars.AverageHumidityValue, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}}" FontSize="14" Foreground="{Binding HumidityColor, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}}" Margin="0,0,0,1" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
             </Grid>
-            <Grid Grid.Row="2">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="auto"/>
-                </Grid.ColumnDefinitions>
-                <Viewbox>
-                    <materialDesign:PackIcon Kind="Circle" ToolTip="وضعیت" Foreground="{Binding StatusIconColor, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}}" Margin="5,0,0,2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Center"/>
-                </Viewbox>
-                <Viewbox Grid.Column="1">
-                    <TextBlock Foreground="{Binding StatusTextColor, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}}" Margin="10,0,0,3" Text="{Binding ScalarSensorSetStatus, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}}"/>
-                </Viewbox>
-                <Viewbox Grid.Column="3">
-                    <TextBlock Foreground="{Binding StatusTextColor, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}}" HorizontalAlignment="Right" Margin="0,0,5,3" Text="{Binding Farm.Scalars.LastReadSensor.LastRead.ReadDate, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}, StringFormat='HH:mm:ss'}"/>
-                </Viewbox>
+            <Grid ToolTip="میزان نور محیط" Visibility="{Binding HasLightSensor, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}, Converter={StaticResource b2v}}">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <materialDesign:PackIcon Kind="Lightbulb" Foreground="{Binding LightColor, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}}" Width="30" Height="30" Margin="0,0,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                <TextBlock Grid.Row="1" Text="{Binding Farm.Scalars.AverageLightValue, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}}" FontSize="14" Foreground="{Binding LightColor, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}}" Margin="0,0,0,1" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
             </Grid>
-        </Grid>
-        <Separator Grid.Row="2" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}"/>
+            <Grid ToolTip="میزان آمونیاک" Visibility="{Binding HasAmmoniaSensor, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}, Converter={StaticResource b2v}}">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <materialDesign:PackIcon Kind="LetterABox" Foreground="{Binding AmmoniaColor, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}}" Width="30" Height="30" Margin="0,0,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                <TextBlock Grid.Row="1" Text="{Binding Farm.Scalars.AverageAmmoniaValue, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}}" FontSize="14" Foreground="{Binding AmmoniaColor, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}}" Margin="0,0,0,1" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
+            </Grid>
+            <Grid ToolTip="میزان دی اکسید کربن" Visibility="{Binding HasCo2Sensor, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}, Converter={StaticResource b2v}}">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <materialDesign:PackIcon Kind="PeriodicTableCarbonDioxide" Foreground="{Binding Co2Color, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}}" Width="30" Height="30" Margin="0,0,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                <TextBlock Grid.Row="1" Text="{Binding Farm.Scalars.AverageCo2Value, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}}" FontSize="14" Foreground="{Binding Co2Color, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}}" Margin="0,0,0,1" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
+            </Grid>
+        </ItemsControl>
         <Grid Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <materialDesign:PackIcon Kind="Circle" ToolTip="وضعیت" Foreground="{Binding StatusIconColor, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}}" Margin="5,0,0,2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Center"/>
+            <TextBlock Grid.Column="1" Foreground="{Binding StatusTextColor, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}}" Margin="10,0,0,3" Text="{Binding ScalarSensorSetStatus, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}}"/>
+            <TextBlock Grid.Column="3" Foreground="{Binding StatusTextColor, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}}" HorizontalAlignment="Right" Margin="0,0,5,3" Text="{Binding Farm.Scalars.LastReadSensor.LastRead.ReadDate, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}, StringFormat='HH:mm:ss'}"/>
+        </Grid>
+        <Separator Grid.Row="4" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}"/>
+        <Grid Grid.Row="5">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="*"/>
@@ -158,8 +120,8 @@
             <TextBlock Grid.Column="0" Grid.Row="2" Text="{Binding CommuteSensorSetStatus, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}}" HorizontalAlignment="Left" Margin="3,3,0,0"/>
             <TextBlock Grid.Column="2" Grid.Row="2" Text=":وضعیت" HorizontalAlignment="Right" Margin="0,3,3,0"/>
         </Grid>
-        <Separator Grid.Row="4" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}"/>
-        <Grid Grid.Row="5">
+        <Separator Grid.Row="6" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}"/>
+        <Grid Grid.Row="7">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="*"/>
@@ -174,8 +136,8 @@
             <TextBlock Grid.Column="0" Grid.Row="1" Text="{Binding CheckupSensorSetStatus, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}}" HorizontalAlignment="Left" Margin="3,3,0,0"/>
             <TextBlock Grid.Column="2" Grid.Row="1" Text=":وضعیت" HorizontalAlignment="Right" Margin="0,3,3,0"/>
         </Grid>
-        <Separator Grid.Row="6" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}"/>
-        <Grid Grid.Row="7">
+        <Separator Grid.Row="8" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}"/>
+        <Grid Grid.Row="9">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="*"/>
@@ -190,8 +152,8 @@
             <TextBlock Grid.Column="0" Grid.Row="1" Text="{Binding FeedSensorSetStatus, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}}" HorizontalAlignment="Left" Margin="3,3,0,0"/>
             <TextBlock Grid.Column="2" Grid.Row="1" Text=":وضعیت" HorizontalAlignment="Right" Margin="0,3,3,0"/>
         </Grid>
-        <Separator Grid.Row="8" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}"/>
-        <Grid Grid.Row="9">
+        <Separator Grid.Row="10" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}"/>
+        <Grid Grid.Row="11">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="*"/>
@@ -203,8 +165,8 @@
             <TextBlock Grid.Column="0" Grid.Row="0" Text="{Binding ElectricPowerSensorSetStatus, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}}" HorizontalAlignment="Left" Margin="3,3,0,0"/>
             <TextBlock Grid.Column="2" Grid.Row="0" Text=":وضعیت برق" HorizontalAlignment="Right" Margin="0,3,3,0"/>
         </Grid>
-        <Separator Grid.Row="10" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}"/>
-        <Grid Grid.Row="11">
+        <Separator Grid.Row="12" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}"/>
+        <Grid Grid.Row="13">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="*"/>
@@ -228,6 +190,6 @@
             <TextBlock Grid.Column="0" Grid.Row="4" Text="{Binding PeriodStatus, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}}" HorizontalAlignment="Left" Margin="3,3,0,0"/>
             <TextBlock Grid.Column="2" Grid.Row="4" Text=":وضعیت دوره" HorizontalAlignment="Right" Margin="0,3,3,0"/>
         </Grid>
-        <Separator Grid.Row="12" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}"/>
+        <Separator Grid.Row="14" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}"/>
     </Grid>
 </UserControl>
