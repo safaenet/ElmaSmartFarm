@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:ElmaSmartFarm.ClientWpf.Views"
         xmlns:viewmodels="clr-namespace:ElmaSmartFarm.ClientWpf.ViewModels" xmlns:usercontrols="clr-namespace:ElmaSmartFarm.UserControls;assembly=ElmaSmartFarm.UserControls" d:DataContext="{d:DesignInstance Type=viewmodels:LiveValuesViewModel}"
         mc:Ignorable="d"
-        Title="LiveValuesView" Height="450" Width="800">
+        Title="LiveValuesView" Height="500" Width="800">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="25"/>
@@ -16,17 +16,14 @@
         <ItemsControl Grid.Row="1" ItemsSource="{Binding PoultryManager.Poultry.Farms}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <UniformGrid Columns="4" Rows="3"/>
+                    <WrapPanel />
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                        <Border BorderThickness="1" BorderBrush="Red">
-                            <usercontrols:FarmBriefViewer Farm="{Binding}" Width="200" Height="400"/>
-                        </Border>
-
-                    </StackPanel>
+                    <Border BorderThickness="1" BorderBrush="Red">
+                        <usercontrols:FarmBriefViewer Farm="{Binding}" Width="200" Height="407"/>
+                    </Border>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>

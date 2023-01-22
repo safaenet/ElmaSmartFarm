@@ -13,7 +13,6 @@ public class PeriodModel
     public int? Duration => EndDate == null ? null : (EndDate - StartDate).Value.Days;
     public ChickenStatisticsModel ChickenStatistics { get; set; } = new();
     public FoodStatisticsModel FoodStatistics { get; set; } = new();
-    public int ChickenPrimaryCount { get => ChickenStatistics.ChickenPrimaryCount; set => ChickenStatistics.ChickenPrimaryCount = value; }
     public int UserId { get; set; }
     public string Descriptions { get; set; }
 }

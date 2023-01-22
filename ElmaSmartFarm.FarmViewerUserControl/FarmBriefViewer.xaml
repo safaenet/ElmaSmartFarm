@@ -7,10 +7,15 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" d:DataContext="{d:DesignInstance Type=local:FarmBriefViewer}"
              FontFamily="Tahoma"
              mc:Ignorable="d" 
-             d:DesignHeight="400" d:DesignWidth="200" Background="AliceBlue">
+             d:DesignHeight="407" d:DesignWidth="200" Background="AliceBlue">
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="100"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
@@ -25,7 +30,17 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Grid Grid.Row="0">
+        <Grid Grid.Row="0" HorizontalAlignment="Right">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Text="{Binding Farm.Name, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}, StringFormat=' ({0}) '}" HorizontalAlignment="Left" Margin="3,3,0,0"/>
+            <TextBlock Grid.Column="1" Text="{Binding Farm.FarmNumber, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}}" HorizontalAlignment="Left" Margin="3,3,0,0"/>
+            <TextBlock Grid.Column="2" Text=":فارم" HorizontalAlignment="Right" Margin="0,3,3,3"/>
+        </Grid>
+        <Grid Grid.Row="1">
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>
@@ -124,8 +139,8 @@
                 </Viewbox>
             </Grid>
         </Grid>
-        <Separator Grid.Row="1" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}"/>
-        <Grid Grid.Row="2">
+        <Separator Grid.Row="2" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}"/>
+        <Grid Grid.Row="3">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="*"/>
@@ -143,8 +158,8 @@
             <TextBlock Grid.Column="0" Grid.Row="2" Text="{Binding CommuteSensorSetStatus, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}}" HorizontalAlignment="Left" Margin="3,3,0,0"/>
             <TextBlock Grid.Column="2" Grid.Row="2" Text=":وضعیت" HorizontalAlignment="Right" Margin="0,3,3,0"/>
         </Grid>
-        <Separator Grid.Row="3" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}"/>
-        <Grid Grid.Row="4">
+        <Separator Grid.Row="4" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}"/>
+        <Grid Grid.Row="5">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="*"/>
@@ -159,8 +174,8 @@
             <TextBlock Grid.Column="0" Grid.Row="1" Text="{Binding CheckupSensorSetStatus, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}}" HorizontalAlignment="Left" Margin="3,3,0,0"/>
             <TextBlock Grid.Column="2" Grid.Row="1" Text=":وضعیت" HorizontalAlignment="Right" Margin="0,3,3,0"/>
         </Grid>
-        <Separator Grid.Row="5" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}"/>
-        <Grid Grid.Row="6">
+        <Separator Grid.Row="6" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}"/>
+        <Grid Grid.Row="7">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="*"/>
@@ -175,6 +190,44 @@
             <TextBlock Grid.Column="0" Grid.Row="1" Text="{Binding FeedSensorSetStatus, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}}" HorizontalAlignment="Left" Margin="3,3,0,0"/>
             <TextBlock Grid.Column="2" Grid.Row="1" Text=":وضعیت" HorizontalAlignment="Right" Margin="0,3,3,0"/>
         </Grid>
-        <Separator Grid.Row="7" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}"/>
+        <Separator Grid.Row="8" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}"/>
+        <Grid Grid.Row="9">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="20"/>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Column="0" Grid.Row="0" Text="{Binding ElectricPowerSensorSetStatus, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}}" HorizontalAlignment="Left" Margin="3,3,0,0"/>
+            <TextBlock Grid.Column="2" Grid.Row="0" Text=":وضعیت برق" HorizontalAlignment="Right" Margin="0,3,3,0"/>
+        </Grid>
+        <Separator Grid.Row="10" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}"/>
+        <Grid Grid.Row="11">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="20"/>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Column="0" Grid.Row="0" Text="{Binding Farm.Period.DayOfPeriod, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}}" HorizontalAlignment="Left" Margin="3,3,0,0"/>
+            <TextBlock Grid.Column="2" Grid.Row="0" Text=":روز دوره" HorizontalAlignment="Right" Margin="0,3,3,0"/>
+            <TextBlock Grid.Column="0" Grid.Row="1" Text="{Binding Farm.Period.ChickenStatistics.TotalAliveCount, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}}" HorizontalAlignment="Left" Margin="3,3,0,0"/>
+            <TextBlock Grid.Column="2" Grid.Row="1" Text=":تعداد دام زنده" HorizontalAlignment="Right" Margin="0,3,3,0"/>
+            <TextBlock Grid.Column="0" Grid.Row="2" Text="{Binding Farm.Period.ChickenStatistics.TotalLossCount, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}}" HorizontalAlignment="Left" Margin="3,3,0,0"/>
+            <TextBlock Grid.Column="2" Grid.Row="2" Text=":تعداد تلفات" HorizontalAlignment="Right" Margin="0,3,3,0"/>
+            <TextBlock Grid.Column="0" Grid.Row="3" Text="{Binding Farm.Period.FoodStatistics.TotalFeedWeight, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}}" HorizontalAlignment="Left" Margin="3,3,0,0"/>
+            <TextBlock Grid.Column="2" Grid.Row="3" Text=":جمع خوراک مصرفی" HorizontalAlignment="Right" Margin="0,3,3,0"/>
+            <TextBlock Grid.Column="0" Grid.Row="4" Text="{Binding PeriodStatus, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}}" HorizontalAlignment="Left" Margin="3,3,0,0"/>
+            <TextBlock Grid.Column="2" Grid.Row="4" Text=":وضعیت دوره" HorizontalAlignment="Right" Margin="0,3,3,0"/>
+        </Grid>
+        <Separator Grid.Row="12" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}"/>
     </Grid>
 </UserControl>

@@ -141,4 +141,9 @@ public partial class FarmBriefViewer : UserControl, INotifyPropertyChanged
     public string LastFeed => Farm == null || Farm.Feeds == null || Farm.Feeds.HasActiveSensors == false ? "سنسور یافت نشد" : Farm.Feeds.ActiveSensors.Max(s => s.LastRead.ReadDate).ToString();
     public string FeedSensorSetStatus => Farm == null || Farm.Feeds == null || Farm.Feeds.HasActiveSensors == false ? "سنسور یافت نشد" : Farm.Feeds.HasError ? Farm.Feeds.ActiveSensors.MaxBy(s => s.LastError.DateHappened).LastError.ErrorType.ToString() : "وضعیت پایدار";
 
+    public string ElectricPowerSensorSetStatus => Farm == null || Farm.ElectricPowers == null || Farm.ElectricPowers.HasActiveSensors == false ? "سنسور یافت نشد" : Farm.ElectricPowers.HasError ? Farm.ElectricPowers.ActiveSensors.MaxBy(s => s.LastError.DateHappened).LastError.ErrorType.ToString() : Farm.ElectricPowers.ActiveSensors.All(s => s.LastRead.Value == SharedLibrary.BinarySensorValueType.On) ? "وضعیت پایدار" : "برق یک یا چند نقطه قطع است";
+
+    public string PeriodStatus => Farm == null || Farm.Period == null ? "دوره تعریف نشده" : Farm.HasPeriodError ? Farm.InPeriodErrors.MaxBy(e=>e.DateHappened).ErrorType.ToString() : "وضعیت پایدار";
+
+
 }
