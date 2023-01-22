@@ -22,14 +22,7 @@
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
-                        <!--<ItemsControl Grid.Row="1" ItemsSource="{Binding Scalars.Sensors}">
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <usercontrols:ScalarSensorViewer Grid.Row="1" Sensor="{Binding}" Width="175" Height="100" BorderThickness="2"/>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>-->
-                        <usercontrols:FarmBriefViewer Farm="{Binding}" Width="175" Height="100"/>
+                        <usercontrols:FarmBriefViewer Farm="{Binding}" Width="200" Height="400"/>
                     </StackPanel>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>

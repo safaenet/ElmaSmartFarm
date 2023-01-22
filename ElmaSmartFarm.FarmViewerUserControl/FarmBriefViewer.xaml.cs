@@ -1,6 +1,7 @@
 ﻿using ElmaSmartFarm.SharedLibrary.Models;
 using ElmaSmartFarm.SharedLibrary.Models.UISettings;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -141,4 +142,7 @@ public partial class FarmBriefViewer : UserControl, INotifyPropertyChanged
         get { return status; }
         set { status = value; OnPropertyChanged(); }
     }
+
+    public string LastCommuteIn => Farm == null || Farm.Commutes == null || Farm.Commutes.HasActiveSensors == false ? "سنسور یافت نشد" : Farm.Commutes.ActiveSensors.MaxBy(s => s.LastRead.ReadDate).LastStepInDate.ToString();
+    public string LastCommuteOut => Farm == null || Farm.Commutes == null || Farm.Commutes.HasActiveSensors == false ? "سنسور یافت نشد" : Farm.Commutes.ActiveSensors.MaxBy(s => s.LastRead.ReadDate).LastStepOutDate.ToString();
 }
