@@ -16,6 +16,7 @@ public class LiveValuesViewModel : ViewAware
     {
         PoultryManager = new(index);
         PoultryManager.OnDataChanged += PoultryManager_OnDataChanged;
+        _ = ConnectAsync().ConfigureAwait(true);
     }
 
     private void PoultryManager_OnDataChanged(object sender, EventArgs e)

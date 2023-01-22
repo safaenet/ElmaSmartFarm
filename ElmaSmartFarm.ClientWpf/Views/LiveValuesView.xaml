@@ -9,10 +9,8 @@
         Title="LiveValuesView" Height="500" Width="800">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="25"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Button x:Name="ConnectAsync" Content="Connect"/>
         <ItemsControl Grid.Row="1" ItemsSource="{Binding PoultryManager.Poultry.Farms}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
@@ -21,7 +19,7 @@
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Border BorderThickness="1" BorderBrush="Red">
+                    <Border BorderThickness="1" Margin="3" BorderBrush="Gray">
                         <usercontrols:FarmBriefViewer Farm="{Binding}" Width="200" Height="407"/>
                     </Border>
                 </DataTemplate>
