@@ -37,12 +37,6 @@ public partial class FarmBriefViewer : UserControl, INotifyPropertyChanged
     protected virtual void OnDataChanged()
     {
         RefreshColors();
-        if (Farm == null) Status = "عدم اتصال";
-        else
-        {
-            if (Farm.HasSensorError || Farm.HasPeriodError) Status = "خطا وجود دارد";
-            else Status = "وضعیت پایدار";
-        }
     }
 
     private void RefreshColors()
@@ -135,14 +129,16 @@ public partial class FarmBriefViewer : UserControl, INotifyPropertyChanged
         get { return statusIconColor; }
         set { statusIconColor = value; OnPropertyChanged(); }
     }
+    public string ScalarSensorSetStatus => Farm == null || Farm.Scalars == null || Farm.Scalars.HasActiveSensors == false ? "سنسور یافت نشد" : Farm.Scalars.HasError ? Farm.Scalars.ActiveSensors.MaxBy(s => s.LastError.DateHappened).LastError.ErrorType.ToString() : "وضعیت پایدار";
 
-    private string status = "Ok";
-    public string Status
-    {
-        get { return status; }
-        set { status = value; OnPropertyChanged(); }
-    }
+    public string LastCommuteIn => Farm == null || Farm.Commutes == null || Farm.Commutes.HasActiveSensors == false ? "سنسور یافت نشد" : Farm.Commutes.ActiveSensors.Max(s => s.LastStepInDate).ToString();
+    public string LastCommuteOut => Farm == null || Farm.Commutes == null || Farm.Commutes.HasActiveSensors == false ? "سنسور یافت نشد" : Farm.Commutes.ActiveSensors.Max(s => s.LastStepOutDate).ToString();
+    public string CommuteSensorSetStatus => Farm == null || Farm.Commutes == null || Farm.Commutes.HasActiveSensors == false ? "سنسور یافت نشد" : Farm.Commutes.HasError ? Farm.Commutes.ActiveSensors.MaxBy(s => s.LastError.DateHappened).LastError.ErrorType.ToString() : "وضعیت پایدار";
+    
+    public string LastCheckup => Farm == null || Farm.Checkups == null || Farm.Checkups.HasActiveSensors == false ? "سنسور یافت نشد" : Farm.Checkups.ActiveSensors.Max(s => s.LastRead.ReadDate).ToString();
+    public string CheckupSensorSetStatus => Farm == null || Farm.Checkups == null || Farm.Checkups.HasActiveSensors == false ? "سنسور یافت نشد" : Farm.Checkups.HasError ? Farm.Checkups.ActiveSensors.MaxBy(s => s.LastError.DateHappened).LastError.ErrorType.ToString() : "وضعیت پایدار";
 
-    public string LastCommuteIn => Farm == null || Farm.Commutes == null || Farm.Commutes.HasActiveSensors == false ? "سنسور یافت نشد" : Farm.Commutes.ActiveSensors.MaxBy(s => s.LastRead.ReadDate).LastStepInDate.ToString();
-    public string LastCommuteOut => Farm == null || Farm.Commutes == null || Farm.Commutes.HasActiveSensors == false ? "سنسور یافت نشد" : Farm.Commutes.ActiveSensors.MaxBy(s => s.LastRead.ReadDate).LastStepOutDate.ToString();
+    public string LastFeed => Farm == null || Farm.Feeds == null || Farm.Feeds.HasActiveSensors == false ? "سنسور یافت نشد" : Farm.Feeds.ActiveSensors.Max(s => s.LastRead.ReadDate).ToString();
+    public string FeedSensorSetStatus => Farm == null || Farm.Feeds == null || Farm.Feeds.HasActiveSensors == false ? "سنسور یافت نشد" : Farm.Feeds.HasError ? Farm.Feeds.ActiveSensors.MaxBy(s => s.LastError.DateHappened).LastError.ErrorType.ToString() : "وضعیت پایدار";
+
 }

@@ -16,6 +16,10 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="0.3*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -113,10 +117,10 @@
                     <materialDesign:PackIcon Kind="Circle" ToolTip="وضعیت" Foreground="{Binding StatusIconColor, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}}" Margin="5,0,0,2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Center"/>
                 </Viewbox>
                 <Viewbox Grid.Column="1">
-                    <TextBlock Foreground="{Binding StatusTextColor, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}}" Margin="10,0,0,3" Text="{Binding Status, RelativeSource={RelativeSource AncestorType={x:Type local:ScalarSensorViewer}}}"/>
+                    <TextBlock Foreground="{Binding StatusTextColor, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}}" Margin="10,0,0,3" Text="{Binding ScalarSensorSetStatus, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}}"/>
                 </Viewbox>
                 <Viewbox Grid.Column="3">
-                    <TextBlock Foreground="{Binding StatusTextColor, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}}" HorizontalAlignment="Right" Margin="0,0,5,3" Text="{Binding Sensor.LastRead.ReadDate, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}, StringFormat='HH:mm:ss'}"/>
+                    <TextBlock Foreground="{Binding StatusTextColor, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}}" HorizontalAlignment="Right" Margin="0,0,5,3" Text="{Binding Farm.Scalars.LastReadSensor.LastRead.ReadDate, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}, StringFormat='HH:mm:ss'}"/>
                 </Viewbox>
             </Grid>
         </Grid>
@@ -136,7 +140,41 @@
             <TextBlock Grid.Column="2" Grid.Row="0" Text=":آخرین ورود" HorizontalAlignment="Right" Margin="0,3,3,0"/>
             <TextBlock Grid.Column="0" Grid.Row="1" Text="{Binding LastCommuteOut, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}}" HorizontalAlignment="Left" Margin="3,3,0,0"/>
             <TextBlock Grid.Column="2" Grid.Row="1" Text=":آخرین خروج" HorizontalAlignment="Right" Margin="0,3,3,0"/>
+            <TextBlock Grid.Column="0" Grid.Row="2" Text="{Binding CommuteSensorSetStatus, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}}" HorizontalAlignment="Left" Margin="3,3,0,0"/>
+            <TextBlock Grid.Column="2" Grid.Row="2" Text=":وضعیت" HorizontalAlignment="Right" Margin="0,3,3,0"/>
         </Grid>
         <Separator Grid.Row="3" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}"/>
+        <Grid Grid.Row="4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="20"/>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Column="0" Grid.Row="0" Text="{Binding LastCheckup, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}}" HorizontalAlignment="Left" Margin="3,3,0,0"/>
+            <TextBlock Grid.Column="2" Grid.Row="0" Text=":آخرین چکاپ" HorizontalAlignment="Right" Margin="0,3,3,0"/>
+            <TextBlock Grid.Column="0" Grid.Row="1" Text="{Binding CheckupSensorSetStatus, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}}" HorizontalAlignment="Left" Margin="3,3,0,0"/>
+            <TextBlock Grid.Column="2" Grid.Row="1" Text=":وضعیت" HorizontalAlignment="Right" Margin="0,3,3,0"/>
+        </Grid>
+        <Separator Grid.Row="5" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}"/>
+        <Grid Grid.Row="6">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="20"/>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Column="0" Grid.Row="0" Text="{Binding LastFeed, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}}" HorizontalAlignment="Left" Margin="3,3,0,0"/>
+            <TextBlock Grid.Column="2" Grid.Row="0" Text=":آخرین تغذیه" HorizontalAlignment="Right" Margin="0,3,3,0"/>
+            <TextBlock Grid.Column="0" Grid.Row="1" Text="{Binding FeedSensorSetStatus, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}}" HorizontalAlignment="Left" Margin="3,3,0,0"/>
+            <TextBlock Grid.Column="2" Grid.Row="1" Text=":وضعیت" HorizontalAlignment="Right" Margin="0,3,3,0"/>
+        </Grid>
+        <Separator Grid.Row="7" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}"/>
     </Grid>
 </UserControl>

@@ -24,4 +24,6 @@ public class ScalarSensorSetModel : SensorSetModel<ScalarSensorModel>
     public ScalarSensorModel MinimumCo2Sensor => ActiveSensors?.Where(s => s.WatchCo2).MinBy(s => s.LastRead?.Co2);
     public ScalarSensorModel MaximumCo2Sensor => ActiveSensors?.Where(s => s.WatchCo2).MaxBy(s => s.LastRead?.Co2);
     public double? AverageCo2Value => ActiveSensors?.Where(s => s.WatchCo2).Average(s => s.LastRead?.Co2);
+
+    public ScalarSensorModel LastReadSensor => ActiveSensors?.MaxBy(s => s.LastRead?.ReadDate);
 }
