@@ -20,7 +20,7 @@
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <Border BorderThickness="1" Margin="3" BorderBrush="Gray">
-                        <usercontrols:FarmBriefViewer Farm="{Binding}" Width="200" Height="407"/>
+                        <usercontrols:FarmBriefViewer Farm="{Binding}" Width="200" Height="auto"/>
                     </Border>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>

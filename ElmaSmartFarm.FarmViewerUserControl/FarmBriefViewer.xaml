@@ -43,7 +43,7 @@
             <TextBlock Grid.Column="2" Text=":فارم" HorizontalAlignment="Right" Margin="0,3,3,3"/>
         </Grid>
         <Separator Grid.Row="1" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}"/>
-        <ItemsControl Grid.Row="2">
+        <ItemsControl Grid.Row="2" Visibility="{Binding HasScalarSensor, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}, Converter={StaticResource b2v}}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <UniformGrid Columns="3"/>
@@ -90,7 +90,7 @@
                 <TextBlock Grid.Row="1" Text="{Binding Farm.Scalars.AverageCo2Value, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}}" FontSize="14" Foreground="{Binding Co2Color, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}}" Margin="0,0,0,1" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
             </Grid>
         </ItemsControl>
-        <Grid Grid.Row="3">
+        <Grid Grid.Row="3" Visibility="{Binding HasScalarSensor, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}, Converter={StaticResource b2v}}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="auto"/>
@@ -101,8 +101,8 @@
             <TextBlock Grid.Column="1" Foreground="{Binding StatusTextColor, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}}" Margin="10,0,0,3" Text="{Binding ScalarSensorSetStatus, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}}"/>
             <TextBlock Grid.Column="3" Foreground="{Binding StatusTextColor, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}}" HorizontalAlignment="Right" Margin="0,0,5,3" Text="{Binding Farm.Scalars.LastReadSensor.LastRead.ReadDate, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}, StringFormat='HH:mm:ss'}"/>
         </Grid>
-        <Separator Grid.Row="4" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}"/>
-        <Grid Grid.Row="5">
+        <Separator Grid.Row="4" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Visibility="{Binding HasScalarSensor, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}, Converter={StaticResource b2v}}"/>
+        <Grid Grid.Row="5" Visibility="{Binding HasCommuteSensor, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}, Converter={StaticResource b2v}}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="*"/>
@@ -120,8 +120,8 @@
             <TextBlock Grid.Column="0" Grid.Row="2" Text="{Binding CommuteSensorSetStatus, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}}" HorizontalAlignment="Left" Margin="3,3,0,0"/>
             <TextBlock Grid.Column="2" Grid.Row="2" Text=":وضعیت" HorizontalAlignment="Right" Margin="0,3,3,0"/>
         </Grid>
-        <Separator Grid.Row="6" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}"/>
-        <Grid Grid.Row="7">
+        <Separator Grid.Row="6" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Visibility="{Binding HasCommuteSensor, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}, Converter={StaticResource b2v}}"/>
+        <Grid Grid.Row="7" Visibility="{Binding HasCheckupSensor, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}, Converter={StaticResource b2v}}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="*"/>
@@ -136,8 +136,8 @@
             <TextBlock Grid.Column="0" Grid.Row="1" Text="{Binding CheckupSensorSetStatus, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}}" HorizontalAlignment="Left" Margin="3,3,0,0"/>
             <TextBlock Grid.Column="2" Grid.Row="1" Text=":وضعیت" HorizontalAlignment="Right" Margin="0,3,3,0"/>
         </Grid>
-        <Separator Grid.Row="8" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}"/>
-        <Grid Grid.Row="9">
+        <Separator Grid.Row="8" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Visibility="{Binding HasCheckupSensor, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}, Converter={StaticResource b2v}}"/>
+        <Grid Grid.Row="9" Visibility="{Binding HasFeedSensor, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}, Converter={StaticResource b2v}}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="*"/>
@@ -152,8 +152,8 @@
             <TextBlock Grid.Column="0" Grid.Row="1" Text="{Binding FeedSensorSetStatus, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}}" HorizontalAlignment="Left" Margin="3,3,0,0"/>
             <TextBlock Grid.Column="2" Grid.Row="1" Text=":وضعیت" HorizontalAlignment="Right" Margin="0,3,3,0"/>
         </Grid>
-        <Separator Grid.Row="10" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}"/>
-        <Grid Grid.Row="11">
+        <Separator Grid.Row="10" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Visibility="{Binding HasFeedSensor, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}, Converter={StaticResource b2v}}"/>
+        <Grid Grid.Row="11" Visibility="{Binding HasElectricPowerSensor, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}, Converter={StaticResource b2v}}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="*"/>
@@ -165,8 +165,8 @@
             <TextBlock Grid.Column="0" Grid.Row="0" Text="{Binding ElectricPowerSensorSetStatus, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}}" HorizontalAlignment="Left" Margin="3,3,0,0"/>
             <TextBlock Grid.Column="2" Grid.Row="0" Text=":وضعیت برق" HorizontalAlignment="Right" Margin="0,3,3,0"/>
         </Grid>
-        <Separator Grid.Row="12" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}"/>
-        <Grid Grid.Row="13">
+        <Separator Grid.Row="12" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Visibility="{Binding HasElectricPowerSensor, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}, Converter={StaticResource b2v}}"/>
+        <Grid Grid.Row="13"  Visibility="{Binding Farm.IsInPeriod, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}, Converter={StaticResource b2v}}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="*"/>
@@ -190,6 +190,6 @@
             <TextBlock Grid.Column="0" Grid.Row="4" Text="{Binding PeriodStatus, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}}" HorizontalAlignment="Left" Margin="3,3,0,0"/>
             <TextBlock Grid.Column="2" Grid.Row="4" Text=":وضعیت دوره" HorizontalAlignment="Right" Margin="0,3,3,0"/>
         </Grid>
-        <Separator Grid.Row="14" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}"/>
+        <Separator Grid.Row="14" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Visibility="{Binding Farm.IsInPeriod, RelativeSource={RelativeSource AncestorType={x:Type local:FarmBriefViewer}}, Converter={StaticResource b2v}}"/>
     </Grid>
 </UserControl>
