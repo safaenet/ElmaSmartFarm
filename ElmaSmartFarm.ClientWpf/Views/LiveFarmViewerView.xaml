@@ -7,9 +7,9 @@
         xmlns:cal="http://www.caliburnproject.org"
         xmlns:usercontrols="clr-namespace:ElmaSmartFarm.UserControls;assembly=ElmaSmartFarm.UserControls"
         d:DataContext="{d:DesignInstance Type=viewmodels:LiveFarmViewerViewModel}"
-        xmlns:local="clr-namespace:ElmaSmartFarm.ClientWpf.Views"
+        xmlns:local="clr-namespace:ElmaSmartFarm.ClientWpf.Views" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="نمایش فارم" Height="450" Width="530" cal:Message.Attach="[Event Closed] = [Action FormClosed];">
+        Title="نمایش فارم" Width="530" cal:Message.Attach="[Event Closed] = [Action FormClosed];">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -27,13 +27,143 @@
             <usercontrols:ScalarSensorViewer Grid.Column="2" Margin="1" Sensor="{Binding Farm.Scalars.ScalarSensorRight}" MaxWidth="200" IsEnabled="{Binding ScalarSensorRightEnabled}"/>
         </Grid>
         <Separator Grid.Row="1" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}"/>
-        <Grid Grid.Row="2" Name="Details">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            
-        </Grid>
+        <ItemsControl Grid.Row="2" Name="Details" Margin="3,0,3,3" HorizontalAlignment="Right" Foreground="DarkCyan" FlowDirection="RightToLeft">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Columns="3"/>
+                    <!--<WrapPanel/>-->
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel><GroupBox Width="175">
+                <GroupBox.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="درباره فارم"/>
+                        <materialDesign:PackIcon Kind="CardTextOutline" Margin="5,0,0,0"/>
+                        <Button Width="25" Height="12" FontSize="9" Margin="15,0,0,0" Background="Transparent" Foreground="DarkCyan" BorderBrush="DarkCyan">
+                            <materialDesign:PackIcon Kind="UnfoldMoreVertical" Margin="0,-4,0,0" Width="16"/>
+                        </Button>
+                    </StackPanel>
+                </GroupBox.Header>
+                <StackPanel FlowDirection="LeftToRight">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <TextBlock Text="{Binding Farm.Name}"/>
+                        <TextBlock Text=" :نام"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <TextBlock Text="{Binding Farm.FarmNumber}"/>
+                        <TextBlock Text=" :شماره"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <TextBlock Text="{Binding Farm.MaxCapacity}"/>
+                        <TextBlock Text=" :ظرفیت"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <TextBlock Text="{Binding Farm.IsEnabled}"/>
+                        <TextBlock Text=" :وضعیت فعالیت"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <TextBlock Text="{Binding Farm.Id}"/>
+                        <TextBlock Text=" :شناسه"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <TextBlock Text="{Binding Farm.Descriptions}"/>
+                        <TextBlock Text=" :توضیحات"/>
+                    </StackPanel>
+                </StackPanel>
+            </GroupBox>
+            <GroupBox Width="175">
+                <GroupBox.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="دوره"/>
+                        <materialDesign:PackIcon Kind="PeriodicTable" Margin="5,0,0,0"/>
+                        <Button Width="25" Height="12" FontSize="9" Margin="15,0,0,0" Background="Transparent" Foreground="DarkCyan" BorderBrush="DarkCyan">
+                            <materialDesign:PackIcon Kind="UnfoldMoreVertical" Margin="0,-4,0,0" Width="16"/>
+                        </Button>
+                    </StackPanel>
+                </GroupBox.Header>
+                <StackPanel FlowDirection="LeftToRight">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <TextBlock Text="{Binding Farm.Period.Name}"/>
+                        <TextBlock Text=" :نام"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <TextBlock Text="{Binding Farm.Period.StartDate}"/>
+                        <TextBlock Text=" :تاریخ شروع"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <TextBlock Text="{Binding Farm.Period.DayOfPeriod}"/>
+                        <TextBlock Text=" :روز دوره"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <TextBlock Text="{Binding Farm.Period.ChickenStatistics.ChickenPrimaryCount}"/>
+                        <TextBlock Text=" :تعداد دام اولیه"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <TextBlock Text="{Binding Farm.Period.ChickenStatistics.TotalLossCount}"/>
+                        <TextBlock Text=" :تعداد تلفات"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <TextBlock Text="{Binding Farm.Period.ChickenStatistics.TotalAliveCount}"/>
+                        <TextBlock Text=" :تعداد دام زنده"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <TextBlock Text="{Binding Farm.Period.FoodStatistics.TotalFeedWeight}"/>
+                        <TextBlock Text=" :جمع خوراک مصرفی"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <TextBlock Text="{Binding Farm.Period.Descriptions}"/>
+                        <TextBlock Text=" :توضیحات"/>
+                    </StackPanel>
+                </StackPanel>
+            </GroupBox>
+            <GroupBox Width="175">
+                <GroupBox.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="سنسورها"/>
+                        <materialDesign:PackIcon Kind="Leak" Margin="5,0,0,0"/>
+                        <Button Width="25" Height="12" FontSize="9" Margin="15,0,0,0" Background="Transparent" Foreground="DarkCyan" BorderBrush="DarkCyan">
+                            <materialDesign:PackIcon Kind="UnfoldMoreVertical" Margin="0,-4,0,0" Width="16"/>
+                        </Button>
+                    </StackPanel>
+                </GroupBox.Header>
+                <StackPanel FlowDirection="LeftToRight">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <TextBlock Text="{Binding Farm.Period.Name}"/>
+                        <TextBlock Text=" :دما"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <TextBlock Text="{Binding Farm.Period.ChickenStatistics.TotalAliveCount}"/>
+                        <TextBlock Text=" :رطوبت"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <TextBlock Text="{Binding Farm.Period.FoodStatistics.TotalFeedWeight}"/>
+                        <TextBlock Text=" :نور محیط"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <TextBlock Text="{Binding Farm.Period.Descriptions}"/>
+                        <TextBlock Text=" :آمونیاک"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <TextBlock Text="{Binding Farm.Period.StartDate}"/>
+                        <TextBlock Text=" :دی اکسید کربن"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <TextBlock Text="{Binding Farm.Period.DayOfPeriod}"/>
+                        <TextBlock Text=" :رفت و آمد"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <TextBlock Text="{Binding Farm.Period.DayOfPeriod}"/>
+                        <TextBlock Text=" :چکاپ"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <TextBlock Text="{Binding Farm.Period.ChickenStatistics.ChickenPrimaryCount}"/>
+                        <TextBlock Text=" :تغذیه"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <TextBlock Text="{Binding Farm.Period.ChickenStatistics.TotalLossCount}"/>
+                        <TextBlock Text=" :برق"/>
+                    </StackPanel>
+                </StackPanel>
+            </GroupBox>
+        </ItemsControl>
     </Grid>
 </Window>
