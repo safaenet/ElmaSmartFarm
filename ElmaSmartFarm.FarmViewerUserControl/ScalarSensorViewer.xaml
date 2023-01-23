@@ -8,7 +8,7 @@
              d:DataContext="{d:DesignInstance Type=local:ScalarSensorViewer}"
              FontFamily="Tahoma"
              mc:Ignorable="d" 
-             d:DesignWidth="175" Background="AliceBlue">
+             d:DesignWidth="175" Background="Transparent">
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="b2v"/>
     </UserControl.Resources>
