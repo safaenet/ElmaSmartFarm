@@ -1,12 +1,7 @@
 ﻿using Caliburn.Micro;
 using ElmaSmartFarm.ApiClient.DataAccess;
-using ElmaSmartFarm.SharedLibrary.Models;
-using ElmaSmartFarm.SharedLibrary.Models.Sensors;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using System.Windows;
 
 namespace ElmaSmartFarm.ClientWpf.ViewModels;
 
@@ -14,8 +9,8 @@ public class LivePoultryViewerViewModel : ViewAware
 {
     public LivePoultryViewerViewModel(int index)
     {
-        PoultryManager = new(index);
-        PoultryManager.OnDataChanged += PoultryManager_OnDataChanged;
+        poultryManager = new(index);
+        poultryManager.OnDataChanged += PoultryManager_OnDataChanged;
         _ = ConnectAsync().ConfigureAwait(true);
     }
 
@@ -24,35 +19,35 @@ public class LivePoultryViewerViewModel : ViewAware
         RefreshBindings();
     }
 
-    private PoultryManager poultryManager;
-    public PoultryManager PoultryManager
+    private PoultryManager _poultryManager;
+    public PoultryManager poultryManager
     {
-        get => poultryManager;
-        set { poultryManager = value; NotifyOfPropertyChange(() => PoultryManager); }
+        get => _poultryManager;
+        set { _poultryManager = value; NotifyOfPropertyChange(() => poultryManager); }
     }
 
     public async Task ConnectAsync()
     {
-        if (PoultryManager != null && !PoultryManager.IsRunning) await PoultryManager.ConnectAsync();
-        await PoultryManager.RequestPoultryOverHttp();
+        if (poultryManager != null && !poultryManager.IsRunning) await poultryManager.ConnectAsync();
+        await poultryManager.RequestPoultryOverHttp();
         RefreshBindings();
     }
 
     public async Task DisconnectAsync()
     {
-        await PoultryManager.DisconnectAsync();
+        await poultryManager.DisconnectAsync();
     }
 
     private void RefreshBindings()
     {
-        NotifyOfPropertyChange(() => PoultryManager);
+        NotifyOfPropertyChange(() => poultryManager);
         //NotifyOfPropertyChange(() => PoultryManager.Poultry);
         //NotifyOfPropertyChange(() => PoultryManager.Poultry.Farms);
     }
 
     public async Task OpenFarmAsync()
     {
-        LiveFarmViewerViewModel liveFarmViewModel = new(PoultryManager, PoultryManager.Poultry.Farms.FirstOrDefault().Id);
+        LiveFarmViewerViewModel liveFarmViewModel = new(poultryManager, poultryManager.Poultry.Farms[0].Id);
         WindowManager wm = new();
         await wm.ShowWindowAsync(liveFarmViewModel);
     }

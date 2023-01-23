@@ -16,12 +16,9 @@ public class FarmModel
     public BinarySensorSetModel ElectricPowers { get; set; } = new();
     public PeriodModel Period { get; set; }
     public bool IsEnabled { get; set; }
-    [System.Text.Json.Serialization.JsonIgnore]
     public bool IsInPeriod => IsEnabled && Period != null && Period.EndDate is not null;
     public List<FarmInPeriodErrorModel> InPeriodErrors { get; set; } = new();
-    [System.Text.Json.Serialization.JsonIgnore]
     public bool HasSensorError => IsEnabled && ((Scalars != null && Scalars.HasError) || (Commutes != null && Commutes.HasError) || (Checkups != null && Checkups.HasError) || (Feeds != null && Feeds.HasError) || (ElectricPowers != null && ElectricPowers.HasError));
-    [System.Text.Json.Serialization.JsonIgnore]
     public bool HasPeriodError => IsInPeriod && InPeriodErrors != null && InPeriodErrors.Any(e => e.DateErased is null);
     public string Descriptions { get; set; }
 }

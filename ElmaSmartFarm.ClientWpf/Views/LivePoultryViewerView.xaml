@@ -15,7 +15,7 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Button Content="Open Farm" x:Name="OpenFarmAsync"/>
-        <ItemsControl Grid.Row="1" ItemsSource="{Binding PoultryManager.Poultry.Farms}">
+        <ItemsControl Grid.Row="1" ItemsSource="{Binding poultryManager.Poultry.Farms}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <WrapPanel />

@@ -12,6 +12,7 @@ public partial class ScalarSensorViewer : UserControl, INotifyPropertyChanged
     public ScalarSensorViewer()
     {
         InitializeComponent();
+        RefreshColors();
     }
 
     public event PropertyChangedEventHandler PropertyChanged;
@@ -46,13 +47,16 @@ public partial class ScalarSensorViewer : UserControl, INotifyPropertyChanged
 
     private void RefreshColors()
     {
-        if (Sensor == null || Sensor.LastRead == null)
+        if (Sensor == DependencyProperty.UnsetValue || Sensor == null || Sensor.LastRead == null || Sensor.IsEnabled == false)
         {
-            TemperatureColor = Settings.NormalValueColor.ToSolidBrush();
-            HumidityColor = Settings.NormalValueColor.ToSolidBrush();
-            LightColor = Settings.NormalValueColor.ToSolidBrush();
-            AmmoniaColor = Settings.NormalValueColor.ToSolidBrush();
-            Co2Color = Settings.NormalValueColor.ToSolidBrush();
+            TemperatureColor = Settings.ItemDisabledColor.ToSolidBrush();
+            HumidityColor = Settings.ItemDisabledColor.ToSolidBrush();
+            LightColor = Settings.ItemDisabledColor.ToSolidBrush();
+            AmmoniaColor = Settings.ItemDisabledColor.ToSolidBrush();
+            Co2Color = Settings.ItemDisabledColor.ToSolidBrush();
+            HeaderTextColor = Settings.ItemDisabledColor.ToSolidBrush();
+            StatusTextColor = Settings.ItemDisabledColor.ToSolidBrush();
+            StatusIconColor = Settings.ItemDisabledColor.ToSolidBrush();
         }
         else
         {
@@ -77,12 +81,15 @@ public partial class ScalarSensorViewer : UserControl, INotifyPropertyChanged
             {
                 StatusTextColor = Settings.StatusTextErrorColor.ToSolidBrush();
                 StatusIconColor = Settings.StatusIconErrorColor.ToSolidBrush();
+                BorderColor = Settings.BorderErrorColor.ToSolidBrush();
             }
             else
             {
                 StatusTextColor = Settings.StatusTextOkColor.ToSolidBrush();
                 StatusIconColor = Settings.StatusIconOkColor.ToSolidBrush();
+                BorderColor = Settings.BorderOkColor.ToSolidBrush();
             }
+            HeaderTextColor = Settings.HeaderTextOkColor.ToSolidBrush();
         }
     }
 
@@ -121,6 +128,13 @@ public partial class ScalarSensorViewer : UserControl, INotifyPropertyChanged
         set { co2Color = value; OnPropertyChanged(); }
     }
 
+    private SolidColorBrush headerTextColor = new(Colors.Black);
+    public SolidColorBrush HeaderTextColor
+    {
+        get { return headerTextColor; }
+        set { headerTextColor = value; OnPropertyChanged(); }
+    }
+
     private SolidColorBrush statusTextColor = new(Colors.Black);
     public SolidColorBrush StatusTextColor
     {
@@ -133,6 +147,13 @@ public partial class ScalarSensorViewer : UserControl, INotifyPropertyChanged
     {
         get { return statusIconColor; }
         set { statusIconColor = value; OnPropertyChanged(); }
+    }
+
+    private SolidColorBrush borderColor = new(Colors.Black);
+    public SolidColorBrush BorderColor
+    {
+        get { return borderColor; }
+        set { borderColor = value; OnPropertyChanged(); }
     }
 
     private string status = "Ok";
