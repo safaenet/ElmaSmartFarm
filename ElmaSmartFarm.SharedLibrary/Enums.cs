@@ -114,17 +114,8 @@ public enum BinarySensorValueType
 
 public enum SensorSection
 {
-    FarmLeftTop = 1,
-    FarmLeftMiddle = 2,
-    FarmLeftBottom = 3,
-
-    FarmMiddleTop = 4,
-    FarmMiddleMiddle = 5,
-    FarmMiddleBottom = 6,
-
-    FarmRightTop = 7,
-    FarmRightMiddle = 8,
-    FarmRightBottom = 9,
-
-    Outdoor = 10
+    FarmLeft = 1,
+    FarmMiddle = 2,
+    FarmRight = 3,
+    Outdoor = 4
 }

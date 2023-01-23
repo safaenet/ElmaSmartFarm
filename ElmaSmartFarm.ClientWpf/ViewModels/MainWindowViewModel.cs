@@ -13,7 +13,7 @@ public class MainWindowViewModel : ViewAware
 
     public async Task ViewLiveValuesAsync()
     {
-        LiveValuesViewModel liveValuesViewModel = new(0);
+        LivePoultryViewerViewModel liveValuesViewModel = new(0);
         //await liveValuesViewModel.ConnectAsync();
         WindowManager wm = new();
         await wm.ShowWindowAsync(liveValuesViewModel);
