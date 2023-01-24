@@ -49,6 +49,7 @@
                 </GroupBox.Header>
                 <StackPanel FlowDirection="LeftToRight">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <!--<TextBox Background="Transparent" BorderThickness="0" Text="{Binding Farm.Name, Mode=OneWay}" IsReadOnly="True" TextWrapping="Wrap" />-->
                         <TextBlock Text="{Binding Farm.Name}"/>
                         <TextBlock Text=" :نام"/>
                     </StackPanel>
