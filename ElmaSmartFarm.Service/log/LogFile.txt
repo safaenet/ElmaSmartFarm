@@ -18326,3 +18326,95 @@ Error Number:121,State:0,Class:20
 2023-01-24 10:41:36.888 +03:30 [INF] MQTT Message received. Topic: Elma/ToServer/FromClient/GetInstance, Payload: 1
 2023-01-24 10:41:36.896 +03:30 [INF] MQTT Message is from a client. Topic: Elma/ToServer/FromClient/GetInstance, Payload: 1
 2023-01-24 10:41:37.178 +03:30 [INF] ===============  End of mqtt process 292.0674 ms) ===============
+2023-01-24 17:50:11.277 +03:30 [INF] Starting up the Service...
+2023-01-24 17:50:15.505 +03:30 [INF] Loading poultry...
+2023-01-24 17:50:17.936 +03:30 [INF] Poultry loaded. (2430.5306 ms)
+2023-01-24 17:50:17.947 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: f2a182a3-9a01-40d8-81ed-9c711ccc63ab.
+2023-01-24 17:50:18.008 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: f2a182a3-9a01-40d8-81ed-9c711ccc63ab.
+2023-01-24 17:50:18.027 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2023-01-24 17:50:22.567 +03:30 [INF] ===============  Begin mqtt process  ===============
+2023-01-24 17:50:22.569 +03:30 [INF] MQTT Message received. Topic: Elma/ToServer/FromClient/GetInstance, Payload: 1
+2023-01-24 17:50:22.597 +03:30 [INF] MQTT Message is from a client. Topic: Elma/ToServer/FromClient/GetInstance, Payload: 1
+2023-01-24 17:50:23.175 +03:30 [INF] ===============  End of mqtt process 607.6399 ms) ===============
+2023-01-24 18:33:42.137 +03:30 [INF] Starting up the Service...
+2023-01-24 18:33:44.422 +03:30 [INF] Loading poultry...
+2023-01-24 18:33:45.696 +03:30 [INF] Poultry loaded. (1273.7468 ms)
+2023-01-24 18:33:45.711 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: b3bcaa7e-1681-4e29-8a1d-746e35f63a85.
+2023-01-24 18:33:45.789 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: b3bcaa7e-1681-4e29-8a1d-746e35f63a85.
+2023-01-24 18:33:45.809 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2023-01-24 18:33:49.853 +03:30 [INF] ===============  Begin mqtt process  ===============
+2023-01-24 18:33:49.855 +03:30 [INF] MQTT Message received. Topic: Elma/ToServer/FromClient/GetInstance, Payload: 1
+2023-01-24 18:33:49.874 +03:30 [INF] MQTT Message is from a client. Topic: Elma/ToServer/FromClient/GetInstance, Payload: 1
+2023-01-24 18:33:50.449 +03:30 [INF] ===============  End of mqtt process 595.6812 ms) ===============
+2023-01-24 18:34:24.015 +03:30 [INF] Starting up the Service...
+2023-01-24 18:34:26.175 +03:30 [INF] Loading poultry...
+2023-01-24 18:34:27.138 +03:30 [INF] Poultry loaded. (962.8498 ms)
+2023-01-24 18:34:27.149 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: e79075ec-ffd4-475f-8fa4-1c8554488ae9.
+2023-01-24 18:34:27.209 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: e79075ec-ffd4-475f-8fa4-1c8554488ae9.
+2023-01-24 18:34:27.227 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2023-01-24 18:34:30.858 +03:30 [INF] ===============  Begin mqtt process  ===============
+2023-01-24 18:34:30.861 +03:30 [INF] MQTT Message received. Topic: Elma/ToServer/FromClient/GetInstance, Payload: 1
+2023-01-24 18:34:30.868 +03:30 [INF] MQTT Message is from a client. Topic: Elma/ToServer/FromClient/GetInstance, Payload: 1
+2023-01-24 18:34:31.154 +03:30 [INF] ===============  End of mqtt process 295.6724 ms) ===============
+2023-01-24 18:35:00.867 +03:30 [INF] Starting up the Service...
+2023-01-24 18:35:02.869 +03:30 [INF] Loading poultry...
+2023-01-24 18:35:03.961 +03:30 [INF] Poultry loaded. (1092.4298 ms)
+2023-01-24 18:35:03.969 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: e8e2672b-053d-4b36-aaa6-313fac666060.
+2023-01-24 18:35:04.023 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: e8e2672b-053d-4b36-aaa6-313fac666060.
+2023-01-24 18:35:04.039 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2023-01-24 18:35:07.651 +03:30 [INF] ===============  Begin mqtt process  ===============
+2023-01-24 18:35:07.653 +03:30 [INF] MQTT Message received. Topic: Elma/ToServer/FromClient/GetInstance, Payload: 1
+2023-01-24 18:35:07.667 +03:30 [INF] MQTT Message is from a client. Topic: Elma/ToServer/FromClient/GetInstance, Payload: 1
+2023-01-24 18:35:08.129 +03:30 [INF] ===============  End of mqtt process 478.5132 ms) ===============
+2023-01-24 18:35:25.626 +03:30 [INF] Starting up the Service...
+2023-01-24 18:35:27.664 +03:30 [INF] Loading poultry...
+2023-01-24 18:35:28.588 +03:30 [INF] Poultry loaded. (923.6627 ms)
+2023-01-24 18:35:28.595 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: baf3a069-c2dc-419c-8376-3430a4333e3f.
+2023-01-24 18:35:28.649 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: baf3a069-c2dc-419c-8376-3430a4333e3f.
+2023-01-24 18:35:28.669 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2023-01-24 18:35:32.252 +03:30 [INF] ===============  Begin mqtt process  ===============
+2023-01-24 18:35:32.254 +03:30 [INF] MQTT Message received. Topic: Elma/ToServer/FromClient/GetInstance, Payload: 1
+2023-01-24 18:35:32.260 +03:30 [INF] MQTT Message is from a client. Topic: Elma/ToServer/FromClient/GetInstance, Payload: 1
+2023-01-24 18:35:32.545 +03:30 [INF] ===============  End of mqtt process 293.6487 ms) ===============
+2023-01-24 18:35:48.418 +03:30 [INF] Starting up the Service...
+2023-01-24 18:35:50.696 +03:30 [INF] Loading poultry...
+2023-01-24 18:35:51.533 +03:30 [INF] Poultry loaded. (836.6921 ms)
+2023-01-24 18:35:51.544 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 5db8925f-9f84-47c6-bd14-8602eab247c7.
+2023-01-24 18:35:51.605 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 5db8925f-9f84-47c6-bd14-8602eab247c7.
+2023-01-24 18:35:51.622 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2023-01-24 18:35:56.340 +03:30 [INF] ===============  Begin mqtt process  ===============
+2023-01-24 18:35:56.344 +03:30 [INF] MQTT Message received. Topic: Elma/ToServer/FromClient/GetInstance, Payload: 1
+2023-01-24 18:35:56.350 +03:30 [INF] MQTT Message is from a client. Topic: Elma/ToServer/FromClient/GetInstance, Payload: 1
+2023-01-24 18:35:56.575 +03:30 [INF] ===============  End of mqtt process 235.5419 ms) ===============
+2023-01-24 18:36:11.044 +03:30 [INF] Starting up the Service...
+2023-01-24 18:36:13.489 +03:30 [INF] Loading poultry...
+2023-01-24 18:36:14.499 +03:30 [INF] Poultry loaded. (1009.6235 ms)
+2023-01-24 18:36:14.509 +03:30 [INF] Connecting to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 74dd4b09-1aeb-44bb-80ae-686b45734af3.
+2023-01-24 18:36:14.568 +03:30 [INF] Successfully connected to MQTT Broker: 192.168.1.106, Port: 1883, Client Id: 74dd4b09-1aeb-44bb-80ae-686b45734af3.
+2023-01-24 18:36:14.590 +03:30 [INF] Subscribed to MQTT topic Elma/ToServer/#.
+2023-01-24 18:36:18.507 +03:30 [INF] ===============  Begin mqtt process  ===============
+2023-01-24 18:36:18.508 +03:30 [INF] MQTT Message received. Topic: Elma/ToServer/FromClient/GetInstance, Payload: 1
+2023-01-24 18:36:18.516 +03:30 [INF] MQTT Message is from a client. Topic: Elma/ToServer/FromClient/GetInstance, Payload: 1
+2023-01-24 18:36:18.794 +03:30 [INF] ===============  End of mqtt process 287.2328 ms) ===============
+2023-01-24 18:37:00.091 +03:30 [WRN] Sensor with ID: 1 is not sending KeepAlive message since 1/24/2023 6:36:14 PM. Location: 1, Section: FarmLeft
+2023-01-24 18:37:00.097 +03:30 [INF] Writing sensor error in database. Sensor ID: 1, LocationID: 1, Section: FarmLeft, Error Type: NotAlive
+2023-01-24 18:37:10.332 +03:30 [INF] Activating farm alarm. Count: 1, Level: 2
+2023-01-24 18:37:10.334 +03:30 [INF] Activating poultry light alarm. Count: 1, Level: 2
+2023-01-24 18:37:10.336 +03:30 [INF] Activating/Reactivating alarm. Alarm type: PoultryLight, Alarm location ID: 0, Error: Not Alive since: 1/24/2023 6:36:14 PM, Thread: 7
+2023-01-24 18:37:10.336 +03:30 [INF] Activating/Reactivating alarm. Alarm type: FarmLight, Alarm location ID: 1, Error: Not Alive since: 1/24/2023 6:36:14 PM, Thread: 25
+2023-01-24 18:37:10.339 +03:30 [INF] Writing alarm trigger log in database. Sensor ID: 1, Action: On
+2023-01-24 18:37:10.339 +03:30 [INF] Writing alarm trigger log in database. Sensor ID: 2, Action: On
+2023-01-24 18:37:15.336 +03:30 [INF] Deactivating alarm. Alarm type: FarmLight, Alarm location ID: 1, Error: Not Alive since: 1/24/2023 6:36:14 PM, Thread: 25
+2023-01-24 18:37:15.336 +03:30 [INF] Deactivating alarm. Alarm type: PoultryLight, Alarm location ID: 0, Error: Not Alive since: 1/24/2023 6:36:14 PM, Thread: 7
+2023-01-24 18:37:15.355 +03:30 [INF] Writing alarm trigger log in database. Sensor ID: 1, Action: Off
+2023-01-24 18:37:15.519 +03:30 [INF] Writing alarm trigger log in database. Sensor ID: 2, Action: Off
+2023-01-24 18:37:25.478 +03:30 [INF] Activating farm alarm. Count: 2, Level: 2
+2023-01-24 18:37:25.480 +03:30 [INF] Activating poultry light alarm. Count: 2, Level: 2
+2023-01-24 18:37:25.480 +03:30 [INF] Activating/Reactivating alarm. Alarm type: FarmLight, Alarm location ID: 1, Error: Not Alive since: 1/24/2023 6:36:14 PM, Thread: 7
+2023-01-24 18:37:25.481 +03:30 [INF] Activating/Reactivating alarm. Alarm type: PoultryLight, Alarm location ID: 0, Error: Not Alive since: 1/24/2023 6:36:14 PM, Thread: 11
+2023-01-24 18:37:25.482 +03:30 [INF] Writing alarm trigger log in database. Sensor ID: 1, Action: On
+2023-01-24 18:37:25.483 +03:30 [INF] Writing alarm trigger log in database. Sensor ID: 2, Action: On
+2023-01-24 18:37:30.498 +03:30 [INF] Deactivating alarm. Alarm type: FarmLight, Alarm location ID: 1, Error: Not Alive since: 1/24/2023 6:36:14 PM, Thread: 7
+2023-01-24 18:37:30.498 +03:30 [INF] Deactivating alarm. Alarm type: PoultryLight, Alarm location ID: 0, Error: Not Alive since: 1/24/2023 6:36:14 PM, Thread: 23
+2023-01-24 18:37:30.523 +03:30 [INF] Writing alarm trigger log in database. Sensor ID: 1, Action: Off
+2023-01-24 18:37:30.581 +03:30 [INF] Writing alarm trigger log in database. Sensor ID: 2, Action: Off

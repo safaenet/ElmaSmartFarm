@@ -12,4 +12,5 @@ public class SensorSetModel<T> where T : SensorModel
     public IEnumerable<T> ActiveSensors => EnabledSensors?.Where(s => s.IsWatched);
     public bool HasActiveSensors => ActiveSensors != null && ActiveSensors.Any();
     public bool HasError => HasSensors && Sensors.Any(s => s.HasError);
+    public int ErrorCount => EnabledSensors?.Select(s => s.Errors?.Count ?? 0).Sum() ?? 0;
 }

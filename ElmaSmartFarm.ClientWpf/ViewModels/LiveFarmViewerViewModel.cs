@@ -51,6 +51,7 @@ public class LiveFarmViewerViewModel : ViewAware
     public void FormClosed()
     {
         poultryManager.OnDataChanged -= PoultryManager_OnDataChanged;
+        var s = Farm.Commutes.ActiveSensors.SelectMany(s => s.Values).Where(r => r.ReadDate == DateTime.Now);
     }
 
     public string WindowTitleText => $"سالن شماره {Farm.FarmNumber}";
@@ -65,4 +66,9 @@ public class LiveFarmViewerViewModel : ViewAware
     public string CheckupSensorText => $"{(Farm.HasCheckupSensor ? "دارد" : "ندارد")}{(Farm.HasCheckupSensor ? $" - {Farm.CheckupSensorCount}" : "")}";
     public string FeedSensorText => $"{(Farm.HasFeedSensor ? "دارد" : "ندارد")}{(Farm.HasFeedSensor ? $" - {Farm.FeedSensorCount}" : "")}";
     public string ElectricPowerSensorText => $"{(Farm.HasElectricPowerSensor ? "دارد" : "ندارد")}{(Farm.HasElectricPowerSensor ? $" - {Farm.ElectricPowerSensorCount}" : "")}";
+
+    public int TodayCommuteStepInCount => Farm.Commutes.Sensors.SelectMany(s => s.Values).Count(r => r.Value == SharedLibrary.CommuteSensorValueType.StepIn && DateOnly.FromDateTime(r.ReadDate) == DateOnly.FromDateTime(DateTime.Now));
+    public int TodayCommuteStepOutCount => Farm.Commutes.Sensors.SelectMany(s => s.Values).Count(r => r.Value == SharedLibrary.CommuteSensorValueType.StepOut && DateOnly.FromDateTime(r.ReadDate) == DateOnly.FromDateTime(DateTime.Now));
+    public int TodayCheckupCount => Farm.Checkups.Sensors.SelectMany(s => s.Values).Count(r => DateOnly.FromDateTime(r.ReadDate) == DateOnly.FromDateTime(DateTime.Now));
+    public int TodayFeedCount => Farm.Feeds.Sensors.SelectMany(s => s.Values).Count(r => DateOnly.FromDateTime(r.ReadDate) == DateOnly.FromDateTime(DateTime.Now));
 }

@@ -9,7 +9,7 @@
         d:DataContext="{d:DesignInstance Type=viewmodels:LiveFarmViewerViewModel}"
         xmlns:local="clr-namespace:ElmaSmartFarm.ClientWpf.Views" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="{Binding WindowTitleText}" Width="530" MaxWidth="530" cal:Message.Attach="[Event Closed] = [Action FormClosed];">
+        Title="{Binding WindowTitleText}" Width="550"  cal:Message.Attach="[Event Closed] = [Action FormClosed];">
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="b2v"/>
     </Window.Resources>
@@ -17,7 +17,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
-            <RowDefinition/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" Name="Scalars">
             <Grid.ColumnDefinitions>
@@ -33,8 +33,8 @@
         <ItemsControl Grid.Row="2" Name="Details" Margin="3,0,3,3" HorizontalAlignment="Right" Foreground="DarkCyan" FlowDirection="RightToLeft">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <UniformGrid Columns="3" VerticalAlignment="Top"/>
-                    <!--<WrapPanel/>-->
+                    <!--<UniformGrid Columns="3" VerticalAlignment="Top"/>-->
+                    <WrapPanel/>
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
             <GroupBox Width="175">
@@ -117,6 +117,10 @@
                         <TextBlock Text="{Binding Farm.Period.Descriptions}"/>
                         <TextBlock Text=" :توضیحات"/>
                     </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <TextBlock Text="{Binding Farm.Period.Descriptions}"/>
+                        <TextBlock Text=" :تعداد خطا"/>
+                    </StackPanel>
                 </StackPanel>
             </GroupBox><GroupBox Width="175">
                 <GroupBox.Header>
@@ -151,7 +155,7 @@
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                         <TextBlock Text="{Binding CommuteSensorText}"/>
-                        <TextBlock Text=" :رفت و آمد"/>
+                        <TextBlock Text=" :تردد"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                         <TextBlock Text="{Binding CheckupSensorText}"/>
@@ -170,7 +174,7 @@
             <GroupBox Width="175" Visibility="{Binding Farm.HasCommuteSensor, Converter={StaticResource b2v}}">
                 <GroupBox.Header>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="رفت و آمد"/>
+                        <TextBlock Text="تردد"/>
                         <materialDesign:PackIcon Kind="SwapHorizontal" Margin="5,0,0,0"/>
                         <Button Width="25" Height="12" FontSize="9" Margin="15,0,0,0" Background="Transparent" Foreground="DarkCyan" BorderBrush="DarkCyan">
                             <materialDesign:PackIcon Kind="UnfoldMoreVertical" Margin="0,-4,0,0" Width="16"/>
@@ -179,40 +183,98 @@
                 </GroupBox.Header>
                 <StackPanel FlowDirection="LeftToRight">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                        <TextBlock Text="{Binding Farm.Commutes}"/>
-                        <TextBlock Text=" :دما"/>
+                        <TextBlock Text="{Binding Farm.Commutes.LastStepInDate}"/>
+                        <TextBlock Text=" :آخرین ورود"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                        <TextBlock Text="{Binding HumiditySensorText}"/>
-                        <TextBlock Text=" :رطوبت"/>
+                        <TextBlock Text="{Binding Farm.Commutes.LastStepOutDate}"/>
+                        <TextBlock Text=" :آخرین خروج"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                        <TextBlock Text="{Binding LightSensorText}"/>
-                        <TextBlock Text=" :نور محیط"/>
+                        <TextBlock Text="{Binding TodayCommuteStepInCount}"/>
+                        <TextBlock Text=" :تعداد ورود امروز"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                        <TextBlock Text="{Binding AmmoniaSensorText}"/>
-                        <TextBlock Text=" :آمونیاک"/>
+                        <TextBlock Text="{Binding TodayCommuteStepOutCount}"/>
+                        <TextBlock Text=" :تعداد خروج امروز"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                        <TextBlock Text="{Binding Co2SensorText}"/>
-                        <TextBlock Text=" :دی اکسید کربن"/>
+                        <TextBlock Text="{Binding Farm.Commutes.ErrorCount}"/>
+                        <TextBlock Text=" :تعداد خطا"/>
+                    </StackPanel>
+                </StackPanel>
+            </GroupBox><GroupBox Width="175" Visibility="{Binding Farm.HasCheckupSensor, Converter={StaticResource b2v}}">
+                <GroupBox.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="چکاپ فارم"/>
+                        <materialDesign:PackIcon Kind="CheckboxOutline" Margin="5,0,0,0"/>
+                        <Button Width="25" Height="12" FontSize="9" Margin="15,0,0,0" Background="Transparent" Foreground="DarkCyan" BorderBrush="DarkCyan">
+                            <materialDesign:PackIcon Kind="UnfoldMoreVertical" Margin="0,-4,0,0" Width="16"/>
+                        </Button>
+                    </StackPanel>
+                </GroupBox.Header>
+                <StackPanel FlowDirection="LeftToRight">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <TextBlock Text="{Binding Farm.Checkups.LastReadSensor.LastRead.ReadDate}"/>
+                        <TextBlock Text=" :آخرین چکاپ"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                        <TextBlock Text="{Binding CommuteSensorText}"/>
-                        <TextBlock Text=" :رفت و آمد"/>
+                        <TextBlock Text="{Binding TodayCheckupCount}"/>
+                        <TextBlock Text=" :تعداد چکاپ امروز"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                        <TextBlock Text="{Binding CheckupSensorText}"/>
-                        <TextBlock Text=" :چکاپ"/>
+                        <TextBlock Text="{Binding Farm.Checkups.ErrorCount}"/>
+                        <TextBlock Text=" :تعداد خطا"/>
+                    </StackPanel>
+                </StackPanel>
+            </GroupBox>
+            <GroupBox Width="175" Visibility="{Binding Farm.HasFeedSensor, Converter={StaticResource b2v}}">
+                <GroupBox.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="تغذیه دام"/>
+                        <materialDesign:PackIcon Kind="SeedOutline" Margin="5,0,0,0"/>
+                        <Button Width="25" Height="12" FontSize="9" Margin="15,0,0,0" Background="Transparent" Foreground="DarkCyan" BorderBrush="DarkCyan">
+                            <materialDesign:PackIcon Kind="UnfoldMoreVertical" Margin="0,-4,0,0" Width="16"/>
+                        </Button>
+                    </StackPanel>
+                </GroupBox.Header>
+                <StackPanel FlowDirection="LeftToRight">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <TextBlock Text="{Binding Farm.Feeds.LastReadSensor.LastRead.ReadDate}"/>
+                        <TextBlock Text=" :آخرین تغذیه"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                        <TextBlock Text="{Binding FeedSensorText}"/>
-                        <TextBlock Text=" :تغذیه"/>
+                        <TextBlock Text="{Binding TodayCheckupCount}"/>
+                        <TextBlock Text=" :تعداد تغذیه امروز"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                        <TextBlock Text="{Binding ElectricPowerSensorText}"/>
-                        <TextBlock Text=" :برق"/>
+                        <TextBlock Text="{Binding Farm.Feeds.ErrorCount}"/>
+                        <TextBlock Text=" :تعداد خطا"/>
+                    </StackPanel>
+                </StackPanel>
+            </GroupBox>
+            <GroupBox Width="175" Visibility="{Binding Farm.HasElectricPowerSensor, Converter={StaticResource b2v}}">
+                <GroupBox.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="برق فارم"/>
+                        <materialDesign:PackIcon Kind="LightningBoltOutline" Margin="5,0,0,0"/>
+                        <Button Width="25" Height="12" FontSize="9" Margin="15,0,0,0" Background="Transparent" Foreground="DarkCyan" BorderBrush="DarkCyan">
+                            <materialDesign:PackIcon Kind="UnfoldMoreVertical" Margin="0,-4,0,0" Width="16"/>
+                        </Button>
+                    </StackPanel>
+                </GroupBox.Header>
+                <StackPanel FlowDirection="LeftToRight">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <TextBlock Text="{Binding Farm.Feeds.LastReadSensor.LastRead.ReadDate}"/>
+                        <TextBlock Text=" :وضعیت برق"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <TextBlock Text="{Binding TodayCheckupCount}"/>
+                        <TextBlock Text=" :تعداد تغذیه امروز"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <TextBlock Text="{Binding Farm.Feeds.ErrorCount}"/>
+                        <TextBlock Text=" :تعداد خطا"/>
                     </StackPanel>
                 </StackPanel>
             </GroupBox>
