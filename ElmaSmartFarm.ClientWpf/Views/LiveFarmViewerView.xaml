@@ -9,7 +9,10 @@
         d:DataContext="{d:DesignInstance Type=viewmodels:LiveFarmViewerViewModel}"
         xmlns:local="clr-namespace:ElmaSmartFarm.ClientWpf.Views" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="نمایش فارم" Width="530" cal:Message.Attach="[Event Closed] = [Action FormClosed];">
+        Title="{Binding WindowTitleText}" Width="530" MaxWidth="530" cal:Message.Attach="[Event Closed] = [Action FormClosed];">
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="b2v"/>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -22,9 +25,9 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <usercontrols:ScalarSensorViewer Grid.Column="0" Margin="1" Sensor="{Binding Farm.Scalars.ScalarSensorLeft}" MaxWidth="200" IsEnabled="{Binding ScalarSensorLeftEnabled}"/>
-            <usercontrols:ScalarSensorViewer Grid.Column="1" Margin="1" Sensor="{Binding Farm.Scalars.ScalarSensorMiddle}" MaxWidth="200" IsEnabled="{Binding ScalarSensorMiddleEnabled}"/>
-            <usercontrols:ScalarSensorViewer Grid.Column="2" Margin="1" Sensor="{Binding Farm.Scalars.ScalarSensorRight}" MaxWidth="200" IsEnabled="{Binding ScalarSensorRightEnabled}"/>
+            <usercontrols:ScalarSensorViewer Grid.Column="0" Margin="1" Sensor="{Binding Farm.Scalars.ScalarSensorLeft}" Settings="{Binding Settings.ScalarSettings}" MaxWidth="200" IsEnabled="{Binding Farm.Scalars.ScalarSensorLeft.IsEnabled}"/>
+            <usercontrols:ScalarSensorViewer Grid.Column="1" Margin="1" Sensor="{Binding Farm.Scalars.ScalarSensorMiddle}" Settings="{Binding Settings.ScalarSettings}" MaxWidth="200" IsEnabled="{Binding Farm.Scalars.ScalarSensorMiddle.IsEnabled}"/>
+            <usercontrols:ScalarSensorViewer Grid.Column="2" Margin="1" Sensor="{Binding Farm.Scalars.ScalarSensorRight}" Settings="{Binding Settings.ScalarSettings}" MaxWidth="200" IsEnabled="{Binding Farm.Scalars.ScalarSensorRight.IsEnabled}"/>
         </Grid>
         <Separator Grid.Row="1" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}"/>
         <ItemsControl Grid.Row="2" Name="Details" Margin="3,0,3,3" HorizontalAlignment="Right" Foreground="DarkCyan" FlowDirection="RightToLeft">
@@ -115,8 +118,7 @@
                         <TextBlock Text=" :توضیحات"/>
                     </StackPanel>
                 </StackPanel>
-            </GroupBox>
-            <GroupBox Width="175">
+            </GroupBox><GroupBox Width="175">
                 <GroupBox.Header>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="سنسورها"/>
@@ -129,6 +131,55 @@
                 <StackPanel FlowDirection="LeftToRight">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                         <TextBlock Text="{Binding TemperatureSensorText}"/>
+                        <TextBlock Text=" :دما"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <TextBlock Text="{Binding HumiditySensorText}"/>
+                        <TextBlock Text=" :رطوبت"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <TextBlock Text="{Binding LightSensorText}"/>
+                        <TextBlock Text=" :نور محیط"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <TextBlock Text="{Binding AmmoniaSensorText}"/>
+                        <TextBlock Text=" :آمونیاک"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <TextBlock Text="{Binding Co2SensorText}"/>
+                        <TextBlock Text=" :دی اکسید کربن"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <TextBlock Text="{Binding CommuteSensorText}"/>
+                        <TextBlock Text=" :رفت و آمد"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <TextBlock Text="{Binding CheckupSensorText}"/>
+                        <TextBlock Text=" :چکاپ"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <TextBlock Text="{Binding FeedSensorText}"/>
+                        <TextBlock Text=" :تغذیه"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <TextBlock Text="{Binding ElectricPowerSensorText}"/>
+                        <TextBlock Text=" :برق"/>
+                    </StackPanel>
+                </StackPanel>
+            </GroupBox>
+            <GroupBox Width="175" Visibility="{Binding Farm.HasCommuteSensor, Converter={StaticResource b2v}}">
+                <GroupBox.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="رفت و آمد"/>
+                        <materialDesign:PackIcon Kind="SwapHorizontal" Margin="5,0,0,0"/>
+                        <Button Width="25" Height="12" FontSize="9" Margin="15,0,0,0" Background="Transparent" Foreground="DarkCyan" BorderBrush="DarkCyan">
+                            <materialDesign:PackIcon Kind="UnfoldMoreVertical" Margin="0,-4,0,0" Width="16"/>
+                        </Button>
+                    </StackPanel>
+                </GroupBox.Header>
+                <StackPanel FlowDirection="LeftToRight">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <TextBlock Text="{Binding Farm.Commutes}"/>
                         <TextBlock Text=" :دما"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">

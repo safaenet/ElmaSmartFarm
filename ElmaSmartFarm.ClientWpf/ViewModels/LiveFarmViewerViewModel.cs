@@ -1,6 +1,7 @@
 ﻿using Caliburn.Micro;
 using ElmaSmartFarm.ApiClient.DataAccess;
 using ElmaSmartFarm.SharedLibrary.Models;
+using ElmaSmartFarm.SharedLibrary.Models.UISettings;
 using System;
 using System.Linq;
 
@@ -13,6 +14,8 @@ public class LiveFarmViewerViewModel : ViewAware
         this.farmId = farmId;
         Farm = poultryManager?.Poultry?.Farms?.Where(f => f.Id == farmId).FirstOrDefault();
         poultryManager.OnDataChanged += PoultryManager_OnDataChanged;
+        if (Settings == null) Settings = new();
+        if (Settings.ScalarSettings == null) Settings.ScalarSettings = new();
     }
 
     private FarmModel farm;
@@ -20,6 +23,13 @@ public class LiveFarmViewerViewModel : ViewAware
     {
         get { return farm; }
         set { farm = value; NotifyOfPropertyChange(() => Farm); }
+    }
+
+    private FarmSettings settings;
+    public FarmSettings Settings
+    {
+        get { return settings; }
+        set { settings = value; NotifyOfPropertyChange(() => Settings); }
     }
 
     private readonly PoultryManager poultryManager;
@@ -43,41 +53,16 @@ public class LiveFarmViewerViewModel : ViewAware
         poultryManager.OnDataChanged -= PoultryManager_OnDataChanged;
     }
 
-    public bool ScalarSensorLeftEnabled => Farm?.Scalars?.ScalarSensorLeft?.IsEnabled ?? false;
-    public bool ScalarSensorMiddleEnabled => Farm?.Scalars?.ScalarSensorMiddle?.IsEnabled ?? false;
-    public bool ScalarSensorRightEnabled => Farm?.Scalars?.ScalarSensorRight?.IsEnabled ?? false;
-    public string WindowTitleText => $"نمایش سالن شماره {Farm.FarmNumber}";
+    public string WindowTitleText => $"سالن شماره {Farm.FarmNumber}";
 
-    public int TemperatureSensorCount => Farm?.Scalars?.ActiveSensors?.Count(s => s.HasTemperature) ?? 0;
-    public int HumiditySensorCount => Farm?.Scalars?.ActiveSensors?.Count(s => s.HasHumidity) ?? 0;
-    public int LightSensorCount => Farm?.Scalars?.ActiveSensors?.Count(s => s.HasLight) ?? 0;
-    public int AmmoniaSensorCount => Farm?.Scalars?.ActiveSensors?.Count(s => s.HasAmmonia) ?? 0;
-    public int Co2SensorCount => Farm?.Scalars?.ActiveSensors?.Count(s => s.HasCo2) ?? 0;
-    public int ScalarSensorCount => Farm?.Scalars?.ActiveSensors?.Count() ?? 0;
-    public int CommuteSensorCount => Farm?.Commutes?.ActiveSensors?.Count() ?? 0;
-    public int CheckupSensorCount => Farm?.Checkups?.ActiveSensors?.Count() ?? 0;
-    public int FeedSensorCount => Farm?.Feeds?.ActiveSensors?.Count() ?? 0;
-    public int ElectricPowerSensorCount => Farm?.ElectricPowers?.ActiveSensors?.Count() ?? 0;
-
-    public bool HasTemperatureSensor => TemperatureSensorCount > 0;
-    public bool HasHumiditySensor => HumiditySensorCount > 0;
-    public bool HasLightSensor => LightSensorCount > 0;
-    public bool HasAmmoniaSensor => AmmoniaSensorCount > 0;
-    public bool HasCo2Sensor => Co2SensorCount > 0;
-    public bool HasScalarSensor => ScalarSensorCount > 0;
-    public bool HasCommuteSensor => CommuteSensorCount > 0;
-    public bool HasCheckupSensor => CheckupSensorCount > 0;
-    public bool HasFeedSensor => FeedSensorCount > 0;
-    public bool HasElectricPowerSensor => ElectricPowerSensorCount > 0;
-
-    public string TemperatureSensorText => $"{(HasTemperatureSensor ? "دارد" : "ندارد")}{(HasTemperatureSensor ? $" - {TemperatureSensorCount}" : "")}";
-    public string HumiditySensorText => $"{(HasHumiditySensor ? "دارد" : "ندارد")}{(HasHumiditySensor ? $" - {HumiditySensorCount}" : "")}";
-    public string LightSensorText => $"{(HasLightSensor ? "دارد" : "ندارد")}{(HasLightSensor ? $" - {LightSensorCount}" : "")}";
-    public string AmmoniaSensorText => $"{(HasAmmoniaSensor ? "دارد" : "ندارد")}{(HasAmmoniaSensor ? $" - {AmmoniaSensorCount}" : "")}";
-    public string Co2SensorText => $"{(HasCo2Sensor ? "دارد" : "ندارد")}{(HasCo2Sensor ? $" - {Co2SensorCount}" : "")}";
-    public string ScalarSensorText => $"{(HasScalarSensor ? "دارد" : "ندارد")}{(HasScalarSensor ? $" - {ScalarSensorCount}" : "")}";
-    public string CommuteSensorText => $"{(HasCommuteSensor ? "دارد" : "ندارد")}{(HasCommuteSensor ? $" - {CommuteSensorCount}" : "")}";
-    public string CheckupSensorText => $"{(HasCheckupSensor ? "دارد" : "ندارد")}{(HasCheckupSensor ? $" - {CheckupSensorCount}" : "")}";
-    public string FeedSensorText => $"{(HasFeedSensor ? "دارد" : "ندارد")}{(HasFeedSensor ? $" - {FeedSensorCount}" : "")}";
-    public string ElectricPowerSensorText => $"{(HasElectricPowerSensor ? "دارد" : "ندارد")}{(HasElectricPowerSensor ? $" - {ElectricPowerSensorCount}" : "")}";
+    public string TemperatureSensorText => $"{(Farm.HasTemperatureSensor ? "دارد" : "ندارد")}{(Farm.HasTemperatureSensor ? $" - {Farm.TemperatureSensorCount}" : "")}";
+    public string HumiditySensorText => $"{(Farm.HasHumiditySensor ? "دارد" : "ندارد")}{(Farm.HasHumiditySensor ? $" - {Farm.HumiditySensorCount}" : "")}";
+    public string LightSensorText => $"{(Farm.HasLightSensor ? "دارد" : "ندارد")}{(Farm.HasLightSensor ? $" - {Farm.LightSensorCount}" : "")}";
+    public string AmmoniaSensorText => $"{(Farm.HasAmmoniaSensor ? "دارد" : "ندارد")}{(Farm.HasAmmoniaSensor ? $" - {Farm.AmmoniaSensorCount}" : "")}";
+    public string Co2SensorText => $"{(Farm.HasCo2Sensor ? "دارد" : "ندارد")}{(Farm.HasCo2Sensor ? $" - {Farm.Co2SensorCount}" : "")}";
+    public string ScalarSensorText => $"{(Farm.HasScalarSensor ? "دارد" : "ندارد")}{(Farm.HasScalarSensor ? $" - {Farm.ScalarSensorCount}" : "")}";
+    public string CommuteSensorText => $"{(Farm.HasCommuteSensor ? "دارد" : "ندارد")}{(Farm.HasCommuteSensor ? $" - {Farm.CommuteSensorCount}" : "")}";
+    public string CheckupSensorText => $"{(Farm.HasCheckupSensor ? "دارد" : "ندارد")}{(Farm.HasCheckupSensor ? $" - {Farm.CheckupSensorCount}" : "")}";
+    public string FeedSensorText => $"{(Farm.HasFeedSensor ? "دارد" : "ندارد")}{(Farm.HasFeedSensor ? $" - {Farm.FeedSensorCount}" : "")}";
+    public string ElectricPowerSensorText => $"{(Farm.HasElectricPowerSensor ? "دارد" : "ندارد")}{(Farm.HasElectricPowerSensor ? $" - {Farm.ElectricPowerSensorCount}" : "")}";
 }

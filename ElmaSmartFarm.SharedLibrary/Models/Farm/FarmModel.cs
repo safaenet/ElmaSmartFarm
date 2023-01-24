@@ -21,4 +21,27 @@ public class FarmModel
     public bool HasSensorError => IsEnabled && ((Scalars != null && Scalars.HasError) || (Commutes != null && Commutes.HasError) || (Checkups != null && Checkups.HasError) || (Feeds != null && Feeds.HasError) || (ElectricPowers != null && ElectricPowers.HasError));
     public bool HasPeriodError => IsInPeriod && InPeriodErrors != null && InPeriodErrors.Any(e => e.DateErased is null);
     public string Descriptions { get; set; }
+
+    #region Other readonly properties:
+    public int ScalarSensorCount => Scalars?.ActiveSensors?.Count() ?? 0;
+    public int TemperatureSensorCount => Scalars?.ActiveSensors?.Count(s => s.HasTemperature) ?? 0;
+    public int HumiditySensorCount => Scalars?.ActiveSensors?.Count(s => s.HasHumidity) ?? 0;
+    public int LightSensorCount => Scalars?.ActiveSensors?.Count(s => s.HasLight) ?? 0;
+    public int AmmoniaSensorCount => Scalars?.ActiveSensors?.Count(s => s.HasAmmonia) ?? 0;
+    public int Co2SensorCount => Scalars?.ActiveSensors?.Count(s => s.HasCo2) ?? 0;
+    public int CommuteSensorCount => Commutes?.ActiveSensors?.Count() ?? 0;
+    public int CheckupSensorCount => Commutes?.ActiveSensors?.Count() ?? 0;
+    public int FeedSensorCount => Commutes?.ActiveSensors?.Count() ?? 0;
+    public int ElectricPowerSensorCount => Commutes?.ActiveSensors?.Count() ?? 0;
+    public bool HasScalarSensor => ScalarSensorCount > 0;
+    public bool HasTemperatureSensor => TemperatureSensorCount > 0;
+    public bool HasHumiditySensor => HumiditySensorCount > 0;
+    public bool HasLightSensor => LightSensorCount > 0;
+    public bool HasAmmoniaSensor => AmmoniaSensorCount > 0;
+    public bool HasCo2Sensor => Co2SensorCount > 0;
+    public bool HasCommuteSensor => CommuteSensorCount > 0;
+    public bool HasCheckupSensor => CheckupSensorCount > 0;
+    public bool HasFeedSensor => FeedSensorCount > 0;
+    public bool HasElectricPowerSensor => ElectricPowerSensorCount > 0;
+    #endregion
 }

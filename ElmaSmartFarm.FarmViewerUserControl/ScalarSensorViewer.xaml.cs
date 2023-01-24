@@ -47,7 +47,8 @@ public partial class ScalarSensorViewer : UserControl, INotifyPropertyChanged
 
     private void RefreshColors()
     {
-        if (Sensor == DependencyProperty.UnsetValue || Sensor == null || Sensor.LastRead == null || Sensor.IsEnabled == false)
+        if (Settings == null) Settings = new();
+        if (Sensor == null || Sensor.LastRead == null || Sensor.IsEnabled == false)
         {
             TemperatureColor = Settings.ItemDisabledColor.ToSolidBrush();
             HumidityColor = Settings.ItemDisabledColor.ToSolidBrush();
@@ -57,40 +58,40 @@ public partial class ScalarSensorViewer : UserControl, INotifyPropertyChanged
             HeaderTextColor = Settings.ItemDisabledColor.ToSolidBrush();
             StatusTextColor = Settings.ItemDisabledColor.ToSolidBrush();
             StatusIconColor = Settings.ItemDisabledColor.ToSolidBrush();
+            BorderColor = Settings.ItemDisabledColor.ToSolidBrush();
+            return;
+        }
+
+        if (Sensor.LastRead.Temperature <= Settings.LowTemperatureThreshold) TemperatureColor = Settings.LowTemperatureColor.ToSolidBrush();
+        else if (Sensor.LastRead.Temperature >= Settings.HighTemperatureThreshold) TemperatureColor = Settings.HighTemperatureColor.ToSolidBrush();
+        else TemperatureColor = Settings.NormalValueColor.ToSolidBrush();
+
+        if (Sensor.LastRead.Humidity <= Settings.LowHumidityThreshold) HumidityColor = Settings.LowHumidityColor.ToSolidBrush();
+        else if (Sensor.LastRead.Humidity >= Settings.HighHumidityThreshold) HumidityColor = Settings.HighHumidityColor.ToSolidBrush();
+        else HumidityColor = Settings.NormalValueColor.ToSolidBrush();
+
+        if (Sensor.LastRead.Light <= Settings.LightThreshold) LightColor = Settings.DarkLightColor.ToSolidBrush();
+        else LightColor = Settings.BrightLightColor.ToSolidBrush();
+
+        if (Sensor.LastRead.Ammonia >= Settings.HighTemperatureThreshold) AmmoniaColor = Settings.HighAmmoniaColor.ToSolidBrush();
+        else AmmoniaColor = Settings.NormalValueColor.ToSolidBrush();
+
+        if (Sensor.LastRead.Co2 >= Settings.HighCo2Threshold) Co2Color = Settings.HighCo2Color.ToSolidBrush();
+        else Co2Color = Settings.NormalValueColor.ToSolidBrush();
+
+        if (Sensor.HasError)
+        {
+            StatusTextColor = Settings.StatusTextErrorColor.ToSolidBrush();
+            StatusIconColor = Settings.StatusIconErrorColor.ToSolidBrush();
+            BorderColor = Settings.BorderErrorColor.ToSolidBrush();
         }
         else
         {
-            if (Sensor.LastRead.Temperature <= Settings.LowTemperatureThreshold) TemperatureColor = Settings.LowTemperatureColor.ToSolidBrush();
-            else if (Sensor.LastRead.Temperature >= Settings.HighTemperatureThreshold) TemperatureColor = Settings.HighTemperatureColor.ToSolidBrush();
-            else TemperatureColor = Settings.NormalValueColor.ToSolidBrush();
-
-            if (Sensor.LastRead.Humidity <= Settings.LowHumidityThreshold) HumidityColor = Settings.LowHumidityColor.ToSolidBrush();
-            else if (Sensor.LastRead.Humidity >= Settings.HighHumidityThreshold) HumidityColor = Settings.HighHumidityColor.ToSolidBrush();
-            else HumidityColor = Settings.NormalValueColor.ToSolidBrush();
-
-            if (Sensor.LastRead.Light <= Settings.LightThreshold) LightColor = Settings.DarkLightColor.ToSolidBrush();
-            else LightColor = Settings.BrightLightColor.ToSolidBrush();
-
-            if (Sensor.LastRead.Ammonia >= Settings.HighTemperatureThreshold) AmmoniaColor = Settings.HighAmmoniaColor.ToSolidBrush();
-            else AmmoniaColor = Settings.NormalValueColor.ToSolidBrush();
-
-            if (Sensor.LastRead.Co2 >= Settings.HighCo2Threshold) Co2Color = Settings.HighCo2Color.ToSolidBrush();
-            else Co2Color = Settings.NormalValueColor.ToSolidBrush();
-
-            if (Sensor.HasError)
-            {
-                StatusTextColor = Settings.StatusTextErrorColor.ToSolidBrush();
-                StatusIconColor = Settings.StatusIconErrorColor.ToSolidBrush();
-                BorderColor = Settings.BorderErrorColor.ToSolidBrush();
-            }
-            else
-            {
-                StatusTextColor = Settings.StatusTextOkColor.ToSolidBrush();
-                StatusIconColor = Settings.StatusIconOkColor.ToSolidBrush();
-                BorderColor = Settings.BorderOkColor.ToSolidBrush();
-            }
-            HeaderTextColor = Settings.HeaderTextOkColor.ToSolidBrush();
+            StatusTextColor = Settings.StatusTextOkColor.ToSolidBrush();
+            StatusIconColor = Settings.StatusIconOkColor.ToSolidBrush();
+            BorderColor = Settings.BorderOkColor.ToSolidBrush();
         }
+        HeaderTextColor = Settings.HeaderTextOkColor.ToSolidBrush();
     }
 
     private SolidColorBrush temperatureColor = new(Colors.Black);
