@@ -19,4 +19,7 @@ public class PoultryModel
     public List<PoultryInPeriodErrorModel> InPeriodErrors { get; set; }
     public bool HasPeriodError => IsInPeriod && InPeriodErrors != null && InPeriodErrors.Any(e => e.DateErased == null);
     public List<AlarmModel> AlarmDevices { get; set; }
+    public bool HasScalarSensor => Scalar != null && Scalar.IsEnabled;
+    public bool HasMainElectricPowerSensor => MainElectricPower != null && MainElectricPower.IsEnabled;
+    public bool HasBackupElectricPowerSensor => BackupElectricPower != null && BackupElectricPower.IsEnabled;
 }
