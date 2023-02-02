@@ -22,4 +22,5 @@ public class PoultryModel
     public bool HasScalarSensor => Scalar != null && Scalar.IsEnabled;
     public bool HasMainElectricPowerSensor => MainElectricPower != null && MainElectricPower.IsEnabled;
     public bool HasBackupElectricPowerSensor => BackupElectricPower != null && BackupElectricPower.IsEnabled;
+    public int ActiveAlarmCount => AlarmDevices?.Count(a => a.IsActive) ?? 0;
 }

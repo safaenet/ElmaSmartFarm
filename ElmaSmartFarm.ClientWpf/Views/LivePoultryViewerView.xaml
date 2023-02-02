@@ -123,7 +123,7 @@
                     </StackPanel>
                 </StackPanel>
             </GroupBox>
-            <GroupBox Width="175" Visibility="{Binding Farm.HasElectricPowerSensor, Converter={StaticResource b2v}}">
+            <GroupBox Width="175">
                 <GroupBox.Header>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="جزئیات"/>
@@ -156,10 +156,10 @@
                     </StackPanel>
                 </StackPanel>
             </GroupBox>
-            <GroupBox Width="175" Visibility="{Binding Farm.HasElectricPowerSensor, Converter={StaticResource b2v}}">
+            <GroupBox Width="175">
                 <GroupBox.Header>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="آلارم ها"/>
+                        <TextBlock Text="خطاها و آلارم ها"/>
                         <materialDesign:PackIcon Kind="ErrorOutline" Margin="5,0,0,0"/>
                         <Button Width="25" Height="12" FontSize="9" Margin="15,0,0,0" Background="Transparent" Foreground="DarkCyan" BorderBrush="DarkCyan">
                             <materialDesign:PackIcon Kind="UnfoldMoreVertical" Margin="0,-4,0,0" Width="16"/>
@@ -179,9 +179,13 @@
                         <TextBlock Text="{Binding poultryManager.AlarmablePoultryPeriodErrors.Count}"/>
                         <TextBlock Text=" :تعداد خطای دوره مرغداری"/>
                     </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <TextBlock Text="{Binding poultryManager.Poultry.ActiveAlarmCount}"/>
+                        <TextBlock Text=" :تعداد آلارم های فعال"/>
+                    </StackPanel>
                 </StackPanel>
             </GroupBox>
-            <GroupBox Width="175" Visibility="{Binding Farm.HasElectricPowerSensor, Converter={StaticResource b2v}}">
+            <GroupBox Width="175">
                 <GroupBox.Header>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="سیستم"/>
@@ -207,10 +211,10 @@
                 </StackPanel>
             </GroupBox>
         </ItemsControl>
-        <Separator Grid.Row="3" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}"/>
-        <Expander Grid.Row="4" Header="پیامهای ناشناخته - MQTT" ExpandDirection="Down" IsExpanded="False" Background="Transparent" FlowDirection="RightToLeft">
+        <Separator Grid.Row="3" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Background="DarkCyan"/>
+        <Expander Grid.Row="4" Header="پیامهای ناشناخته - MQTT" ExpandDirection="Down" IsExpanded="False" Background="Transparent" FlowDirection="RightToLeft" Foreground="DarkCyan">
             <DataGrid ItemsSource="{Binding poultryManager.UnknownMqttMessages}" AutoGenerateColumns="False" HorizontalGridLinesBrush="Silver" VerticalGridLinesBrush="Silver" IsTabStop="False"
-                  Background="Transparent" CanUserAddRows="False" CanUserDeleteRows="False" HeadersVisibility="All" RowHeaderWidth="35" FlowDirection="RightToLeft">
+                  Background="Transparent" CanUserAddRows="False" CanUserDeleteRows="False" HeadersVisibility="All" RowHeaderWidth="35" FlowDirection="RightToLeft" Foreground="DarkCyan">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="موضوع" Binding="{Binding Topic}" Width="*"/>
                     <DataGridTextColumn Header="دیتا" Binding="{Binding Payload}" Width="*"/>
