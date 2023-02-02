@@ -198,7 +198,7 @@
                 <StackPanel FlowDirection="LeftToRight">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                         <TextBlock Text="{Binding poultryManager.SystemStartupTime}"/>
-                        <TextBlock Text=" :تاریخ شروع سیستم"/>
+                        <TextBlock Text=" :شروع سیستم"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                         <TextBlock Text="{Binding poultryManager.IsRunning}"/>
