@@ -123,7 +123,8 @@
                         <TextBlock Text=" :تعداد خطا"/>
                     </StackPanel>
                 </StackPanel>
-            </GroupBox><GroupBox Width="175">
+            </GroupBox>
+            <GroupBox Width="175">
                 <GroupBox.Header>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="سنسورها"/>

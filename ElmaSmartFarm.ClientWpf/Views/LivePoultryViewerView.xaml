@@ -5,15 +5,20 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ElmaSmartFarm.ClientWpf.Views"
         xmlns:viewmodels="clr-namespace:ElmaSmartFarm.ClientWpf.ViewModels"
-        xmlns:usercontrols="clr-namespace:ElmaSmartFarm.UserControls;assembly=ElmaSmartFarm.UserControls"
+        xmlns:usercontrols="clr-namespace:ElmaSmartFarm.UserControls;assembly=ElmaSmartFarm.UserControls" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         d:DataContext="{d:DesignInstance Type=viewmodels:LivePoultryViewerViewModel}"
         mc:Ignorable="d"
         Title="نمایش کلی مجموعه" Height="500" Width="612" MinWidth="206">
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="b2v"/>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition/>
-            <RowDefinition/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto" MaxHeight="100"/>
             <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
         <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
@@ -32,6 +37,172 @@
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
         </ScrollViewer>
-        <Button Grid.Row="3" Content="Open Farm" x:Name="OpenFarmAsync"/>
+        <ItemsControl Grid.Row="1" Name="Details" Margin="3,0,3,3" HorizontalAlignment="Right" Foreground="DarkCyan" FlowDirection="RightToLeft">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <GroupBox Width="175">
+                <GroupBox.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="سنسور محیط"/>
+                        <materialDesign:PackIcon Kind="CardTextOutline" Margin="5,0,0,0"/>
+                        <Button Width="25" Height="12" FontSize="9" Margin="15,0,0,0" Background="Transparent" Foreground="DarkCyan" BorderBrush="DarkCyan">
+                            <materialDesign:PackIcon Kind="ProximitySensor" Margin="0,-4,0,0" Width="16"/>
+                        </Button>
+                    </StackPanel>
+                </GroupBox.Header>
+                <StackPanel FlowDirection="LeftToRight">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <!--<TextBox Background="Transparent" BorderThickness="0" Text="{Binding Farm.Name, Mode=OneWay}" IsReadOnly="True" TextWrapping="Wrap" />-->
+                        <TextBlock Text="{Binding Farm.Name}"/>
+                        <TextBlock Text=" :نام"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <TextBlock Text="{Binding Farm.FarmNumber}"/>
+                        <TextBlock Text=" :شماره"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <TextBlock Text="{Binding Farm.MaxCapacity}"/>
+                        <TextBlock Text=" :ظرفیت"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <TextBlock Text="{Binding Farm.IsEnabled}"/>
+                        <TextBlock Text=" :وضعیت فعالیت"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <TextBlock Text="{Binding Farm.Id}"/>
+                        <TextBlock Text=" :شناسه"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <TextBlock Text="{Binding Farm.Descriptions}"/>
+                        <TextBlock Text=" :توضیحات"/>
+                    </StackPanel>
+                </StackPanel>
+            </GroupBox>
+            <GroupBox Width="175" Visibility="{Binding Farm.HasElectricPowerSensor, Converter={StaticResource b2v}}">
+                <GroupBox.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="برق اصلی"/>
+                        <materialDesign:PackIcon Kind="LightningBoltOutline" Margin="5,0,0,0"/>
+                        <Button Width="25" Height="12" FontSize="9" Margin="15,0,0,0" Background="Transparent" Foreground="DarkCyan" BorderBrush="DarkCyan">
+                            <materialDesign:PackIcon Kind="UnfoldMoreVertical" Margin="0,-4,0,0" Width="16"/>
+                        </Button>
+                    </StackPanel>
+                </GroupBox.Header>
+                <StackPanel FlowDirection="LeftToRight">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <TextBlock Text="{Binding Farm.Feeds.LastReadSensor.LastRead.ReadDate}"/>
+                        <TextBlock Text=" :وضعیت برق"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <TextBlock Text="{Binding TodayCheckupCount}"/>
+                        <TextBlock Text=" :تعداد تغذیه امروز"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <TextBlock Text="{Binding Farm.Feeds.ErrorCount}"/>
+                        <TextBlock Text=" :تعداد خطا"/>
+                    </StackPanel>
+                </StackPanel>
+            </GroupBox>
+            <GroupBox Width="175" Visibility="{Binding Farm.HasElectricPowerSensor, Converter={StaticResource b2v}}">
+                <GroupBox.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="برق اضطراری"/>
+                        <materialDesign:PackIcon Kind="LightningBoltCircle" Margin="5,0,0,0"/>
+                        <Button Width="25" Height="12" FontSize="9" Margin="15,0,0,0" Background="Transparent" Foreground="DarkCyan" BorderBrush="DarkCyan">
+                            <materialDesign:PackIcon Kind="UnfoldMoreVertical" Margin="0,-4,0,0" Width="16"/>
+                        </Button>
+                    </StackPanel>
+                </GroupBox.Header>
+                <StackPanel FlowDirection="LeftToRight">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <TextBlock Text="{Binding Farm.Feeds.LastReadSensor.LastRead.ReadDate}"/>
+                        <TextBlock Text=" :وضعیت برق"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <TextBlock Text="{Binding TodayCheckupCount}"/>
+                        <TextBlock Text=" :تعداد تغذیه امروز"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <TextBlock Text="{Binding Farm.Feeds.ErrorCount}"/>
+                        <TextBlock Text=" :تعداد خطا"/>
+                    </StackPanel>
+                </StackPanel>
+            </GroupBox>
+            <GroupBox Width="175" Visibility="{Binding Farm.HasElectricPowerSensor, Converter={StaticResource b2v}}">
+                <GroupBox.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="جزئیات"/>
+                        <materialDesign:PackIcon Kind="Text" Margin="5,0,0,0"/>
+                        <Button Width="25" Height="12" FontSize="9" Margin="15,0,0,0" Background="Transparent" Foreground="DarkCyan" BorderBrush="DarkCyan">
+                            <materialDesign:PackIcon Kind="UnfoldMoreVertical" Margin="0,-4,0,0" Width="16"/>
+                        </Button>
+                    </StackPanel>
+                </GroupBox.Header>
+                <StackPanel FlowDirection="LeftToRight">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <TextBlock Text="{Binding Farm.Feeds.LastReadSensor.LastRead.ReadDate}"/>
+                        <TextBlock Text=" :وضعیت برق"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <TextBlock Text="{Binding TodayCheckupCount}"/>
+                        <TextBlock Text=" :تعداد تغذیه امروز"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <TextBlock Text="{Binding Farm.Feeds.ErrorCount}"/>
+                        <TextBlock Text=" :تعداد خطا"/>
+                    </StackPanel>
+                </StackPanel>
+            </GroupBox>
+            <GroupBox Width="175" Visibility="{Binding Farm.HasElectricPowerSensor, Converter={StaticResource b2v}}">
+                <GroupBox.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="آلارم ها"/>
+                        <materialDesign:PackIcon Kind="ErrorOutline" Margin="5,0,0,0"/>
+                        <Button Width="25" Height="12" FontSize="9" Margin="15,0,0,0" Background="Transparent" Foreground="DarkCyan" BorderBrush="DarkCyan">
+                            <materialDesign:PackIcon Kind="UnfoldMoreVertical" Margin="0,-4,0,0" Width="16"/>
+                        </Button>
+                    </StackPanel>
+                </GroupBox.Header>
+                <StackPanel FlowDirection="LeftToRight">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <TextBlock Text="{Binding Farm.Feeds.LastReadSensor.LastRead.ReadDate}"/>
+                        <TextBlock Text=" :وضعیت برق"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <TextBlock Text="{Binding TodayCheckupCount}"/>
+                        <TextBlock Text=" :تعداد تغذیه امروز"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <TextBlock Text="{Binding Farm.Feeds.ErrorCount}"/>
+                        <TextBlock Text=" :تعداد خطا"/>
+                    </StackPanel>
+                </StackPanel>
+            </GroupBox>
+        </ItemsControl>
+        <Separator Grid.Row="3" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}"/>
+        <Expander Grid.Row="4" Header="پیامهای ناشناخته" ExpandDirection="Down" IsExpanded="False" Background="Transparent" FlowDirection="RightToLeft">
+            <DataGrid ItemsSource="{Binding poultryManager.UnknownMqttMessages}" AutoGenerateColumns="False" HorizontalGridLinesBrush="Silver" VerticalGridLinesBrush="Silver" IsTabStop="False"
+                  Background="Transparent" CanUserAddRows="False" CanUserDeleteRows="False" HeadersVisibility="All" RowHeaderWidth="35" FlowDirection="RightToLeft">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="موضوع" Binding="{Binding Topic}" Width="*"/>
+                    <DataGridTextColumn Header="دیتا" Binding="{Binding Payload}" Width="*"/>
+                    <DataGridTextColumn Header="تاریخ" Binding="{Binding ReadDate}" Width="0.6*"/>
+                    <DataGridTemplateColumn Header="ماندگار">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <materialDesign:PackIcon Kind="Check" Visibility="{Binding Retained, Converter={StaticResource b2v}}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn Header="QoS" Binding="{Binding QoS}" Width="0.2*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Expander>
+        <Button Grid.Row="5" Content="Open Farm" x:Name="OpenFarmAsync"/>
     </Grid>
 </Window>
